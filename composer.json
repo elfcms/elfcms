@@ -1,0 +1,28 @@
+{
+    "name": "elfcms/elfcms",
+    "description": "ELF CMS",
+    "minimum-stability": "stable",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Maxim Klassen",
+            "email": "maximklassen@mail.de"
+        }
+    ],
+    "require": {
+        "php": "^8.0",
+        "livewire/livewire": "^3.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Elfcms\\Elfcms\\": "src"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Elfcms\\Elfcms\\Providers\\ElfcmsModuleProvider"
+            ]
+        }
+    }
+}
