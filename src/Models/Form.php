@@ -29,21 +29,27 @@ class Form extends Model
         'reset_title',
         'reset_value',
         'additional_buttons',
-        'event_id'
+        'event_id',
+        'active'
     ];
+
+    public function scopeActive($query)
+    {
+        return $query->where('active',1);
+    }
 
     public function fields()
     {
-        return $this->hasMany(FormField::class, 'form_id')->orderBy('position');
+        return $this->hasMany(FormField::class, 'form_id')->orderBy('-position DESC');
     }
 
     public function fieldsWithoutGroup()
     {
-        return $this->fields()->where('group_id',null);
+        return $this->fields()->where('group_id',null)->orderBy('-position DESC');
     }
 
     public function groups()
     {
-        return $this->hasMany(FormFieldGroup::class, 'form_id')->orderBy('position');
+        return $this->hasMany(FormFieldGroup::class, 'form_id')->orderByRaw('-position DESC');
     }
 }

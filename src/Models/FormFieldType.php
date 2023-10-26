@@ -3,9 +3,8 @@
 namespace Elfcms\Elfcms\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
 
-class FormFieldType extends Model
+class FormFieldType extends DefaultModel
 {
     use HasFactory;
 
@@ -42,7 +41,7 @@ class FormFieldType extends Model
         ['name' => 'color', 'description' => ''],
     ];
 
-    public function start()
+    /* public function start()
     {
         foreach($this->strings as $string) {
             $exists = $this->where('name',$string['name'])->count();
@@ -56,5 +55,10 @@ class FormFieldType extends Model
                 return false;
             }
         }
+    } */
+
+    public function start($field = 'name')
+    {
+        return parent::start('name');
     }
 }

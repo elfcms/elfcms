@@ -20,18 +20,38 @@
 
     <div class="item-form">
         <h3>{{ __('elfcms::default.edit_form_field_group') }}</h3>
-        <form action="{{ route('admin.form.groups.update',$group->id) }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('admin.forms.groups.update',['form'=>$form,'group'=>$group]) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="colored-rows-box">
                 <div class="input-box colored">
                     <label for="form_id">{{ __('elfcms::default.form') }}</label>
                     <div class="input-wrapper">
-                        <select name="form_id" id="form_id">
+                        <input type="hidden" name="form_id" id="form_id" value="{{ $form->id }}">
+                        {{-- <select name="form_id" id="form_id">
                             @foreach ($forms as $item)
                                 <option value="{{ $item->id }}" @if ($item->id == $group->form_id) selected @endif>{{ $item->name }}</option>
                             @endforeach
-                        </select>
+                        </select> --}}
+                        #{{ $form->id }} {{ $form->title ?? $form->name ?? $form->code }}
+                    </div>
+                </div>
+                <div class="input-box colored">
+                    <div class="checkbox-wrapper">
+                        <div class="checkbox-inner">
+                            <input
+                                type="checkbox"
+                                name="active"
+                                id="active"
+                                @if ($group->active == 1)
+                                checked
+                                @endif
+                            >
+                            <i></i>
+                            <label for="active">
+                                {{ __('elfcms::default.active') }}
+                            </label>
+                        </div>
                     </div>
                 </div>
                 <div class="input-box colored">
@@ -78,13 +98,23 @@
                 </div>
             </div>
             <div class="button-box single-box">
-                <button type="submit" class="default-btn submit-button">{{ __('elfcms::default.submit') }}</button>
+                <button type="submit" class="default-btn success-button">{{ __('elfcms::default.submit') }}</button>
+                <button type="submit" name="submit" value="save_and_close" class="default-btn alternate-button">{{ __('elfcms::default.save_and_close') }}</button>
+                <a href="{{ route('admin.forms.show', $form) }}" class="default-btn">{{ __('elfcms::default.cancel') }}</a>
             </div>
         </form>
     </div>
     <script>
     autoSlug('.autoslug')
     inputSlugInit()
+    const position = document.querySelector('input[name="position"]');
+    if (position) {
+        position.addEventListener("input", function () {
+            if (this.value == '' || this.value === undefined || this.value === null || this.value === false || isNaN(this.value)) {
+                this.value = 0;
+            }
+        });
+    }
     </script>
 
 @endsection

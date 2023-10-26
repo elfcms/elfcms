@@ -20,8 +20,14 @@ class FormField extends Model
         'attributes',
         'type_id',
         'form_id',
-        'group_id'
+        'group_id',
+        'active'
     ];
+
+    public function scopeActive($query)
+    {
+        return $query->where('active',1);
+    }
 
     public function form()
     {

@@ -16,7 +16,13 @@ class FormFieldGroup extends Model
         'position',
         'form_id',
         'title',
+        'active'
     ];
+
+    public function scopeActive($query)
+    {
+        return $query->where('active',1);
+    }
 
     public function form()
     {

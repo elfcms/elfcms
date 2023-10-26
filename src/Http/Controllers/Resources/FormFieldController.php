@@ -33,23 +33,24 @@ class FormFieldController extends Controller
     /**
      * Show the form for creating a new resource.
      *
+     * @param  Elfcms\Elfcms\Models\Form  $form
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create(Request $request, Form $form)
     {
-        $forms = Form::all();
+        //$forms = Form::all();
         $types = FormFieldType::all();
-        $form_id = !empty($request->form_id) ? $request->form_id : null;
-        if (empty($form_id) && !empty($forms[0])) {
+        //$form_id = !empty($request->form_id) ? $request->form_id : null;
+        /* if (empty($form_id) && !empty($forms[0])) {
             $form_id = $forms[0]->id;
-        }
+        } */
         //dd($request->form_id);
-        $group_id = !empty($request->group_id) ? $request->group_id : null;
+        $group = !empty($request->group) ? $request->group : null;
         /* if (empty($form_id)) {
             $groups = FormFieldGroup::all();
         } */
         //else {
-            $groups = FormFieldGroup::where('form_id',$form_id)->get();
+            $groups = FormFieldGroup::where('form_id',$form->id)->get();
         //}
         return view('elfcms::admin.form.fields.create',[
             'page' => [
@@ -57,9 +58,9 @@ class FormFieldController extends Controller
                 'current' => url()->current(),
             ],
             'groups' => $groups,
-            'forms' => $forms,
-            'form_id' => $form_id,
-            'group_id' => $group_id,
+            'form' => $form,
+            //'form_id' => $form_id,
+            'group' => $group,
             'types' => $types
         ]);
     }
@@ -68,9 +69,10 @@ class FormFieldController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
+     * @param  Elfcms\Elfcms\Models\Form  $form
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Form  $form)
     {
         $request->merge([
             'name' => Str::slug($request->name),
@@ -84,11 +86,12 @@ class FormFieldController extends Controller
         ]);
         $validated = $request->validate([
             'name' => 'required',
-            'form_id' => 'integer|required',
+            //'form_id' => 'integer|required',
             'type_id' => 'integer|required',
             'position' => 'integer|max:999999',
             'attributes' => 'json',
         ]);
+        $validated['form_id'] = $form->id;
         $validated['description'] = $request->description;
         $validated['title'] = $request->title;
         $validated['position'] = $request->position;
@@ -119,9 +122,11 @@ class FormFieldController extends Controller
             }
         }
 
-        //dd($group);
+        if ($request->input('submit') == 'save_and_close') {
+            return redirect(route('admin.forms.forms.show',$form))->with('success',__('elfcms::default.field_created_successfully'));
+        }
 
-        return redirect(route('admin.form.fields.edit',$field->id))->with('fieldcreated','Field created successfully');
+        return redirect(route('admin.forms.fields.edit',['form'=>$form, 'field'=>$field]))->with('success',__('elfcms::default.field_created_successfully'));
     }
 
     /**
@@ -139,9 +144,11 @@ class FormFieldController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
+     * @param  Elfcms\Elfcms\Models\FormField  $field
+     * @param  Elfcms\Elfcms\Models\Form  $form
      * @return \Illuminate\Http\Response
      */
-    public function edit(FormField $field)
+    public function edit(FormField $field, Form  $form)
     {
         //dd($field->group->id);
         $types = FormFieldType::all();
@@ -153,7 +160,8 @@ class FormFieldController extends Controller
             ],
             'field' => $field,
             'groups' => $groups,
-            'types' => $types
+            'types' => $types,
+            'form' => $form,
         ]);
     }
 
@@ -161,10 +169,11 @@ class FormFieldController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Elfcms\Elfcms\Models\FormField  $field
+     * @param  Elfcms\Elfcms\Models\Form  $form
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, FormField $field)
+    public function update(Request $request, FormField $field, Form  $form)
     {
         $request->merge([
             'name' => Str::slug($request->name),
@@ -237,7 +246,11 @@ class FormFieldController extends Controller
 
         $field->save();
 
-        return redirect(route('admin.form.fields.edit',$field->id))->with('fieldedited','Field edited successfully');
+        if ($request->input('submit') == 'save_and_close') {
+            return redirect(route('admin.forms.forms.show',$form))->with('success',__('elfcms::default.field_edited_successfully'));
+        }
+
+        return redirect(route('admin.forms.fields.edit',$field))->with('success',__('elfcms::default.field_edited_successfully'));
     }
 
     /**
@@ -248,10 +261,11 @@ class FormFieldController extends Controller
      */
     public function destroy(FormField $field)
     {
+        $form = $field->form;
         if (!$field->delete()) {
-            return redirect(route('admin.form.fields'))->withErrors(['fielddelerror'=>'Error of field deleting']);
+            return redirect(route('admin.forms.schow',$form))->withErrors(['fielddelerror'=>__('elfcms::default.field_delete_error')]);
         }
 
-        return redirect(route('admin.form.fields'))->with('fielddeleted','Field deleted successfully');
+        return redirect(route('admin.forms.schow',$form))->with('success',__('elfcms::default.field_deleted_successfully'));
     }
 }

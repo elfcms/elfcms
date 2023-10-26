@@ -56,7 +56,6 @@ class FormController extends Controller
             $form = new Form();
             $fields = $form->getFillable();
         }
-        //dd($fields);
 
         $events = EmailEvent::all();
         return view('elfcms::admin.form.forms.create',[
@@ -111,12 +110,16 @@ class FormController extends Controller
         $validated['reset_title'] = $request->reset_title;
         $validated['reset_value'] = $request->reset_value;
         $validated['additional_buttons'] = '[{}]';
+        $validated['active'] = empty($request->active) ? 0 : 1;
 
         $form = Form::create($validated);
 
         if ($form) {
-            if ($request->input('submit') == 'save_and_close') {
+            if ($request->input('submit') == 'save_and_open') {
                 return redirect(route('admin.form.forms.show',$form->id))->with('success',__('elfcms::default.form_created_successfully'));
+            }
+            if ($request->input('submit') == 'save_and_close') {
+                return redirect(route('admin.form.forms'))->with('success',__('elfcms::default.form_created_successfully'));
             }
             return redirect(route('admin.form.forms.edit',$form->id))->with('success',__('elfcms::default.form_created_successfully'));
         }
@@ -132,15 +135,16 @@ class FormController extends Controller
      */
     public function show(Form $form)
     {
-        $groups = FormFieldGroup::where('form_id',$form->id)->get();
-        $fields = FormField::where('form_id',$form->id)->get();
+        //$groups = FormFieldGroup::where('form_id',$form->id)->get();
+        //$fields = FormField::where('form_id',$form->id)->get();
+
         return view('elfcms::admin.form.forms.show',[
             'page' => [
                 'title' => __('elfcms::default.form').' #' . $form->id,
                 'current' => url()->current(),
             ],
-            'groups' => $groups,
-            'fields' => $fields,
+            //'groups' => $groups,
+            //'fields' => $fields,
             'form' => $form
         ]);
     }
@@ -226,11 +230,16 @@ class FormController extends Controller
         $form->reset_title = $request->reset_title;
         $form->reset_value = $request->reset_value;
         $form->event_id = $request->event_id;
+        $form->active = empty($request->active) ? 0 : 1;
 
         $form->save();
 
-        if ($request->input('submit') == 'save_and_close') {
+        if ($request->input('submit') == 'save_and_open') {
             return redirect(route('admin.form.forms.show',$form->id))->with('success',__('elfcms::default.form_edited_successfully'));
+        }
+
+        if ($request->input('submit') == 'save_and_close') {
+            return redirect(route('admin.form.forms'))->with('success',__('elfcms::default.form_edited_successfully'));
         }
 
         return redirect(route('admin.form.forms.edit',$form->id))->with('success',__('elfcms::default.form_edited_successfully'));

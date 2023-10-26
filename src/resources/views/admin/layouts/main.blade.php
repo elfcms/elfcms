@@ -117,6 +117,8 @@
 
     </div>
 </main>
+@section('footerscript')
+@show
 <footer id="footer">
     &copy; Maxim Klassen, 2022. ELF CMS Package v{{config('elfcms.elfcms.version')}} @if (config('elfcms.elfcms.is_beta')) (beta) @endif
 </footer>

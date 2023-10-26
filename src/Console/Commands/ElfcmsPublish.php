@@ -12,7 +12,7 @@ class ElfcmsPublish extends Command
      *
      * @var string
      */
-    protected $signature = 'elfcms:publish {module=elfcms} {--noforce}';
+    protected $signature = 'elfcms:publish {module=elfcms} {--tag=} {--noforce}';
 
     /**
      * The console command description.
@@ -31,7 +31,7 @@ class ElfcmsPublish extends Command
         $module = ucfirst($this->argument('module'));
         $provider = 'Elfcms\\' . $module . '\Providers\ElfcmsModuleProvider';
         $exitCode = Artisan::call('vendor:publish', [
-            '--provider' => $provider, '--force' => !$this->option('noforce')
+            '--provider' => $provider, '--force' => !$this->option('noforce'), '--tag' => $this->option('tag') ?? null
         ]);
 
         if ($exitCode == 0) {

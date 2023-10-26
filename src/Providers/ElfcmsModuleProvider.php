@@ -8,6 +8,7 @@ use Elfcms\Elfcms\Console\Commands\ElfcmsPublish;
 use Elfcms\Elfcms\Aux\Locales;
 use Elfcms\Elfcms\Console\Commands\ElfcmsDataTypes;
 use Elfcms\Elfcms\Console\Commands\ElfcmsEmailEvents;
+use Elfcms\Elfcms\Console\Commands\ElfcmsFieldTypes;
 use Elfcms\Elfcms\Console\Commands\ElfcmsRoles;
 use Elfcms\Elfcms\Console\Commands\ElfcmsSettings;
 use Elfcms\Elfcms\Http\Middleware\CookieCheck;
@@ -59,6 +60,10 @@ class ElfcmsModuleProvider extends ServiceProvider
      */
     public function boot(Router $router)
     {
+        $moduleDir = dirname(__DIR__);
+
+        $locales = config('elfcms.elfcms.locales');
+
         if ($this->app->runningInConsole()) {
             $this->commands([
                 ElfcmsPublish::class,
@@ -67,69 +72,89 @@ class ElfcmsModuleProvider extends ServiceProvider
                 ElfcmsSettings::class,
                 ElfcmsDataTypes::class,
                 ElfcmsEmailEvents::class,
+                ElfcmsFieldTypes::class,
             ]);
         }
-        $this->loadRoutesFrom(__DIR__.'/../routes/web.php');
-        $this->loadViewsFrom(__DIR__.'/../resources/views', 'elfcms');
-        $this->loadMigrationsFrom(__DIR__.'/../database/migrations');
+        $this->loadRoutesFrom($moduleDir.'/routes/web.php');
+        $this->loadViewsFrom($moduleDir.'/resources/views', 'elfcms');
+        $this->loadMigrationsFrom($moduleDir.'/database/migrations');
 
-        $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'elfcms');
+        $this->loadTranslationsFrom($moduleDir.'/resources/lang', 'elfcms');
 
-        $this->publishes([
-            __DIR__.'/../resources/lang/en/validation.php' => resource_path('lang/en/validation.php'),
-        ]);
-        $this->publishes([
-            __DIR__.'/../resources/lang/de/validation.php' => resource_path('lang/de/validation.php'),
-        ]);
-        $this->publishes([
-            __DIR__.'/../resources/lang/ru/validation.php' => resource_path('lang/ru/validation.php'),
-        ]);
-
-        $this->publishes([
-            __DIR__.'/../config/elfcms.php' => config_path('elfcms/elfcms.php'),
-        ]);
-
-        $this->publishes([
-            __DIR__.'/../resources/views/admin' => resource_path('views/elfcms/admin'),
-        ]);
-        $this->publishes([
-            __DIR__.'/../resources/views/components' => resource_path('views/elfcms/components'),
-        ]);
-        $this->publishes([
-            __DIR__.'/../resources/views/emails' => resource_path('views/elfcms/emails'),
-        ]);
+        if (!empty($locales) && is_array($locales)) {
+            foreach ($locales as $locale) {
+                if (!empty($locale['code'])) {
+                    $this->publishes([
+                        $moduleDir.'/resources/lang/'.$locale['code'].'/validation.php' => resource_path('lang/'.$locale['code'].'/validation.php'),
+                    ],'lang');
+                }
+            }
+        }
         /* $this->publishes([
-            __DIR__.'/../resources/views/components' => resource_path('views'),
+            $moduleDir.'/resources/lang/en/validation.php' => resource_path('lang/en/validation.php'),
+        ],'lang');
+        $this->publishes([
+            $moduleDir.'/resources/lang/de/validation.php' => resource_path('lang/de/validation.php'),
+        ],'lang');
+        $this->publishes([
+            $moduleDir.'/resources/lang/ru/validation.php' => resource_path('lang/ru/validation.php'),
+        ],'lang'); */
+
+        $this->publishes([
+            $moduleDir.'/resources/lang' => resource_path('lang/elfcms/elfcms'),
+        ],'lang');
+
+        $this->publishes([
+            $moduleDir.'/config/elfcms.php' => config_path('elfcms/elfcms.php'),
+        ],'config');
+
+        $this->publishes([
+            $moduleDir.'/resources/views/admin' => resource_path('views/elfcms/admin'),
+        ],'admin');
+        $this->publishes([
+            $moduleDir.'/public/admin' => public_path('elfcms/admin/'),
+        ], 'admin');
+
+        $this->publishes([
+            $moduleDir.'/resources/views/components' => resource_path('views/elfcms/components'),
+        ],'components');
+
+        $this->publishes([
+            $moduleDir.'/resources/views/emails' => resource_path('views/elfcms/emails'),
+        ],'emails');
+        /* $this->publishes([
+            $moduleDir.'/resources/views/components' => resource_path('views'),
         ]);
         $this->publishes([
-            __DIR__.'/../resources/views/emails' => resource_path('views'),
+            $moduleDir.'/resources/views/emails' => resource_path('views'),
         ]);
         $this->publishes([
-            __DIR__.'/../resources/views/public' => resource_path('views'),
+            $moduleDir.'/resources/views/public' => resource_path('views'),
         ]); */
         $this->publishes([
-            __DIR__.'/../resources/views/welcome.blade.php' => resource_path('views').'/welcome.blade.php',
-        ]);
-
+            $moduleDir.'/resources/views/welcome.blade.php' => resource_path('views').'/welcome.blade.php',
+        ],'welcome');
         $this->publishes([
-            __DIR__.'/../resources/lang' => resource_path('lang/elfcms/elfcms'),
-        ]);
+            $moduleDir.'/public/welcome' => public_path('elfcms/welcome/'),
+        ], 'welcome');
+        /* dd([
+            $moduleDir.'/resources/views/welcome.blade.php',
+            resource_path('views').'/welcome.blade.php'
+        ]); */
+
 
         /* $this->publishes([
-            __DIR__.'/../public/css' => public_path('css'),
+            $moduleDir.'/public/css' => public_path('css'),
         ], 'public');
         $this->publishes([
-            __DIR__.'/../public/js' => public_path('js'),
+            $moduleDir.'/public/js' => public_path('js'),
         ], 'public');
         $this->publishes([
-            __DIR__.'/../public/images' => public_path('images'),
+            $moduleDir.'/public/images' => public_path('images'),
         ], 'public');
         $this->publishes([
-            __DIR__.'/../public/fonts' => public_path('fonts'),
+            $moduleDir.'/public/fonts' => public_path('fonts'),
         ], 'public'); */
-        $this->publishes([
-            __DIR__.'/../public/admin' => public_path('elfcms/admin/'),
-        ], 'admin');
 
         config(['auth.providers.users.model' => \Elfcms\Elfcms\Models\User::class]);
         if (config('elfcms.elfcms.disks.elfcmsviews')) {

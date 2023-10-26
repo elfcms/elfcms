@@ -2,11 +2,8 @@
 
 @section('formpage-content')
 
-    @if (Session::has('fieldedited'))
-        <div class="alert alert-success">{{ Session::get('fieldedited') }}</div>
-    @endif
-    @if (Session::has('fieldcreated'))
-        <div class="alert alert-success">{{ Session::get('fieldcreated') }}</div>
+    @if (Session::has('success'))
+        <div class="alert alert-success">{{ Session::get('success') }}</div>
     @endif
     @if ($errors->any())
     <div class="alert alert-danger">
@@ -20,7 +17,7 @@
 
     <div class="item-form">
         <h3>{{ __('elfcms::default.edit_field') }} #{{ $field->id }}</h3>
-        <form action="{{ route('admin.form.fields.update',$field->id) }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('admin.forms.fields.update',['form'=>$form, 'field'=>$field]) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="colored-rows-box">
@@ -219,7 +216,9 @@
                 </div>
             </div>
             <div class="button-box single-box">
-                <button type="submit" class="default-btn submit-button">{{ __('elfcms::default.submit') }}</button>
+                <button type="submit" class="default-btn success-button">{{ __('elfcms::default.submit') }}</button>
+                <button type="submit" name="submit" value="save_and_close" class="default-btn alternate-button">{{ __('elfcms::default.save_and_close') }}</button>
+                <a href="{{ route('admin.forms.show', $form) }}" class="default-btn">{{ __('elfcms::default.cancel') }}</a>
             </div>
         </form>
     </div>

@@ -195,8 +195,8 @@ return [
         [
             "title" => "Form",
             "lang_title" => "elfcms::default.form",
-            "route" => "admin.form.forms",
-            "parent_route" => "admin.form",
+            "route" => "admin.forms.index",
+            "parent_route" => "admin.forms",
             "icon" => "/elfcms/admin/images/icons/forms.png",
             "position" => 40,
             /* "submenu" => [

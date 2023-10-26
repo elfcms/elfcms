@@ -20,10 +20,27 @@
 
     <div class="item-form">
         <h3>{{ __('elfcms::default.create_field') }}</h3>
-        <form action="{{ route('admin.form.fields.store') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('admin.forms.fields.store',['form'=>$form]) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('POST')
             <div class="colored-rows-box">
+                <div class="input-box colored">
+                    <label for="form_id">{{ __('elfcms::default.form') }}</label>
+                    <div class="input-wrapper">
+                        #{{ $form->id }} {{ $form->title ?? $form->name ?? $form->code }}
+                    </div>
+                </div>
+                <div class="input-box colored">
+                    <label for="group_id">{{ __('elfcms::default.group') }}</label>
+                    <div class="input-wrapper">
+                        <select name="group_id" id="group_id">
+                            <option value="null"> {{ __('elfcms::default.none') }} </option>
+                        @foreach ($groups as $item)
+                            <option value="{{ $item->id }}" @if($group == $item->id) selected @endif>{{ $item->name }}</option>
+                        @endforeach
+                        </select>
+                    </div>
+                </div>
                 <div class="input-box colored">
                     <label for="title">{{ __('elfcms::default.title') }}</label>
                     <div class="input-wrapper">
@@ -120,7 +137,7 @@
                         <input type="number" name="position" id="position" autocomplete="off">
                     </div>
                 </div>
-                <div class="input-box colored">
+                {{-- <div class="input-box colored">
                     <label for="form_id">{{ __('elfcms::default.form') }}</label>
                     <div class="input-wrapper">
                         <select name="form_id" id="form_id">
@@ -129,18 +146,7 @@
                         @endforeach
                         </select>
                     </div>
-                </div>
-                <div class="input-box colored">
-                    <label for="group_id">{{ __('elfcms::default.group') }}</label>
-                    <div class="input-wrapper">
-                        <select name="group_id" id="group_id">
-                            <option value="null"> {{ __('elfcms::default.none') }} </option>
-                        @foreach ($groups as $item)
-                            <option value="{{ $item->id }}">{{ $item->name }}</option>
-                        @endforeach
-                        </select>
-                    </div>
-                </div>
+                </div> --}}
                 <div class="input-box colored">
                     <label for="type_id">{{ __('elfcms::default.field_type') }}</label>
                     <div class="input-wrapper">
@@ -199,7 +205,9 @@
                 </div>
             </div>
             <div class="button-box single-box">
-                <button type="submit" class="default-btn submit-button">{{ __('elfcms::default.submit') }}</button>
+                <button type="submit" class="default-btn success-button">{{ __('elfcms::default.submit') }}</button>
+                <button type="submit" name="submit" value="save_and_close" class="default-btn alternate-button">{{ __('elfcms::default.save_and_close') }}</button>
+                <a href="{{ route('admin.forms.show', $form) }}" class="default-btn">{{ __('elfcms::default.cancel') }}</a>
             </div>
         </form>
     </div>

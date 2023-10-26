@@ -63,7 +63,7 @@ Route::group(['middleware'=>['web','cookie']],function() use ($adminPath) {
         Route::name('email.')->group(function() use ($adminPath) {
             Route::resource($adminPath . '/email/addresses', Elfcms\Elfcms\Http\Controllers\Resources\EmailAddressController::class)->names(['index' => 'addresses']);
             Route::resource($adminPath . '/email/events', Elfcms\Elfcms\Http\Controllers\Resources\EmailEventController::class)->names(['index' => 'events']);
-            Route::resource($adminPath . '/email/templates', Elfcms\Elfcms\Http\Controllers\Resources\EmailTemplateController::class)->names(['index' => 'templates']);
+            //Route::resource($adminPath . '/email/templates', Elfcms\Elfcms\Http\Controllers\Resources\EmailTemplateController::class)->names(['index' => 'templates']);
         });
 
         Route::name('form.')->group(function() use ($adminPath) {
@@ -73,6 +73,24 @@ Route::group(['middleware'=>['web','cookie']],function() use ($adminPath) {
             Route::resource($adminPath . '/form/options', Elfcms\Elfcms\Http\Controllers\Resources\FormFieldOptionController::class)->names(['index' => 'options']);
             Route::resource($adminPath . '/form/field-types', Elfcms\Elfcms\Http\Controllers\Resources\FormController::class)->names(['index' => 'field-types']);
             Route::resource($adminPath . '/form/results', Elfcms\Elfcms\Http\Controllers\Resources\FormResultController::class)->names(['index' => 'results']);
+        });
+
+        Route::name('forms.')->group(function() use ($adminPath) {
+            Route::resource($adminPath . '/forms', Elfcms\Elfcms\Http\Controllers\Resources\FormController::class)->names([
+                'index' => 'index',
+                'create' => 'create',
+                'edit'   =>'edit',
+                'store'=>'store',
+                'show' => 'show',
+                'update' => 'update',
+                'destroy' => 'destroy'
+            ]);
+            Route::resource($adminPath . '/forms/{form}/groups', Elfcms\Elfcms\Http\Controllers\Resources\FormFieldGroupController::class)->names(['index' => 'groups']);
+            Route::resource($adminPath . '/forms/{form}/fields', Elfcms\Elfcms\Http\Controllers\Resources\FormFieldController::class)
+            //->parameters(['field'=>'formField'])
+            ->names(['index' => 'fields']);
+            Route::resource($adminPath . '/forms/{form}/fields/{field}/options', Elfcms\Elfcms\Http\Controllers\Resources\FormFieldOptionController::class)->names(['index' => 'options']);
+            Route::resource($adminPath . '/forms/{form}/results', Elfcms\Elfcms\Http\Controllers\Resources\FormResultController::class)->names(['index' => 'results']);
         });
 
         Route::name('menu.')->group(function() use ($adminPath) {
@@ -86,6 +104,15 @@ Route::group(['middleware'=>['web','cookie']],function() use ($adminPath) {
 
         Route::name('statistics.')->group(function() use ($adminPath) {
             Route::get($adminPath . '/statistics', [Elfcms\Elfcms\Http\Controllers\VisitStatisticController::class,'index'])->name('index');
+        });
+
+
+        Route::name('ajax.')->group(function() {
+
+            Route::name('form.')->group(function() {
+                Route::post('/elfcms/api/form/{form}/grouporder', [Elfcms\Elfcms\Http\Controllers\Ajax\FormController::class, 'groupOrder']);
+            });
+
         });
 
     });

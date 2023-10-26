@@ -17,10 +17,27 @@
 
     <div class="item-form">
         <h3>{{ __('elfcms::default.create_form') }}</h3>
-        <form action="{{ route('admin.form.forms.store') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('admin.forms.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('POST')
             <div class="colored-rows-box">
+                <div class="input-box colored">
+                    <div class="checkbox-wrapper">
+                        <div class="checkbox-inner">
+                            <input
+                                type="checkbox"
+                                name="active"
+                                id="active"
+                                value="1"
+                                checked
+                            >
+                            <i></i>
+                            <label for="active">
+                                {{ __('elfcms::default.active') }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
                 <div class="input-box colored">
                     <label for="title">{{ __('elfcms::default.title') }}</label>
                     <div class="input-wrapper">
@@ -150,8 +167,9 @@
             </div>
             <div class="button-box single-box">
                 <button type="submit" name="submit" value="save" class="default-btn success-button">{{ __('elfcms::default.submit') }}</button>
+                <button type="submit" name="submit" value="save_and_open" class="default-btn alternate-button">{{ __('elfcms::default.save_and_open') }}</button>
                 <button type="submit" name="submit" value="save_and_close" class="default-btn alternate-button">{{ __('elfcms::default.save_and_close') }}</button>
-                <a href="{{ route('admin.form.forms') }}" class="default-btn">{{ __('elfcms::default.cancel') }}</a>
+                <a href="{{ route('admin.forms.index') }}" class="default-btn">{{ __('elfcms::default.cancel') }}</a>
             </div>
         </form>
     </div>
