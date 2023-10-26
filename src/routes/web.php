@@ -87,7 +87,6 @@ Route::group(['middleware'=>['web','cookie']],function() use ($adminPath) {
             ]);
             Route::resource($adminPath . '/forms/{form}/groups', Elfcms\Elfcms\Http\Controllers\Resources\FormFieldGroupController::class)->names(['index' => 'groups']);
             Route::resource($adminPath . '/forms/{form}/fields', Elfcms\Elfcms\Http\Controllers\Resources\FormFieldController::class)
-            //->parameters(['field'=>'formField'])
             ->names(['index' => 'fields']);
             Route::resource($adminPath . '/forms/{form}/fields/{field}/options', Elfcms\Elfcms\Http\Controllers\Resources\FormFieldOptionController::class)->names(['index' => 'options']);
             Route::resource($adminPath . '/forms/{form}/results', Elfcms\Elfcms\Http\Controllers\Resources\FormResultController::class)->names(['index' => 'results']);
@@ -111,6 +110,7 @@ Route::group(['middleware'=>['web','cookie']],function() use ($adminPath) {
 
             Route::name('form.')->group(function() {
                 Route::post('/elfcms/api/form/{form}/grouporder', [Elfcms\Elfcms\Http\Controllers\Ajax\FormController::class, 'groupOrder']);
+                Route::post('/elfcms/api/form/{form}/fieldorder', [Elfcms\Elfcms\Http\Controllers\Ajax\FormController::class, 'fieldOrder']);
             });
 
         });

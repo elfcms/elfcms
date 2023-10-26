@@ -42,6 +42,23 @@
                     </div>
                 </div>
                 <div class="input-box colored">
+                    <div class="checkbox-wrapper">
+                        <div class="checkbox-inner">
+                            <input
+                                type="checkbox"
+                                name="active"
+                                id="active"
+                                value="1"
+                                checked
+                            >
+                            <i></i>
+                            <label for="active">
+                                {{ __('elfcms::default.active') }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-box colored">
                     <label for="title">{{ __('elfcms::default.title') }}</label>
                     <div class="input-wrapper">
                         <input type="text" name="title" id="title" autocomplete="off">
@@ -69,6 +86,12 @@
                     <label for="description">{{ __('elfcms::default.description') }}</label>
                     <div class="input-wrapper">
                         <input type="text" name="description" id="description" autocomplete="off">
+                    </div>
+                </div>
+                <div class="input-box colored">
+                    <label for="value">{{ __('elfcms::default.value') }}</label>
+                    <div class="input-wrapper">
+                        <input type="text" name="value" id="value" autocomplete="off">
                     </div>
                 </div>
                 <div class="input-box colored">

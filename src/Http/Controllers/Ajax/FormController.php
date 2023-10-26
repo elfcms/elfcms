@@ -49,8 +49,49 @@ class FormController extends Controller
 
         return $result;
 
-        /* foreach ($data['groups'] as $groupId => $position) {
+    }
 
-        } */
+    /**
+     * Update positions for form fields.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  Elfcms\Elfcms\Models\Form  $form
+     * @return bool
+     */
+    public function fieldOrder(Request $request, Form $form)
+    {
+        if (!$request->ajax()) abort(403);
+
+        $result = [
+            'result' => 'error',
+            'message' => '',
+        ];
+
+        $data = $request->all();
+
+        if (!empty($data['formId']) && $data['formId'] != $form->id) {
+            $result['message'] = __('elfcms::default.error_saving_data');
+        }
+
+        if (empty($data['fields'])) {
+            $result['message'] = __('elfcms::default.error_saving_data');
+        }
+
+        //$groups = $form->groups;
+        if (!empty($form->fields)) {
+            foreach ($form->fields as $field) {
+                if (!empty($data['fields'][$field->id] && $data['fields'][$field->id]['new'] == 1)) {
+                    $field->position = $data['fields'][$field->id]['position'];
+                    $field->group_id = $data['fields'][$field->id]['group'];
+                    $field->save();
+                }
+            }
+        }
+
+        $result['message'] = __('elfcms::default.changes_saved');
+        $result['result'] = 'success';
+
+        return $result;
+
     }
 }

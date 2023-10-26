@@ -40,16 +40,16 @@ class Form extends Model
 
     public function fields()
     {
-        return $this->hasMany(FormField::class, 'form_id')->orderBy('-position DESC');
+        return $this->hasMany(FormField::class, 'form_id')->orderBy('position','asc');
     }
 
     public function fieldsWithoutGroup()
     {
-        return $this->fields()->where('group_id',null)->orderBy('-position DESC');
+        return $this->hasMany(FormField::class, 'form_id')->where('group_id',null);
     }
 
     public function groups()
     {
-        return $this->hasMany(FormFieldGroup::class, 'form_id')->orderByRaw('-position DESC');
+        return $this->hasMany(FormFieldGroup::class, 'form_id')->orderByRaw('position ASC');
     }
 }

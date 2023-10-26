@@ -22,6 +22,35 @@
             @method('PUT')
             <div class="colored-rows-box">
                 <div class="input-box colored">
+                    <label for="group_id">{{ __('elfcms::default.group') }}</label>
+                    <div class="input-wrapper">
+                        <select name="group_id" id="group_id">
+                            <option value="null"> {{ __('elfcms::default.none') }} </option>
+                        @foreach ($groups as $item)
+                            <option value="{{ $item->id }}" @if ($field->group && $item->id == $field->group->id) selected @endif>{{ $item->name }}</option>
+                        @endforeach
+                        </select>
+                    </div>
+                </div>
+                <div class="input-box colored">
+                    <div class="checkbox-wrapper">
+                        <div class="checkbox-inner">
+                            <input
+                                type="checkbox"
+                                name="active"
+                                id="active"
+                                @if ($field->active == 1)
+                                checked
+                                @endif
+                            >
+                            <i></i>
+                            <label for="active">
+                                {{ __('elfcms::default.active') }}
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="input-box colored">
                     <label for="title">{{ __('elfcms::default.title') }}</label>
                     <div class="input-wrapper">
                         <input type="text" name="title" id="title" autocomplete="off" value="{{ $field->title }}">
@@ -49,6 +78,12 @@
                     <label for="description">{{ __('elfcms::default.description') }}</label>
                     <div class="input-wrapper">
                         <input type="text" name="description" id="description" autocomplete="off" value="{{ $field->description }}">
+                    </div>
+                </div>
+                <div class="input-box colored">
+                    <label for="value">{{ __('elfcms::default.value') }}</label>
+                    <div class="input-wrapper">
+                        <input type="text" name="value" id="value" autocomplete="off" value="{{ $field->value }}">
                     </div>
                 </div>
                 <div class="input-box colored">
@@ -125,17 +160,6 @@
                     <label for="form_id">{{ __('elfcms::default.form') }}</label>
                     <div class="input-wrapper">
                         <span class="info-field">{{ $field->form->name }} [{{ $field->form->id }}]</span>
-                    </div>
-                </div>
-                <div class="input-box colored">
-                    <label for="group_id">{{ __('elfcms::default.group') }}</label>
-                    <div class="input-wrapper">
-                        <select name="group_id" id="group_id">
-                            <option value="null"> {{ __('elfcms::default.none') }} </option>
-                        @foreach ($groups as $item)
-                            <option value="{{ $item->id }}" @if ($field->group && $item->id == $field->group->id) selected @endif>{{ $item->name }}</option>
-                        @endforeach
-                        </select>
                     </div>
                 </div>
                 <div class="input-box colored">

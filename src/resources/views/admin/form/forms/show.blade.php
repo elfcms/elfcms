@@ -23,7 +23,7 @@
     <div class="form-groups" data-form="{{ $form->id }}">
         @foreach ($form->groups as $group)
             <div class="form-group-box" data-id="{{ $group->id }}">
-                <div @class(['form-group-position', 'inactive' => $group->active != 1]) draggable="true">
+                <div @class(['form-group-position', 'inactive' => $group->active != 1]) draggable="true" data-title="{{ $group->title ?? $group->name }}">
                     {{ $group->position }}
                 </div>
                 <div class="form-group-data">
@@ -45,18 +45,23 @@
                             </form>
                         </div>
                     </div>
-                    <div class="form-group-fields">
+                    <div class="form-group-fields" data-id="{{ $group->id }}">
                     @if (!empty($group->fields))
                         @foreach ($group->fields as $field)
                             <x-elfcms::admin.formfield :field="$field" :form="$form" />
                         @endforeach
                     @endif
+                    </div>
                         <div class="form-group-fields-buttons">
                             <a href="{{ route('admin.forms.fields.create',['form'=>$form, 'group'=>$group->id]) }}" class="default-btn success-button icon-text-button light-icon plus-button">{{-- {{__('elfcms::default.create_field')}} --}}</a>
                         </div>
-                    </div>
                 </div>
             </div>
+        @endforeach
+    </div>
+    <div class="form-groupless-fields">
+        @foreach ($form->fieldsWithoutGroup as $field)
+        <x-elfcms::admin.formfield :field="$field" :form="$form" />
         @endforeach
     </div>
 
@@ -102,5 +107,6 @@ if (checkForms) {
 </script>
 @endsection
 @section('footerscript')
-<script src="{{ asset('elfcms/admin/js/formorder.js') }}"></script>
+<script src="{{ asset('elfcms/admin/js/grouporder.js') }}"></script>
+<script src="{{ asset('elfcms/admin/js/fieldorder.js') }}"></script>
 @endsection

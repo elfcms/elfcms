@@ -1,33 +1,50 @@
+
 const formGroups = document.querySelector('.form-groups');
-//const groupBoxes = formGroups.querySelectorAll('.form-group-box');
+const elements = Array.from(document.querySelectorAll('.form-group-position'));
 
 let draggedElement = null;
+let draggedElementParent = null;
 
-formGroups.addEventListener('dragstart', (e) => {
-    if (e.target.classList.contains('form-group-position')) {
-        draggedElement = e.target.closest('.form-group-box');
-        e.dataTransfer.setData('text', 'dummy'); // Required for Firefox
+elements.forEach(element => {
+    element.addEventListener('dragstart', () => {
+        element.classList.add('dragging');
+        elementBox = element.parentNode;
+        draggedElement = elementBox;
+        draggedElementParent = elementBox.parentNode;
+    });
+
+    element.addEventListener('dragend', () => {
+        draggedElement = null;
+        draggedElementParent = null;
+        element.classList.remove('dragging');
+        elementPositionSuccess();
+    });
+});
+
+const containers = Array.from(document.querySelectorAll('.form-groups'));
+
+containers.forEach(container => {
+    container.addEventListener('dragover', e => {
+        e.preventDefault();
+        const afterElement = getDragAfterElement(container, e.clientY);
+        if (draggedElement) container.insertBefore(draggedElement, afterElement);
+    });
+});
+
+function getDragAfterElement(container, y) {
+  const draggableElements = Array.from(container.querySelectorAll('.form-group-box:not(.dragging)'));
+
+  return draggableElements.reduce((closest, child) => {
+    const box = child.getBoundingClientRect();
+    const offset = y - box.top - box.height / 2;
+
+    if (offset < 0 && offset > closest.offset) {
+      return { offset: offset, element: child };
+    } else {
+      return closest;
     }
-});
-
-formGroups.addEventListener('dragover', (e) => {
-    e.preventDefault();
-    const targetItem = e.target.closest('.form-group-box');
-    if (targetItem && targetItem !== draggedElement) {
-        const rect = targetItem.getBoundingClientRect();
-        const y = e.clientY - rect.top;
-        if (y < rect.height / 2) {
-            formGroups.insertBefore(draggedElement, targetItem);
-        } else {
-            formGroups.insertBefore(draggedElement, targetItem.nextSibling);
-        }
-    }
-});
-
-formGroups.addEventListener('dragend', () => {
-    draggedElement = null;
-    elementPositionSuccess();
-});
+  }, { offset: Number.NEGATIVE_INFINITY }).element;
+}
 
 function elementPositionSuccess() {
     const groupBoxes = formGroups.querySelectorAll('.form-group-box');
@@ -37,7 +54,6 @@ function elementPositionSuccess() {
         let groups = {};
         groupBoxes.forEach(groupBox => {
             const groupId = groupBox.dataset.id;
-            //console.log(groupId)
             const positionBox = groupBox.querySelector('.form-group-position');
             if (positionBox) {
                 positionBox.innerHTML = position;
@@ -47,8 +63,7 @@ function elementPositionSuccess() {
                 position++;
             }
         });
-        //console.log (formId, groups);
-        //const data = JSON.stringify({name:input.value});
+
         const data = JSON.stringify({
             formId,
             groups
@@ -68,14 +83,7 @@ function elementPositionSuccess() {
             (result) => result.json()
         ).then (
             (data) => {
-                /* if (data.result && data.data) {
-                    if (data.result == 'success' && data.data.id) {
-                        tagList.push(data.data)
-                    }
-                    if (data.data.id) {
-                        addTagToList (listBox,input,data.data)
-                    }
-                } */
+
                 //console.log(data);
             }
         ).catch(error => {

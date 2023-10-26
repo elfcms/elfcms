@@ -102,6 +102,7 @@ class FormFieldController extends Controller
         $validated['checked'] = $request->checked;
         $validated['readonly'] = $request->readonly;
         $validated['group_id'] = $request->group_id > 0 ? $request->group_id : null;
+        $validated['active'] = empty($request->active) ? 0 : 1;
 
         //dd($validated);
 
@@ -123,7 +124,7 @@ class FormFieldController extends Controller
         }
 
         if ($request->input('submit') == 'save_and_close') {
-            return redirect(route('admin.forms.forms.show',$form))->with('success',__('elfcms::default.field_created_successfully'));
+            return redirect(route('admin.forms.show',$form))->with('success',__('elfcms::default.field_created_successfully'));
         }
 
         return redirect(route('admin.forms.fields.edit',['form'=>$form, 'field'=>$field]))->with('success',__('elfcms::default.field_created_successfully'));
@@ -148,7 +149,7 @@ class FormFieldController extends Controller
      * @param  Elfcms\Elfcms\Models\Form  $form
      * @return \Illuminate\Http\Response
      */
-    public function edit(FormField $field, Form  $form)
+    public function edit(Form  $form, FormField $field)
     {
         //dd($field->group->id);
         $types = FormFieldType::all();
@@ -169,11 +170,11 @@ class FormFieldController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  Elfcms\Elfcms\Models\FormField  $field
      * @param  Elfcms\Elfcms\Models\Form  $form
+     * @param  Elfcms\Elfcms\Models\FormField  $field
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, FormField $field, Form  $form)
+    public function update(Request $request, Form  $form, FormField $field)
     {
         $request->merge([
             'name' => Str::slug($request->name),
@@ -206,6 +207,7 @@ class FormFieldController extends Controller
         $field->position = $request->position;
         $field->placeholder = $request->placeholder;
         $field->value = $request->value;
+        $field->active = empty($request->active) ? 0 : 1;
         /* $field->disabled = $request->disabled;
         $field->checked = $request->checked;
         $field->readonly = $request->readonly; */
@@ -247,25 +249,26 @@ class FormFieldController extends Controller
         $field->save();
 
         if ($request->input('submit') == 'save_and_close') {
-            return redirect(route('admin.forms.forms.show',$form))->with('success',__('elfcms::default.field_edited_successfully'));
+            return redirect(route('admin.forms.show',$form))->with('success',__('elfcms::default.field_edited_successfully'));
         }
 
-        return redirect(route('admin.forms.fields.edit',$field))->with('success',__('elfcms::default.field_edited_successfully'));
+        return redirect(route('admin.forms.fields.edit',['form'=>$form, 'field'=>$field]))->with('success',__('elfcms::default.field_edited_successfully'));
     }
 
     /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
+     * @param  Elfcms\Elfcms\Models\Form  $form
      * @return \Illuminate\Http\Response
      */
-    public function destroy(FormField $field)
+    public function destroy(Form  $form, FormField $field)
     {
         $form = $field->form;
         if (!$field->delete()) {
-            return redirect(route('admin.forms.schow',$form))->withErrors(['fielddelerror'=>__('elfcms::default.field_delete_error')]);
+            return redirect(route('admin.forms.show',$form))->withErrors(['fielddelerror'=>__('elfcms::default.field_delete_error')]);
         }
 
-        return redirect(route('admin.forms.schow',$form))->with('success',__('elfcms::default.field_deleted_successfully'));
+        return redirect(route('admin.forms.show',$form))->with('success',__('elfcms::default.field_deleted_successfully'));
     }
 }

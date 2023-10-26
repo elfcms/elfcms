@@ -2540,6 +2540,7 @@ body.system-login main .login-form .alert {
     padding: 15px 5px;
     font-size: 13px;
     cursor: grab;
+    position: relative;
 }
 .form-group-position.inactive {
     background-color: #575757;
@@ -2602,9 +2603,30 @@ body.system-login main .login-form .alert {
     padding: 15px 5px;
     font-size: 13px;
     cursor: grab;
+    position: relative;
 }
 .form-field-position.inactive {
     background-color: #575757;
+}
+.form-group-position.dragging::after,
+.form-field-position.dragging::after {
+    content: attr(data-title);
+    position: absolute;
+    background-color: #ffffff;
+    left: 100%;
+    top: 0;
+    height: 100%;
+    width: min-content;
+    min-width: 50vw;
+    max-width: 90vw;
+    display: flex;
+    align-items: center;
+    padding: 0px 15px;
+    border-radius: 0px 8px 8px 0px;
+    font-size: 1.4em;
+    color: #074ca5;
+    box-sizing: border-box;
+    z-index: 2;
 }
 
 .form-field-data {
@@ -2612,22 +2634,49 @@ body.system-login main .login-form .alert {
     /* background-color: rgba(255, 255, 255, 0.3); */
     border-radius: 0px 8px 8px 0px;
     overflow: hidden;
-    display: flex;
-    justify-content: space-between;
+    /* display: flex;
+    justify-content: space-between; */
     padding: 5px 15px;
     background-color: #ffffff;
     color: #074ca5;
     font-size: 18px;
 }
 
-/* .form-field-title-box {
+.form-field-title-box {
     display: flex;
     justify-content: space-between;
-    padding: 5px 15px;
+    width: 100%;
+   /*  padding: 5px 15px;
     background-color: #ffffff;
     color: #074ca5;
-    font-size: 20px;
-} */
+    font-size: 20px; */
+}
+.form-field-position.dragging ~ .form-field-title-box,
+.form-field-position.dragging ~ .form-field-data {
+    color: transparent;
+    opacity: 0.5;
+}
+.form-group-position.dragging ~ .form-group-data {
+    opacity: 0.5;
+}
+
+.form-field-type {
+    font-size: 0.9em;
+    color: #575757;
+}
+
+.form-groupless-fields {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    min-height: 30px;
+    margin-bottom: 15px;
+}
+
+.form-group-fields-buttons {
+    padding: 15px;
+}
+
 
 /* .form-field-fields {
     padding: 10px 15px;

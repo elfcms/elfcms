@@ -1,5 +1,5 @@
 <div class="form-field-box" data-id="{{ $field->id }}">
-    <div @class(['form-field-position', 'inactive' => $field->active != 1]) draggable="true">
+    <div @class(['form-field-position', 'inactive' => $field->active != 1]) draggable="true" data-title="{{ $field->title ?? $field->name }}">
         {{ $field->position }}
     </div>
     <div class="form-field-data">
@@ -20,6 +20,9 @@
                     <button type="submit" class="inline-button circle-button delete-button" title="{{ __('elfcms::default.delete') }}"></button>
                 </form>
             </div>
+        </div>
+        <div class="form-field-type">
+            {{ $field->type->name }}
         </div>
     </div>
 </div>
