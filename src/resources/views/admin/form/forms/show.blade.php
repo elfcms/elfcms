@@ -1,5 +1,7 @@
 @extends('elfcms::admin.layouts.form')
-
+@section('head')
+<link rel="stylesheet" href="{{ asset('elfcms/admin/css/popnotifi.css') }}">
+@endsection
 @section('formpage-content')
     @if (Session::has('success'))
     <div class="alert alert-alternate">{{ Session::get('success') }}</div>
@@ -107,6 +109,7 @@ if (checkForms) {
 </script>
 @endsection
 @section('footerscript')
+<script src="{{ asset('elfcms/admin/js/popnotifi.js') }}"></script>
 <script src="{{ asset('elfcms/admin/js/grouporder.js') }}"></script>
 <script src="{{ asset('elfcms/admin/js/fieldorder.js') }}"></script>
 @endsection

@@ -134,8 +134,7 @@ function itemPositionSuccess() {
             (result) => result.json()
         ).then (
             (data) => {
-
-                //console.log(data);
+                showNotifi(data.result,data.message);
             }
         ).catch(error => {
             //

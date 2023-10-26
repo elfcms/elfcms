@@ -18,6 +18,8 @@
     @foreach ($admin_scripts as $script)
     <script src="{{ asset($script) }}"></script>
     @endforeach
+    @section('head')
+    @show
 </head>
 <body>
 @inject('currentUser', 'Elfcms\Elfcms\Aux\User')
