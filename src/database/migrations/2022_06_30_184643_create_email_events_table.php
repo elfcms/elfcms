@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('subject')->nullable();
             $table->string('description')->nullable();
-            $table->text('content')->nullable();
+            $table->longText('content')->nullable();
             $table->json('contentparams')->nullable();
             $table->timestamps();
         });
