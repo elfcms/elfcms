@@ -29,7 +29,7 @@ class ViewServiceProvider extends ServiceProvider
     public function boot()
     {
         try {
-            if (Schema::hasTable('settings')) {
+            if (Schema::hasTable('elfcms_settings')) {
 
                 View::composer('*::admin.*', function($view) {
                     $configs = config('elfcms');

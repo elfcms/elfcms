@@ -31,7 +31,7 @@ class ElfcmsModuleProvider extends ServiceProvider
      */
     public function register()
     {
-        //$this->app->register(EventServiceProvider::class);
+        $this->app->register(EventServiceProvider::class);
         $this->app->register(ViewServiceProvider::class);
 
         require_once __DIR__ . '/../Aux/UrlParams.php';

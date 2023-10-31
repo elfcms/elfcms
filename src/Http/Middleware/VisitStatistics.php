@@ -25,7 +25,7 @@ class VisitStatistics
      */
     public function handle(Request $request, Closure $next)
     {
-        if (Schema::hasTable('settings')) {
+        if (Schema::hasTable('elfcms_settings')) {
             $useStatistic = Setting::value('site_statistics_use');
             if (empty($useStatistic) || $useStatistic != 1) {
                 return $next($request);
