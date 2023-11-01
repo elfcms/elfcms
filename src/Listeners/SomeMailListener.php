@@ -1,9 +1,9 @@
 <?php
 
-namespace Elfcms\Basic\Listeners;
+namespace Elfcms\Elfcms\Listeners;
 
-use Elfcms\Basic\Models\EmailEvent;
-use Elfcms\Basic\Events\SomeMailEvent;
+use Elfcms\Elfcms\Models\EmailEvent;
+use Elfcms\Elfcms\Events\SomeMailEvent;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Log;
@@ -76,8 +76,6 @@ class SomeMailListener
 
         $emailEvent->eventUser = $event->eventUser;
 
-        //dd($emailEvent);
-        //dd($this);
-        Mail::send(new \Elfcms\Basic\Mail\EmailEventSend($emailEvent));
+        Mail::send(new \Elfcms\Elfcms\Mail\EmailEventSend($emailEvent));
     }
 }

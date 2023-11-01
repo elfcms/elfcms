@@ -52,14 +52,7 @@ class EmailEvent extends DefaultModel
 
         $emailFieldList = $this->hasMany(EmailEventAddress::class, 'email_event_id')->get();
 
-        /* foreach ($ef as $a=>$b) {
-            dd($b->address()->get());
-        } */
-        //$emailFieldList = $this->hasMany(EmailEventAddress::class, 'email_event_id')->get()->toArray();
-
         foreach ($emailFieldList as $field) {
-            //dd($field->address()->get());
-            //$data = $field->address()->get();
             if (in_array($field->field, $this->emailFields)) {
                 $result[$field->field] = $field->address()->first();
             }
@@ -71,17 +64,5 @@ class EmailEvent extends DefaultModel
     public function start($field = 'name')
     {
         return parent::start('name');
-        /* foreach($this->strings as $string) {
-            $exists = $this->where('name',$string['name'])->count();
-            if ($exists && $exists > 0) {
-                continue;
-            }
-
-            $newString = $this->create($string);
-
-            if (!$newString) {
-                return false;
-            }
-        } */
     }
 }
