@@ -75,6 +75,7 @@
                     <td>{{ $event->updated_at }}</td>
                     <td class="button-column non-text-buttons">
                         <a href="{{ route('admin.email.events.edit',$event->id) }}" class="default-btn edit-button" title="{{ __('elfcms::default.edit') }}"></a>
+                        @if(!in_array($event->code,$protected))
                         <form action="{{ route('admin.email.events.destroy',$event->id) }}" method="POST" data-submit="check">
                             @csrf
                             @method('DELETE')
@@ -82,6 +83,9 @@
                             <input type="hidden" name="name" value="{{ $event->name }}">
                             <button type="submit" class="default-btn delete-button" title="{{ __('elfcms::default.delete') }}"></button>
                         </form>
+                        @else
+                        <button class="default-btn delete-button" title="{{ __('elfcms::default.delete') }}" disabled></button>
+                        @endif
                     </td>
                 </tr>
             @endforeach

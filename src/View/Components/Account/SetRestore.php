@@ -7,7 +7,7 @@ use Illuminate\View\Component;
 
 class SetRestore extends \Illuminate\View\Component
 {
-    public $template = 'basic',
+    public $template = 'default',
         $token;
 
     /**
@@ -15,7 +15,7 @@ class SetRestore extends \Illuminate\View\Component
      *
      * @return void
      */
-    public function __construct($template = 'basic', $token)
+    public function __construct($template = 'default', $token)
     {
         $this->template = $template;
         $this->token = $token;
@@ -31,8 +31,8 @@ class SetRestore extends \Illuminate\View\Component
         if (View::exists('components.account.' . $this->template . '.setrestore')) {
             return view('components.account.' . $this->template . '.setrestore');
         }
-        if (View::exists('basic::components.account.'.$this->template . '.setrestore')) {
-            return view('basic::components.account.'.$this->template . '.setrestore');
+        if (View::exists('elfcms::components.account.'.$this->template . '.setrestore')) {
+            return view('elfcms::components.account.'.$this->template . '.setrestore');
         }
         if (View::exists($this->template . '.setrestore')) {
             return view($this->template . '.setrestore');

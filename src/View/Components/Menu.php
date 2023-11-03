@@ -15,7 +15,7 @@ class Menu extends Component
      *
      * @return void
      */
-    public function __construct($menu, $template='basic')
+    public function __construct($menu, $template='default')
     {
         $result = $menu;
         if (is_numeric($menu)) {
@@ -39,8 +39,8 @@ class Menu extends Component
         if (View::exists('components.menu.' . $this->template)) {
             return view('components.menu.' . $this->template);
         }
-        if (View::exists('basic::components.menu.'.$this->template)) {
-            return view('basic::components.menu.'.$this->template);
+        if (View::exists('elfcms::components.menu.'.$this->template)) {
+            return view('elfcms::components.menu.'.$this->template);
         }
         if (View::exists($this->template)) {
             return view($this->template);

@@ -34,12 +34,23 @@ class EmailEventController extends Controller
         $events = EmailEvent::orderBy($order, $trend)->paginate(60);
 
         $events = EmailEvent::all();
+
+        $event = new EmailEvent();
+        $strings = $event->getProperty('strings');
+        $protected = [];
+        if (!empty($strings)) {
+            foreach ($strings as $string) {
+                $protected[] = $string['code'];
+            }
+        }
+
         return view('elfcms::admin.email.events.index',[
             'page' => [
                 'title' => __('elfcms::default.email_events'),
                 'current' => url()->current(),
             ],
-            'events' => $events
+            'events' => $events,
+            'protected' => $protected,
         ]);
     }
 

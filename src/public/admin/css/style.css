@@ -523,6 +523,15 @@ select.failed {
     text-shadow: 1px 1px 1px var(--main-warning-shadow-color);
 }
 
+.default-btn[disabled] {
+    filter: grayscale(.9) brightness(1.2);
+    opacity: .7;
+    cursor: not-allowed;
+}
+.default-btn[disabled]:hover {
+    box-shadow: none !important;
+}
+
 .inline-button {
     display: block;
     position: relative;

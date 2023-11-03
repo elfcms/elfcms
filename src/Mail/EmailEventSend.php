@@ -85,6 +85,7 @@ class EmailEventSend extends Mailable
             $this->emailEvent->params = array_merge($this->emailEvent->contentparams,$this->emailEvent->params);
         }
         Log::info('content: ' . $this->emailEvent->content);
+        Log::info('event: ' . $this->emailEvent);
         return $this->view($view,['content'=>$this->emailEvent->content, 'params'=>$this->emailEvent->params]);
     }
 }

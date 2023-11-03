@@ -65,7 +65,7 @@ class LoginController extends \App\Http\Controllers\Controller
 
     public function getRestore(Request $request)
     {
-        /* $request->validate(['email' => 'required|email']);
+        $request->validate(['email' => 'required|email']);
 
         $user = User::where('email',$request->email)->first();
 
@@ -79,7 +79,7 @@ class LoginController extends \App\Http\Controllers\Controller
             return redirect(route('admin.getrestore'))->with('requestissended',$message);
         }
 
-        return back()->withErrors(['email' => __('elfcms::default.email_not_found')]); */
+        return back()->withErrors(['email' => __('elfcms::default.email_not_found')]);
 
     }
 

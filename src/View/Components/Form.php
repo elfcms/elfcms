@@ -17,7 +17,7 @@ class Form extends \Illuminate\View\Component
      *
      * @return void
      */
-    public function __construct($form, $template = 'basic')
+    public function __construct($form, $template = 'default')
     {
         $result = $form;
         if (is_numeric($form)) {
@@ -68,8 +68,8 @@ class Form extends \Illuminate\View\Component
         if (View::exists('components.form.' . $this->template)) {
             return view('components.form.' . $this->template);
         }
-        if (View::exists('basic::components.form.' . $this->template)) {
-            return view('basic::components.form.' . $this->template);
+        if (View::exists('elfcms::components.form.' . $this->template)) {
+            return view('elfcms::components.form.' . $this->template);
         }
         if (View::exists($this->template)) {
             return view($this->template);

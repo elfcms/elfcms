@@ -7,14 +7,14 @@ use Illuminate\View\Component;
 
 class Register extends \Illuminate\View\Component
 {
-    public $template = 'basic';
+    public $template = 'default';
 
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($template = 'basic')
+    public function __construct($template = 'default')
     {
         $this->template = $template;
     }
@@ -29,8 +29,8 @@ class Register extends \Illuminate\View\Component
         if (View::exists('components.account.' . $this->template . '.register')) {
             return view('components.account.' . $this->template . '.register');
         }
-        if (View::exists('basic::components.account.'.$this->template . '.register')) {
-            return view('basic::components.account.'.$this->template . '.register');
+        if (View::exists('elfcms::components.account.'.$this->template . '.register')) {
+            return view('elfcms::components.account.'.$this->template . '.register');
         }
         if (View::exists($this->template . '.register')) {
             return view($this->template . '.register');

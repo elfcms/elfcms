@@ -8,7 +8,7 @@
 @section('main')
 <div class="login-form">
     <h1>{{ $page['title'] ?? $elfSiteSettings['title'] }}</h1>
-        <x-elfcms-basic-account-getrestore template="admin" />
+        <x-elfcms-account-getrestore template="admin" />
 </div>
 
 @endsection

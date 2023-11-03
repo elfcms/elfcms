@@ -20,7 +20,7 @@
             {{ $linkErrorText }}
         </div>
     @else
-        <x-elfcms-basic-account-setrestore template="admin" :token="$token" />
+        <x-elfcms-account-setrestore template="admin" :token="$token" />
     @endif
 </div>
 

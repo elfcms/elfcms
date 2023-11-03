@@ -24,4 +24,8 @@ class DefaultModel extends Model
             }
         }
     }
+
+    function getProperty($prop) {
+        return $this->$prop;
+    }
 }
