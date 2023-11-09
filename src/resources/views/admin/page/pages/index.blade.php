@@ -1,7 +1,9 @@
 @extends('elfcms::admin.layouts.page')
 
 @section('pagepage-content')
-
+<div class="table-search-box">
+    <a href="{{ route('admin.page.pages.create') }}" class="default-btn success-button icon-text-button light-icon plus-button">{{__('elfcms::default.create_page')}}</a>
+</div>
     @if (Session::has('pagedeleted'))
     <div class="alert alert-alternate">{{ Session::get('pagedeleted') }}</div>
     @endif

@@ -246,12 +246,20 @@ return [
             "position" => 60,
         ],
         [
+            "title" => "Messages",
+            "lang_title" => "elfcms::default.messages",
+            "route" => "admin.message.messages",
+            "parent_route" => "admin.message.messages",
+            "icon" => "/elfcms/admin/images/icons/info.png",
+            "position" => 70,
+        ],
+        [
             "title" => "Statistics",
             "lang_title" => "elfcms::default.statistics",
             "route" => "admin.statistics.index",
             "parent_route" => "admin.statistics.index",
             "icon" => "/elfcms/admin/images/icons/stats.png",
-            "position" => 70,
+            "position" => 80,
         ]
     ],
 

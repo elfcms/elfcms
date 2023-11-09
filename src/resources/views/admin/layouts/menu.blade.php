@@ -4,7 +4,7 @@
 
 <div class="big-container">
 
-    <nav class="pagenav">
+    {{-- <nav class="pagenav">
         <ul>
             <li>
                 <a href="{{ route('admin.menu.menus') }}" class="button button-left">{{ __('elfcms::default.menu') }}</a>
@@ -15,7 +15,7 @@
                 <a href="{{ route('admin.menu.items.create') }}" class="button button-right">+</a>
             </li>
         </ul>
-    </nav>
+    </nav> --}}
     @section('menupage-content')
     @show
 

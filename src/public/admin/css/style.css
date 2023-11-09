@@ -331,6 +331,8 @@ select.failed {
     margin-left: 5.5em;
 }
 
+/* Elfcms 09.11. */
+
 .checkbox-wrapper:not(.low-wrapper) {
     padding: 10px;
     margin: 5px 0px;
@@ -2242,6 +2244,8 @@ button.option-table-add {
 .tile-item:hover {
     /* transform: scale(1.07); */
     box-shadow: 2px 2px 8px 3px rgba(0, 0, 0, 0.3);
+    color: var(--main-contrast-color) !important;
+    text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
 }
 .tile-item h3 {
     margin: 5px 0px 20px;
@@ -2591,7 +2595,7 @@ body.system-login main .login-form .alert {
     position: relative;
 }
 .form-field-position.inactive {
-    background-color: var(--main-text-inactive-color);
+    background-color: var(--main-bg-shade-color);
 }
 .form-group-position.dragging::after,
 .form-field-position.dragging::after {
@@ -2676,6 +2680,8 @@ body.system-login main .login-form .alert {
 }
 
 /* /Forms */
+
+
 
 /* Footer */
 footer#footer {

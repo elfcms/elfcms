@@ -1,7 +1,9 @@
 @extends('elfcms::admin.layouts.menu')
 
 @section('menupage-content')
-
+<div class="table-search-box">
+    <a href="{{ route('admin.menu.items.create') }}" class="default-btn success-button icon-text-button light-icon plus-button">{{__('elfcms::default.create_menu_item')}}</a>
+</div>
     @if (Session::has('menuitemdeleted'))
     <div class="alert alert-alternate">{{ Session::get('menuitemdeleted') }}</div>
     @endif

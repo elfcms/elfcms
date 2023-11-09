@@ -190,6 +190,7 @@ class ElfcmsModuleProvider extends ServiceProvider
 
         Blade::component('elfcms-form', \Elfcms\Elfcms\View\Components\Form::class);
         Blade::component('elfcms-menu', \Elfcms\Elfcms\View\Components\Menu::class);
+        Blade::component('elfcms-message', \Elfcms\Elfcms\View\Components\Message::class);
         Blade::component('elfcms-account-login', \Elfcms\Elfcms\View\Components\Account\Login::class);
         Blade::component('elfcms-account-register', \Elfcms\Elfcms\View\Components\Account\Register::class);
         Blade::component('elfcms-account-edit', \Elfcms\Elfcms\View\Components\Account\Edit::class);
