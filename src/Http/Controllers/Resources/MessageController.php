@@ -26,9 +26,19 @@ class MessageController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        $message = (object)$request->old();
+        if (!isset($message->active)) {
+            $message->active = 1;
+        }
+        return view('elfcms::admin.messages.create',[
+            'page' => [
+                'title' => __('elfcms::default.create_message'),
+                'current' => url()->current(),
+            ],
+            'message' => $message,
+        ]);
     }
 
     /**
@@ -36,7 +46,25 @@ class MessageController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required',
+            'code' => 'required',
+        ]);
+
+        $validated['text'] = $request->text;
+        $validated['theme'] = $request->theme;
+        $validated['date_from'] = $request->date_from;
+        $validated['date_to'] = $request->date_to;
+        $validated['is_popup'] = empty($request->is_popup) ? 0 : 1;
+        $validated['close_remember'] = empty($request->close_remember) ? 0 : 1;
+        $validated['active'] = empty($request->active) ? 0 : 1;
+
+        $message = Message::create($request->all());
+
+        if ($request->input('submit') == 'save_and_close') {
+            return redirect(route('admin.messages.index'))->with('success',__('elfcms::default.message_created_successfully'));
+        }
+        return redirect(route('admin.messages.edit',$message))->with('success',__('elfcms::default.message_created_successfully'));
     }
 
     /**
@@ -52,7 +80,13 @@ class MessageController extends Controller
      */
     public function edit(Message $message)
     {
-        //
+        return view('elfcms::admin.messages.edit',[
+            'page' => [
+                'title' => __('elfcms::default.edit_message').' #' . $message->id,
+                'current' => url()->current(),
+            ],
+            'message' => $message
+        ]);
     }
 
     /**
@@ -60,7 +94,27 @@ class MessageController extends Controller
      */
     public function update(Request $request, Message $message)
     {
-        //
+        $validated = $request->validate([
+            'name' => 'required',
+            'code' => 'required'
+        ]);
+
+        $message->name = $validated['name'];
+        $message->code = $validated['code'];
+        $message->text = $request->text;
+        $message->theme = $request->theme;
+        $message->date_from = $request->date_from;
+        $message->date_to = $request->date_to;
+        $message->is_popup = empty($request->is_popup) ? 0 : 1;
+        $message->close_remember = empty($request->close_remember) ? 0 : 1;
+        $message->active = empty($request->active) ? 0 : 1;
+
+        $message->save();
+
+        if ($request->input('submit') == 'save_and_close') {
+            return redirect(route('admin.messages.index'))->with('success',__('elfcms::default.message_created_successfully'));
+        }
+        return redirect(route('admin.messages.edit',$message))->with('success',__('elfcms::default.message_edited_successfully'));
     }
 
     /**
@@ -69,9 +123,9 @@ class MessageController extends Controller
     public function destroy(Message $message)
     {
         if (!$message->delete()) {
-            return redirect(route('admin.message.messages'))->withErrors(['messagedelerror'=>'Error of message deleting']);
+            return redirect(route('admin.messages.index'))->withErrors(['messagedelerror'=>__('elfcms::default.message_delete_error')]);
         }
 
-        return redirect(route('admin.message.messages'))->with('success',__('elfcms::default.message_deleted_successfully'));
+        return redirect(route('admin.messages.index'))->with('success',__('elfcms::default.message_deleted_successfully'));
     }
 }

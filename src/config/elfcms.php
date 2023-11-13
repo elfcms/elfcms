@@ -248,8 +248,8 @@ return [
         [
             "title" => "Messages",
             "lang_title" => "elfcms::default.messages",
-            "route" => "admin.message.messages",
-            "parent_route" => "admin.message.messages",
+            "route" => "admin.messages.index",
+            "parent_route" => "admin.messages",
             "icon" => "/elfcms/admin/images/icons/info.png",
             "position" => 70,
         ],

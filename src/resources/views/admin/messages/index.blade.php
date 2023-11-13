@@ -2,7 +2,7 @@
 
 @section('message-content')
 <div class="table-search-box">
-    <a href="{{ route('admin.message.messages.create') }}" class="default-btn success-button icon-text-button light-icon plus-button">{{__('elfcms::default.create_message')}}</a>
+    <a href="{{ route('admin.messages.create') }}" class="default-btn success-button icon-text-button light-icon plus-button">{{__('elfcms::default.create_message')}}</a>
 </div>
 @if (Session::has('success'))
 <div class="alert alert-alternate">{{ Session::get('success') }}</div>
@@ -34,7 +34,7 @@
                 <td>{{ $message->id }}</td>
                 <td>{{ $message->code }}</td>
                 <td>
-                    <a href="{{ route('admin.message.messages.show',$message->id) }}">
+                    <a href="{{ route('admin.messages.edit',$message) }}">
                         {{ $message->name }}
                     </a>
                 </td>
@@ -44,8 +44,8 @@
                 </td>
                 <td>{{ $message->active != 1 ? __('elfcms::default.inactive') : '' }}</td>
                 <td class="button-column non-text-buttons">
-                    <a href="{{ route('admin.message.messages.edit',$message->id) }}" class="default-btn edit-button" title="{{ __('elfcms::default.edit_message') }}"></a>
-                    <form action="{{ route('admin.message.messages.update',$message->id) }}" method="POST">
+                    <a href="{{ route('admin.messages.edit',$message) }}" class="default-btn edit-button" title="{{ __('elfcms::default.edit_message') }}"></a>
+                    <form action="{{ route('admin.messages.update',$message) }}" method="POST">
                         @csrf
                         @method('PUT')
                         <input type="hidden" name="id" id="id" value="{{ $message->id }}">
@@ -55,7 +55,7 @@
 
                         </button>
                     </form>
-                    <form action="{{ route('admin.message.messages.destroy',$message->id) }}" method="POST" data-submit="check">
+                    <form action="{{ route('admin.messages.destroy',$message->id) }}" method="POST" data-submit="check">
                         @csrf
                         @method('DELETE')
                         <input type="hidden" name="id" value="{{ $message->id }}">

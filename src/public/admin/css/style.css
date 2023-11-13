@@ -175,6 +175,19 @@ select.failed {
     outline: 1px solid var(--main-danger-color);
 }
 
+.input-period-separator {
+    margin: 0 6px;
+    line-height: 1.7em;
+}
+.input-period-separator::after {
+    content: '-';
+}
+
+button,
+input[type="submit"] {
+    cursor: pointer;
+}
+
 .ql-toolbar ~ textarea {
     width: 100%;
     height: calc(100% - 42px);
@@ -1148,10 +1161,10 @@ select.failed {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #6a6a6a;
+    color: var(--main-text-inactive-color);
 }
 .checkbox-switch.green {
-    color: #a8c176;
+    color: var(--main-success-color);
 }
 .checkbox-switch.blue {
     color: var(--main-select-color);

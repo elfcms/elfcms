@@ -31,10 +31,12 @@ class Message extends Component
                 $this->show = false;
             }
             else {
-                if (!empty($result->date_from) && Carbon::parse($result->date_from) > Carbon::now()) {
+                $now = Carbon::now();
+
+                if (!empty($result->date_from) && Carbon::parse($result->date_from) > $now) {
                     $this->show = false;
                 }
-                if (!empty($result->date_to) && Carbon::parse($result->date_to) < Carbon::now()) {
+                if (!empty($result->date_to) && Carbon::parse($result->date_to) < $now) {
                     $this->show = false;
                 }
             }

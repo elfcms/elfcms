@@ -101,8 +101,16 @@ Route::group(['middleware'=>['web','cookie']],function() use ($adminPath) {
             Route::resource($adminPath . '/page/pages', Elfcms\Elfcms\Http\Controllers\Resources\PageController::class)->names(['index' => 'pages']);
         });
 
-        Route::name('message.')->group(function() use ($adminPath) {
-            Route::resource($adminPath . '/messages', Elfcms\Elfcms\Http\Controllers\Resources\MessageController::class)->names(['index' => 'messages']);
+        Route::name('messages.')->group(function() use ($adminPath) {
+            Route::resource($adminPath . '/messages', Elfcms\Elfcms\Http\Controllers\Resources\MessageController::class)->names([
+                'index' => 'index',
+                'create' => 'create',
+                'edit'   =>'edit',
+                'store'=>'store',
+                'show' => 'show',
+                'update' => 'update',
+                'destroy' => 'destroy'
+            ]);
         });
 
         Route::name('statistics.')->group(function() use ($adminPath) {
