@@ -32,17 +32,13 @@
                 </div>
             </div>
 
-
             <div class="input-box colored">
                 <div class="checkbox-wrapper">
-                    <div class="checkbox-inner">
-                        <input
-                            type="checkbox"
-                            name="is_confirmed"
-                            id="is_confirmed"
-                            value="1"
-                        >
-                        <i></i>
+                    <div class="checkbox-switch-wrapper">
+                        <div class="checkbox-switch blue">
+                            <input type="checkbox" name="is_confirmed" id="is_confirmed" value="1" checked>
+                            <i></i>
+                        </div>
                         <label for="is_confirmed">
                             {{ __('elfcms::default.confirmed') }}
                         </label>
@@ -55,7 +51,18 @@
             <h4>{{ __('elfcms::default.roles') }}</h4>
             @foreach ($roles as $role)
             <div class="input-box">
-                <div class="checkbox-wrapper low-wrapper">
+                <div class="checkbox-wrapper">
+                    <div class="checkbox-switch-wrapper">
+                        <div class="checkbox-switch blue">
+                            <input type="checkbox" name="role[]" id="role_{{ $role->id }}" value="{{ $role->id }}" @if ($role->code == $default_role_code) checked @endif>
+                            <i></i>
+                        </div>
+                        <label for="role_{{ $role->id }}">
+                            {{ $role->name }}
+                        </label>
+                    </div>
+                </div>
+                {{-- <div class="checkbox-wrapper low-wrapper">
                     <div class="checkbox-inner">
                         <input
                             type="checkbox"
@@ -71,7 +78,7 @@
                             {{ $role->name }}
                         </label>
                     </div>
-                </div>
+                </div> --}}
             </div>
             @endforeach
         </div>

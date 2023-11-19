@@ -50,6 +50,24 @@
                 @elseif ($setting['params']['type'] == 'checkbox')
                 <div class="input-box colored">
                     <div class="checkbox-wrapper">
+                        <div class="checkbox-switch-wrapper">
+                            <div class="checkbox-switch blue">
+                                <input type="checkbox" name="{{ $setting['code'] }}" id="{{ $setting['code'] }}" value="1"
+                                @if ($setting['value'] && $setting['value'] == 1)
+                                    checked
+                                @endif>
+                                <i></i>
+                            </div>
+                            <label for="{{ $setting['code'] }}">
+                                @if (__('elfcms::default.'.$setting['code']) != 'elfcms::default.'.$setting['code'])
+                                {{__('elfcms::default.'.$setting['code'])}}
+                            @else
+                                {{ $setting['name'] }}
+                            @endif
+                            </label>
+                        </div>
+                    </div>
+                    {{-- <div class="checkbox-wrapper">
                         <div class="checkbox-inner">
                             <input
                                 type="checkbox"
@@ -69,7 +87,7 @@
                             @endif
                             </label>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
                 @elseif ($setting['params']['type'] == 'image')
                 <div class="input-box colored">

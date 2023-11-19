@@ -42,20 +42,14 @@
                     </div>
                 </div>
                 <div class="input-box colored">
-                    <div class="checkbox-wrapper">
-                        <div class="checkbox-inner">
-                            <input
-                                type="checkbox"
-                                name="active"
-                                id="active"
-                                value="1"
-                                checked
-                            >
+                    <div class="checkbox-switch-wrapper">
+                        <div class="checkbox-switch blue">
+                            <input type="checkbox" name="active" id="active" value="1" checked>
                             <i></i>
-                            <label for="active">
-                                {{ __('elfcms::default.active') }}
-                            </label>
                         </div>
+                        <label for="active">
+                            {{ __('elfcms::default.active') }}
+                        </label>
                     </div>
                 </div>
                 <div class="input-box colored">
@@ -95,63 +89,47 @@
                     </div>
                 </div>
                 <div class="input-box colored">
-                    <div class="checkbox-wrapper">
-                        <div class="checkbox-inner">
-                            <input
-                                type="checkbox"
-                                name="required"
-                                id="required"
-                            >
+                    <div class="checkbox-switch-wrapper">
+                        <div class="checkbox-switch blue">
+                            <input type="checkbox" name="required" id="required" value="1">
                             <i></i>
-                            <label for="required">
-                                {{ __('elfcms::default.field_is_required') }}
-                            </label>
                         </div>
+                        <label for="required">
+                            {{ __('elfcms::default.field_is_required') }}
+                        </label>
                     </div>
                 </div>
                 <div class="input-box colored">
-                    <div class="checkbox-wrapper">
-                        <div class="checkbox-inner">
-                            <input
-                                type="checkbox"
-                                name="disabled"
-                                id="disabled"
-                            >
+                    <div class="checkbox-switch-wrapper">
+                        <div class="checkbox-switch blue">
+                            <input type="checkbox" name="disabled" id="disabled" value="1">
                             <i></i>
-                            <label for="disabled">
-                                {{ __('elfcms::default.field_is_disabled') }}
-                            </label>
                         </div>
+                        <label for="disabled">
+                            {{ __('elfcms::default.field_is_disabled') }}
+                        </label>
                     </div>
                 </div>
                 <div class="input-box colored">
-                    <div class="checkbox-wrapper">
-                        <div class="checkbox-inner">
-                            <input
-                                type="checkbox"
-                                name="checked"
-                                id="checked"
-                            >
+                    <div class="checkbox-switch-wrapper">
+                        <div class="checkbox-switch blue">
+                            <input type="checkbox" name="checked" id="checked" value="1">
                             <i></i>
-                            <label for="checked">
-                                {{ __('elfcms::default.field_is_checked') }}
-                            </label>
                         </div>
+                        <label for="checked">
+                            {{ __('elfcms::default.field_is_checked') }}
+                        </label>
                     </div>
                 </div>
                 <div class="input-box colored">
-                    <div class="checkbox-wrapper">
-                        <div class="checkbox-inner">
-                            <input
-                                type="checkbox"
-                                name="readonly"
-                                id="readonly"
-                            >
+                    <div class="checkbox-switch-wrapper">
+                        <div class="checkbox-switch blue">
+                            <input type="checkbox" name="readonly" id="readonly" value="1">
                             <i></i>
-                            <label for="readonly">
-                                {{ __('elfcms::default.readonly_field') }}
-                            </label>
                         </div>
+                        <label for="readonly">
+                            {{ __('elfcms::default.readonly_field') }}
+                        </label>
                     </div>
                 </div>
                 <div class="input-box colored">

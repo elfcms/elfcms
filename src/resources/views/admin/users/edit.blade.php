@@ -48,16 +48,11 @@
 
             <div class="input-box colored">
                 <div class="checkbox-wrapper">
-                    <div class="checkbox-inner">
-                        <input
-                            type="checkbox"
-                            name="is_confirmed"
-                            id="is_confirmed"
-                            @if ($user->is_confirmed == 1)
-                            checked
-                            @endif
-                        >
-                        <i></i>
+                    <div class="checkbox-switch-wrapper">
+                        <div class="checkbox-switch blue">
+                            <input type="checkbox" name="is_confirmed" id="is_confirmed" value="1" @if ($user->is_confirmed == 1) checked @endif>
+                            <i></i>
+                        </div>
                         <label for="is_confirmed">
                             {{ __('elfcms::default.confirmed') }}
                         </label>
@@ -69,7 +64,18 @@
                 <h4>{{ __('elfcms::default.roles') }}</h4>
                 @foreach ($roles as $role)
                 <div class="input-box">
-                    <div class="checkbox-wrapper low-wrapper">
+                    <div class="checkbox-wrapper">
+                        <div class="checkbox-switch-wrapper">
+                            <div class="checkbox-switch blue">
+                                <input type="checkbox" name="role[]" id="role_{{ $role->id }}" value="{{ $role->id }}" @if (in_array($role->id,$user_roles)) checked @endif>
+                                <i></i>
+                            </div>
+                            <label for="role_{{ $role->id }}">
+                                {{ $role->name }}
+                            </label>
+                        </div>
+                    </div>
+                    {{-- <div class="checkbox-wrapper low-wrapper">
                         <div class="checkbox-inner">
                             <input
                                 type="checkbox"
@@ -85,7 +91,7 @@
                                 {{ $role->name }}
                             </label>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
                 @endforeach
             </div>

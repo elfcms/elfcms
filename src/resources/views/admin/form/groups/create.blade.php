@@ -34,15 +34,11 @@
                 </div>
                 <div class="input-box colored">
                     <div class="checkbox-wrapper">
-                        <div class="checkbox-inner">
-                            <input
-                                type="checkbox"
-                                name="active"
-                                id="active"
-                                value="1"
-                                checked
-                            >
-                            <i></i>
+                        <div class="checkbox-switch-wrapper">
+                            <div class="checkbox-switch blue">
+                                <input type="checkbox" name="active" id="active" value="1" checked>
+                                <i></i>
+                            </div>
                             <label for="active">
                                 {{ __('elfcms::default.active') }}
                             </label>

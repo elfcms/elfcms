@@ -52,7 +52,16 @@
                     </div>
                 </div> --}}
                 <div class="input-box colored">
-                    <div class="checkbox-wrapper">
+                    <div class="checkbox-switch-wrapper">
+                        <div class="checkbox-switch blue">
+                            <input type="checkbox" name="is_dynamic" id="is_dynamic" value="1">
+                            <i></i>
+                        </div>
+                        <label for="is_dynamic">
+                            {{ __('elfcms::default.display_by_url') . ': ' . config('elfcms.basic.page_path') }}/&lt;slug&gt;
+                        </label>
+                    </div>
+                    {{-- <div class="checkbox-wrapper">
                         <div class="checkbox-inner">
                             <input
                                 type="checkbox"
@@ -66,7 +75,7 @@
                                 {{ __('elfcms::default.display_by_url') . ': ' . config('elfcms.basic.page_path') }}/&lt;slug&gt;
                             </label>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
                 <div class="input-box colored">
                     <label for="path">{{ __('elfcms::default.path') }}</label>
