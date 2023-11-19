@@ -64,7 +64,7 @@ class AdminController extends Controller
                     }
                 }
             } */
-            /* if ($data['route'] == 'admin.menu.menus') {
+            /* if ($data['route'] == 'admin.menus.menus') {
                 $menuCount = Menu::count();
                 $subdata[] = [
                     'title' => __('elfcms::default.menus'),

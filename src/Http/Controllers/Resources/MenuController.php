@@ -58,7 +58,15 @@ class MenuController extends Controller
 
         $menu = Menu::create($validated);
 
-        return redirect(route('admin.menu.menus.edit',$menu->id))->with('menuedited',__('elfcms::default.menu_created_successfully'));
+        if ($request->input('submit') == 'save_and_open') {
+            return redirect(route('admin.menus.show',$menu))->with('success',__('elfcms::default.menu_edited_successfully'));
+        }
+
+        if ($request->input('submit') == 'save_and_close') {
+            return redirect(route('admin.menus'))->with('success',__('elfcms::default.menu_edited_successfully'));
+        }
+
+        return redirect(route('admin.menus.edit',$menu->id))->with('success',__('elfcms::default.menu_created_successfully'));
     }
 
     /**
@@ -72,13 +80,12 @@ class MenuController extends Controller
         if ($request->ajax()) {
             return Menu::find($menu->id)->toJson();
         }
-        $items = MenuItem::flat(menu_id: $menu->id);
+
         return view('elfcms::admin.menu.menus.show',[
             'page' => [
-                'title' => __('elfcms::default.menu_items'),
+                'title' => __('elfcms::default.menu') . ' ' . ($menu->name ?? '#'.$menu->id), //__('elfcms::default.menu_items'),
                 'current' => url()->current(),
             ],
-            'items' => $items,
             'menu' => $menu
         ]);
     }
@@ -120,7 +127,15 @@ class MenuController extends Controller
 
         $menu->save();
 
-        return redirect(route('admin.menu.menus.edit',$menu->id))->with('menuedited',__('elfcms::default.menu_edited_successfully'));
+        if ($request->input('submit') == 'save_and_open') {
+            return redirect(route('admin.menus.show',$menu))->with('success',__('elfcms::default.menu_edited_successfully'));
+        }
+
+        if ($request->input('submit') == 'save_and_close') {
+            return redirect(route('admin.menus'))->with('success',__('elfcms::default.menu_edited_successfully'));
+        }
+
+        return redirect(route('admin.menus.edit',$menu))->with('success',__('elfcms::default.menu_edited_successfully'));
     }
 
     /**
@@ -132,9 +147,9 @@ class MenuController extends Controller
     public function destroy(Menu $menu)
     {
         if (!$menu->delete()) {
-            return redirect(route('admin.menu.menus'))->withErrors(['menudelerror'=>'Error of menu deleting']);
+            return redirect(route('admin.menus.menus'))->withErrors(['menudelerror'=>'Error of menu deleting']);
         }
 
-        return redirect(route('admin.menu.menus'))->with('menudeleted','Menu deleted successfully');
+        return redirect(route('admin.menus.menus'))->with('success','Menu deleted successfully');
     }
 }

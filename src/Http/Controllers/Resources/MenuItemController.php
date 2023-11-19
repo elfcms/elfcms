@@ -31,28 +31,32 @@ class MenuItemController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+    public function create(Request $request, Menu $menu)
     {
-        $menus = Menu::all();
+        /* $menus = Menu::all();
         $menu_id = !empty($request->menu_id) ? $request->menu_id : null;
         if (empty($menu_id) && !empty($menus[0])) {
             $menu_id = $menus[0]->id;
-        }
+        } */
         $parent_id = null;
+        $menuItems = MenuItem::where('menu_id',$menu->id);
         if ($request->parent_id) {
             $parent_id = $request->parent_id;
-            $parent_menu = MenuItem::find($parent_id);
-            $menu_id = $parent_menu->menu_id;
+            //$parent_menu = MenuItem::find($parent_id);
+            //$menu_id = $parent_menu->menu_id;
+            $menuItems->where('parent_id','<>',$parent_id);
         }
-        $items = MenuItem::all();
+        $items = $menuItems->get();
+        //dd($items);
+
         //dd($menu_id);
         return view('elfcms::admin.menu.items.create',[
             'page' => [
                 'title' => __('elfcms::default.create_menu_item'),
                 'current' => url()->current(),
             ],
-            'menus' => $menus,
-            'menu_id' => $menu_id,
+            'menu' => $menu,
+            'item_id' => $request->item,
             'items' => $items,
             'parent_id' => $parent_id
         ]);
@@ -64,12 +68,11 @@ class MenuItemController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Menu $menu)
     {
         $request->merge([
             'clickable' => empty($request->clickable) ? 0 : 1
         ]);
-        //dd($request);
 
         $attributes = [];
         if (!empty($request->attributes_new)) {
@@ -85,7 +88,7 @@ class MenuItemController extends Controller
             'position' => 'integer|nullable'
         ]);
 
-        $validated['menu_id'] = $request->menu_id;
+        $validated['menu_id'] = $menu->id;
         $validated['parent_id'] = $request->parent_id;
         $validated['position'] = $request->position;
         $validated['link'] = $request->link;
@@ -97,7 +100,11 @@ class MenuItemController extends Controller
         //dd($validated);
         $item = MenuItem::create($validated);
 
-        return redirect(route('admin.menu.items.edit',$item->id))->with('menuitemedited',__('elfcms::default.menu_item_created_successfully'));
+        if ($request->input('submit') == 'save_and_close') {
+            return redirect(route('admin.menus.show',$menu))->with('success',__('elfcms::default.menu_edited_successfully'));
+        }
+
+        return redirect(route('admin.menus.items.edit',['item'=>$item,'menu'=>$menu]))->with('menuitemedited',__('elfcms::default.menu_item_created_successfully'));
     }
 
     /**
@@ -117,16 +124,17 @@ class MenuItemController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(MenuItem $item, Request $request)
+    public function edit(Menu $menu, MenuItem $item)
     {
-        $menus = Menu::all();
+        //$menus = Menu::all();
         $items = MenuItem::where('id','<>',$item->id)->get();
         return view('elfcms::admin.menu.items.edit',[
             'page' => [
                 'title' => __('elfcms::default.edit_menu_item'),
                 'current' => url()->current(),
             ],
-            'menus' => $menus,
+            //'menus' => $menus,
+            'menu' => $menu,
             'items' => $items,
             'item' => $item
         ]);
@@ -139,7 +147,7 @@ class MenuItemController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, MenuItem $item)
+    public function update(Request $request, Menu $menu, MenuItem $item)
     {
         $attributes = [];
         if (!empty($request->attributes_new)) {
@@ -155,11 +163,10 @@ class MenuItemController extends Controller
         ]);
 
         $validated = $request->validate([
-            'menu_id' => 'required',
             'position' => 'integer|nullable'
         ]);
 
-        $item->menu_id = $validated['menu_id'];
+        $item->menu_id = $menu->id;
         $item->parent_id = $request->parent_id;
         $item->position = $request->position;
         $item->text = $request->text;
@@ -170,7 +177,11 @@ class MenuItemController extends Controller
 
         $item->save();
 
-        return redirect(route('admin.menu.items.edit',$item->id))->with('menuitemedited',__('elfcms::default.menu_item_edited_successfully'));
+        if ($request->input('submit') == 'save_and_close') {
+            return redirect(route('admin.menus.show',$menu))->with('success',__('elfcms::default.menu_edited_successfully'));
+        }
+
+        return redirect(route('admin.menus.items.edit',['item'=>$item,'menu'=>$menu]))->with('success',__('elfcms::default.menu_item_edited_successfully'));
     }
 
     /**
@@ -179,12 +190,12 @@ class MenuItemController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(MenuItem $item)
+    public function destroy(Menu $menu, MenuItem $item)
     {
         if (!$item->delete()) {
-            return redirect(route('admin.menu.items'))->withErrors(['menuitemdelerror'=>'Error of menu item deleting']);
+            return redirect(route('admin.menus.items', $menu))->withErrors(['menuitemdelerror'=>'Error of menu item deleting']);
         }
 
-        return redirect(route('admin.menu.items'))->with('menuitemdeleted','Menu item deleted successfully');
+        return redirect(route('admin.menus.items', $menu))->with('menuitemdeleted','Menu item deleted successfully');
     }
 }

@@ -235,6 +235,7 @@ return [
     'menu_items' => 'Menu items',
     'menu_created_successfully' => 'Menu created successfully',
     'menu_item_created_successfully' => 'Menu item created successfully',
+    'edit_menu_contents' => 'Edit menu content',
     'add_item' => 'Add item',
     'add_subitem' => 'Add subitem',
     'create_menu_item' => 'Create menu item',

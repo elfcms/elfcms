@@ -2,7 +2,7 @@
 
 @section('menupage-content')
 <div class="table-search-box">
-    <a href="{{ route('admin.menu.items.create') }}" class="default-btn success-button icon-text-button light-icon plus-button">{{__('elfcms::default.create_menu_item')}}</a>
+    <a href="{{ route('admin.menus.items.create') }}" class="default-btn success-button icon-text-button light-icon plus-button">{{__('elfcms::default.create_menu_item')}}</a>
 </div>
     @if (Session::has('menuitemdeleted'))
     <div class="alert alert-alternate">{{ Session::get('menuitemdeleted') }}</div>
@@ -26,27 +26,27 @@
                 <tr>
                     <th>
                         ID
-                        <a href="{{ route('admin.menu.items',UrlParams::addArr(['order'=>'id','trend'=>['desc','asc']])) }}" class="ordering @if (UrlParams::case('order',['id'=>true])) {{UrlParams::case('trend',['desc'=>'desc'],'asc')}} @endif"></a>
+                        <a href="{{ route('admin.menus.items',UrlParams::addArr(['order'=>'id','trend'=>['desc','asc']])) }}" class="ordering @if (UrlParams::case('order',['id'=>true])) {{UrlParams::case('trend',['desc'=>'desc'],'asc')}} @endif"></a>
                     </th>
                     <th>
                         {{ __('elfcms::default.text') }}
-                        <a href="{{ route('admin.menu.items',UrlParams::addArr(['order'=>'text','trend'=>['desc','asc']])) }}" class="ordering @if (UrlParams::case('order',['text'=>true])) {{UrlParams::case('trend',['desc'=>'desc'],'asc')}} @endif"></a>
+                        <a href="{{ route('admin.menus.items',UrlParams::addArr(['order'=>'text','trend'=>['desc','asc']])) }}" class="ordering @if (UrlParams::case('order',['text'=>true])) {{UrlParams::case('trend',['desc'=>'desc'],'asc')}} @endif"></a>
                     </th>
                     <th>
                         {{ __('elfcms::default.link') }}
-                        <a href="{{ route('admin.menu.items',UrlParams::addArr(['order'=>'link','trend'=>['desc','asc']])) }}" class="ordering @if (UrlParams::case('order',['link'=>true])) {{UrlParams::case('trend',['desc'=>'desc'],'asc')}} @endif"></a>
+                        <a href="{{ route('admin.menus.items',UrlParams::addArr(['order'=>'link','trend'=>['desc','asc']])) }}" class="ordering @if (UrlParams::case('order',['link'=>true])) {{UrlParams::case('trend',['desc'=>'desc'],'asc')}} @endif"></a>
                     </th>
                     <th>
                         {{ __('elfcms::default.menu') }}
-                        <a href="{{ route('admin.menu.items',UrlParams::addArr(['order'=>'menu_id','trend'=>['desc','asc']])) }}" class="ordering @if (UrlParams::case('order',['menu_id'=>true])) {{UrlParams::case('trend',['desc'=>'desc'],'asc')}} @endif"></a>
+                        <a href="{{ route('admin.menus.items',UrlParams::addArr(['order'=>'menu_id','trend'=>['desc','asc']])) }}" class="ordering @if (UrlParams::case('order',['menu_id'=>true])) {{UrlParams::case('trend',['desc'=>'desc'],'asc')}} @endif"></a>
                     </th>
                     <th>
                         {{ __('elfcms::default.created') }}
-                        <a href="{{ route('admin.menu.items',UrlParams::addArr(['order'=>'created_at','trend'=>['desc','asc']])) }}" class="ordering @if (UrlParams::case('order',['created_at'=>true])) {{UrlParams::case('trend',['desc'=>'desc'],'asc')}} @endif"></a>
+                        <a href="{{ route('admin.menus.items',UrlParams::addArr(['order'=>'created_at','trend'=>['desc','asc']])) }}" class="ordering @if (UrlParams::case('order',['created_at'=>true])) {{UrlParams::case('trend',['desc'=>'desc'],'asc')}} @endif"></a>
                     </th>
                     <th>
                         {{ __('elfcms::default.updated') }}
-                        <a href="{{ route('admin.menu.items',UrlParams::addArr(['order'=>'updated_at','trend'=>['desc','asc']])) }}" class="ordering @if (UrlParams::case('order',['updated_at'=>true])) {{UrlParams::case('trend',['desc'=>'desc'],'asc')}} @endif"></a>
+                        <a href="{{ route('admin.menus.items',UrlParams::addArr(['order'=>'updated_at','trend'=>['desc','asc']])) }}" class="ordering @if (UrlParams::case('order',['updated_at'=>true])) {{UrlParams::case('trend',['desc'=>'desc'],'asc')}} @endif"></a>
                     </th>
                     <th></th>
                 </tr>
@@ -56,29 +56,29 @@
                 <tr data-id="{{ $item->id }}" class="level-{{ $item->level }}@empty ($item->active) inactive @endempty">
                     <td class="subline-{{ $item->level }}">{{ $item->id }}</td>
                     <td>
-                        <a href="{{ route('admin.menu.items.edit',$item->id) }}">
+                        <a href="{{ route('admin.menus.items.edit',$item->id) }}">
                             {{ $item->text }}
                         </a>
                     </td>
                     <td>
-                        <a href="{{ route('admin.menu.items.edit',$item->id) }}">
+                        <a href="{{ route('admin.menus.items.edit',$item->id) }}">
                             {{ $item->link }}
                         </a>
                     </td>
                     <td>
-                        <a href="{{ route('admin.menu.menus.edit',$item->menu_id) }}">
+                        <a href="{{ route('admin.menus.menus.edit',$item->menu_id) }}">
                             {{ $item->menu->name }}
                         </a>
                     </td>
                     <td>{{ $item->created_at }}</td>
                     <td>{{ $item->updated_at }}</td>
                     <td class="button-column non-text-buttons">
-                        <form action="{{ route('admin.menu.items.create') }}" method="GET">
+                        <form action="{{ route('admin.menus.items.create') }}" method="GET">
                             <input type="hidden" name="parent_id" value="{{ $item->id }}">
                             <button type="submit" class="default-btn submit-button create-button" title="{{ __('elfcms::default.add_subitem') }}"></button>
                         </form>
-                        <a href="{{ route('admin.menu.items.edit',$item->id) }}" class="default-btn edit-button" title="{{ __('elfcms::default.edit') }}"></a>
-                        <form action="{{ route('admin.menu.items.destroy',$item->id) }}" method="POST" data-submit="check">
+                        <a href="{{ route('admin.menus.items.edit',$item->id) }}" class="default-btn edit-button" title="{{ __('elfcms::default.edit') }}"></a>
+                        <form action="{{ route('admin.menus.items.destroy',$item->id) }}" method="POST" data-submit="check">
                             @csrf
                             @method('DELETE')
                             <input type="hidden" name="id" value="{{ $item->id }}">

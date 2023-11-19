@@ -220,22 +220,22 @@ return [
         [
             "title" => "Menu",
             "lang_title" => "elfcms::default.menu",
-            "route" => "admin.menu.menus",
-            "parent_route" => "admin.menu",
+            "route" => "admin.menus.index",
+            "parent_route" => "admin.menus",
             "icon" => "/elfcms/admin/images/icons/menu.png",
             "position" => 50,
-            "submenu" => [
+            /* "submenu" => [
                 [
                     "title" => "Menu",
                     "lang_title" => "elfcms::default.menu",
-                    "route" => "admin.menu.menus"
+                    "route" => "admin.menus.menus"
                 ],
                 [
                     "title" => "Items",
                     "lang_title" => "elfcms::default.menu_items",
-                    "route" => "admin.menu.items"
+                    "route" => "admin.menus.items"
                 ],
-            ]
+            ] */
         ],
         [
             "title" => "Pages",

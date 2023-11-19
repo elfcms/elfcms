@@ -30,6 +30,15 @@ class MenuItem extends Model
         return $this->belongsTo(Menu::class, 'menu_id');
     }
 
+    public function subitems($orderBy = 'position', $trend = 'asc')
+    {
+        $trend = strtolower($trend);
+        if ($trend == 'desc') {
+            return $this->hasMany(MenuItem::class, 'parent_id')->orderByDesc($orderBy);
+        }
+        return $this->hasMany(MenuItem::class, 'parent_id')->orderBy($orderBy);
+    }
+
     public static function tree($parent = null)
     {
         if ($parent !== null) {

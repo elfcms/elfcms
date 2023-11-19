@@ -2,8 +2,8 @@
 
 @section('menupage-content')
 
-    @if (Session::has('menuedited'))
-        <div class="alert alert-success">{{ Session::get('menuedited') }}</div>
+    @if (Session::has('success'))
+        <div class="alert alert-success">{{ Session::get('success') }}</div>
     @endif
     @if ($errors->any())
     <div class="alert alert-danger">
@@ -17,7 +17,7 @@
 
     <div class="item-form">
         <h3>{{ __('elfcms::default.edit_menu') }} #{{ $menu->id }}</h3>
-        <form action="{{ route('admin.menu.menus.update',$menu->id) }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('admin.menus.update',$menu->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="colored-rows-box">
@@ -42,6 +42,9 @@
             </div>
             <div class="button-box single-box">
                 <button type="submit" class="default-btn submit-button">{{ __('elfcms::default.submit') }}</button>
+                <button type="submit" name="submit" value="save_and_open" class="default-btn alternate-button">{{ __('elfcms::default.save_and_open') }}</button>
+                <button type="submit" name="submit" value="save_and_close" class="default-btn alternate-button">{{ __('elfcms::default.save_and_close') }}</button>
+                <a href="{{ route('admin.menus.index') }}" class="default-btn">{{ __('elfcms::default.cancel') }}</a>
             </div>
         </form>
     </div>

@@ -235,6 +235,7 @@ return [
     'menu_items' => 'Пункты меню',
     'menu_created_successfully' => 'Меню успешно создано',
     'menu_item_created_successfully' => 'Пункт меню успешно создан',
+    'edit_menu_contents' => 'Редактировать содержимое меню',
     'add_item' => 'Добавить пункт',
     'add_subitem' => 'Добавить подпункт',
     'create_menu_item' => 'Создать пункт меню',

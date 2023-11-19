@@ -81,10 +81,6 @@ function elementPositionSuccess() {
             body: data
         }).then(
             (result) => result.json()
-        ).then (
-            (data) => {
-                showNotifi(data.result,data.message);
-            }
         ).catch(error => {
             //
         });

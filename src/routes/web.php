@@ -92,9 +92,25 @@ Route::group(['middleware'=>['web','cookie']],function() use ($adminPath) {
             Route::resource($adminPath . '/forms/{form}/results', Elfcms\Elfcms\Http\Controllers\Resources\FormResultController::class)->names(['index' => 'results']);
         });
 
-        Route::name('menu.')->group(function() use ($adminPath) {
-            Route::resource($adminPath . '/menu/menus', Elfcms\Elfcms\Http\Controllers\Resources\MenuController::class)->names(['index' => 'menus']);
-            Route::resource($adminPath . '/menu/items', Elfcms\Elfcms\Http\Controllers\Resources\MenuItemController::class)->names(['index' => 'items']);
+        Route::name('menus.')->group(function() use ($adminPath) {
+            Route::resource($adminPath . '/menus', Elfcms\Elfcms\Http\Controllers\Resources\MenuController::class)->names([
+                'index' => 'index',
+                'create' => 'create',
+                'edit'   =>'edit',
+                'store'=>'store',
+                'show' => 'show',
+                'update' => 'update',
+                'destroy' => 'destroy'
+            ]);
+            Route::resource($adminPath . '/menus/{menu}/items', Elfcms\Elfcms\Http\Controllers\Resources\MenuItemController::class)->names([
+                'index' => 'items',
+                'create' => 'items.create',
+                'edit'   =>'items.edit',
+                'store'=>'items.store',
+                'show' => 'items.show',
+                'update' => 'items.update',
+                'destroy' => 'items.destroy'
+            ]);
         });
 
         Route::name('page.')->group(function() use ($adminPath) {
@@ -123,6 +139,10 @@ Route::group(['middleware'=>['web','cookie']],function() use ($adminPath) {
             Route::name('form.')->group(function() {
                 Route::post('/elfcms/api/form/{form}/grouporder', [Elfcms\Elfcms\Http\Controllers\Ajax\FormController::class, 'groupOrder']);
                 Route::post('/elfcms/api/form/{form}/fieldorder', [Elfcms\Elfcms\Http\Controllers\Ajax\FormController::class, 'fieldOrder']);
+            });
+
+            Route::name('menu.')->group(function() {
+                Route::post('/elfcms/api/menu/{menu}/itemorder', [Elfcms\Elfcms\Http\Controllers\Ajax\MenuController::class, 'itemOrder']);
             });
 
         });

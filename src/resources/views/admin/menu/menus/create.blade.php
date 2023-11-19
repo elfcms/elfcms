@@ -17,7 +17,7 @@
 
     <div class="item-form">
         <h3>{{ __('elfcms::default.create_menu') }}</h3>
-        <form action="{{ route('admin.menu.menus.store') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('admin.menus.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('POST')
             <div class="colored-rows-box">
@@ -49,6 +49,9 @@
 
             <div class="button-box single-box">
                 <button type="submit" class="default-btn submit-button">{{ __('elfcms::default.submit') }}</button>
+                <button type="submit" name="submit" value="save_and_open" class="default-btn alternate-button">{{ __('elfcms::default.save_and_open') }}</button>
+                <button type="submit" name="submit" value="save_and_close" class="default-btn alternate-button">{{ __('elfcms::default.save_and_close') }}</button>
+                <a href="{{ route('admin.menus.index') }}" class="default-btn">{{ __('elfcms::default.cancel') }}</a>
             </div>
         </form>
     </div>

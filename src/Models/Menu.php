@@ -24,4 +24,13 @@ class Menu extends Model
         }
         return $this->hasMany(MenuItem::class)->orderBy($orderBy);
     }
+
+    public function topitems($orderBy = 'position', $trend = 'asc')
+    {
+        $trend = strtolower($trend);
+        if ($trend == 'desc') {
+            return $this->hasMany(MenuItem::class)->where('parent_id',null)->orderByDesc($orderBy);
+        }
+        return $this->hasMany(MenuItem::class)->where('parent_id',null)->orderBy($orderBy);
+    }
 }

@@ -7,12 +7,12 @@
     {{-- <nav class="pagenav">
         <ul>
             <li>
-                <a href="{{ route('admin.menu.menus') }}" class="button button-left">{{ __('elfcms::default.menu') }}</a>
-                <a href="{{ route('admin.menu.menus.create') }}" class="button button-right">+</a>
+                <a href="{{ route('admin.menus.menus') }}" class="button button-left">{{ __('elfcms::default.menu') }}</a>
+                <a href="{{ route('admin.menus.menus.create') }}" class="button button-right">+</a>
             </li>
             <li>
-                <a href="{{ route('admin.menu.items') }}" class="button button-left">{{ __('elfcms::default.menu_items') }}</a>
-                <a href="{{ route('admin.menu.items.create') }}" class="button button-right">+</a>
+                <a href="{{ route('admin.menus.items') }}" class="button button-left">{{ __('elfcms::default.menu_items') }}</a>
+                <a href="{{ route('admin.menus.items.create') }}" class="button button-right">+</a>
             </li>
         </ul>
     </nav> --}}

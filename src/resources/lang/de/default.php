@@ -235,6 +235,7 @@ return [
     'menu_items' => 'Menüpunkte',
     'menu_created_successfully' => 'Menü erfolgreich erstellt',
     'menu_item_created_successfully' => 'Menüpunkt erfolgreich erstellt',
+    'edit_menu_contents' => 'Menülarinhalt bearbeiten',
     'add_item' => 'Punkt hinzufügen',
     'add_subitem' => 'Unterpunkt hinzufügen',
     'create_menu_item' => 'Menüpunkt erstellen',

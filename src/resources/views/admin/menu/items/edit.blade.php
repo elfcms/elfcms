@@ -2,8 +2,8 @@
 
 @section('menupage-content')
 
-    @if (Session::has('menuitemedited'))
-        <div class="alert alert-success">{{ Session::get('menuitemedited') }}</div>
+    @if (Session::has('success'))
+        <div class="alert alert-success">{{ Session::get('success') }}</div>
     @endif
     @if ($errors->any())
     <div class="alert alert-danger">
@@ -17,11 +17,11 @@
 
     <div class="item-form">
         <h3>{{ __('elfcms::default.edit_menu_item') }} #{{ $item->id }}</h3>
-        <form action="{{ route('admin.menu.items.update',$item->id) }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('admin.menus.items.update',['item'=>$item,'menu'=>$menu]) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="colored-rows-box">
-                <div class="input-box colored">
+                {{-- <div class="input-box colored">
                     <label for="menu_id">{{ __('elfcms::default.menu') }}</label>
                     <div class="input-wrapper">
                         <select name="menu_id" id="menu_id">
@@ -30,12 +30,12 @@
                         @endforeach
                         </select>
                     </div>
-                </div>
+                </div> --}}
                 <div class="input-box colored">
                     <label for="parent_id">{{ __('elfcms::default.parent_item') }}</label>
                     <div class="input-wrapper">
                         <select name="parent_id" id="parent_id">
-                            <option value="" data-menu="0">None</option>
+                            <option value="" data-menu="0">{{ __('elfcms::default.none') }}</option>
                         @foreach ($items as $parent_item)
                             <option value="{{ $parent_item->id }}" @if($item->parent_id == $parent_item->id) selected @endif data-menu="{{ $parent_item->menu_id }}" @if ($parent_item->menu_id != $item->menu_id) style="display:none" @endif>{{ $parent_item->text }}</option>
                         @endforeach
@@ -67,7 +67,16 @@
                     </div>
                 </div>
                 <div class="input-box colored">
-                    <div class="checkbox-wrapper">
+                    <div class="checkbox-switch-wrapper">
+                        <div class="checkbox-switch blue">
+                            <input type="checkbox" name="clickable" id="clickable" value="1" @if(!empty($item->clickable)) checked @endif>
+                            <i></i>
+                        </div>
+                        <label for="remember">
+                            {{ __('elfcms::default.item_is_clickable') }}
+                        </label>
+                    </div>
+                    {{-- <div class="checkbox-wrapper">
                         <div class="checkbox-inner">
                             <input
                                 type="checkbox"
@@ -80,7 +89,7 @@
                                 {{ __('elfcms::default.item_is_clickable') }}
                             </label>
                         </div>
-                    </div>
+                    </div> --}}
                 </div>
                 <div class="input-box colored">
                     <label for="handler">{{ __('elfcms::default.handler') }}</label>
@@ -136,12 +145,14 @@
             </div>
             <div class="button-box single-box">
                 <button type="submit" class="default-btn submit-button">{{ __('elfcms::default.submit') }}</button>
+                <button type="submit" name="submit" value="save_and_close" class="default-btn alternate-button">{{ __('elfcms::default.save_and_close') }}</button>
+                <a href="{{ route('admin.messages.index') }}" class="default-btn">{{ __('elfcms::default.cancel') }}</a>
             </div>
         </form>
     </div>
     <script>
         menuAttrBoxInit('#addattributeline',{{ count($item->attributes)-1 }})
-        selectFilter('#menu_id','#parent_id','data-menu','0')
+        //selectFilter('#menu_id','#parent_id','data-menu','0')
     </script>
 
 @endsection
