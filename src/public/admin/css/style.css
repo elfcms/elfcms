@@ -1108,6 +1108,75 @@ input[type="submit"] {
 }
 
 
+.input-image-button-box {
+    width: 100%;
+    min-width: 120px;
+    font-size: 11px;
+}
+.input-image-button {
+    position: relative;
+    background-color: var(--main-bg-semilight-color);
+    border: 1px solid var(--main-select-shade-color);
+    border-radius: 3px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.input-image-button input[type="file"] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+    z-index: 2;
+}
+.input-image-button .image-button-img {
+    filter: drop-shadow(1px 1px 1px rgba(0, 0, 0, 0.4));
+    z-index: 1;
+    width: 180px;
+    height: 180px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.input-image-button .image-button-img img {
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+}
+.input-image-button .image-button-text {
+    padding: 5px;
+    width: 180px;
+    /* font-size: 0.9em; */
+    color: var(--main-text-light-color);
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.input-image-button .delete-image {
+    font-size: 24px;
+    display: block;
+    position: absolute;
+    top: 0px;
+    right: 5px;
+    color: var(--main-danger-text-color);
+    text-shadow: 1px 1px 2px var(--main-contrast-color), -1px -1px 2px var(--main-contrast-color), 1px -1px 2px var(--main-contrast-color),
+        -1px 1px 2px var(--main-contrast-color);
+    z-index: 20;
+    cursor: pointer;
+}
+.input-image-button .delete-image.hidden {
+    display: none;
+}
+
+
 /* Global */
 .check-delete-wrapper {
     position: relative;
@@ -1540,7 +1609,8 @@ header#header nav#mainmenu {
     padding: 20px 0px;
 }
 header#header nav#mainmenu ul li {
-    padding: 0px 20px 0px 10px;
+    padding: 0px 12px 0px 12px;
+    margin: 6px auto;
     /* &:hover ul.submenu {
         max-height: 500px;
     } */
@@ -1551,7 +1621,7 @@ header#header nav#mainmenu ul li a {
     text-decoration: none;
     font-size: 16px;
     font-weight: 300;
-    padding: 15px 0px;
+    padding: 10px 0px;
 }
 header#header nav#mainmenu ul li a img {
     height: 20px;

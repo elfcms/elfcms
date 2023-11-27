@@ -87,7 +87,7 @@
                 <div class="input-box colored">
                     <label for="image">{{ __('elfcms::default.image') }}</label>
                     <div class="input-wrapper">
-                        <input type="hidden" name="image_path" id="image_path" value="{{$pageData->image}}">
+                        {{-- <input type="hidden" name="image_path" id="image_path" value="{{$pageData->image}}">
                         <div class="image-button">
                             <div class="delete-image @if (empty($pageData->image)) hidden @endif">&#215;</div>
                             <div class="image-button-img">
@@ -105,7 +105,8 @@
                             @endif
                             </div>
                             <input type="file" name="image" id="image">
-                        </div>
+                        </div> --}}
+                        <x-elfcms-input-image code="image" value="{{$pageData->image}}" />
                     </div>
                 </div>
                 <div class="input-box colored">

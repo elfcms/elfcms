@@ -93,7 +93,7 @@
                 <div class="input-box colored">
                     <label for="{{ $setting['code'] }}">@if (__('elfcms::default.'.$setting['code']) != 'elfcms::default.'.$setting['code']) {{__('elfcms::default.'.$setting['code'])}} @else {{ $setting['name'] }} @endif</label>
                     <div class="input-wrapper">
-                        <input type="hidden" name="{{ $setting['code'] }}_path" id="{{ $setting['code'] }}_path" value="{{$setting['value']}}">
+                        {{-- <input type="hidden" name="{{ $setting['code'] }}_path" id="{{ $setting['code'] }}_path" value="{{$setting['value']}}">
                         <div class="image-button">
                             <div class="delete-image @if (empty($setting['value'])) hidden @endif">&#215;</div>
                             <div class="image-button-img">
@@ -111,15 +111,16 @@
                             @endif
                             </div>
                             <input type="file" name="{{ $setting['code'] }}" id="{{ $setting['code'] }}" accept="image/*">
-                        </div>
+                        </div> --}}
+                        <x-elfcms-input-image :inputData=$setting />
                     </div>
                 </div>
-                <script>
+                {{-- <script>
                     const {{ Str::camel($setting['code']) }} = document.querySelector('#{{ $setting['code'] }}')
                     if ({{ Str::camel($setting['code']) }}) {
                         inputFileImg({{ Str::camel($setting['code']) }})
                     }
-                </script>
+                </script> --}}
                 @elseif ($setting['code'] == 'site_locale')
                 <div class="input-box colored">
                     <label for="{{ $setting['code'] }}">@if (__('elfcms::default.'.$setting['code']) != 'elfcms::default.'.$setting['code']) {{__('elfcms::default.'.$setting['code'])}} @else {{ $setting['name'] }} @endif</label>

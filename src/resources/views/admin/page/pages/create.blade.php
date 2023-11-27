@@ -86,7 +86,8 @@
                 <div class="input-box colored">
                     <label for="image">{{ __('elfcms::default.image') }}</label>
                     <div class="input-wrapper">
-                        <input type="hidden" name="image_path" id="image_path">
+                        <x-elfcms-input-image code="image" value="" />
+                        {{-- <input type="hidden" name="image_path" id="image_path">
                         <div class="image-button">
                             <div class="delete-image hidden">&#215;</div>
                             <div class="image-button-img">
@@ -96,7 +97,7 @@
                                 {{ __('elfcms::default.choose_file') }}
                             </div>
                             <input type="file" name="image" id="image">
-                        </div>
+                        </div> --}}
                     </div>
                 </div>
                 <div class="input-box colored">
@@ -128,10 +129,10 @@
     checkInactive()
     //add editor
     runEditor('#content')
-    const imageInput = document.querySelector('#image')
+    /* const imageInput = document.querySelector('#image')
     if (imageInput) {
         inputFileImg(imageInput)
-    }
+    } */
     </script>
 
 @endsection
