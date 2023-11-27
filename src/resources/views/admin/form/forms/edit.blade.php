@@ -31,22 +31,6 @@
                             {{ __('elfcms::default.active') }}
                         </label>
                     </div>
-                    {{-- <div class="checkbox-wrapper">
-                        <div class="checkbox-inner">
-                            <input
-                                type="checkbox"
-                                name="active"
-                                id="active"
-                                @if ($form->active == 1)
-                                checked
-                                @endif
-                            >
-                            <i></i>
-                            <label for="active">
-                                {{ __('elfcms::default.active') }}
-                            </label>
-                        </div>
-                    </div> --}}
                 </div>
                 <div class="input-box colored">
                     <label for="title">{{ __('elfcms::default.title') }}</label>

@@ -10,11 +10,7 @@
 @section('main')
     <div class="login-form">
     <h1>{{ $page['title'] ?? $elfSiteSettings['title'] }}</h1>
-    {{-- <div class="container">
-        @if (Session::has('toemailconfirm'))
-            <div class="alert alert-success">{{ Session::get('toemailconfirm') }}</div>
-        @endif
-    </div> --}}
+
     <form action="{{ route('admin.login') }}" method="post" class="">
         @if ($errors->any())
         <div class="alert alert-danger">
@@ -49,15 +45,6 @@
                     {{ __('elfcms::default.remember_me') }}
                 </label>
             </div>
-            {{-- <div class="checkbox-wrapper">
-                <div class="checkbox-inner">
-                    <input type="checkbox" name="remember" id="remember">
-                    <i></i>
-                    <label for="remember">
-                        {{ __('elfcms::default.remember_me') }}
-                    </label>
-                </div>
-            </div> --}}
         </div>
         <div class="button-box single-box">
             <button type="submit" class="default-btn submit-button">{{ __('elfcms::default.login') }}</button>

@@ -46,12 +46,6 @@
                         <input type="text" name="title" id="title" autocomplete="off" value="{{ $pageData->title }}">
                     </div>
                 </div>
-                {{-- <div class="input-box colored">
-                    <label for="browser_title">{{ __('elfcms::default.browser_title') }}</label>
-                    <div class="input-wrapper">
-                        <input type="text" name="browser_title" id="browser_title" autocomplete="off" value="{{ $pageData->browser_title }}">
-                    </div>
-                </div> --}}
                 <div class="input-box colored">
                     <div class="checkbox-switch-wrapper">
                         <div class="checkbox-switch blue">
@@ -62,21 +56,6 @@
                             {{ __('elfcms::default.display_by_url') . ': ' . config('elfcms.basic.page_path') }}/&lt;slug&gt;
                         </label>
                     </div>
-                    {{-- <div class="checkbox-wrapper">
-                        <div class="checkbox-inner">
-                            <input
-                                type="checkbox"
-                                name="is_dynamic"
-                                id="is_dynamic"
-                                @if ($pageData->is_dynamic == 1) checked @endif
-                                data-inactive="path"
-                            >
-                            <i></i>
-                            <label for="is_dynamic">
-                                {{ __('elfcms::default.display_by_url') . ': ' . config('elfcms.basic.page_path') }}/&lt;slug&gt;
-                            </label>
-                        </div>
-                    </div> --}}
                 </div>
                 <div class="input-box colored">
                     <label for="path">{{ __('elfcms::default.path') }}</label>
@@ -87,25 +66,6 @@
                 <div class="input-box colored">
                     <label for="image">{{ __('elfcms::default.image') }}</label>
                     <div class="input-wrapper">
-                        {{-- <input type="hidden" name="image_path" id="image_path" value="{{$pageData->image}}">
-                        <div class="image-button">
-                            <div class="delete-image @if (empty($pageData->image)) hidden @endif">&#215;</div>
-                            <div class="image-button-img">
-                            @if (!empty($pageData->image))
-                                <img src="{{ asset($pageData->image) }}" alt="Image">
-                            @else
-                                <img src="{{ asset('/elfcms/admin/images/icons/upload.png') }}" alt="Upload file">
-                            @endif
-                            </div>
-                            <div class="image-button-text">
-                            @if (!empty($pageData->image))
-                                {{ __('elfcms::default.change_file') }}
-                            @else
-                                {{ __('elfcms::default.choose_file') }}
-                            @endif
-                            </div>
-                            <input type="file" name="image" id="image">
-                        </div> --}}
                         <x-elfcms-input-image code="image" value="{{$pageData->image}}" />
                     </div>
                 </div>
@@ -138,10 +98,6 @@
     checkInactive()
     //add editor
     runEditor('#content')
-    const imageInput = document.querySelector('#image')
-    if (imageInput) {
-        inputFileImg(imageInput)
-    }
     </script>
 
 @endsection

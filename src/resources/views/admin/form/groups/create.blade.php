@@ -22,13 +22,8 @@
             @method('POST')
             <div class="colored-rows-box">
                 <div class="input-box colored">
-                    <label for="form_id">{{ __('elfcms::default.form') }}</label>
+                    <label>{{ __('elfcms::default.form') }}</label>
                     <div class="input-wrapper">
-                        {{-- <select name="form_id" id="form_id">
-                        @foreach ($forms as $item)
-                            <option value="{{ $item->id }}" @if ($item->id == $form_id) selected @endif>{{ $item->name }}</option>
-                        @endforeach
-                        </select> --}}
                         #{{ $form->id }} {{ $form->title ?? $form->name ?? $form->code }}
                     </div>
                 </div>

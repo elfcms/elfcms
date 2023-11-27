@@ -59,7 +59,7 @@
                 </div>
 
                 <div class="input-box colored" id="paramsbox">
-                    <label for="">{{ __('elfcms::default.parameters') }}</label>
+                    <label>{{ __('elfcms::default.parameters') }}</label>
                     <div class="input-wrapper">
                         <div>
                             <div class="input-params-table">

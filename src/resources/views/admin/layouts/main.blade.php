@@ -9,7 +9,6 @@
     <link rel="shortcut icon" href="{{ asset($elfSiteSettings['icon']) }}" type="image/x-icon">
     @endisset
     <link rel="stylesheet" href="{{ asset('elfcms/admin/fonts/roboto/roboto.css') }}">
-    {{-- <link rel="stylesheet" href="{{ asset('elfcms/admin/css/style.css') }}"> --}}
     <link href="{{ asset('elfcms/admin/css/gnommy.min.css') }}" rel="stylesheet">
     @foreach ($admin_styles as $style)
     <link rel="stylesheet" href="{{ asset($style) }}">
@@ -93,9 +92,6 @@
         </div>
         <div class="userinfo">
             {{$currentUser->user->name()}}
-            {{-- <div class="userinfo_name">
-                <a href="{{ route('admin.users.edit',['user'=>$currentUser->user->id]) }}">{{ $currentUser->name() }}</a>
-            </div> --}}
             <div class="userinfo_avatar">
             {{-- @if (!empty($currentUser->avatar()))
                 <img src="/{{ $currentUser->avatar(true) }}" alt="">

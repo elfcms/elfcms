@@ -27,7 +27,7 @@
                             <input type="checkbox" name="active" id="active" value="1" @if(!empty($message->active)) checked @endif>
                             <i></i>
                         </div>
-                        <label for="remember">
+                        <label for="active">
                             {{ __('elfcms::default.active') }}
                         </label>
                     </div>
@@ -64,23 +64,6 @@
                         <input type="date" name="date_to" id="date_to" value="{{ $message->date_to ?? '' }}">
                     </div>
                 </div>
-                {{-- <div class="input-box colored">
-                    <label for="theme">{{ __('elfcms::default.theme') }}</label>
-                    <div class="input-wrapper">
-                        <input type="text" name="theme" id="theme" value="{{ $message->date_to ?? '' }}">
-                    </div>
-                </div> --}}
-                {{-- <div class="input-box colored">
-                    <div class="checkbox-switch-wrapper">
-                        <div class="checkbox-switch blue">
-                            <input type="checkbox" name="is_popup" id="is_popup" value="1"  @if(!empty($message->is_popup)) checked @endif>
-                            <i></i>
-                        </div>
-                        <label for="remember">
-                            {{ __('elfcms::default.is_popup') }}
-                        </label>
-                    </div>
-                </div> --}}
             </div>
 
             <div class="button-box single-box">

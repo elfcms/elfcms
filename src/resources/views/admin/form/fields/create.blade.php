@@ -25,7 +25,7 @@
             @method('POST')
             <div class="colored-rows-box">
                 <div class="input-box colored">
-                    <label for="form_id">{{ __('elfcms::default.form') }}</label>
+                    <label>{{ __('elfcms::default.form') }}</label>
                     <div class="input-wrapper">
                         #{{ $form->id }} {{ $form->title ?? $form->name ?? $form->code }}
                     </div>
@@ -138,16 +138,6 @@
                         <input type="number" name="position" id="position" autocomplete="off">
                     </div>
                 </div>
-                {{-- <div class="input-box colored">
-                    <label for="form_id">{{ __('elfcms::default.form') }}</label>
-                    <div class="input-wrapper">
-                        <select name="form_id" id="form_id">
-                        @foreach ($forms as $item)
-                            <option value="{{ $item->id }}" @if($form_id == $item->id) selected @endif>{{ $item->name }}</option>
-                        @endforeach
-                        </select>
-                    </div>
-                </div> --}}
                 <div class="input-box colored">
                     <label for="type_id">{{ __('elfcms::default.field_type') }}</label>
                     <div class="input-wrapper">
@@ -159,7 +149,7 @@
                     </div>
                 </div>
                 <div class="input-box colored hidden" id="optionsbox">
-                    <label for="">{{ __('elfcms::default.field_options') }}</label>
+                    <label>{{ __('elfcms::default.field_options') }}</label>
                     <div class="input-wrapper">
                         <div>
                             <div class="input-options-table">
@@ -195,7 +185,7 @@
                                         <input type="checkbox" name="options_new[0][disabled]" id="option_new_disabled_0" data-option-disabled>
                                     </div>
                                     <div class="options-table-string">
-                                        <input type="checkbox" name="options_new[0][deleted]" id="option_new_disabled_0" data-option-deleted>
+                                        <input type="checkbox" name="options_new[0][deleted]" id="option_new_deleted_0" data-option-deleted>
                                     </div>
                                     <div class="options-table-string"></div>
                                 </div>

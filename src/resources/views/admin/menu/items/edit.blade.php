@@ -21,16 +21,6 @@
             @csrf
             @method('PUT')
             <div class="colored-rows-box">
-                {{-- <div class="input-box colored">
-                    <label for="menu_id">{{ __('elfcms::default.menu') }}</label>
-                    <div class="input-wrapper">
-                        <select name="menu_id" id="menu_id">
-                        @foreach ($menus as $menu)
-                            <option value="{{ $menu->id }}" @if($item->menu_id == $menu->id) selected @endif>{{ $menu->name }}</option>
-                        @endforeach
-                        </select>
-                    </div>
-                </div> --}}
                 <div class="input-box colored">
                     <label for="parent_id">{{ __('elfcms::default.parent_item') }}</label>
                     <div class="input-wrapper">
@@ -72,24 +62,10 @@
                             <input type="checkbox" name="clickable" id="clickable" value="1" @if(!empty($item->clickable)) checked @endif>
                             <i></i>
                         </div>
-                        <label for="remember">
+                        <label for="clickable">
                             {{ __('elfcms::default.item_is_clickable') }}
                         </label>
                     </div>
-                    {{-- <div class="checkbox-wrapper">
-                        <div class="checkbox-inner">
-                            <input
-                                type="checkbox"
-                                name="clickable"
-                                id="clickable"
-                                @if($item->clickable == 1) checked @endif
-                            >
-                            <i></i>
-                            <label for="clickable">
-                                {{ __('elfcms::default.item_is_clickable') }}
-                            </label>
-                        </div>
-                    </div> --}}
                 </div>
                 <div class="input-box colored">
                     <label for="handler">{{ __('elfcms::default.handler') }}</label>
@@ -98,7 +74,7 @@
                     </div>
                 </div>
                 <div class="input-box colored" id="attributesbox">
-                    <label for="">{{ __('elfcms::default.attributes') }}</label>
+                    <label>{{ __('elfcms::default.attributes') }}</label>
                     <div class="input-wrapper">
                         <div>
                             <div class="input-attributes-table">
@@ -152,7 +128,6 @@
     </div>
     <script>
         menuAttrBoxInit('#addattributeline',{{ count($item->attributes)-1 }})
-        //selectFilter('#menu_id','#parent_id','data-menu','0')
     </script>
 
 @endsection

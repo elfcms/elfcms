@@ -21,7 +21,7 @@
         <div class="table-search-box">
             <form action="{{ route('admin.statistics.index') }}" method="get">
                 <div class="input-box">
-                    <label for="search">
+                    <label>
                         {{ __('elfcms::default.period') }}
                     </label>
                     <div class="input-wrapper">
@@ -79,7 +79,7 @@
         </script>
         <h2>{{ __('elfcms::default.unique_visits') }}</h2>
         <div class="widetable-wrapper">
-            <table class="grid-table table-cols-9" {{-- style="--first-col:65px; --last-col:140px; --minw:800px" --}}>
+            <table class="grid-table table-cols-9">
                 <thead>
                     <tr>
                         <th>
@@ -196,10 +196,9 @@
 
             </nav>
         @endif
-        {{-- {{$uniqueVisits->links('elfcms::admin.layouts.pagination')}} --}}
         <h2>{{ __('elfcms::default.all_visits') }}</h2>
         <div class="widetable-wrapper">
-            <table class="grid-table table-cols-9" {{-- style="--first-col:65px; --last-col:140px; --minw:800px" --}}>
+            <table class="grid-table table-cols-9">
                 <thead>
                     <tr>
                         <th>

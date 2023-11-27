@@ -133,7 +133,7 @@
                     </div>
                 </div>
                 <div class="input-box colored">
-                    <label for="form_id">{{ __('elfcms::default.form') }}</label>
+                    <label>{{ __('elfcms::default.form') }}</label>
                     <div class="input-wrapper">
                         <span class="info-field">{{ $field->form->name }} [{{ $field->form->id }}]</span>
                     </div>
@@ -149,7 +149,7 @@
                     </div>
                 </div>
                 <div class="input-box colored hidden" id="optionsbox">
-                    <label for="">{{ __('elfcms::default.field_options') }}</label>
+                    <label>{{ __('elfcms::default.field_options') }}</label>
                     <div class="input-wrapper">
                         <div>
                             <div class="input-options-table">
@@ -183,10 +183,10 @@
                                         <input type="checkbox" name="options_exist[{{ $item->id }}][selected]" id="options_exist_selected_{{ $item->id }}" data-option-selected @if ($item->selected == 1) checked @endif>
                                     </div>
                                     <div class="options-table-string">
-                                        <input type="checkbox" name="options_exist[{{ $item->id }}][disabled]" id="option_new_disabled_{{ $item->id }}" data-option-disabled @if ($item->disabled == 1) checked @endif>
+                                        <input type="checkbox" name="options_exist[{{ $item->id }}][disabled]" id="option_exist_disabled_{{ $item->id }}" data-option-disabled @if ($item->disabled == 1) checked @endif>
                                     </div>
                                     <div class="options-table-string">
-                                        <input type="checkbox" name="options_exist[{{ $item->id }}][deleted]" id="options_exist_disabled_{{ $item->id }}" data-option-deleted>
+                                        <input type="checkbox" name="options_exist[{{ $item->id }}][deleted]" id="options_exist_deleted_{{ $item->id }}" data-option-deleted>
                                     </div>
                                     <div class="options-table-string"></div>
                                 </div>
@@ -205,7 +205,7 @@
                                         <input type="checkbox" name="options_new[0][disabled]" id="option_new_disabled_0" data-option-disabled>
                                     </div>
                                     <div class="options-table-string">
-                                        <input type="checkbox" name="options_new[0][deleted]" id="option_new_disabled_0" data-option-deleted>
+                                        <input type="checkbox" name="options_new[0][deleted]" id="option_new_deleted_0" data-option-deleted>
                                     </div>
                                     <div class="options-table-string"></div>
                                 </div>

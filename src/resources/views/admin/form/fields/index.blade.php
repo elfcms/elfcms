@@ -62,10 +62,6 @@
                     <td>{{ $field->created_at }}</td>
                     <td>{{ $field->updated_at }}</td>
                     <td class="button-column non-text-buttons">
-                        {{--<form action="{{ route('admin.form.options.create') }}" method="GET">
-                            <input type="hidden" name="field_id" value="{{ $field->id }}">
-                            <button type="submit" class="default-btn submit-button">{{ __('elfcms::default.add_option') }}</button>
-                        </form>--}}
                         <a href="{{ route('admin.form.fields.edit',$field->id) }}" class="default-btn edit-button" title="{{ __('elfcms::default.edit') }}"></a>
                         <form action="{{ route('admin.form.fields.destroy',$field->id) }}" method="POST" data-submit="check">
                             @csrf

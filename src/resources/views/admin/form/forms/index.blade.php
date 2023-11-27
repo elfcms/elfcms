@@ -54,14 +54,6 @@
                     <td>{{ $form->updated_at }}</td>
                     <td>{{ $form->active != 1 ? __('elfcms::default.inactive') : '' }}</td>
                     <td class="button-column non-text-buttons">
-                        {{-- <form action="{{ route('admin.form.groups.create') }}" method="GET">
-                            <input type="hidden" name="form_id" value="{{ $form->id }}">
-                            <button type="submit" class="default-btn submit-button group-button" title="{{ __('elfcms::default.add_group') }}"></button>
-                        </form>
-                        <form action="{{ route('admin.form.fields.create') }}" method="GET">
-                            <input type="hidden" name="form_id" value="{{ $form->id }}">
-                            <button type="submit" class="default-btn submit-button create-button" title="{{ __('elfcms::default.add_field') }}"></button>
-                        </form> --}}
                         <a href="{{ route('admin.forms.show',$form->id) }}" class="default-btn content-button" title="{{ __('elfcms::default.edit_form_contents') }}"></a>
                         <a href="{{ route('admin.forms.edit',$form->id) }}" class="default-btn edit-button" title="{{ __('elfcms::default.edit_form_params') }}"></a>
                         <form action="{{ route('admin.forms.destroy',$form->id) }}" method="POST" data-submit="check">

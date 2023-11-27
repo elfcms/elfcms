@@ -60,7 +60,7 @@
                 </div>
 
                 <div class="input-box colored" id="paramsbox">
-                    <label for="">{{ __('elfcms::default.parameters') }}</label>
+                    <label>{{ __('elfcms::default.parameters') }}</label>
                     <div class="input-wrapper">
                         <div>
                             <div class="input-params-table">
@@ -80,9 +80,7 @@
                                     <div class="params-table-string">
                                         <input type="text" name="params_new[0][value]" id="param_new_value_0" data-param-value>
                                     </div>
-                                    <div class="params-table-string">
-                                        {{-- <button type="button" class="default-btn" onclick="eventParamDelete(0)">&#215;</button> --}}
-                                    </div>
+                                    <div class="params-table-string"></div>
                                 </div>
 
                             </div>
