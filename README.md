@@ -1,12 +1,26 @@
-## Package ELF CMS
+## ELF CMS 
+Package for Laravel Framework
 
 You can install the package from scratch or into an existing project
 
-### Installation in an existing project
+## Requirements
+
+php >= 8.1
+
+laravel >= 10.0
+
+mysql >= 8.0
+
+### Installation in an existing laravel-project
 
 Install the package ELF CMS
 ```sh
 composer require elfcms/elfcms
+```
+
+Install and set up ELF CMS
+```sh
+php artisan elfcms:install
 ```
 
 ### Installation from scratch
@@ -28,4 +42,8 @@ Install the package ELF CMS
 composer require elfcms/elfcms
 ```
 
-Go to the /admin page of your project to complete the initial setup
+Install and set up ELF CMS
+```sh
+php artisan elfcms:install
+```
+

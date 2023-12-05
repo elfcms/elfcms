@@ -23,7 +23,7 @@ class HomeController extends Controller
         if (!empty($pageData->content) && !empty($pageData)) {
             $pageContent = $pageData->content;
         }
-        return view('basic::public.index',[
+        return view('elfcms::public.index',[
             'page' => [
                 'title' => $pageData->title,
                 'current' => url()->current(),
@@ -39,7 +39,7 @@ class HomeController extends Controller
         if (!empty($pageData->content) && !empty($pageData)) {
             $pageContent = $pageData->content;
         }
-        return view('basic::public.contact',[
+        return view('elfcms::public.contact',[
             'page' => [
                 'title' => $pageData->title ?? null,
                 'current' => url()->current(),

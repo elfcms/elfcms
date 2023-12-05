@@ -63,7 +63,7 @@ class TestController extends \App\Http\Controllers\Controller
         //dd($fieldsWithoutGroup);
 
         //dd(FormSaver::read(\Elfcms\Elfcms\Models\FormResult::find(5)));
-        //dd(View::exists('basic::public.form.results'));
+        //dd(View::exists('elfcms::public.form.results'));
         //dd(Storage::disk('elfcmsviews')->files('basic/emails/events',true));
         //dd(Views::list('basic/emails/events'));
         //dd(config('elfcms.basic.disks.views'));
@@ -77,7 +77,7 @@ class TestController extends \App\Http\Controllers\Controller
         //dd(FormSaver::read(ModelsFormResult::where('form_id',1)->first()));
         //event(new EventsSomeMailEvent('test',['params'=>['first'=>'Wow'],'subject'=>'Some subject']));
 
-        return view('basic::test',[
+        return view('elfcms::test',[
             'page' => [
                 'title' => 'Test page',
                 'current' => url()->current(),

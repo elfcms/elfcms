@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Resources;
+namespace Elfcms\Elfcms\Http\Controllers\Resources;
 
 use App\Http\Controllers\Controller;
 use Elfcms\Elfcms\Models\Role;

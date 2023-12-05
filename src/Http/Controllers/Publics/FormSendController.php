@@ -35,7 +35,7 @@ class FormSendController extends Controller
 
     public function result()
     {
-        return view('basic::public.form.result',[
+        return view('elfcms::public.form.result',[
             'page' => [
                 'title' => Lang::get('elfcms::default.form_sending')
             ],

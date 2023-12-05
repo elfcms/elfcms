@@ -73,7 +73,7 @@ class EmailEventSend extends Mailable
             $this->attachData($this->emailEvent->attachData->data,$this->emailEvent->attachData->name,$this->emailEvent->attachData->option);
         }
 
-        $view = 'basic::emails.events.default';
+        $view = 'elfcms::emails.events.default';
         if(!empty($this->emailEvent->custom['view'])) {
             $view = $this->emailEvent->custom['view'];
         }

@@ -30,8 +30,8 @@ class Edit extends \Illuminate\View\Component
         if (View::exists('components.account.' . $this->template . '.edit')) {
             return view('components.account.' . $this->template . '.edit');
         }
-        if (View::exists('basic::components.account.'.$this->template . '.edit')) {
-            return view('basic::components.account.'.$this->template . '.edit');
+        if (View::exists('elfcms::components.account.'.$this->template . '.edit')) {
+            return view('elfcms::components.account.'.$this->template . '.edit');
         }
         if (View::exists($this->template . '.edit')) {
             return view($this->template . '.edit');

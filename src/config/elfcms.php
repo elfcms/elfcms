@@ -10,7 +10,7 @@ return [
     |
     */
 
-    'version' => '1.5.0',
+    'version' => '1.1.0',
 
     /*
     |--------------------------------------------------------------------------
@@ -18,7 +18,7 @@ return [
     |--------------------------------------------------------------------------
     */
 
-    'is_beta' => true,
+    'is_beta' => false,
 
     /*
     |--------------------------------------------------------------------------
@@ -199,23 +199,6 @@ return [
             "parent_route" => "admin.forms",
             "icon" => "/elfcms/admin/images/icons/forms.png",
             "position" => 40,
-            /* "submenu" => [
-                [
-                    "title" => "Forms",
-                    "lang_title" => "elfcms::default.forms",
-                    "route" => "admin.form.forms"
-                ],
-                [
-                    "title" => "Field groups",
-                    "lang_title" => "elfcms::default.form_field_groups",
-                    "route" => "admin.form.groups"
-                ],
-                [
-                    "title" => "Fields",
-                    "lang_title" => "elfcms::default.form_fields",
-                    "route" => "admin.form.fields"
-                ],
-            ] */
         ],
         [
             "title" => "Menu",
@@ -223,20 +206,7 @@ return [
             "route" => "admin.menus.index",
             "parent_route" => "admin.menus",
             "icon" => "/elfcms/admin/images/icons/menu.png",
-            "position" => 50,
-            /* "submenu" => [
-                [
-                    "title" => "Menu",
-                    "lang_title" => "elfcms::default.menu",
-                    "route" => "admin.menus.menus"
-                ],
-                [
-                    "title" => "Items",
-                    "lang_title" => "elfcms::default.menu_items",
-                    "route" => "admin.menus.items"
-                ],
-            ] */
-        ],
+            "position" => 50,        ],
         [
             "title" => "Pages",
             "lang_title" => "elfcms::default.pages",
@@ -254,12 +224,20 @@ return [
             "position" => 70,
         ],
         [
+            "title" => "Fragment",
+            "lang_title" => "elfcms::default.fragment",
+            "route" => "admin.fragment.items",
+            "parent_route" => "admin.fragment.items",
+            "icon" => "/elfcms/admin/images/icons/fragment.png",
+            "position" => 80,
+        ],
+        [
             "title" => "Statistics",
             "lang_title" => "elfcms::default.statistics",
             "route" => "admin.statistics.index",
             "parent_route" => "admin.statistics.index",
             "icon" => "/elfcms/admin/images/icons/stats.png",
-            "position" => 80,
+            "position" => 90,
         ]
     ],
 

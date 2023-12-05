@@ -1,5 +1,6 @@
 <?php
 
+use Elfcms\Elfcms\Models\DataType;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Lang;
@@ -52,8 +53,8 @@ Route::group(['middleware'=>['web','cookie']],function() use ($adminPath) {
         Route::get($adminPath . '/ajax/json/lang/{name}',function(Request $request ,$name){
             $result = [];
             if ($request->ajax()) {
-                if (Lang::has('basic::'.$name)) {
-                    $result = Lang::get('basic::'.$name);
+                if (Lang::has('elfcms::'.$name)) {
+                    $result = Lang::get('elfcms::'.$name);
                 }
             }
             return json_encode($result);
@@ -128,6 +129,9 @@ Route::group(['middleware'=>['web','cookie']],function() use ($adminPath) {
                 'destroy' => 'destroy'
             ]);
         });
+        Route::name('fragment.')->group(function() use ($adminPath) {
+            Route::resource($adminPath . '/fragment/items', \Elfcms\Elfcms\Http\Controllers\Resources\FragmentItemController::class)->names(['index' => 'items']);
+        });
 
         Route::name('statistics.')->group(function() use ($adminPath) {
             Route::get($adminPath . '/statistics', [Elfcms\Elfcms\Http\Controllers\VisitStatisticController::class,'index'])->name('index');
@@ -143,6 +147,10 @@ Route::group(['middleware'=>['web','cookie']],function() use ($adminPath) {
 
             Route::name('menu.')->group(function() {
                 Route::post('/elfcms/api/menu/{menu}/itemorder', [Elfcms\Elfcms\Http\Controllers\Ajax\MenuController::class, 'itemOrder']);
+            });
+
+            Route::name('fragment.')->group(function() {
+                Route::get('/elfcms/api/fragment/datatypes', [Elfcms\Elfcms\Http\Controllers\Ajax\FragmentDataTypeController::class, 'get']);
             });
 
         });

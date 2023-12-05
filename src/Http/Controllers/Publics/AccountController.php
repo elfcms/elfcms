@@ -32,7 +32,7 @@ class AccountController extends \App\Http\Controllers\Controller
             return redirect()->intended('/account/login');
         }
 
-        return view('basic::public.account.index',[
+        return view('elfcms::public.account.index',[
             'page' => [
                 'title' => __('elfcms::default.account'),
                 'current' => url()->current(),
@@ -43,7 +43,7 @@ class AccountController extends \App\Http\Controllers\Controller
 
     public function loginForm()
     {
-        return view('basic::public.account.login',[
+        return view('elfcms::public.account.login',[
             'page' => [
                 'title' => __('elfcms::default.login'),
                 'current' => url()->current(),
@@ -78,7 +78,7 @@ class AccountController extends \App\Http\Controllers\Controller
 
     public function getRestoreForm()
     {
-        return view('basic::public.account.getrestore',[
+        return view('elfcms::public.account.getrestore',[
             'page' => [
                 'title' => __('elfcms::default.forgot_your_password'),
                 'current' => url()->current(),
@@ -94,7 +94,7 @@ class AccountController extends \App\Http\Controllers\Controller
 
         if ($user) {
             $user->setConfirmationToken();
-            event(new SomeMailEvent('passwordrecoveryrequest',['view'=>'basic::emails.events.password-recovery-request','to'=>$user->email,'params'=>['confirm_token'=>$user->confirm_token,'email'=>$user->email]],$user));
+            event(new SomeMailEvent('passwordrecoveryrequest',['view'=>'elfcms::emails.events.password-recovery-request','to'=>$user->email,'params'=>['confirm_token'=>$user->confirm_token,'email'=>$user->email]],$user));
             $message = Lang::get('elfcms::default.a_password_reset_link_has_been_sent_to_your_email_account');
             if (!$message) {
                 $message = 'A password reset link has been sent to your email account';
@@ -126,7 +126,7 @@ class AccountController extends \App\Http\Controllers\Controller
 
         //dd(Config::get('elfcms.basic.confirmation_period'));
         //dd(Carbon::parse($user->confirm_token_at)->diffInSeconds(now()));
-        return view('basic::public.account.setrestore',[
+        return view('elfcms::public.account.setrestore',[
             'page' => [
                 'title' => __('elfcms::default.set_a_new_password'),
                 'current' => url()->current(),
@@ -161,7 +161,7 @@ class AccountController extends \App\Http\Controllers\Controller
 
     public function registerForm()
     {
-        return view('basic::public.account.register',[
+        return view('elfcms::public.account.register',[
             'page' => [
                 'title' => __('elfcms::default.registration'),
                 'current' => url()->current(),
@@ -202,7 +202,7 @@ class AccountController extends \App\Http\Controllers\Controller
 
             if (Config::get('elfcms.basic.email_confirmation')) {
                 $user->setConfirmationToken();
-                event(new SomeMailEvent('userregisterconfirm',['view'=>'basic::emails.events.register-confirm','to'=>$validated['email'],'params'=>['confirm_token'=>$user->confirm_token,'email'=>$user->email]],$user));
+                event(new SomeMailEvent('userregisterconfirm',['view'=>'elfcms::emails.events.register-confirm','to'=>$validated['email'],'params'=>['confirm_token'=>$user->confirm_token,'email'=>$user->email]],$user));
                 $message = Lang::get('elfcms::default.email_confirmation');
                 if (!$message) {
                     $message = 'A verification link has been sent to your email account';
@@ -231,18 +231,18 @@ class AccountController extends \App\Http\Controllers\Controller
             $user->email_verified_at = time();
             $user->save();
 
-            //return view('basic::public.account.confirm-email')->with('success',Lang::get('elfcms::default.email_confirmation_success'));
+            //return view('elfcms::public.account.confirm-email')->with('success',Lang::get('elfcms::default.email_confirmation_success'));
             return redirect(route('account.confirmation'))->with('success',Lang::get('elfcms::default.email_confirmation_success'));
 
         }
         //return redirect(route('user.confirm-email'))->withErrors(['error'=>'Error of email confirmation']);
-        //return view('basic::public.account.confirm-email')->with('error',Lang::get('elfcms::default.error_of_email_confirmation'));
+        //return view('elfcms::public.account.confirm-email')->with('error',Lang::get('elfcms::default.error_of_email_confirmation'));
         return redirect(route('account.confirmation'))->with('error',Lang::get('elfcms::default.error_of_email_confirmation'));
     }
 
     public function confirmation()
     {
-        return view('basic::public.account.confirm-email',[
+        return view('elfcms::public.account.confirm-email',[
             'page' => [
                 'title' => Lang::get('elfcms::default.registration_confirmation')
             ],
@@ -279,7 +279,7 @@ class AccountController extends \App\Http\Controllers\Controller
                 'thumbnail' => null
             ];
         }
-        return view('basic::public.account.edit',[
+        return view('elfcms::public.account.edit',[
             'page' => [
                 'title' => Lang::get('elfcms::default.edit_account')
             ],

@@ -16,7 +16,7 @@ class PageController extends Controller
         if ($dynamic === true && $page->is_dynamic != 1) {
             abort(404);
         }
-        return view('basic::public.pages.default',[
+        return view('elfcms::public.pages.default',[
             'page' => [
                 'title' => $page->title,
                 'current' => url()->current(),
@@ -30,7 +30,7 @@ class PageController extends Controller
     public function about()
     {
         $page = Page::where('slug','about')->first();
-        return view('basic::public.pages.default',[
+        return view('elfcms::public.pages.default',[
             'page' => [
                 'title' => $page->title,
                 'current' => url()->current(),
