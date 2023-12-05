@@ -28,15 +28,12 @@ class FragmentItemController extends Controller
         }
         $search = $request->search ?? '';
         if (!empty($search)) {
-            $items = FragmentItem::where('title','like',"%{$search}%")->orderBy($order, $trend)->paginate(30);
-
-        }
-        else {
+            $items = FragmentItem::where('title', 'like', "%{$search}%")->orderBy($order, $trend)->paginate(30);
+        } else {
             $items = FragmentItem::orderBy($order, $trend)->paginate(30);
-
         }
 
-        return view('elfcms::admin.fragment.items.index',[
+        return view('elfcms::admin.fragment.items.index', [
             'page' => [
                 'title' => __('elfcms::default.fragment') . ' ' . __('elfcms::default.items'),
                 'current' => url()->current(),
@@ -54,9 +51,9 @@ class FragmentItemController extends Controller
      */
     public function create()
     {
-        $filterData = ['bool','int','float','string','text','date','time','datetime','json'];
-        $data_types = DataType::whereIn('code',$filterData)->get();
-        return view('elfcms::admin.fragment.items.create',[
+        $filterData = ['bool', 'int', 'float', 'string', 'text', 'date', 'time', 'datetime', 'json'];
+        $data_types = DataType::whereIn('code', $filterData)->get();
+        return view('elfcms::admin.fragment.items.create', [
             'page' => [
                 'title' => __('elfcms::default.fragment') . ' ' . __('elfcms::default.items'),
                 'current' => url()->current(),
@@ -85,7 +82,7 @@ class FragmentItemController extends Controller
         $image_path = '';
         if (!empty($request->file()['image'])) {
             $image = $request->file()['image']->store('public/fragment/items/image');
-            $image_path = str_ireplace('public/','/storage/',$image);
+            $image_path = str_ireplace('public/', '/storage/', $image);
         }
 
         $validated['image'] = $image_path;
@@ -99,21 +96,21 @@ class FragmentItemController extends Controller
                     continue;
                 }
                 $typeCode = DataType::find($param['type']);
-                $typeCodes = ['int','float','date','datetime'];
+                $typeCodes = ['int', 'float', 'date', 'datetime'];
                 $type = '';
-                if (!empty($typeCode) && !empty($typeCode->code) && in_array($typeCode->code,$typeCodes)) {
+                if (!empty($typeCode) && !empty($typeCode->code) && in_array($typeCode->code, $typeCodes)) {
                     $type = '_' . $typeCode->code;
                 }
                 $optionData = [
                     'name' => $param['name'],
                     'data_type_id' => $param['type'],
-                    'value'.$type => $param['value'],
+                    'value' . $type => $param['value'],
                 ];
                 $item->options()->create($optionData);
             }
         }
 
-        return redirect(route('admin.fragment.items.edit',$item->id))->with('success',__('elfcms::default.item_created_successfully'));
+        return redirect(route('admin.fragment.items.edit', $item->id))->with('success', __('elfcms::default.item_created_successfully'));
     }
 
     /**
@@ -135,18 +132,17 @@ class FragmentItemController extends Controller
      */
     public function edit(FragmentItem $item)
     {
-        $filterData = ['bool','int','float','string','text','date','time','datetime','json'];
-        $data_types = DataType::whereIn('code',$filterData)->get();
+        $filterData = ['bool', 'int', 'float', 'string', 'text', 'date', 'time', 'datetime', 'json'];
+        $data_types = DataType::whereIn('code', $filterData)->get();
 
         $next_option_id = $item->options->max('id');
         if (empty($next_option_id)) {
             $next_option_id = 0;
-        }
-        else {
+        } else {
             $next_option_id++;
         }
-        $typeCodes = ['int','float','date','datetime'];
-        return view('elfcms::admin.fragment.items.edit',[
+        $typeCodes = ['int', 'float', 'date', 'datetime'];
+        return view('elfcms::admin.fragment.items.edit', [
             'page' => [
                 'title' => __('elfcms::default.fragment') . ' ' . __('elfcms::default.item') . '#' . $item->id,
                 'current' => url()->current(),
@@ -172,18 +168,18 @@ class FragmentItemController extends Controller
         ]);
         $validated = $request->validate([
             'title' => 'required',
-            'code' => 'required',//|unique:Elfcms\Elfcms\Models\FragmentItem,code',
+            'code' => 'required', //|unique:Elfcms\Elfcms\Models\FragmentItem,code',
             'image' => 'nullable|file|max:1024',
         ]);
-        if (FragmentItem::where('code',$request->code)->where('id','<>',$item->id)->first()) {
-            return redirect(route('admin.fragment.item.edit',$item->id))->withErrors([
+        if (FragmentItem::where('code', $request->code)->where('id', '<>', $item->id)->first()) {
+            return redirect(route('admin.fragment.item.edit', $item->id))->withErrors([
                 'code' => __('elfcms::default.item_already_exists')
             ]);
         }
         $image_path = $request->image_path;
         if (!empty($request->file()['image'])) {
             $image = $request->file()['image']->store('public/fragment/items/image');
-            $image_path = str_ireplace('public/','/storage/',$image);
+            $image_path = str_ireplace('public/', '/storage/', $image);
         }
 
         $item->code = $request->code;
@@ -191,7 +187,7 @@ class FragmentItemController extends Controller
         $item->image = $image_path;
         $item->text = $request->text;
 
-        $typeCodes = ['int','float','date','datetime'];
+        $typeCodes = ['int', 'float', 'date', 'datetime'];
 
         if (!empty($request->options_exist)) {
             foreach ($request->options_exist as $oid => $param) {
@@ -201,12 +197,12 @@ class FragmentItemController extends Controller
                 }
                 $typeCode = DataType::find($param['type']);
                 $type = '';
-                if (!empty($typeCode) && !empty($typeCode->code) && in_array($typeCode->code,$typeCodes)) {
+                if (!empty($typeCode) && !empty($typeCode->code) && in_array($typeCode->code, $typeCodes)) {
                     $type = '_' . $typeCode->code;
                 }
                 $option = FragmentItemOption::find($oid);
                 if ($option) {
-                    $option['value'.$type] = $param['value'];
+                    $option['value' . $type] = $param['value'];
                     $option->name = $param['name'];
                     $option->data_type_id = $param['type'];
                     $option->save();
@@ -221,11 +217,11 @@ class FragmentItemController extends Controller
                 }
                 $typeCode = DataType::find($param['type']);
                 $type = '';
-                if (!empty($typeCode) && !empty($typeCode->code) && in_array($typeCode->code,$typeCodes)) {
+                if (!empty($typeCode) && !empty($typeCode->code) && in_array($typeCode->code, $typeCodes)) {
                     $type = '_' . $typeCode->code;
                 }
                 $optionData = [
-                    'value'.$type => $param['value'],
+                    'value' . $type => $param['value'],
                     'name' => $param['name'],
                     'data_type_id' => $param['type'],
                 ];
@@ -235,8 +231,7 @@ class FragmentItemController extends Controller
 
         $item->save();
 
-        return redirect(route('admin.fragment.items.edit',$item->id))->with('success',__('elfcms::default.item_edited_successfully'));
-
+        return redirect(route('admin.fragment.items.edit', $item->id))->with('success', __('elfcms::default.item_edited_successfully'));
     }
 
     /**
@@ -248,9 +243,9 @@ class FragmentItemController extends Controller
     public function destroy(FragmentItem $item)
     {
         if (!$item->delete()) {
-            return redirect(route('admin.fragment.items'))->withErrors(['itemdelerror'=>__('elfcms::default.error_of_item_deleting')]);
+            return redirect(route('admin.fragment.items'))->withErrors(['itemdelerror' => __('elfcms::default.error_of_item_deleting')]);
         }
 
-        return redirect(route('admin.fragment.items'))->with('itemdeleted',__('elfcms::default.item_deleted_successfully'));
+        return redirect(route('admin.fragment.items'))->with('itemdeleted', __('elfcms::default.item_deleted_successfully'));
     }
 }

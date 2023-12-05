@@ -5,45 +5,46 @@ let draggedItem = null;
 let draggedItemParent = null;
 
 items.forEach(item => {
-  item.addEventListener('dragstart', () => {
-    item.classList.add('dragging');
-    itemBox = item.parentNode;
-    draggedItem = itemBox;
-    draggedItemParent = itemBox.parentNode;
-  });
+    item.addEventListener('dragstart', () => {
+        item.classList.add('dragging');
+        itemBox = item.parentNode;
+        draggedItem = itemBox;
+        draggedItemParent = itemBox.parentNode;
+    });
 
-  item.addEventListener('dragend', () => {
-    draggedItem = null;
-    draggedItemParent = null;
-    item.classList.remove('dragging');
-    itemPositionSuccess();
-  });
+    item.addEventListener('dragend', () => {
+        draggedItem = null;
+        draggedItemParent = null;
+        item.classList.remove('dragging');
+        itemPositionSuccess();
+    });
 
 });
 
 const fieldContainers = Array.from(document.querySelectorAll('.form-group-fields, .form-groupless-fields'));
 
 fieldContainers.forEach(container => {
-  container.addEventListener('dragover', e => {
-    e.preventDefault();
-    const afterElement = getDragAfterItem(container, e.clientY);
-    if (draggedItem) container.insertBefore(draggedItem, afterElement);
-  });
+    container.addEventListener('dragover', e => {
+        e.preventDefault();
+        const afterElement = getDragAfterItem(container, e.clientY);
+        if (draggedItem) container.insertBefore(draggedItem, afterElement);
+    });
 });
 
 function getDragAfterItem(container, y) {
-  const draggableElements = Array.from(container.querySelectorAll('.form-field-box:not(.dragging)'));
+    const draggableElements = Array.from(container.querySelectorAll('.form-field-box:not(.dragging)'));
 
-  return draggableElements.reduce((closest, child) => {
-    const box = child.getBoundingClientRect();
-    const offset = y - box.top - box.height / 2;
+    return draggableElements.reduce((closest, child) => {
+        const box = child.getBoundingClientRect();
+        const offset = y - box.top - box.height / 2;
 
-    if (offset < 0 && offset > closest.offset) {
-      return { offset: offset, element: child };
-    } else {
-      return closest;
-    }
-  }, { offset: Number.NEGATIVE_INFINITY }).element;
+        if (offset < 0 && offset > closest.offset) {
+        return { offset: offset, element: child };
+        } else {
+        return closest;
+        }
+    },
+    { offset: Number.NEGATIVE_INFINITY }).element;
 }
 
 let fieldsData = {};

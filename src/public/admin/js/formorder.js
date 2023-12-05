@@ -1,5 +1,4 @@
 const formGroups = document.querySelector('.form-groups');
-//const groupBoxes = formGroups.querySelectorAll('.form-group-box');
 
 let draggedElement = null;
 
@@ -37,7 +36,6 @@ function elementPositionSuccess() {
         let groups = {};
         groupBoxes.forEach(groupBox => {
             const groupId = groupBox.dataset.id;
-            //console.log(groupId)
             const positionBox = groupBox.querySelector('.form-group-position');
             if (positionBox) {
                 positionBox.innerHTML = position;
@@ -47,8 +45,6 @@ function elementPositionSuccess() {
                 position++;
             }
         });
-        //console.log (formId, groups);
-        //const data = JSON.stringify({name:input.value});
         const data = JSON.stringify({
             formId,
             groups
@@ -68,14 +64,6 @@ function elementPositionSuccess() {
             (result) => result.json()
         ).then (
             (data) => {
-                /* if (data.result && data.data) {
-                    if (data.result == 'success' && data.data.id) {
-                        tagList.push(data.data)
-                    }
-                    if (data.data.id) {
-                        addTagToList (listBox,input,data.data)
-                    }
-                } */
                 //console.log(data);
             }
         ).catch(error => {

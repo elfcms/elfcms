@@ -206,7 +206,8 @@ return [
             "route" => "admin.menus.index",
             "parent_route" => "admin.menus",
             "icon" => "/elfcms/admin/images/icons/menu.png",
-            "position" => 50,        ],
+            "position" => 50,
+        ],
         [
             "title" => "Pages",
             "lang_title" => "elfcms::default.pages",

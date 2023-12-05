@@ -49,7 +49,6 @@ function inputImgComponent (input) {
                     fReader.readAsDataURL(files[0]);
                 }
             }
-            //deleteImage(wrapper)
         })
     }
 }

@@ -4,21 +4,21 @@ let draggedItem = null;
 let draggedItemParent = null;
 
 items.forEach((item) => {
-  item.addEventListener("dragstart", () => {
-    item.classList.add("dragging");
-    itemBox = item.parentNode;
-    draggedItem = itemBox;
-    draggedItem.classList.add('dragging');
-    draggedItemParent = itemBox.parentNode;
-  });
+    item.addEventListener("dragstart", () => {
+        item.classList.add("dragging");
+        itemBox = item.parentNode;
+        draggedItem = itemBox;
+        draggedItem.classList.add('dragging');
+        draggedItemParent = itemBox.parentNode;
+    });
 
-  item.addEventListener("dragend", () => {
-    draggedItem.classList.remove('dragging');
-    draggedItem = null;
-    draggedItemParent = null;
-    item.classList.remove("dragging");
-    itemPositionSuccess();
-  });
+    item.addEventListener("dragend", () => {
+        draggedItem.classList.remove('dragging');
+        draggedItem = null;
+        draggedItemParent = null;
+        item.classList.remove("dragging");
+        itemPositionSuccess();
+    });
 });
 
 const itemContainers = Array.from(
@@ -33,35 +33,35 @@ if (menuBox) {
 
 itemContainers.forEach((container) => {
     container.addEventListener("dragover", (e) => {
-    e.preventDefault();
-    const afterElement = getDragAfterItem(container, e.clientY);
-    try {
-        if (draggedItem) container.insertBefore(draggedItem, afterElement);
-    }
-    catch(e) {
-        //
-    }
-  });
+        e.preventDefault();
+        const afterElement = getDragAfterItem(container, e.clientY);
+        try {
+            if (draggedItem) container.insertBefore(draggedItem, afterElement);
+        }
+        catch(e) {
+            //
+        }
+    });
 });
 
 function getDragAfterItem(container, y) {
-  const draggableElements = Array.from(
-    container.querySelectorAll(".menu-item-box:not(.dragging), .menu-not-item")
-  );
+    const draggableElements = Array.from(
+        container.querySelectorAll(".menu-item-box:not(.dragging), .menu-not-item")
+    );
 
-  return draggableElements.reduce(
-    (closest, child) => {
-      const box = child.getBoundingClientRect();
-      const offset = y - box.top - box.height / 2;
+    return draggableElements.reduce(
+        (closest, child) => {
+            const box = child.getBoundingClientRect();
+            const offset = y - box.top - box.height / 2;
 
-      if (offset < 0 && offset > closest.offset) {
-        return { offset: offset, element: child };
-      } else {
-        return closest;
-      }
-    },
-    { offset: Number.NEGATIVE_INFINITY }
-  ).element;
+            if (offset < 0 && offset > closest.offset) {
+                return { offset: offset, element: child };
+            } else {
+                return closest;
+            }
+        },
+        { offset: Number.NEGATIVE_INFINITY }
+    ).element;
 }
 
 let itemsData = {};
