@@ -1,6 +1,8 @@
 ## ELF CMS 
 Package for Laravel Framework
 
+Version of package 1.1.0
+
 You can install the package from scratch or into an existing project
 
 ## Requirements
