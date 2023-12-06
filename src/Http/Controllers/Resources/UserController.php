@@ -88,7 +88,7 @@ class UserController extends Controller
     {
         $roles = Role::get();
 
-        $defaultRoleCode = Config::get('elfcms.basic.user_default_role');
+        $defaultRoleCode = Config::get('elfcms.elfcms.user_default_role');
 
         if (!$defaultRoleCode) {
             $defaultRoleCode = 'users';
@@ -127,7 +127,7 @@ class UserController extends Controller
 
             $roles = $request->role;
             if (empty($roles)) {
-                $roleCode = Config::get('elfcms.basic.user_default_role');
+                $roleCode = Config::get('elfcms.elfcms.user_default_role');
                 if (!$roleCode) {
                     $roleCode = 'users';
                 }
@@ -231,7 +231,7 @@ class UserController extends Controller
             return redirect(route('admin.users'))->with('useredited','User ' . $userAction . ' successfully');
         }
 
-        $defaultRoleCode = Config::get('elfcms.basic.user_default_role');
+        $defaultRoleCode = Config::get('elfcms.elfcms.user_default_role');
         if (!$defaultRoleCode) {
             $defaultRoleCode = 'users';
         }

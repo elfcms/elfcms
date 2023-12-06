@@ -66,7 +66,7 @@ class TestController extends \App\Http\Controllers\Controller
         //dd(View::exists('elfcms::public.form.results'));
         //dd(Storage::disk('elfcmsviews')->files('basic/emails/events',true));
         //dd(Views::list('basic/emails/events'));
-        //dd(config('elfcms.basic.disks.views'));
+        //dd(config('elfcms.elfcms.disks.views'));
         //dd(config('filesystems.disks'));
 
         //event(new SomeMailEvent('userregisterconfirm',['params'=>['confirm_token'=>'Wow'],'subject'=>'Test subject','to'=>'maximklassen@mail.de','view'=>'register-confirm']));

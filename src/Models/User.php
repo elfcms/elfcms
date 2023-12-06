@@ -143,7 +143,7 @@ class User extends ModelsUser
     public function isAdmin()
     {
         $result = false;
-        $roleCode = Config::get('elfcms.basic.user_admin_role');
+        $roleCode = Config::get('elfcms.elfcms.user_admin_role');
         if (empty($roleCode)) {
             $roleCode = 'admin';
         }

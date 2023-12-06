@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Route;
 
-$adminPath = config('elfcms.basic.admin_path') ?? '/admin';
+$adminPath = config('elfcms.elfcms.admin_path') ?? '/admin';
 
 Route::group(['middleware'=>['web','cookie']],function() use ($adminPath) {
 

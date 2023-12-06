@@ -153,7 +153,7 @@ class ElfcmsInstall extends Command
 
         $this->line(__('elfcms::default.create_user'));
 
-        $roleCode = config('elfcms.basic.user_admin_role');
+        $roleCode = config('elfcms.elfcms.user_admin_role');
         if (empty($roleCode)) {
             $roleCode = 'admin';
         }

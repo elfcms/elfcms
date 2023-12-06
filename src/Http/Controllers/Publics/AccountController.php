@@ -22,7 +22,7 @@ class AccountController extends \App\Http\Controllers\Controller
 
     public function __construct()
     {
-        $this->passwordLength = Config::get('elfcms.basic.password_length') ?? 8;
+        $this->passwordLength = Config::get('elfcms.elfcms.password_length') ?? 8;
     }
 
     public function index()
@@ -115,7 +115,7 @@ class AccountController extends \App\Http\Controllers\Controller
             $linkError = true;
         }
         else {
-            $period = Config::get('elfcms.basic.confirmation_period');
+            $period = Config::get('elfcms.elfcms.confirmation_period');
             if (!$period) {
                 $period = 86400;
             }
@@ -124,7 +124,7 @@ class AccountController extends \App\Http\Controllers\Controller
             }
         }
 
-        //dd(Config::get('elfcms.basic.confirmation_period'));
+        //dd(Config::get('elfcms.elfcms.confirmation_period'));
         //dd(Carbon::parse($user->confirm_token_at)->diffInSeconds(now()));
         return view('elfcms::public.account.setrestore',[
             'page' => [
@@ -187,7 +187,7 @@ class AccountController extends \App\Http\Controllers\Controller
             ]);
         }
 
-        $roleCode = Config::get('elfcms.basic.user_default_role');
+        $roleCode = Config::get('elfcms.elfcms.user_default_role');
 
         if (!$roleCode) {
             $roleCode = 'users';
@@ -200,7 +200,7 @@ class AccountController extends \App\Http\Controllers\Controller
 
             $user->assignRole($role);
 
-            if (Config::get('elfcms.basic.email_confirmation')) {
+            if (Config::get('elfcms.elfcms.email_confirmation')) {
                 $user->setConfirmationToken();
                 event(new SomeMailEvent('userregisterconfirm',['view'=>'elfcms::emails.events.register-confirm','to'=>$validated['email'],'params'=>['confirm_token'=>$user->confirm_token,'email'=>$user->email]],$user));
                 $message = Lang::get('elfcms::default.email_confirmation');

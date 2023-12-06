@@ -67,7 +67,7 @@ class PageController extends Controller
 
         $image_path = '';
         if (!empty($request->file()['image'])) {
-            $image = $request->file()['image']->store('public/basic/pages/image');
+            $image = $request->file()['image']->store('public/pages/image');
             $image_path = str_ireplace('public/','/storage/',$image);
         }
 
@@ -142,7 +142,7 @@ class PageController extends Controller
 
         $image_path = $request->image_path;
         if (!empty($request->file()['image'])) {
-            $image = $request->file()['image']->store('public/basic/pages/image');
+            $image = $request->file()['image']->store('public/pages/image');
             $image_path = str_ireplace('public/','/storage/',$image);
         }
 

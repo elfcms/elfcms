@@ -49,25 +49,6 @@
                     <label for="image">{{ __('elfcms::default.image') }}</label>
                     <div class="input-wrapper">
                         <x-elfcms-input-image code="image" value="{{$item->image}}" />
-                        {{-- <input type="hidden" name="image_path" id="image_path" value="{{$item->image}}">
-                        <div class="image-button">
-                            <div class="delete-image @if (empty($item->image)) hidden @endif">&#215;</div>
-                            <div class="image-button-img">
-                            @if (!empty($item->image))
-                                <img src="{{ asset($item->image) }}" alt="Image">
-                            @else
-                                <img src="{{ asset('/vendor/elfcms/basic/admin/images/icons/upload.png') }}" alt="Upload file">
-                            @endif
-                            </div>
-                            <div class="image-button-text">
-                            @if (!empty($item->image))
-                                {{ __('elfcms::default.change_file') }}
-                            @else
-                                {{ __('elfcms::default.choose_file') }}
-                            @endif
-                            </div>
-                            <input type="file" name="image" id="image">
-                        </div> --}}
                     </div>
                 </div>
                 <div class="input-box colored" id="optionsbox">

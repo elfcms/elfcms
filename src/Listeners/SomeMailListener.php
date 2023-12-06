@@ -25,7 +25,7 @@ class SomeMailListener
     /**
      * Handle the event.
      *
-     * @param  \Elfcms\Basic\Events\SomeMailEvent  $event
+     * @param  \Elfcms\Elfcms\Events\SomeMailEvent  $event
      * @return void
      */
     public function handle(SomeMailEvent $event)

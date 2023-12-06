@@ -54,7 +54,7 @@
                     @if (!empty($user->data['photo']))
                         <img src="{{ asset($user->data['photo']) }}" alt="User avatar">
                     @else
-                        <img src="{{ asset('/vendor/elfcms/basic/admin/images/icons/upload.png') }}" alt="Upload file">
+                        <img src="{{ asset('/public/elfcms/admin/images/icons/upload.png') }}" alt="Upload file">
                     @endif
                     </div>
                     {{-- <div class="image-button-text">

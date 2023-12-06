@@ -52,7 +52,7 @@
                             <i></i>
                         </div>
                         <label for="is_dynamic">
-                            {{ __('elfcms::default.display_by_url') . ': ' . config('elfcms.basic.page_path') }}/&lt;slug&gt;
+                            {{ __('elfcms::default.display_by_url') . ': ' . config('elfcms.elfcms.page_path') }}/&lt;slug&gt;
                         </label>
                     </div>
                 </div>
