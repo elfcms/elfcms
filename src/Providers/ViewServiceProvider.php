@@ -33,13 +33,19 @@ class ViewServiceProvider extends ServiceProvider
 
                 View::composer('*::admin.*', function($view) {
                     $configs = config('elfcms');
-                    $vendorPath = '';
-                    $cssPath = '/admin/css/style.css';
-                    $jsPath = '/admin/js/elf.js';
+                    $vendorPath = 'elfcms/admin';
+                    $cssPath = '/css/style.css';
+                    $jsPath = '/js/elf.js';
                     $styles = [];
                     $scripts = [];
                     if (!empty($configs)) {
                         foreach ($configs as $name => $config) {
+                            if ($name == 'elfcms') {
+                                $name = '';
+                            }
+                            else {
+                                $name = '/modules/' . $name;
+                            }
                             if (file_exists($_SERVER['DOCUMENT_ROOT'] . '/' . $vendorPath . $name . $cssPath) || file_exists($_SERVER['DOCUMENT_ROOT'] . '/public/' . $vendorPath . $name . $cssPath)) {
                                 $styles[] = $vendorPath . $name . $cssPath;
                             }
