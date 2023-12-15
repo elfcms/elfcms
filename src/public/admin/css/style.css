@@ -612,6 +612,21 @@ input[type="submit"] {
     border-radius: 50%;
 }
 
+.inline-button.transparent-button {
+    background-color: transparent;
+}
+.inline-button.transparent-button::after {
+    background-image: url("/elfcms/admin/images/non-text-button-light.png");
+}
+
+.inline-button.transparent-button:hover::after {
+    background-image: url("/elfcms/admin/images/non-text-button.png");
+}
+
+.inline-button.transparent-button:hover::before {
+    background-color: var(--main-contrast-color);
+}
+
 
 .non-text-buttons {
     display: flex;
@@ -2838,7 +2853,7 @@ body.system-login main .login-form .alert {
     display: flex;
     flex-direction: column;
     gap: 5px;
-    min-height: 30px;
+    min-height: 15px;
 }
 
 .menu-item-box.dragging {

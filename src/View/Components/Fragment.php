@@ -5,7 +5,7 @@ namespace Elfcms\Elfcms\View\Components;
 use Elfcms\Elfcms\Models\FragmentItem;
 use Illuminate\View\Component;
 
-class Box extends Component
+class Fragment extends Component
 {
     public $item, $theme;
 
