@@ -136,8 +136,13 @@ class UserController extends Controller
             }
             else {
                 foreach ($roles as $roleCode) {
-                    $role = Role::where('code',$roleCode)->first();
-                    $user->assignRole($role);
+                    if (is_numeric($roleCode)) {
+                        $role = Role::find($roleCode);
+                    }
+                    else {
+                        $role = Role::where('code',$roleCode)->first();
+                    }
+                    if (!empty($role)) $user->assignRole($role);
                 }
             }
 

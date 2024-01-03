@@ -3,7 +3,7 @@
 <div class="file-button" id="{{ $id }}">
     <input type="hidden" name="{{ $name }}[path]" id="{{ $name }}_path" value="{{ $value }}">
     <input type="file" name="{{ $name }}[file]" id="{{ $name }}_file">
-    <div class="file-temp-name" data-text="{{ __('basic::elf.choose_file') }}"></div>
+    <div class="file-temp-name" data-text="{{ __('elfcms::default.choose_file') }}"></div>
     <div class="file-temp-delete">&#215;</div>
     @if (!empty($value))
     <div class="file-wrapper">
