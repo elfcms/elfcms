@@ -419,4 +419,9 @@ return [
     'type' => 'Тип',
     'types' => 'Типы',
     /* /Fragment */
+    'permission' => 'Разрешение',
+    'permissions' => 'Разрешения',
+    'perm_read' => 'Чтение',
+    'perm_write' => 'Запись',
+    'sys_section' => 'Раздел',
 ];

@@ -417,6 +417,11 @@ return [
     'option' => 'Option',
     'options' => 'Optionen',
     'type' => 'Typ',
-    'types' => 'Typen'
+    'types' => 'Typen',
     /* /Fragment */
+    'permission' => 'Berechtigung',
+    'permissions' => 'Berechtigungen',
+    'perm_read' => 'Lesen',
+    'perm_write' => 'Schreiben',
+    'sys_section' => 'Abschnitt',
 ];

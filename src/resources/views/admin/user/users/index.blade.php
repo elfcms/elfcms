@@ -3,13 +3,13 @@
 @section('userpage-content')
 
     <div class="table-search-box">
-        <a href="{{ route('admin.users.create') }}" class="default-btn success-button icon-text-button light-icon plus-button">{{__('elfcms::default.create_new_user')}}</a>
+        <a href="{{ route('admin.user.users.create') }}" class="default-btn success-button icon-text-button light-icon plus-button">{{__('elfcms::default.create_new_user')}}</a>
         <div class="table-search-result-title">
             @if (!empty($search))
-                {{ __('elfcms::default.search_result_for') }} "{{ $search }}" <a href="{{ route('admin.users') }}" title="{{ __('elfcms::default.reset_search') }}">&#215;</a>
+                {{ __('elfcms::default.search_result_for') }} "{{ $search }}" <a href="{{ route('admin.user.users') }}" title="{{ __('elfcms::default.reset_search') }}">&#215;</a>
             @endif
         </div>
-        <form action="{{ route('admin.users') }}" method="get">
+        <form action="{{ route('admin.user.users') }}" method="get">
             <div class="input-box">
                 <label for="search">
                     {{ __('elfcms::default.search') }}
@@ -49,23 +49,23 @@
                 <tr>
                     <th>
                         ID
-                        <a href="{{ route('admin.users',UrlParams::addArr(['order'=>'id','trend'=>['desc','asc']])) }}" class="ordering @if (UrlParams::case('order',['id'=>true])) {{UrlParams::case('trend',['desc'=>'desc'],'asc')}} @endif"></a>
+                        <a href="{{ route('admin.user.users',UrlParams::addArr(['order'=>'id','trend'=>['desc','asc']])) }}" class="ordering @if (UrlParams::case('order',['id'=>true])) {{UrlParams::case('trend',['desc'=>'desc'],'asc')}} @endif"></a>
                     </th>
                     <th>
                         Email
-                        <a href="{{ route('admin.users',UrlParams::addArr(['order'=>'email','trend'=>['desc','asc']])) }}" class="ordering @if (UrlParams::case('order',['email'=>true])) {{UrlParams::case('trend',['desc'=>'desc'],'asc')}} @endif"></a>
+                        <a href="{{ route('admin.user.users',UrlParams::addArr(['order'=>'email','trend'=>['desc','asc']])) }}" class="ordering @if (UrlParams::case('order',['email'=>true])) {{UrlParams::case('trend',['desc'=>'desc'],'asc')}} @endif"></a>
                     </th>
                     <th>
                         {{ __('elfcms::default.created') }}
-                        <a href="{{ route('admin.users',UrlParams::addArr(['order'=>'created_at','trend'=>['desc','asc']])) }}" class="ordering @if (UrlParams::case('order',['created_at'=>true])) {{UrlParams::case('trend',['desc'=>'desc'],'asc')}} @endif"></a>
+                        <a href="{{ route('admin.user.users',UrlParams::addArr(['order'=>'created_at','trend'=>['desc','asc']])) }}" class="ordering @if (UrlParams::case('order',['created_at'=>true])) {{UrlParams::case('trend',['desc'=>'desc'],'asc')}} @endif"></a>
                     </th>
                     <th>
                         {{ __('elfcms::default.updated') }}
-                        <a href="{{ route('admin.users',UrlParams::addArr(['order'=>'updated_at','trend'=>['desc','asc']])) }}" class="ordering @if (UrlParams::case('order',['updated_at'=>true])) {{UrlParams::case('trend',['desc'=>'desc'],'asc')}} @endif"></a>
+                        <a href="{{ route('admin.user.users',UrlParams::addArr(['order'=>'updated_at','trend'=>['desc','asc']])) }}" class="ordering @if (UrlParams::case('order',['updated_at'=>true])) {{UrlParams::case('trend',['desc'=>'desc'],'asc')}} @endif"></a>
                     </th>
                     <th>
                         {{ __('elfcms::default.confirmed') }}
-                        <a href="{{ route('admin.users',UrlParams::addArr(['order'=>'is_confirmed','trend'=>['desc','asc']])) }}" class="ordering @if (UrlParams::case('order',['is_confirmed'=>true])) {{UrlParams::case('trend',['desc'=>'desc'],'asc')}} @endif"></a>
+                        <a href="{{ route('admin.user.users',UrlParams::addArr(['order'=>'is_confirmed','trend'=>['desc','asc']])) }}" class="ordering @if (UrlParams::case('order',['is_confirmed'=>true])) {{UrlParams::case('trend',['desc'=>'desc'],'asc')}} @endif"></a>
                     </th>
                     <th></th>
                 </tr>
@@ -85,8 +85,8 @@
                     @endif
                     </td>
                     <td class="button-column non-text-buttons">
-                        <a href="{{ route('admin.users.edit',$user->id) }}" class="default-btn edit-button" title="{{ __('elfcms::default.edit') }}"></a>
-                        <form action="{{ route('admin.users.update',$user->id) }}" method="POST">
+                        <a href="{{ route('admin.user.users.edit',$user->id) }}" class="default-btn edit-button" title="{{ __('elfcms::default.edit') }}"></a>
+                        <form action="{{ route('admin.user.users.update',$user->id) }}" method="POST">
                             @csrf
                             @method('PUT')
                             <input type="hidden" name="id" id="id" value="{{ $user->id }}">
@@ -96,7 +96,7 @@
 
                             </button>
                         </form>
-                        <form action="{{ route('admin.users.destroy',$user->id) }}" method="POST" data-submit="check">
+                        <form action="{{ route('admin.user.users.destroy',$user->id) }}" method="POST" data-submit="check">
                             @csrf
                             @method('DELETE')
                             <input type="hidden" name="id" value="{{ $user->id }}">
@@ -104,8 +104,8 @@
                             <button type="submit" class="default-btn delete-button" title="{{ __('elfcms::default.delete') }}"></button>
                         </form>
                         <div class="contextmenu-content-box">
-                            <a href="{{ route('admin.users.edit',$user->id) }}" class="contextmenu-item">{{ __('elfcms::default.edit') }}</a>
-                            <form action="{{ route('admin.users.update',$user->id) }}" method="POST">
+                            <a href="{{ route('admin.user.users.edit',$user->id) }}" class="contextmenu-item">{{ __('elfcms::default.edit') }}</a>
+                            <form action="{{ route('admin.user.users.update',$user->id) }}" method="POST">
                                 @csrf
                                 @method('PUT')
                                 <input type="hidden" name="id" id="id" value="{{ $user->id }}">
@@ -119,7 +119,7 @@
                                 @endif
                                 </button>
                             </form>
-                            <form action="{{ route('admin.users.destroy',$user->id) }}" method="POST" data-submit="check">
+                            <form action="{{ route('admin.user.users.destroy',$user->id) }}" method="POST" data-submit="check">
                                 @csrf
                                 @method('DELETE')
                                 <input type="hidden" name="id" value="{{ $user->id }}">

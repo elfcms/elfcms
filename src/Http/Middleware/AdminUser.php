@@ -18,7 +18,6 @@ class AdminUser
      */
     public function handle(Request $request, Closure $next)
     {
-        //dd($request->method());
         if ($request->method() == 'POST') {
             return $next($request);
         }
@@ -35,7 +34,6 @@ class AdminUser
         $currentRoute = Route::currentRouteName();
         if (!in_array($currentRoute, ['admin.login','admin.getrestore','admin.setrestore'])) {
             return redirect()->guest(route('admin.login'));
-            //return view('elfcms::admin.login');
         }
 
         return $next($request);

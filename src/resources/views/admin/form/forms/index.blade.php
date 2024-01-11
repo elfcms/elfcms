@@ -5,7 +5,7 @@
         <a href="{{ route('admin.forms.create') }}" class="default-btn success-button icon-text-button light-icon plus-button">{{__('elfcms::default.create_form')}}</a>
         <div class="table-search-result-title">
             @if (!empty($search))
-                {{ __('elfcms::default.search_result_for') }} "{{ $search }}" <a href="{{ route('admin.users') }}" title="{{ __('elfcms::default.reset_search') }}">&#215;</a>
+                {{ __('elfcms::default.search_result_for') }} "{{ $search }}" <a href="{{ route('admin.user.users') }}" title="{{ __('elfcms::default.reset_search') }}">&#215;</a>
             @endif
         </div>
     </div>

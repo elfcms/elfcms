@@ -3,6 +3,18 @@
 return [
     /*
     |--------------------------------------------------------------------------
+    | Name
+    |--------------------------------------------------------------------------
+    |
+    | Name of package
+    |
+    */
+
+    'name' => 'Elfcms',
+    'title' => 'ELF CMS',
+
+    /*
+    |--------------------------------------------------------------------------
     | Version
     |--------------------------------------------------------------------------
     |
@@ -155,20 +167,20 @@ return [
         [
             "title" => "Users",
             "lang_title" => "elfcms::default.users",
-            "route" => "admin.users",
-            "parent_route" => "admin.users",
+            "route" => "admin.user.users",
+            "parent_route" => "admin.user",
             "icon" => "/elfcms/admin/images/icons/users.png",
             "position" => 20,
             "submenu" => [
                 [
                     "title" => "Users",
                     "lang_title" => "elfcms::default.users",
-                    "route" => "admin.users"
+                    "route" => "admin.user.users"
                 ],
                 [
                     "title" => "Roles",
                     "lang_title" => "elfcms::default.roles",
-                    "route" => "admin.users.roles"
+                    "route" => "admin.user.roles"
                 ],
             ]
         ],
@@ -239,6 +251,84 @@ return [
             "parent_route" => "admin.statistics.index",
             "icon" => "/elfcms/admin/images/icons/stats.png",
             "position" => 90,
+        ]
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Access control
+    |--------------------------------------------------------------------------
+    |
+    | Define access rules for admin panel pages.
+    |
+    */
+
+    "access_routes" => [
+        [
+            "title" => "Settings",
+            "lang_title" => "elfcms::default.settings",
+            "route" => "admin.settings",
+            "actions" => ["read", "write"],
+        ],
+        [
+            "title" => "Users",
+            "lang_title" => "elfcms::default.users",
+            "route" => "admin.user.users",
+            "actions" => ["read", "write"],
+        ],
+        [
+            "title" => "User roles",
+            "lang_title" => "elfcms::default.roles",
+            "route" => "admin.user.roles",
+            "actions" => ["read", "write"],
+        ],
+        [
+            "title" => "Addresses",
+            "lang_title" => "elfcms::default.addresses",
+            "route" => "admin.email.addresses",
+            "actions" => ["read", "write"],
+        ],
+        [
+            "title" => "Events",
+            "lang_title" => "elfcms::default.events",
+            "route" => "admin.email.events",
+            "actions" => ["read", "write"],
+        ],
+        [
+            "title" => "Form",
+            "lang_title" => "elfcms::default.form",
+            "route" => "admin.forms",
+            "actions" => ["read", "write"],
+        ],
+        [
+            "title" => "Menu",
+            "lang_title" => "elfcms::default.menu",
+            "route" => "admin.menus",
+            "actions" => ["read", "write"],
+        ],
+        [
+            "title" => "Pages",
+            "lang_title" => "elfcms::default.pages",
+            "route" => "admin.page",
+            "actions" => ["read", "write"],
+        ],
+        [
+            "title" => "Messages",
+            "lang_title" => "elfcms::default.messages",
+            "route" => "admin.messages",
+            "actions" => ["read", "write"],
+        ],
+        [
+            "title" => "Fragment",
+            "lang_title" => "elfcms::default.fragment",
+            "route" => "admin.fragment",
+            "actions" => ["read", "write"],
+        ],
+        [
+            "title" => "Statistics",
+            "lang_title" => "elfcms::default.statistics",
+            "route" => "admin.statistics",
+            "actions" => ["read"],
         ]
     ],
 

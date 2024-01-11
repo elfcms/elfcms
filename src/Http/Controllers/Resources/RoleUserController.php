@@ -19,7 +19,7 @@ class RoleUserController extends Controller
         //$users = User::paginate(30);
         $roles = Role::paginate(30);
         $notEdit = ['admin','users'];
-        return view('elfcms::admin.users.roles.index',[
+        return view('elfcms::admin.user.roles.index',[
             'page' => [
                 'title' => 'Roles',
                 'current' => url()->current(),
@@ -36,7 +36,7 @@ class RoleUserController extends Controller
      */
     public function create()
     {
-        return view('elfcms::admin.users.roles.create',[
+        return view('elfcms::admin.user.roles.create',[
             'page' => [
                 'title' => 'Create role'
             ]
@@ -56,12 +56,12 @@ class RoleUserController extends Controller
             'code' => 'required'
         ]);
         if (Role::where('name',$validated['name'])->exists()) {
-            return redirect(route('admin.users.roles.create'))->withErrors([
+            return redirect(route('admin.user.roles.create'))->withErrors([
                 'name' => 'Role already exists'
             ]);
         }
         if (Role::where('code',$validated['code'])->exists()) {
-            return redirect(route('admin.users.roles.create'))->withErrors([
+            return redirect(route('admin.user.roles.create'))->withErrors([
                 'code' => 'Role already exists'
             ]);
         }
@@ -69,9 +69,9 @@ class RoleUserController extends Controller
         $role = Role::create($validated);
 
         if ($role) {
-            return redirect(route('admin.users.roles.edit',['role'=>$role->id]))->with('rolecreated','Role created successfully');
+            return redirect(route('admin.user.roles.edit',['role'=>$role->id]))->with('rolecreated','Role created successfully');
         }
-        return redirect(route('admin.users.roles.create'))->withErrors([
+        return redirect(route('admin.user.roles.create'))->withErrors([
             'code' => 'Role already exists'
         ]);
     }

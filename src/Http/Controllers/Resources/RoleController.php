@@ -3,7 +3,9 @@
 namespace Elfcms\Elfcms\Http\Controllers\Resources;
 
 use App\Http\Controllers\Controller;
+use Elfcms\Elfcms\Aux\Admin\Permissions;
 use Elfcms\Elfcms\Models\Role;
+use Elfcms\Elfcms\Models\RolePermission;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -27,8 +29,8 @@ class RoleController extends Controller
             $order = $request->order;
         }
         $roles = Role::orderBy($order, $trend)->paginate(30);
-        $notEdit = ['admin','users'];
-        return view('elfcms::admin.users.roles.index',[
+        $notEdit = ['admin', 'users'];
+        return view('elfcms::admin.user.roles.index', [
             'page' => [
                 'title' => __('elfcms::default.roles'),
                 'current' => url()->current(),
@@ -45,10 +47,12 @@ class RoleController extends Controller
      */
     public function create()
     {
-        return view('elfcms::admin.users.roles.create',[
+        $accessRoutes = Permissions::routes();
+        return view('elfcms::admin.user.roles.create', [
             'page' => [
                 'title' => __('elfcms::default.create_new_role')
-            ]
+            ],
+            'accessRoutes' => $accessRoutes
         ]);
     }
 
@@ -64,13 +68,13 @@ class RoleController extends Controller
             'name' => 'required',
             'code' => 'required'
         ]);
-        if (Role::where('name',$validated['name'])->exists()) {
-            return redirect(route('admin.users.roles.create'))->withErrors([
+        if (Role::where('name', $validated['name'])->exists()) {
+            return redirect(route('admin.user.roles.create'))->withErrors([
                 'name' => 'Role already exists'
             ]);
         }
-        if (Role::where('code',$validated['code'])->exists()) {
-            return redirect(route('admin.users.roles.create'))->withErrors([
+        if (Role::where('code', $validated['code'])->exists()) {
+            return redirect(route('admin.user.roles.create'))->withErrors([
                 'code' => 'Role already exists'
             ]);
         }
@@ -80,9 +84,41 @@ class RoleController extends Controller
         $role = Role::create($validated);
 
         if ($role) {
-            return redirect(route('admin.users.roles.edit',['role'=>$role->id]))->with('rolecreated','Role created successfully');
+
+            if (!empty($request->permissions)) {
+
+                $routes = Permissions::routes();
+
+                $permRows = [];
+
+                foreach ($routes as $moduleRoutes) {
+                    foreach ($moduleRoutes as $routeName => $routeData) {
+                        $accessName = str_replace('.', '_', $routeName);
+                        $read = 0;
+                        $write = 0;
+                        if (!empty($request->permissions[$accessName])) {
+                            if (!empty($request->permissions[$accessName]['read'])) $read = 1;
+                            if (!empty($request->permissions[$accessName]['write'])) $write = 1;
+                        }
+                        $permRows[] = [
+                            'role_id' => $role->id,
+                            'route' => $routeName,
+                            'read' => $read,
+                            'write' => $write,
+                        ];
+                    }
+                }
+
+                RolePermission::upsert(
+                    $permRows,
+                    ['role_id', 'route'],
+                    ['read', 'write']
+                );
+            }
+
+            return redirect(route('admin.user.roles.edit', ['role' => $role]))->with('rolecreated', 'Role created successfully');
         }
-        return redirect(route('admin.users.roles.create'))->withErrors([
+        return redirect(route('admin.user.roles.create'))->withErrors([
             'rolecreateerror' => 'Role creating error'
         ]);
     }
@@ -106,11 +142,13 @@ class RoleController extends Controller
      */
     public function edit(Role $role)
     {
-        return view('elfcms::admin.users.roles.edit',[
+        $accessRoutes = Permissions::roleRoutes($role);
+        return view('elfcms::admin.user.roles.edit', [
             'page' => [
                 'title' => __('elfcms::default.edit_role')
             ],
-            'role' => $role
+            'role' => $role,
+            'accessRoutes' => $accessRoutes,
         ]);
     }
 
@@ -134,7 +172,38 @@ class RoleController extends Controller
 
         $role->save();
 
-        return redirect(route('admin.users.roles.edit',['role'=>$role->id]))->with('roleedited','Role edited successfully');
+        if (!empty($request->permissions)) {
+
+            $routes = Permissions::routes();
+
+            $permRows = [];
+
+            foreach ($routes as $moduleRoutes) {
+                foreach ($moduleRoutes as $routeName => $routeData) {
+                    $accessName = str_replace('.', '_', $routeName);
+                    $read = 0;
+                    $write = 0;
+                    if (!empty($request->permissions[$accessName])) {
+                        if (!empty($request->permissions[$accessName]['read'])) $read = 1;
+                        if (!empty($request->permissions[$accessName]['write'])) $write = 1;
+                    }
+                    $permRows[] = [
+                        'role_id' => $role->id,
+                        'route' => $routeName,
+                        'read' => $read,
+                        'write' => $write,
+                    ];
+                }
+            }
+
+            RolePermission::upsert(
+                $permRows,
+                ['role_id', 'route'],
+                ['read', 'write']
+            );
+        }
+
+        return redirect(route('admin.user.roles.edit', ['role' => $role]))->with('roleedited', 'Role edited successfully');
     }
 
     /**
@@ -146,9 +215,9 @@ class RoleController extends Controller
     public function destroy(Role $role)
     {
         if (!$role->delete()) {
-            return redirect(route('admin.users.roles'))->withErrors(['roledelerror'=>'Error of role deleting']);
+            return redirect(route('admin.user.roles'))->withErrors(['roledelerror' => 'Error of role deleting']);
         }
 
-        return redirect(route('admin.users.roles'))->with('roledeleted','Role deleted successfully');
+        return redirect(route('admin.user.roles'))->with('roledeleted', 'Role deleted successfully');
     }
 }

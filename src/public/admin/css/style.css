@@ -2970,3 +2970,20 @@ footer#footer {
     margin: 0;
     padding: 10px 10px;
 }
+
+.user-permissions-box {
+    display: grid;
+    grid-template-columns: repeat(3,auto);
+    grid-column-gap : 10px;
+}
+.user-permissions-col-title{
+    padding: 5px;
+    font-weight: bold;
+}
+.user-permissions-row {
+    padding: 5px;
+}
+.user-permissions-row.checkbox-switch-wrapper {
+    display: flex;
+    justify-content: center;
+}

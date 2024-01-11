@@ -10,7 +10,7 @@
 @enderror
 <div class="user-form item-form">
     <h3>{{ __('elfcms::default.create_new_user') }}</h3>
-    <form action="{{ route('admin.users.store') }}" method="POST">
+    <form action="{{ route('admin.user.users.store') }}" method="POST">
         @csrf
         <div class="colored-rows-box">
             <div class="input-box colored">
@@ -84,7 +84,7 @@
         </div>
         <div class="button-box single-box">
             <button type="submit" class="default-btn success-button">{{ __('elfcms::default.submit') }}</button>
-            <a href="{{ route('admin.users') }}" class="default-btn">{{ __('elfcms::default.cancel') }}</a>
+            <a href="{{ route('admin.user.users') }}" class="default-btn">{{ __('elfcms::default.cancel') }}</a>
         </div>
     </form>
 </div>

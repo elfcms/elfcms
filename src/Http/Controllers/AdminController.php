@@ -27,9 +27,9 @@ class AdminController extends Controller
         foreach ($menuData as $key => $data) {
             $subdata = [];
             $text = '';
-            if ($data['route'] == 'admin.users' && !empty($data['submenu'])) {
+            if ($data['route'] == 'admin.user.users' && !empty($data['submenu'])) {
                 foreach ($data['submenu'] as $submenu) {
-                    if ($submenu['route'] == 'admin.users') {
+                    if ($submenu['route'] == 'admin.user.users') {
                         $usersCount = User::count();
                         $inactiveUserCount = User::where('is_confirmed','<>',1)->count();
                         $subdata['users'] = [
@@ -37,7 +37,7 @@ class AdminController extends Controller
                             'value' => $usersCount . ' (' . $inactiveUserCount . ' ' . __('elfcms::default.inactive') . ')'
                         ];
                     }
-                    if ($submenu['route'] == 'admin.users.roles') {
+                    if ($submenu['route'] == 'admin.user.roles') {
                         $rolesCount = Role::count();
                         $subdata['roles'] = [
                             'title' => __('elfcms::default.roles'),
@@ -103,7 +103,7 @@ class AdminController extends Controller
 
     public function users()
     {
-        return view('elfcms::admin.users.index',[
+        return view('elfcms::admin.user.users.index',[
             'page' => [
                 'title' => 'Users',
                 'current' => url()->current(),

@@ -419,4 +419,9 @@ return [
     'type' => 'Type',
     'types' => 'Types',
     /* /Fragment */
+    'permission' => 'Permission',
+    'permissions' => 'Permissions',
+    'perm_read' => 'Read',
+    'perm_write' => 'Write',
+    'sys_section' => 'Section',
 ];

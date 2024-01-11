@@ -23,7 +23,6 @@ Route::group(['middleware'=>['web','cookie']],function() use ($adminPath) {
             return redirect($adminPath . '/login');
         })->name('logout');
 
-
         Route::get($adminPath . '/forgot-password', [Elfcms\Elfcms\Http\Controllers\LoginController::class, 'getRestoreForm'])->name('getrestore');
         Route::post($adminPath . '/forgot-password', [Elfcms\Elfcms\Http\Controllers\LoginController::class, 'getRestore']);
 
@@ -38,17 +37,26 @@ Route::group(['middleware'=>['web','cookie']],function() use ($adminPath) {
             Route::get($adminPath . '/settings',[Elfcms\Elfcms\Http\Controllers\SettingController::class,'index'])->name('index');
             Route::post($adminPath . '/settings',[Elfcms\Elfcms\Http\Controllers\SettingController::class,'save'])->name('save');
         });
-        Route::resource($adminPath . '/users/roles', Elfcms\Elfcms\Http\Controllers\Resources\RoleController::class)->names([
-            'index' => 'users.roles',
-            'create' => 'users.roles.create',
-            'edit' => 'users.roles.edit',
-            'store' => 'users.roles.store',
-            'show' => 'users.roles.show',
-            'edit' => 'users.roles.edit',
-            'update' => 'users.roles.update',
-            'destroy' => 'users.roles.destroy'
+        Route::resource($adminPath . '/user/roles', Elfcms\Elfcms\Http\Controllers\Resources\RoleController::class)->names([
+            'index' => 'user.roles',
+            'create' => 'user.roles.create',
+            'edit' => 'user.roles.edit',
+            'store' => 'user.roles.store',
+            'show' => 'user.roles.show',
+            'edit' => 'user.roles.edit',
+            'update' => 'user.roles.update',
+            'destroy' => 'user.roles.destroy'
         ]);
-        Route::resource($adminPath . '/users', Elfcms\Elfcms\Http\Controllers\Resources\UserController::class)->names(['index' => 'users']);
+        Route::resource($adminPath . '/user/users', Elfcms\Elfcms\Http\Controllers\Resources\UserController::class)->names([
+            'index' => 'user.users',
+            'create' => 'user.users.create',
+            'edit' => 'user.users.edit',
+            'store' => 'user.users.store',
+            'show' => 'user.users.show',
+            'edit' => 'user.users.edit',
+            'update' => 'user.users.update',
+            'destroy' => 'user.users.destroy'
+        ]);
 
         Route::get($adminPath . '/ajax/json/lang/{name}',function(Request $request ,$name){
             $result = [];

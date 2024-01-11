@@ -68,7 +68,7 @@ class UserController extends Controller
 
         }
 
-        return view('elfcms::admin.users.index',[
+        return view('elfcms::admin.user.users.index',[
             'page' => [
                 'title' => __('elfcms::default.users'),
                 'current' => url()->current(),
@@ -93,7 +93,7 @@ class UserController extends Controller
         if (!$defaultRoleCode) {
             $defaultRoleCode = 'users';
         }
-        return view('elfcms::admin.users.create',[
+        return view('elfcms::admin.user.users.create',[
             'page' => [
                 'title' => __('elfcms::default.create_new_user')
             ],
@@ -115,7 +115,7 @@ class UserController extends Controller
             'password' => 'required|min:6|confirmed'
         ]);
         if (User::where('email',$validated['email'])->exists()) {
-            return redirect(route('admin.users.create'))->withErrors([
+            return redirect(route('admin.user.users.create'))->withErrors([
                 'email' => 'User already exists'
             ]);
         }
@@ -149,7 +149,7 @@ class UserController extends Controller
             $user->is_confirmed = empty($request->is_confirmed) ? 0 : 1;
             $user->save();
 
-            return redirect(route('admin.users.edit',['user'=>$user->id]))->with('usercreated','User created successfully');
+            return redirect(route('admin.user.users.edit',['user'=>$user->id]))->with('usercreated','User created successfully');
         }
     }
 
@@ -161,7 +161,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        return view('elfcms::admin.users.show',[
+        return view('elfcms::admin.user.users.show',[
             'page' => [
                 'title' => __('elfcms::default.show_user')
             ]
@@ -200,7 +200,7 @@ class UserController extends Controller
                 'thumbnail' => null
             ];
         }
-        return view('elfcms::admin.users.edit',[
+        return view('elfcms::admin.user.users.edit',[
             'page' => [
                 'title' => __('elfcms::default.edit_user')
             ],
@@ -233,7 +233,7 @@ class UserController extends Controller
 
             $user->save();
 
-            return redirect(route('admin.users'))->with('useredited','User ' . $userAction . ' successfully');
+            return redirect(route('admin.user.users'))->with('useredited','User ' . $userAction . ' successfully');
         }
 
         $defaultRoleCode = Config::get('elfcms.elfcms.user_default_role');
@@ -289,7 +289,7 @@ class UserController extends Controller
 
 
         if (User::where('email',$validated['email'])->where('id','<>',$user->id)->first()) {
-            return redirect(route('admin.users.create'))->withErrors([
+            return redirect(route('admin.user.users.create'))->withErrors([
                 'email' => 'User already exists'
             ]);
         }
@@ -300,7 +300,7 @@ class UserController extends Controller
 
         $result = $user->save();
         if (!$result) {
-            return redirect(route('admin.users.edit',['user'=>$user->id]))->withErrors([
+            return redirect(route('admin.user.users.edit',['user'=>$user->id]))->withErrors([
                 'email' => __('elfcms::default.error_of_editing_user')
             ]);
         }
@@ -373,7 +373,7 @@ class UserController extends Controller
             $user->data()->create($dataValidated);
         }
 
-        return redirect(route('admin.users.edit',['user'=>$user->id]))->with('useredited','User edited successfully');
+        return redirect(route('admin.user.users.edit',['user'=>$user->id]))->with('useredited','User edited successfully');
 
     }
 
@@ -392,28 +392,28 @@ class UserController extends Controller
         if ($user->data) {
             if (!$user->data()->delete()) {
                 DB::rollBack();
-                return redirect(route('admin.users'))->withErrors(['userdelerror'=>'Error of user data deleting']);
+                return redirect(route('admin.user.users'))->withErrors(['userdelerror'=>'Error of user data deleting']);
             }
         }
         if ($user->roles) {
             foreach ($user->roles as $role) {
                 if (RoleUser::find($role->id)->delete()) {
                     DB::rollBack();
-                    return redirect(route('admin.users'))->withErrors(['userdelerror'=>'Error of roles of user deleting']);
+                    return redirect(route('admin.user.users'))->withErrors(['userdelerror'=>'Error of roles of user deleting']);
                 }
             }
         }
 
         if (!$user->delete()) {
             DB::rollBack();
-            return redirect(route('admin.users'))->withErrors(['userdelerror'=>'Error of user deleting']);
+            return redirect(route('admin.user.users'))->withErrors(['userdelerror'=>'Error of user deleting']);
         }
 
         DB::commit(); */
         if (!$user->delete()) {
-            return redirect(route('admin.users'))->withErrors(['userdelerror'=>'Error of user deleting']);
+            return redirect(route('admin.user.users'))->withErrors(['userdelerror'=>'Error of user deleting']);
         }
 
-        return redirect(route('admin.users'))->with('userdeleted','User deleted successfully');
+        return redirect(route('admin.user.users'))->with('userdeleted','User deleted successfully');
     }
 }

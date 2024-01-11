@@ -2,10 +2,10 @@
 
 @section('userpage-content')
     <div class="table-search-box">
-        <a href="{{ route('admin.users.roles.create') }}" class="default-btn success-button icon-text-button light-icon plus-button">{{__('elfcms::default.create_new_role')}}</a>
+        <a href="{{ route('admin.user.roles.create') }}" class="default-btn success-button icon-text-button light-icon plus-button">{{__('elfcms::default.create_new_role')}}</a>
         <div class="table-search-result-title">
             @if (!empty($search))
-                {{ __('elfcms::default.search_result_for') }} "{{ $search }}" <a href="{{ route('admin.users') }}" title="{{ __('elfcms::default.reset_search') }}">&#215;</a>
+                {{ __('elfcms::default.search_result_for') }} "{{ $search }}" <a href="{{ route('admin.user.users') }}" title="{{ __('elfcms::default.reset_search') }}">&#215;</a>
             @endif
         </div>
 
@@ -32,27 +32,27 @@
                 <tr>
                     <th>
                         ID
-                        <a href="{{ route('admin.users.roles',UrlParams::addArr(['order'=>'id','trend'=>['desc','asc']])) }}" class="ordering @if (UrlParams::case('order',['id'=>true])) {{UrlParams::case('trend',['desc'=>'desc'],'asc')}} @endif"></a>
+                        <a href="{{ route('admin.user.roles',UrlParams::addArr(['order'=>'id','trend'=>['desc','asc']])) }}" class="ordering @if (UrlParams::case('order',['id'=>true])) {{UrlParams::case('trend',['desc'=>'desc'],'asc')}} @endif"></a>
                     </th>
                     <th>
                         {{ __('elfcms::default.name') }}
-                        <a href="{{ route('admin.users.roles',UrlParams::addArr(['order'=>'name','trend'=>['desc','asc']])) }}" class="ordering @if (UrlParams::case('order',['name'=>true])) {{UrlParams::case('trend',['desc'=>'desc'],'asc')}} @endif"></a>
+                        <a href="{{ route('admin.user.roles',UrlParams::addArr(['order'=>'name','trend'=>['desc','asc']])) }}" class="ordering @if (UrlParams::case('order',['name'=>true])) {{UrlParams::case('trend',['desc'=>'desc'],'asc')}} @endif"></a>
                     </th>
                     <th>
                         {{ __('elfcms::default.code') }}
-                        <a href="{{ route('admin.users.roles',UrlParams::addArr(['order'=>'code','trend'=>['desc','asc']])) }}" class="ordering @if (UrlParams::case('order',['code'=>true])) {{UrlParams::case('trend',['desc'=>'desc'],'asc')}} @endif"></a>
+                        <a href="{{ route('admin.user.roles',UrlParams::addArr(['order'=>'code','trend'=>['desc','asc']])) }}" class="ordering @if (UrlParams::case('order',['code'=>true])) {{UrlParams::case('trend',['desc'=>'desc'],'asc')}} @endif"></a>
                     </th>
                     <th>
                         {{ __('elfcms::default.description') }}
-                        <a href="{{ route('admin.users.roles',UrlParams::addArr(['order'=>'description','trend'=>['desc','asc']])) }}" class="ordering @if (UrlParams::case('order',['description'=>true])) {{UrlParams::case('trend',['desc'=>'desc'],'asc')}} @endif"></a>
+                        <a href="{{ route('admin.user.roles',UrlParams::addArr(['order'=>'description','trend'=>['desc','asc']])) }}" class="ordering @if (UrlParams::case('order',['description'=>true])) {{UrlParams::case('trend',['desc'=>'desc'],'asc')}} @endif"></a>
                     </th>
                     <th>
                         {{ __('elfcms::default.created') }}
-                        <a href="{{ route('admin.users.roles',UrlParams::addArr(['order'=>'created_at','trend'=>['desc','asc']])) }}" class="ordering @if (UrlParams::case('order',['created_at'=>true])) {{UrlParams::case('trend',['desc'=>'desc'],'asc')}} @endif"></a>
+                        <a href="{{ route('admin.user.roles',UrlParams::addArr(['order'=>'created_at','trend'=>['desc','asc']])) }}" class="ordering @if (UrlParams::case('order',['created_at'=>true])) {{UrlParams::case('trend',['desc'=>'desc'],'asc')}} @endif"></a>
                     </th>
                     <th>
                         {{ __('elfcms::default.updated') }}
-                        <a href="{{ route('admin.users.roles',UrlParams::addArr(['order'=>'updated_at','trend'=>['desc','asc']])) }}" class="ordering @if (UrlParams::case('order',['updated_at'=>true])) {{UrlParams::case('trend',['desc'=>'desc'],'asc')}} @endif"></a>
+                        <a href="{{ route('admin.user.roles',UrlParams::addArr(['order'=>'updated_at','trend'=>['desc','asc']])) }}" class="ordering @if (UrlParams::case('order',['updated_at'=>true])) {{UrlParams::case('trend',['desc'=>'desc'],'asc')}} @endif"></a>
                     </th>
                     <th></th>
                 </tr>
@@ -63,7 +63,7 @@
                     <td>{{ $role->id }}</td>
                     <td>
                     @if ($notedit && !in_array($role->code,$notedit))
-                        <a href="{{ route('admin.users.roles.edit',$role->id) }}">{{ $role->name }}</a>
+                        <a href="{{ route('admin.user.roles.edit',$role->id) }}">{{ $role->name }}</a>
                     @else
                         <span>{{ $role->name }}</span>
                     @endif
@@ -74,8 +74,8 @@
                     <td>{{ $role->updated_at }}</td>
                     <td class="button-column  non-text-buttons">
                         @if ($notedit && !in_array($role->code,$notedit))
-                        <a href="{{ route('admin.users.roles.edit',$role->id) }}" class="default-btn edit-button" title="{{ __('elfcms::default.edit') }}"></a>
-                        <form action="{{ route('admin.users.roles.destroy',$role->id) }}" method="POST" data-submit="check">
+                        <a href="{{ route('admin.user.roles.edit',$role->id) }}" class="default-btn edit-button" title="{{ __('elfcms::default.edit') }}"></a>
+                        <form action="{{ route('admin.user.roles.destroy',$role->id) }}" method="POST" data-submit="check">
                             @csrf
                             @method('DELETE')
                             <input type="hidden" name="id" value="{{ $role->id }}">
@@ -84,10 +84,10 @@
                         </form>
                         @endif
                         <div class="contextmenu-content-box">
-                            <a href="{{ route('admin.users',UrlParams::addArr(['role'=>$role->id])) }}" class="contextmenu-item">{{ __('elfcms::default.show_users') }}</a>
+                            <a href="{{ route('admin.user.users',UrlParams::addArr(['role'=>$role->id])) }}" class="contextmenu-item">{{ __('elfcms::default.show_users') }}</a>
                         @if ($notedit && !in_array($role->code,$notedit))
-                            <a href="{{ route('admin.users.roles.edit',$role->id) }}" class="contextmenu-item">{{ __('elfcms::default.edit') }}</a>
-                            <form action="{{ route('admin.users.roles.destroy',$role->id) }}" method="POST" data-submit="check">
+                            <a href="{{ route('admin.user.roles.edit',$role->id) }}" class="contextmenu-item">{{ __('elfcms::default.edit') }}</a>
+                            <form action="{{ route('admin.user.roles.destroy',$role->id) }}" method="POST" data-submit="check">
                                 @csrf
                                 @method('DELETE')
                                 <input type="hidden" name="id" value="{{ $role->id }}">

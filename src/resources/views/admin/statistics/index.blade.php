@@ -137,7 +137,7 @@
                             </td>
                             <td>
                                 @if (!empty($visit->user))
-                                    <a href="{{ route('admin.users.edit', $visit->user_id) }}"
+                                    <a href="{{ route('admin.user.users.edit', $visit->user_id) }}"
                                         title="{{ $visit->user->name() }}">{{ $visit->user_id }}</a>
                                 @else
                                     {{ $visit->user_id }}
@@ -256,7 +256,7 @@
                             </td>
                             <td>
                                 @if (!empty($visit->user))
-                                    <a href="{{ route('admin.users.edit', $visit->user_id) }}"
+                                    <a href="{{ route('admin.user.users.edit', $visit->user_id) }}"
                                         title="{{ $visit->user->name() }}">{{ $visit->user_id }}</a>
                                 @else
                                     {{ $visit->user_id }}

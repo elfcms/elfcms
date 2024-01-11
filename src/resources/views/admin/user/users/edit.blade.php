@@ -22,7 +22,7 @@
     @endif
 <div class="user-form item-form">
     <h3>{{ __('elfcms::default.edit_user') }}{{ $user->id }}</h3>
-    <form action="{{ route('admin.users.update',$user->id) }}" method="POST" enctype="multipart/form-data">
+    <form action="{{ route('admin.user.users.update',$user->id) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <div class="colored-rows-box">
@@ -217,7 +217,7 @@
         </div>
         <div class="button-box single-box">
             <button type="submit" class="default-btn success-button">{{ __('elfcms::default.submit') }}</button>
-            <a href="{{ route('admin.users') }}" class="default-btn">{{ __('elfcms::default.cancel') }}</a>
+            <a href="{{ route('admin.user.users') }}" class="default-btn">{{ __('elfcms::default.cancel') }}</a>
         </div>
     </form>
     <script>
