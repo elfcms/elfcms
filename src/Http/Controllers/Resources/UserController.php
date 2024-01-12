@@ -284,7 +284,7 @@ class UserController extends Controller
                 'password' => 'required|min:6|confirmed'
             ]);
 
-            $user->password = Hash::make($request->password);
+            $user->password = $request->password;
         }
 
 

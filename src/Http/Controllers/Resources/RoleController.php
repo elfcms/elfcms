@@ -18,8 +18,6 @@ class RoleController extends Controller
      */
     public function index(Request $request)
     {
-        //$users = User::paginate(30);
-        //dd(Auth::user());
         $trend = 'asc';
         $order = 'id';
         if (!empty($request->trend) && $request->trend == 'desc') {
@@ -178,6 +176,7 @@ class RoleController extends Controller
 
             $permRows = [];
 
+
             foreach ($routes as $moduleRoutes) {
                 foreach ($moduleRoutes as $routeName => $routeData) {
                     $accessName = str_replace('.', '_', $routeName);
@@ -187,20 +186,19 @@ class RoleController extends Controller
                         if (!empty($request->permissions[$accessName]['read'])) $read = 1;
                         if (!empty($request->permissions[$accessName]['write'])) $write = 1;
                     }
-                    $permRows[] = [
-                        'role_id' => $role->id,
-                        'route' => $routeName,
-                        'read' => $read,
-                        'write' => $write,
-                    ];
+                    $row = RolePermission::updateOrCreate(
+                        [
+                            'role_id' => $role->id,
+                            'route' => $routeName,
+                        ],
+                        [
+                            'read' => $read,
+                            'write' => $write,
+                        ]
+                    );
+                    $permRows[] = $row;
                 }
             }
-
-            RolePermission::upsert(
-                $permRows,
-                ['role_id', 'route'],
-                ['read', 'write']
-            );
         }
 
         return redirect(route('admin.user.roles.edit', ['role' => $role]))->with('roleedited', 'Role edited successfully');

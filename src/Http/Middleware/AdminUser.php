@@ -31,9 +31,11 @@ class AdminUser
                 }
             }
         }
-        $currentRoute = Route::currentRouteName();
-        if (!in_array($currentRoute, ['admin.login','admin.getrestore','admin.setrestore'])) {
-            return redirect()->guest(route('admin.login'));
+        else {
+            $currentRoute = Route::currentRouteName();
+            if (!in_array($currentRoute, ['admin.login','admin.getrestore','admin.setrestore'])) {
+                return redirect()->guest(route('admin.login'));
+            }
         }
 
         return $next($request);

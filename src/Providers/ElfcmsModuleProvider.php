@@ -13,6 +13,7 @@ use Elfcms\Elfcms\Console\Commands\ElfcmsRoles;
 use Elfcms\Elfcms\Console\Commands\ElfcmsSettings;
 use Elfcms\Elfcms\Http\Middleware\CookieCheck;
 use Elfcms\Elfcms\Http\Middleware\AccountUser;
+use Elfcms\Elfcms\Http\Middleware\AdminAccess;
 use Elfcms\Elfcms\Http\Middleware\AdminUser;
 use Elfcms\Elfcms\Http\Middleware\VisitStatistics;
 use Elfcms\Elfcms\Livewire\AdminImageUpload;
@@ -174,6 +175,10 @@ class ElfcmsModuleProvider extends ServiceProvider
 
         $router->middlewareGroup('admin', array(
             AdminUser::class
+        ));
+
+        $router->middlewareGroup('access', array(
+            AdminAccess::class
         ));
 
         $router->middlewareGroup('account', array(

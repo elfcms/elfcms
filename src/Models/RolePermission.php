@@ -13,5 +13,7 @@ class RolePermission extends Model
         'role_id',
         'permission',
         'route',
+        'read',
+        'write'
     ];
 }

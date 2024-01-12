@@ -11,7 +11,7 @@ $adminPath = config('elfcms.elfcms.admin_path') ?? '/admin';
 Route::group(['middleware'=>['web','cookie']],function() use ($adminPath) {
 
     /* Admin panel */
-    Route::name('admin.')->middleware('admin')->group(function() use ($adminPath) {
+    Route::name('admin.')->middleware(['admin','access'])->group(function() use ($adminPath) {
 
         Route::get($adminPath . '',[Elfcms\Elfcms\Http\Controllers\AdminController::class,'index'])
         ->name('index');

@@ -101,15 +101,9 @@
             <div class="userinfo">
                 {{ $currentUser->user->name() }}
                 <div class="userinfo_avatar">
-                    {{-- @if (!empty($currentUser->avatar()))
-                <img src="/{{ $currentUser->avatar(true) }}" alt="">
-            @else
-                <img src="/images/icons/users.png" alt="">
-            @endif --}}
                 </div>
                 <nav class="userdata">
                     <ul>
-                        {{-- <li><a href="#">Params</a></li> --}}
                         <li><a href="/admin/logout">Logout</a></li>
                     </ul>
                 </nav>
