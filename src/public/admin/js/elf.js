@@ -177,7 +177,8 @@ function inputFileImg (input) {
         console.log('err')
         return false
     }
-    const wrapper = input.closest('.image-button')
+    const wrapper = input.closest('.input-image-button')
+    console.log(wrapper)
     if (wrapper) {
         const img = wrapper.querySelector('.image-button-img img')
         const text = wrapper.querySelector('.image-button-text')
