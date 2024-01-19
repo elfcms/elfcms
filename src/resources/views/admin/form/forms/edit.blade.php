@@ -22,15 +22,7 @@
             @method('PUT')
             <div class="colored-rows-box">
                 <div class="input-box colored">
-                    <div class="checkbox-switch-wrapper">
-                        <div class="checkbox-switch blue">
-                            <input type="checkbox" name="active" id="active" value="1" @if(!empty($form->active)) checked @endif>
-                            <i></i>
-                        </div>
-                        <label for="active">
-                            {{ __('elfcms::default.active') }}
-                        </label>
-                    </div>
+                    <x-elfcms-input-checkbox code="active" label="{{ __('elfcms::default.active') }}" checked style="blue" />
                 </div>
                 <div class="input-box colored">
                     <label for="title">{{ __('elfcms::default.title') }}</label>

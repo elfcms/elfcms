@@ -16,7 +16,6 @@ use Elfcms\Elfcms\Http\Middleware\AccountUser;
 use Elfcms\Elfcms\Http\Middleware\AdminAccess;
 use Elfcms\Elfcms\Http\Middleware\AdminUser;
 use Elfcms\Elfcms\Http\Middleware\VisitStatistics;
-use Elfcms\Elfcms\Livewire\AdminImageUpload;
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
 use Elfcms\Elfcms\Providers\EventServiceProvider;
@@ -91,15 +90,6 @@ class ElfcmsModuleProvider extends ServiceProvider
                 }
             }
         }
-        /* $this->publishes([
-            $moduleDir.'/resources/lang/en/validation.php' => resource_path('lang/en/validation.php'),
-        ],'lang');
-        $this->publishes([
-            $moduleDir.'/resources/lang/de/validation.php' => resource_path('lang/de/validation.php'),
-        ],'lang');
-        $this->publishes([
-            $moduleDir.'/resources/lang/ru/validation.php' => resource_path('lang/ru/validation.php'),
-        ],'lang'); */
 
         $this->publishes([
             $moduleDir.'/resources/lang' => resource_path('lang/elfcms/elfcms'),
@@ -123,39 +113,12 @@ class ElfcmsModuleProvider extends ServiceProvider
         $this->publishes([
             $moduleDir.'/resources/views/emails' => resource_path('views/elfcms/emails'),
         ],'emails');
-        /* $this->publishes([
-            $moduleDir.'/resources/views/components' => resource_path('views'),
-        ]);
-        $this->publishes([
-            $moduleDir.'/resources/views/emails' => resource_path('views'),
-        ]);
-        $this->publishes([
-            $moduleDir.'/resources/views/public' => resource_path('views'),
-        ]); */
         $this->publishes([
             $moduleDir.'/resources/views/welcome.blade.php' => resource_path('views').'/welcome.blade.php',
         ],'welcome');
         $this->publishes([
             $moduleDir.'/public/welcome' => public_path('elfcms/welcome/'),
         ], 'welcome');
-        /* dd([
-            $moduleDir.'/resources/views/welcome.blade.php',
-            resource_path('views').'/welcome.blade.php'
-        ]); */
-
-
-        /* $this->publishes([
-            $moduleDir.'/public/css' => public_path('css'),
-        ], 'public');
-        $this->publishes([
-            $moduleDir.'/public/js' => public_path('js'),
-        ], 'public');
-        $this->publishes([
-            $moduleDir.'/public/images' => public_path('images'),
-        ], 'public');
-        $this->publishes([
-            $moduleDir.'/public/fonts' => public_path('fonts'),
-        ], 'public'); */
 
         config(['auth.providers.users.model' => \Elfcms\Elfcms\Models\User::class]);
         if (config('elfcms.elfcms.disks.elfcmsviews')) {
@@ -196,6 +159,7 @@ class ElfcmsModuleProvider extends ServiceProvider
         Blade::component('elfcms-form', \Elfcms\Elfcms\View\Components\Form::class);
         Blade::component('elfcms-menu', \Elfcms\Elfcms\View\Components\Menu::class);
         Blade::component('elfcms-message', \Elfcms\Elfcms\View\Components\Message::class);
+        Blade::component('elfcms-input-checkbox', \Elfcms\Elfcms\View\Components\Input\Checkbox::class);
         Blade::component('elfcms-input-image', \Elfcms\Elfcms\View\Components\Input\Image::class);
         Blade::component('elfcms-input-image-alt', \Elfcms\Elfcms\View\Components\Input\ImageAlternate::class);
         Blade::component('elfcms-account-login', \Elfcms\Elfcms\View\Components\Account\Login::class);

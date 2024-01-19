@@ -397,7 +397,8 @@ function tagInput (input, hash = false) {
 }
 
 function removeTagFromList (th) {
-    th.closest('.tag-item-box').remove()
+    const box = th.closest('.tag-item-box');
+    if (box) box.remove();
 }
 
 function tagFormInit() {

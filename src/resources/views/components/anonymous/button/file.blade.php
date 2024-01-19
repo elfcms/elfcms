@@ -1,5 +1,5 @@
 @props(['name' => 'file', 'value' => null, 'id' => uniqid()])
-@inject('files', '\Elfcms\Basic\Elf\Files')
+@inject('files', '\Elfcms\Elfcms\Elf\Files')
 <div class="file-button" id="{{ $id }}">
     <input type="hidden" name="{{ $name }}[path]" id="{{ $name }}_path" value="{{ $value }}">
     <input type="file" name="{{ $name }}[file]" id="{{ $name }}_file">
