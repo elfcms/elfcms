@@ -1,10 +1,12 @@
 <?php
 
 use Elfcms\Elfcms\Models\DataType;
+use Elfcms\Elfcms\Models\Page;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Schema;
 
 $adminPath = config('elfcms.elfcms.admin_path') ?? '/admin';
 
@@ -165,5 +167,33 @@ Route::group(['middleware'=>['web','cookie']],function() use ($adminPath) {
 
     });
     /* /Admin panel */
+
+    /* Form processing */
+    Route::post('/form/send',[\Elfcms\Elfcms\Http\Controllers\Publics\FormSendController::class, 'send'])->name('form-send');
+    Route::get('/form/result', [\Elfcms\Elfcms\Http\Controllers\Publics\FormSendController::class, 'result'])->name('form-result');
+    /* /Form processing */
+
+    /* Public */
+
+    /* Dynamic pages */
+    Route::get(config('elfcms.elfcms.page_path').'/{page:slug}',[\Elfcms\Elfcms\Http\Controllers\Publics\PageController::class, 'get']);
+
+    try {
+        if (Schema::hasTable('pages')) {
+            $pages = Page::where('is_dynamic','<>',1)->whereNotNull('path')->get();
+            foreach ($pages as $page) {
+
+                Route::get($page->path, function() use ($page) {
+                    $controller = new \Elfcms\Elfcms\Http\Controllers\Publics\PageController;
+                    return $controller->get($page, false);
+
+                });
+            }
+        }
+    }
+    catch (\Exception $e) {
+        //
+    }
+
 
 });
