@@ -61,7 +61,6 @@ class PageController extends Controller
         $validated = $request->validate([
             'name' => 'required|unique:Elfcms\Elfcms\Models\Page,name',
             'slug' => 'required|unique:Elfcms\Elfcms\Models\Page,slug',
-            'content' => 'required',
             'image' => 'nullable|file|max:2024',
         ]);
 
@@ -131,7 +130,6 @@ class PageController extends Controller
         $validated = $request->validate([
             'name' => 'required',
             'slug' => 'required',
-            'content' => 'required',
             'image' => 'nullable|file|max:2024',
         ]);
 
