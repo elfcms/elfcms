@@ -22,7 +22,7 @@ return [
     |
     */
 
-    'version' => '1.3.0',
+    'version' => '1.4.0',
 
     /*
     |--------------------------------------------------------------------------
@@ -355,5 +355,36 @@ return [
                 "path" => "page"
             ],
         ]
+    ],
+
+    'components' => [
+        'fragment' => [
+            'class' => '\Elfcms\Elfcms\View\Components\Fragment',
+            'options' => [
+                'item' => false,
+                'theme' => 'default',
+            ],
+        ],
+        'form' => [
+            'class' => '\Elfcms\Elfcms\View\Components\Form',
+            'options' => [
+                'form' => false,
+                'theme' => 'default',
+            ],
+        ],
+        'menu' => [
+            'class' => '\Elfcms\Elfcms\View\Components\Menu',
+            'options' => [
+                'menu' => false,
+                'theme' => 'default',
+            ],
+        ],
+        'message' => [
+            'class' => '\Elfcms\Elfcms\View\Components\Message',
+            'options' => [
+                'message' => false,
+                'theme' => 'default',
+            ],
+        ],
     ],
 ];

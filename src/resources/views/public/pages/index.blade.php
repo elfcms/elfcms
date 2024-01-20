@@ -1,4 +1,4 @@
-@extends('basic::public.layouts.basic')
+@extends('public.layouts.basic')
 
 @section('head')
     @parent

@@ -53,7 +53,6 @@ class TextPrepare
     public static function components($text)
     {
         $componentList = self::componentList();
-
         if (empty($componentList)) {
             return $text;
         }
@@ -62,7 +61,6 @@ class TextPrepare
         preg_match_all($pattern, $text, $result);
 
         $params = [];
-
 
         if (!empty($result[0])) {
             foreach ($result[0] as $param) {
