@@ -3,13 +3,14 @@
 namespace Elfcms\Elfcms\Aux;
 
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Str;
 
 class Views
 {
 
     public static $alias = '';
 
-    public static function get($path = null)
+    public static function get($path = null, $disk = 'elfcmsviews')
     {
         if (mb_substr($path, 0, 1) == '/') {
             $path =  substr_replace($path, '', 0, 1);
@@ -25,12 +26,13 @@ class Views
             self::$alias .= '/';
         }
 
-        $list = Storage::disk('elfcmsviews')->files(self::$alias . $path, true);
+        $list = Storage::disk($disk)->files(self::$alias . $path, true);
         $result = [];
 
         foreach ($list as $file) {
+            if (!Str::endsWith($file, '.blade.php')) continue;
             $result[] = [
-                'name' => str_replace('/', '.', substr_replace(str_replace('.blade.php', '', $file), self::$alias . '::', 0, strlen(self::$alias . '/'))),
+                'name' => str_replace('/', '.', substr_replace(str_replace('.blade.php', '', str_replace('resources.views.','',$file)), self::$alias . '::', 0, strlen(self::$alias . '/'))),
                 'path' => $file,
             ];
         }
@@ -38,7 +40,7 @@ class Views
         return $result;
     }
 
-    public static function list($path = null)
+    public static function list($path = null, $disk = 'elfcmsviews')
     {
         self::$alias = trim(self::$alias, '/');
 
@@ -48,8 +50,13 @@ class Views
 
         $path = trim($path, '/');
 
-
-        $list = Storage::disk('elfcmsviews')->files(self::$alias. $path, true);
+        $list = [];
+        try {
+            $list = Storage::disk($disk)->files(self::$alias. $path, true);
+        }
+        catch(\Exception $e) {
+            //
+        }
 
         $result = [];
 
@@ -58,7 +65,8 @@ class Views
             $alias = self::$alias;
         }
         foreach ($list as $file) {
-            $result[] = str_replace('/', '.', substr_replace(str_replace('.blade.php', '', $file), $alias . '::', 0, strlen(self::$alias)));
+            if (!Str::endsWith($file, '.blade.php')) continue;
+            $result[] =  str_replace('/', '.', substr_replace(str_replace('.blade.php', '', str_ireplace('resources/views/','',$file)), $alias . '::', 0, strlen(self::$alias)));
         }
 
         return $result;

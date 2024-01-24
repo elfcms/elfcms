@@ -424,4 +424,5 @@ return [
     'perm_read' => 'Чтение',
     'perm_write' => 'Запись',
     'sys_section' => 'Раздел',
+    'template' => 'Шаблон',
 ];

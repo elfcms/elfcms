@@ -7,12 +7,8 @@
 
 @section('main')
     <div class="page-line-box">
+        2222222
         <h1>{{ $page['title'] ?? $elfSiteSettings['title'] ?? '' }}</h1>
-        @if (!empty($pageData->image))
-        <div class="image-box">
-            <img src="{{ $pageData->image }}" alt="{{ $pageData->browser_title ?? $pageData->name ?? '' }}">
-        </div>
-        @endif
         <div class="content-box">
             {!! $pageData->html ?? $pageData->content !!}
         </div>

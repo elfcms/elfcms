@@ -1,4 +1,4 @@
-@extends('elfcms::public.layouts.main')
+@extends('public.layouts.main')
 
 @section('head')
     @parent

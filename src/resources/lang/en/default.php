@@ -424,4 +424,5 @@ return [
     'perm_read' => 'Read',
     'perm_write' => 'Write',
     'sys_section' => 'Section',
+    'template' => 'Template',
 ];

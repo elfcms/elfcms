@@ -64,7 +64,12 @@ class EmailEventController extends Controller
         $event = new EmailEvent;
         //dd($el->emailFields);
         $addresses = EmailAddress::all();
+        //dd(config('filesystems'));
         $views = Views::list('emails/events');
+        if (empty($views)) {
+            $views = array_merge($views,Views::list('resources/views//emails/events','elfcmsdev'));
+        }
+        $views = array_merge($views,Views::list('emails/events','publicviews'));
         return view('elfcms::admin.email.events.create',[
             'page' => [
                 'title' => __('elfcms::default.create_email_event'),
@@ -176,9 +181,10 @@ class EmailEventController extends Controller
         $params = $event->contentparams ?? [];
 
         $views = Views::list('emails/events');
-
-
-        //dd(Blade::render('elfcms::admin.index',['menuData'=>[],'page'=>['title'=>'']]));
+        if (empty($views)) {
+            $views = array_merge($views,Views::list('resources/views/emails/events','elfcmsdev'));
+        }
+        $views = array_merge($views,Views::list('emails/events','publicviews'));
 
         return view('elfcms::admin.email.events.edit',[
             'page' => [

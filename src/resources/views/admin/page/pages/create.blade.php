@@ -22,6 +22,9 @@
             @method('POST')
             <div class="colored-rows-box">
                 <div class="input-box colored">
+                    <x-elfcms-input-checkbox code="active" label="{{ __('elfcms::default.active') }}" checked style="blue" />
+                </div>
+                <div class="input-box colored">
                     <label for="name">{{ __('elfcms::default.name') }}</label>
                     <div class="input-wrapper">
                         <input type="text" name="name" id="name" autocomplete="off">
@@ -72,6 +75,12 @@
                     <label for="content">{{ __('elfcms::default.text') }}</label>
                     <div class="input-wrapper">
                         <textarea name="content" id="content" cols="30" rows="10"></textarea>
+                    </div>
+                </div>
+                <div class="input-box colored">
+                    <label for="template">{{ __('elfcms::default.template') }}</label>
+                    <div class="input-wrapper">
+                        <input type="text" name="template" id="template" autocomplete="off">
                     </div>
                 </div>
                 <div class="input-box colored">

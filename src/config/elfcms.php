@@ -22,7 +22,7 @@ return [
     |
     */
 
-    'version' => '1.4.1',
+    'version' => '1.5.0',
 
     /*
     |--------------------------------------------------------------------------
@@ -118,7 +118,15 @@ return [
 
         'elfcmsviews' => [
             'driver' => 'local',
-            'root' => base_path('resources/views/elfcms'),
+            'root' => base_path('vendor/elfcms/elfcms/src/resources/views'),
+        ],
+        'publicviews' => [
+            'driver' => 'local',
+            'root' => base_path('public/resources/views'),
+        ],
+        'elfcmsdev' => [
+            'driver' => 'local',
+            'root' => base_path('packages/elfcms/elfcms/src'),
         ],
     ],
 

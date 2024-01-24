@@ -11,6 +11,7 @@ use Elfcms\Elfcms\Console\Commands\ElfcmsEmailEvents;
 use Elfcms\Elfcms\Console\Commands\ElfcmsFieldTypes;
 use Elfcms\Elfcms\Console\Commands\ElfcmsRoles;
 use Elfcms\Elfcms\Console\Commands\ElfcmsSettings;
+use Elfcms\Elfcms\Console\Commands\ElfcmsSite;
 use Elfcms\Elfcms\Http\Middleware\CookieCheck;
 use Elfcms\Elfcms\Http\Middleware\AccountUser;
 use Elfcms\Elfcms\Http\Middleware\AdminAccess;
@@ -33,6 +34,7 @@ class ElfcmsModuleProvider extends ServiceProvider
     {
         $this->app->register(EventServiceProvider::class);
         $this->app->register(ViewServiceProvider::class);
+        $this->app->register(SitePublicProvider::class);
 
         require_once __DIR__ . '/../Aux/UrlParams.php';
         require_once __DIR__ . '/../Aux/FormSaver.php';
@@ -73,6 +75,7 @@ class ElfcmsModuleProvider extends ServiceProvider
                 ElfcmsDataTypes::class,
                 ElfcmsEmailEvents::class,
                 ElfcmsFieldTypes::class,
+                ElfcmsSite::class,
             ]);
         }
         $this->loadRoutesFrom($moduleDir.'/routes/web.php');
@@ -127,11 +130,14 @@ class ElfcmsModuleProvider extends ServiceProvider
         ], 'welcome');
 
         config(['auth.providers.users.model' => \Elfcms\Elfcms\Models\User::class]);
-        if (config('elfcms.elfcms.disks.elfcmsviews')) {
-            config(['filesystems.disks.elfcmsviews' => config('elfcms.elfcms.disks.elfcmsviews')]);
+        $disks = config('elfcms.elfcms.disks');
+        if (!empty($disks)) {
+            foreach ($disks as $name => $disk) {
+                config(["filesystems.disks.$name" => config("elfcms.elfcms.disks.$name")]);
+            }
         }
-        else {
-            config(['filesystems.disks.elfcmsviews' => ['driver' => 'local','root' => base_path('resources/views/vendor/elfcms'),]]);
+        if (!config('elfcms.elfcms.disks.elfcmsviews')) {
+            config(['filesystems.disks.elfcmsviews' => ['driver' => 'local','root' => base_path('vendor/elfcms/elfcms/src/resources/views')]]);
         }
 
         try {

@@ -8,6 +8,7 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\View;
 
 class EmailEventSend extends Mailable
 {
@@ -79,6 +80,14 @@ class EmailEventSend extends Mailable
         }
         elseif (!empty($this->emailEvent->view)) {
             $view = $this->emailEvent->view;
+        }
+        if (!View::exists($view)) {
+            if (View::exists('emails.events.' . $view)) {
+                $view = 'emails.events.' . $view;
+            }
+            elseif (View::exists('elfcms::emails.events.' . $view)) {
+                $view = 'elfcms::emails.events.' . $view;
+            }
         }
 
         if (!empty($this->emailEvent->contentparams)) {

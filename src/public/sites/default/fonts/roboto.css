@@ -1,0 +1,37 @@
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('roboto/Roboto-Regular.eot');
+    src: local('Roboto'), local('Roboto-Regular'),
+        url('roboto/Roboto-Regular.eot?#iefix') format('embedded-opentype'),
+        url('roboto/Roboto-Regular.woff') format('woff'),
+        url('roboto/Roboto-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('roboto/Roboto-Medium.eot');
+    src: local('Roboto Medium'), local('Roboto-Medium'),
+        url('roboto/Roboto-Medium.eot?#iefix') format('embedded-opentype'),
+        url('roboto/Roboto-Medium.woff') format('woff'),
+        url('roboto/Roboto-Medium.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'Roboto';
+    src: url('roboto/Roboto-Light.eot');
+    src: local('Roboto Light'), local('Roboto-Light'),
+        url('roboto/Roboto-Light.eot?#iefix') format('embedded-opentype'),
+        url('roboto/Roboto-Light.woff') format('woff'),
+        url('roboto/Roboto-Light.ttf') format('truetype');
+    font-weight: 300;
+    font-style: normal;
+    font-display: swap;
+}
+

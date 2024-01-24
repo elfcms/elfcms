@@ -6,6 +6,7 @@ use Elfcms\Elfcms\Aux\Locales;
 use Elfcms\Elfcms\Http\Controllers\SettingController;
 use Elfcms\Elfcms\Models\AccessType;
 use Elfcms\Elfcms\Models\DataType;
+use Elfcms\Elfcms\Models\EmailAddress;
 use Elfcms\Elfcms\Models\EmailEvent;
 use Elfcms\Elfcms\Models\FormFieldType;
 use Elfcms\Elfcms\Models\Role;
@@ -215,6 +216,14 @@ class ElfcmsInstall extends Command
                         $user->assignRole($adminRole);
                         $user->is_confirmed = 1;
                         $user->save();
+
+                        $email = new EmailAddress();
+                        $email->create([
+                            'email' => $user->email,
+                            'name' => 'default',
+                            'active' => 1
+                        ]);
+
                         $this->info(__('elfcms::default.user_created_successfully'));
                     }
                 }

@@ -21,6 +21,9 @@
             @csrf
             @method('PUT')
             <div class="colored-rows-box">
+                <div class="input-box colored">
+                    <x-elfcms-input-checkbox code="active" label="{{ __('elfcms::default.active') }}" style="blue" :checked="$pageData->active" />
+                </div>
                 <input type="hidden" name="id" id="id" value="{{ $pageData->id }}">
                 <div class="input-box colored">
                     <label for="name">{{ __('elfcms::default.name') }}</label>
@@ -73,6 +76,12 @@
                     <label for="content">{{ __('elfcms::default.content') }}</label>
                     <div class="input-wrapper">
                         <textarea name="content" id="content" cols="30" rows="10">{{ $pageData->getOriginal('content') }}</textarea>
+                    </div>
+                </div>
+                <div class="input-box colored">
+                    <label for="template">{{ __('elfcms::default.template') }}</label>
+                    <div class="input-wrapper">
+                        <input type="text" name="template" id="template" autocomplete="off" value="{{ $pageData->template }}">
                     </div>
                 </div>
                 <div class="input-box colored">

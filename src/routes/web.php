@@ -180,12 +180,16 @@ Route::group(['middleware'=>['web','cookie']],function() use ($adminPath) {
 
     try {
         if (Schema::hasTable('pages')) {
-            $pages = Page::where('is_dynamic','<>',1)->whereNotNull('path')->get();
+            $pages = Page::where('is_dynamic','<>',1)->where('active',1)->whereNotNull('path')->get();
             foreach ($pages as $page) {
 
                 Route::get($page->path, function() use ($page) {
                     $controller = new \Elfcms\Elfcms\Http\Controllers\Publics\PageController;
-                    return $controller->get($page, false);
+                    $template = $page->template;
+                    if (empty($template)) {
+                        $template = 'default';
+                    }
+                    return $controller->get($page, dynamic: false, template: $template);
 
                 });
             }

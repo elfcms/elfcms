@@ -79,10 +79,13 @@ class PageController extends Controller
         $validated['image'] = $image_path;
         $validated['path'] = $path;
         $validated['title'] = $request->title;
+        $validated['content'] = $request->content;
+        $validated['template'] = $request->template;
         $validated['browser_title'] = $request->browser_title;
         $validated['meta_keywords'] = $request->meta_keywords;
         $validated['meta_description'] = $request->meta_description;
         $validated['is_dynamic'] = empty($request->is_dynamic) ? 0 : 1;
+        $validated['active'] = empty($request->active) ? 0 : 1;
 
         $page = Page::create($validated);
 
@@ -148,12 +151,14 @@ class PageController extends Controller
         $page->name = $validated['name'];
         $page->slug = $validated['slug'];
         $page->path = $path;
-        $page->content = $validated['content'];
         $page->title = $request->title;
+        $page->content = $request->content;
+        $page->template = $request->template;
         $page->browser_title = $request->browser_title;
         $page->meta_keywords = $request->meta_keywords;
         $page->meta_description = $request->meta_description;
         $page->is_dynamic = empty($request->is_dynamic) ? 0 : 1;
+        $page->active = empty($request->active) ? 0 : 1;
 
         $page->save();
 
