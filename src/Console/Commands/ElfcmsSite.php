@@ -6,6 +6,7 @@ use Elfcms\Elfcms\Models\EmailAddress;
 use Elfcms\Elfcms\Models\EmailEvent;
 use Elfcms\Elfcms\Models\Form;
 use Elfcms\Elfcms\Models\FormField;
+use Elfcms\Elfcms\Models\Menu;
 use Elfcms\Elfcms\Models\Page;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
@@ -44,6 +45,34 @@ class ElfcmsSite extends Command
         );
 
         if ($go == 'Yes') {
+
+            $isIndex = $this->choice(
+                'Do you want to create a home page for your website?',
+                ['No','Yes'],
+                0,
+                $maxAttempts = null,
+                $allowMultipleSelections = false
+            );
+
+            if ($isIndex == 'Yes') {
+                $idexPage = Page::where('slug','start')->first();
+                if (empty($idexPage)) {
+                    try {
+                        $idexPage = new Page();
+                        $idexPage->create([
+                            'slug' => 'start',
+                            'name' => 'Start',
+                            'path' => '/',
+                            'image' => null,
+                            'is_dynamic' => 0,
+                            'active' => 1
+                        ]);
+                    }
+                    catch (\Exception $e) {
+                        //
+                    }
+                }
+            }
 
             $email = EmailAddress::where('name','default')->first();
             if (empty($email)) {
@@ -198,6 +227,26 @@ class ElfcmsSite extends Command
                 catch (\Exception $e) {
                     //
                 }
+            }
+            $menu = Menu::where('code','top')->first();
+            if (empty($menu)) {
+                try {
+                    $menu = new Menu();
+                    $menu->create([
+                        'code' => 'top',
+                        'name' => 'Top',
+                        'active' => 1
+                    ]);
+                }
+                catch (\Exception $e) {
+                    //
+                }
+            }
+            if (!empty($menu)) {
+                $menu->items()->createMany([
+                    ['text'=>'Kontakt', 'link'=>'/kontakt','active'=>1,'menu_id'=>$menu->id,'clickable'=>1],
+                    ['text'=>'Impressum', 'link'=>'/impressum','active'=>1,'menu_id'=>$menu->id,'clickable'=>1]
+                ]);
             }
 
             $provider = 'Elfcms\Elfcms\Providers\SitePublicProvider';
