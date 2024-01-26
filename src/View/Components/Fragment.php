@@ -3,6 +3,7 @@
 namespace Elfcms\Elfcms\View\Components;
 
 use Elfcms\Elfcms\Models\FragmentItem;
+use Illuminate\Support\Facades\View;
 use Illuminate\View\Component;
 
 class Fragment extends Component
@@ -34,6 +35,18 @@ class Fragment extends Component
      */
     public function render()
     {
-        return view('elfcms::components.box.'.$this->theme);
+        if (View::exists('components.fragment.' . $this->theme)) {
+            return view('components.fragment.' . $this->theme);
+        }
+        if (View::exists('elfcms.components.fragment.'.$this->theme)) {
+            return view('elfcms.components.fragment.'.$this->theme);
+        }
+        if (View::exists('elfcms::components.fragment.'.$this->theme)) {
+            return view('elfcms::components.fragment.'.$this->theme);
+        }
+        if (View::exists($this->theme)) {
+            return view($this->theme);
+        }
+        return null;
     }
 }

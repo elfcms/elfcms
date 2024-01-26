@@ -6,7 +6,9 @@ use Elfcms\Elfcms\Models\EmailAddress;
 use Elfcms\Elfcms\Models\EmailEvent;
 use Elfcms\Elfcms\Models\Form;
 use Elfcms\Elfcms\Models\FormField;
+use Elfcms\Elfcms\Models\FormFieldType;
 use Elfcms\Elfcms\Models\Menu;
+use Elfcms\Elfcms\Models\MenuItem;
 use Elfcms\Elfcms\Models\Page;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
@@ -151,8 +153,9 @@ class ElfcmsSite extends Command
                         $nameField->create([
                             'title' => 'Name',
                             'name' => 'name',
-                            'type_id' => 1,
+                            'type_id' => FormFieldType::select('id')->where('name','text')->first()->id ?? 1,
                             'form_id' => $form->id,
+                            'required' => 1,
                             'active' => 1
                         ]);
                     }
@@ -167,8 +170,9 @@ class ElfcmsSite extends Command
                         $emailField->create([
                             'title' => 'Email',
                             'name' => 'email',
-                            'type_id' => 5,
+                            'type_id' => FormFieldType::select('id')->where('name','email')->first()->id ?? 5,
                             'form_id' => $form->id,
+                            'required' => 1,
                             'active' => 1
                         ]);
                     }
@@ -183,7 +187,24 @@ class ElfcmsSite extends Command
                         $messageField->create([
                             'title' => 'Message',
                             'name' => 'message',
-                            'type_id' => 9,
+                            'type_id' => FormFieldType::select('id')->where('name','textarea')->first()->id ?? 9,
+                            'form_id' => $form->id,
+                            'required' => 1,
+                            'active' => 1
+                        ]);
+                    }
+                    catch (\Exception $e) {
+                        //
+                    }
+                }
+                $submitButton = FormField::where('form_id',$form->id)->where('name','message')->first();
+                if (empty($submitButton)) {
+                    try {
+                        $submitButton = new FormField();
+                        $submitButton->create([
+                            'title' => 'OK',
+                            'name' => 'ok',
+                            'type_id' => FormFieldType::select('id')->where('name','submit')->first()->id ?? 15,
                             'form_id' => $form->id,
                             'active' => 1
                         ]);
@@ -243,10 +264,18 @@ class ElfcmsSite extends Command
                 }
             }
             if (!empty($menu)) {
-                $menu->items()->createMany([
+                /* $menu->items()->createMany([
                     ['text'=>'Kontakt', 'link'=>'/kontakt','active'=>1,'menu_id'=>$menu->id,'clickable'=>1],
                     ['text'=>'Impressum', 'link'=>'/impressum','active'=>1,'menu_id'=>$menu->id,'clickable'=>1]
-                ]);
+                ]); */
+                $kontaktItem = MenuItem::firstOrCreate(
+                    ['text'=>'Kontakt', 'menu_id'=>$menu->id],
+                    ['link'=>'/kontakt','active'=>1,'clickable'=>1]
+                );
+                $impressumItem = MenuItem::firstOrCreate(
+                    ['text'=>'Impressum', 'menu_id'=>$menu->id],
+                    ['link'=>'/impressum','active'=>1,'clickable'=>1]
+                );
             }
 
             $provider = 'Elfcms\Elfcms\Providers\SitePublicProvider';

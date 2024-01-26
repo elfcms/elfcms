@@ -39,6 +39,9 @@ class Menu extends Component
         if (View::exists('components.menu.' . $this->template)) {
             return view('components.menu.' . $this->template);
         }
+        if (View::exists('elfcms.components.menu.'.$this->template)) {
+            return view('elfcms.components.menu.'.$this->template);
+        }
         if (View::exists('elfcms::components.menu.'.$this->template)) {
             return view('elfcms::components.menu.'.$this->template);
         }

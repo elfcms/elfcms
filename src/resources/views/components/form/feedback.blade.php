@@ -52,7 +52,7 @@
             <input type="{{$field->type->name}}" name="{{$field->name}}" id="{{$field->name}}" value="1" @if ($field->required) required @endif>
             <label for="{{$field->name}}">{{$field->title}}</label>
         </div>
-        @else
+        @elseif ($field->type->name != 'submit')
         <div>
             {{-- <label for="{{$field->name}}">{{$field->title}}</label> --}}
             <input type="{{$field->type->name}}" name="{{$field->name}}" id="{{$field->name}}" value="{{$field->value}}" @if ($field->required) required @endif placeholder="{{$field->placeholder}}">
@@ -94,11 +94,6 @@
         <label for="{{$field->name}}">{!!$field->title!!}</label>
     </div>
     @elseif ($field->type->name != 'submit')
-    <div>
-        <label for="{{$field->name}}">{{$field->title}}</label>
-        <input type="{{$field->type->name}}" name="{{$field->name}}" id="{{$field->name}}" value="{{$field->value}}" @if ($field->required) required @endif>
-    </div>
-    @else
     <div>
         <label for="{{$field->name}}">{{$field->title}}</label>
         <input type="{{$field->type->name}}" name="{{$field->name}}" id="{{$field->name}}" value="{{$field->value}}" @if ($field->required) required @endif placeholder="{{$field->placeholder}}">

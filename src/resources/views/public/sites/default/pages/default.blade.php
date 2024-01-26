@@ -6,7 +6,8 @@
 @endsection
 
 @section('main')
-    <div class="page-line-box">
+<div class="page-line-box">
+    <div class="container">
         <h1>{{ $page['title'] ?? $elfSiteSettings['title'] ?? '' }}</h1>
         @if (!empty($pageData->image))
         <div class="image-box">
@@ -17,4 +18,5 @@
             {!! $pageData->html ?? $pageData->content !!}
         </div>
     </div>
+</div>
 @endsection

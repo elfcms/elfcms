@@ -14,7 +14,7 @@ class MenuItemController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Menu $menu)
     {
         $items = MenuItem::flat();
         return view('elfcms::admin.menu.items.index',[
@@ -22,7 +22,8 @@ class MenuItemController extends Controller
                 'title' => __('elfcms::default.menu_items'),
                 'current' => url()->current(),
             ],
-            'items' => $items
+            'items' => $items,
+            'menu' => $menu
         ]);
     }
 
@@ -193,9 +194,9 @@ class MenuItemController extends Controller
     public function destroy(Menu $menu, MenuItem $item)
     {
         if (!$item->delete()) {
-            return redirect(route('admin.menus.items', $menu))->withErrors(['menuitemdelerror'=>'Error of menu item deleting']);
+            return redirect(route('admin.menus.show', $menu))->withErrors(['menuitemdelerror'=>'Error of menu item deleting']);
         }
 
-        return redirect(route('admin.menus.items', $menu))->with('menuitemdeleted','Menu item deleted successfully');
+        return redirect(route('admin.menus.show', $menu))->with('menuitemdeleted','Menu item deleted successfully');
     }
 }

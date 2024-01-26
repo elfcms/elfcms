@@ -33,6 +33,7 @@ return [
     'page_created_successfully' => 'Страница успешно создана',
     'page_edited_successfully' => 'Страница успешно изменена',
     'deleting_of_element' => 'Удаление элемента #',
+    'are_you_sure_to_deleting_item' => 'Вы действительно хотите удалить элемент?',
     'are_you_sure_to_deleting_user' => 'Вы действительно хотите удалить пользователя ',
     'user' => 'Пользователь',
     'users' => 'Пользователи',

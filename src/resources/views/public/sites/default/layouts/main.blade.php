@@ -23,13 +23,21 @@
 <body>
     @section('header')
     <header class="header">
-        <div class="header-top">
-            <x-elfcms-menu menu="top"></x-elfcms-menu>
-        </div>
-        <div class="header-box">
-            <div class="header-title-box">
-                <a href="/" class="header-title">{{ $elfSiteSettings['title'] }}</a>
-                <div class="header-subtitle">{{ $elfSiteSettings['slogan'] }}</div>
+        <div class="container">
+            <div class="header-box">
+                <div class="header-title-box">
+                    <a href="/" class="header-title">
+                        @empty($elfSiteSettings['logo'])
+                        {{ $elfSiteSettings['title'] }}
+                        @else
+                        <img src="{{ $elfSiteSettings['logo'] }}" alt="{{ $elfSiteSettings['title'] }}">
+                        @endempty
+                    </a>
+                    <div class="header-subtitle">{{ $elfSiteSettings['slogan'] }}</div>
+                </div>
+                <div class="header-top">
+                    <x-elfcms-menu menu="top" template="top">Start</x-elfcms-menu>
+                </div>
             </div>
         </div>
     </header>
@@ -44,13 +52,15 @@
 
     @section('footer')
     <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-navigation">
-                <x-elfcms-menu menu="social"></x-elfcms-menu>
-                <x-elfcms-menu menu="bottom"></x-elfcms-menu>
-            </div>
-            <div class="footer-copyright">
-                <a href="https://elfweb.de" target="_blank" rel="noopener noreferrer"><img src="https://cdn.elfweb.de/logos/logotext_dark_25.png" alt="ELF Webagentur"></a>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-navigation">
+                    <x-elfcms-menu menu="social"></x-elfcms-menu>
+                    <x-elfcms-menu menu="bottom"></x-elfcms-menu>
+                </div>
+                <div class="footer-copyright">
+                    <a href="https://elfweb.de" target="_blank" rel="noopener noreferrer"><img height="30" src="https://cdn.elfweb.de/logos/logo_text_light.svg" alt="ELF Webagentur"></a>
+                </div>
             </div>
         </div>
     </footer>

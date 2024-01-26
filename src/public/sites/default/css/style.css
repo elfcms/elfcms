@@ -1,0 +1,218 @@
+:root {
+    --base-color: #ffffff;
+    --contrast-color: #0d2f8b;
+    --accent-color: #1ea5ff;
+    --default-text-color: #222222;
+    --header-height: 90px;
+    --footer-height: 60px;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    background-color: var(--base-color);
+    color: var(--default-text-color);
+    font-family: 'Roboto', sans-serif;
+}
+
+body {
+    width: 100vw;
+    min-height: 100vh;
+    min-width: 280px;
+    /* display: flex;
+    flex-direction: column; */
+}
+
+a {
+    color: var(--accent-color);
+}
+
+h1 {
+    font-weight: 500;
+    color: var(--contrast-color);
+}
+
+header {
+    width: 100%;
+    height: var(--header-height);
+    box-shadow: 0px 1px 5px 0px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    left: 0;
+}
+
+main {
+    min-height: calc(100vh - var(--footer-height));
+    padding: var(--header-height) 0 0;
+    box-sizing: border-box;
+}
+
+footer {
+    background-color: var(--default-text-color);
+    color: var(--base-color);
+    height: var(--footer-height);
+    padding: 1.2rem 0;
+    box-sizing: border-box;
+}
+
+.container {
+    width: 96%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.header-box {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: var(--header-height);
+}
+
+.header-top nav ul {
+    display: flex;
+    gap: 20px;
+    list-style: none;
+    margin: 0;
+    padding: 3.2rem 0 0;
+}
+
+.header-top nav ul li {
+    padding: 0.4rem 0.8rem;
+}
+.header-top nav ul li a {
+    text-decoration: none;
+    font-size: 1.4rem;
+    color: var(--contrast-color);
+}
+.header-top nav ul li.active {
+    background-color: var(--contrast-color);
+}
+.header-top nav ul li.active a {
+    color: var(--base-color);
+}
+
+.content-box form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1em;
+}
+
+.content-box form > div {
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+
+.content-box form > div > div {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3em;
+}
+
+.content-box form label {
+    font-size: 0.9rem;
+}
+
+.content-box form input[type="text"],
+.content-box form input[type="email"],
+.content-box form input[type="number"],
+.content-box form input[type="date"],
+.content-box form input[type="time"],
+.content-box form input[type="datetime"],
+.content-box form input[type="password"],
+.content-box form textarea {
+    border: 1px solid var(--contrast-color);
+    background-color: var(--base-color);
+    padding: 0.5em 0.8em;
+    border-radius: 4px;
+}
+.content-box form button {
+    background-color: #1ea5ff;
+    color: var(--base-color);
+    padding: 0.5em 1.8em;
+    border-radius: 4px;
+    border: 0;
+    cursor: pointer;
+}
+.content-box form button:hover {
+    filter: brightness(110%);
+    box-shadow: 0px 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+.footer-content {
+    display: flex;
+    justify-content: space-between;
+}
+
+#mobile-nav-button {
+    display: none;
+}
+
+@media screen and (max-width: 560px) {
+    #mobile-nav-button {
+        display: block;
+        width: 30px;
+        height: 30px;
+        position: relative;
+        color: var(--contrast-color);
+        padding: 10px 20px 10px 10px;
+    }
+    #mobile-nav-button::before,
+    #mobile-nav-button::after {
+        content: '';
+        display: block;
+        position: absolute;
+        width: 30px;
+        height: 2px;
+        top: 24px;
+        left: 10px;
+        background-color: currentColor;
+        transition: .4s, box-shadow .2s;
+    }
+    #mobile-nav-button::before {
+        box-shadow: 0px 12px 0px 0px currentColor;
+    }
+    #mobile-nav-button::after {
+        box-shadow: 0px -12px 0px 0px currentColor;
+    }
+    #mobile-nav-button.opened {
+        color: var(--contrast-color);
+    }
+    #mobile-nav-button.opened::before {
+        box-shadow: 0px 0px 0px 0px transparent;
+        rotate: 45deg;
+    }
+    #mobile-nav-button.opened::after {
+        box-shadow: 0px 0px 0px 0px transparent;
+        rotate: -45deg;
+    }
+
+    .header-top nav ul {
+        /* display: none; */
+        flex-direction: column;
+        height: 0;
+        position: fixed;
+        top: 90px;
+        left: 0;
+        width: 100%;
+        padding: 0 30px;
+        background-color: var(--base-color);
+        box-sizing: border-box;
+        overflow: hidden;
+        transition: height .5s;
+    }
+
+    .header-top nav ul li a {
+        display: block;
+        text-align: center;
+    }
+
+    #mobile-nav-button.opened + ul {
+        height: calc(100vh - 90px);
+    }
+}

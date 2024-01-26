@@ -33,6 +33,7 @@ return [
     'page_created_successfully' => 'Page created successfully',
     'page_edited_successfully' => 'Page edited successfully',
     'deleting_of_element' => 'Deleting of element #',
+    'are_you_sure_to_deleting_item' => 'Are you sure to deleting item?',
     'are_you_sure_to_deleting_user' => 'Are you sure to deleting user ',
     'user' => 'User',
     'users' => 'Users',

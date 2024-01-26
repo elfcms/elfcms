@@ -63,6 +63,9 @@ class Message extends Component
         if (View::exists('components.message.' . $this->popup . $this->template)) {
             return view('components.message.' . $this->popup . $this->template);
         }
+        if (View::exists('elfcms.components.message.' . $this->popup . $this->template)) {
+            return view('elfcms.components.message.' . $this->popup . $this->template);
+        }
         if (View::exists('elfcms::components.message.' . $this->popup . $this->template)) {
             return view('elfcms::components.message.' . $this->popup . $this->template);
         }

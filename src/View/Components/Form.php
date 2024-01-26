@@ -68,6 +68,9 @@ class Form extends \Illuminate\View\Component
         if (View::exists('components.form.' . $this->template)) {
             return view('components.form.' . $this->template);
         }
+        if (View::exists('elfcms.components.form.' . $this->template)) {
+            return view('elfcms.components.form.' . $this->template);
+        }
         if (View::exists('elfcms::components.form.' . $this->template)) {
             return view('elfcms::components.form.' . $this->template);
         }

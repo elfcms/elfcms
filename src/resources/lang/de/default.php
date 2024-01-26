@@ -33,6 +33,7 @@ return [
     'page_created_successfully' => 'Die Seite erfolgreich erstellt',
     'page_edited_successfully' => 'Die Seite erfolgreich bearbeitet',
     'deleting_of_element' => 'Element löschen. Element #',
+    'are_you_sure_to_deleting_item' => 'Möchten Sie das Element wirklich löschen?',
     'are_you_sure_to_deleting_user' => 'Möchten Sie den Benutzer wirklich löschen? Benutzer ',
     'user' => 'Benutzer',
     'users' => 'Benutzer',
