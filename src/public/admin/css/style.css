@@ -934,6 +934,9 @@ input[type="submit"] {
     /* &:nth-child(even) {
         background-color: $line-shadow-bg;
     } */
+    max-height: 2000px;
+    transition: max-height .3s;
+    overflow: hidden;
 }
 .input-box label {
     min-width: 160px;
@@ -979,6 +982,10 @@ input[type="submit"] {
 .input-box .input-extra-button-box button {
     max-height: 30px;
     margin-bottom: 10px;
+}
+
+.input-box.collapsed {
+    max-height: 0;
 }
 
 .colored-rows-box .colored:nth-child(even) {
