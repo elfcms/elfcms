@@ -77,13 +77,13 @@ class FormController extends Controller
             $result['message'] = __('elfcms::default.error_saving_data');
         }
 
-        //$groups = $form->groups;
         if (!empty($form->fields)) {
             foreach ($form->fields as $field) {
                 if (!empty($data['fields'][$field->id] && $data['fields'][$field->id]['new'] == 1)) {
-                    $field->position = $data['fields'][$field->id]['position'];
-                    $field->group_id = $data['fields'][$field->id]['group'];
-                    $field->save();
+                    $field->update([
+                        'position' => $data['fields'][$field->id]['position'],
+                        'group_id' =>  $data['fields'][$field->id]['group']
+                    ]);
                 }
             }
         }

@@ -43,9 +43,14 @@ class Form extends Model
         return $this->hasMany(FormField::class, 'form_id')->orderBy('position','asc');
     }
 
+    public function allfields()
+    {
+        return $this->hasMany(FormField::class, 'form_id');
+    }
+
     public function fieldsWithoutGroup()
     {
-        return $this->hasMany(FormField::class, 'form_id')->where('group_id',null);
+        return $this->hasMany(FormField::class, 'form_id')->where('group_id',null)->orderBy('position','asc');
     }
 
     public function groups()
