@@ -1134,6 +1134,7 @@ input[type="submit"] {
     width: 100%;
     min-width: 120px;
     font-size: 11px;
+    display: flex;
 }
 .input-image-button {
     position: relative;
@@ -1196,6 +1197,77 @@ input[type="submit"] {
 }
 .input-image-button .delete-image.hidden {
     display: none;
+}
+
+.input-file-button-box {
+    width: 100%;
+    min-width: 120px;
+    font-size: 11px;
+}
+.input-file-button {
+    position: relative;
+    background-color: var(--main-bg-semilight-color);
+    border: 1px solid var(--main-select-shade-color);
+    border-radius: 3px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.input-file-button input[type="file"] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+    z-index: 2;
+}
+.input-file-button .file-button-text {
+    padding: 5px;
+    width: 180px;
+    /* font-size: 0.9em; */
+    color: var(--main-text-light-color);
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.input-file-button .delete-file {
+    font-size: 24px;
+    display: block;
+    position: absolute;
+    top: 0px;
+    right: 5px;
+    color: var(--main-danger-text-color);
+    text-shadow: 1px 1px 2px var(--main-contrast-color), -1px -1px 2px var(--main-contrast-color), 1px -1px 2px var(--main-contrast-color),
+        -1px 1px 2px var(--main-contrast-color);
+    z-index: 20;
+    cursor: pointer;
+}
+.input-file-button .delete-file.hidden {
+    display: none;
+}
+
+.input-file-download {
+    height: 23px;
+    width: 23px;
+    background-color: var(--main-bg-semilight-color);
+    border: 1px solid var(--main-select-shade-color);
+    border-radius: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 3px;
+    margin-left: 10px;
+    color: var(--main-text-light-color);
+    text-decoration: none;
+}
+.input-file-download::after {
+    content: '\2913';
+
 }
 
 

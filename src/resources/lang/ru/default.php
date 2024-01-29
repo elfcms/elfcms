@@ -426,4 +426,5 @@ return [
     'perm_write' => 'Запись',
     'sys_section' => 'Раздел',
     'template' => 'Шаблон',
+    'download'  => 'Скачать',
 ];

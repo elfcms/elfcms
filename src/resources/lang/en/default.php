@@ -426,4 +426,5 @@ return [
     'perm_write' => 'Write',
     'sys_section' => 'Section',
     'template' => 'Template',
+    'download' => 'Download',
 ];

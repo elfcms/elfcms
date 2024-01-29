@@ -8,14 +8,14 @@ use Illuminate\Support\Str;
 
 class ImageAlternate extends Component
 {
-    public $valueName, $inputName, $value, $valueId, $accept, $template, $boxId, $jsName;
+    public $valueName, $inputName, $value, $valueId, $accept, $template, $boxId, $jsName, $download;
 
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($inputName = null, $value = null, $valueName = null, $valueId = null, $accept = null, $template='default')
+    public function __construct($inputName = null, $value = null, $valueName = null, $valueId = null, $accept = null, $template='default', $download = false)
     {
         $this->inputName = $inputName;
         $this->valueName = $valueName;
@@ -23,6 +23,7 @@ class ImageAlternate extends Component
         $this->valueId = $valueId;
         $this->accept = $accept;
         $this->template = $template;
+        $this->download = $download;
         $this->boxId = uniqid();
         $this->jsName = Str::camel(str_replace(']','',str_replace('[','_',$inputName)));
     }

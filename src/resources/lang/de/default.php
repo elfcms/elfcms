@@ -426,4 +426,5 @@ return [
     'perm_write' => 'Schreiben',
     'sys_section' => 'Abschnitt',
     'template' => 'Vorlage',
+    'download'  => 'Herunterladen',
 ];

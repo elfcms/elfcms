@@ -18,6 +18,9 @@
         </div>
         <input type="file" name="{{ $inputName }}" id="{{ $jsName }}" accept="{{ $accept ?? 'image/*' }}">
     </div>
+    @if ($download && !empty($value))
+        <a href="{{ $value }}" class="input-file-download" download title="{{ __('elfcms::default.download') }}"></a>
+    @endif
 </div>
 <script src="{{ asset('elfcms/admin/js/imageinput.js') }}"></script>
 <script>

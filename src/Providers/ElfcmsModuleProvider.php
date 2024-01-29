@@ -173,6 +173,7 @@ class ElfcmsModuleProvider extends ServiceProvider
         Blade::component('elfcms-fragment', \Elfcms\Elfcms\View\Components\Fragment::class);
         Blade::component('elfcms-message', \Elfcms\Elfcms\View\Components\Message::class);
         Blade::component('elfcms-input-checkbox', \Elfcms\Elfcms\View\Components\Input\Checkbox::class);
+        Blade::component('elfcms-input-file', \Elfcms\Elfcms\View\Components\Input\File::class);
         Blade::component('elfcms-input-image', \Elfcms\Elfcms\View\Components\Input\Image::class);
         Blade::component('elfcms-input-image-alt', \Elfcms\Elfcms\View\Components\Input\ImageAlternate::class);
         Blade::component('elfcms-account-login', \Elfcms\Elfcms\View\Components\Account\Login::class);

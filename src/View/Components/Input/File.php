@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\View;
 use Illuminate\View\Component;
 use Illuminate\Support\Str;
 
-class Image extends Component
+class File extends Component
 {
     public $inputData, $value, $code, $accept, $template, $boxId, $jsName, $download;
 
@@ -40,14 +40,14 @@ class Image extends Component
      */
     public function render()
     {
-        if (View::exists('components.input.image.' . $this->template)) {
-            return view('components.input.image.' . $this->template);
+        if (View::exists('components.input.file.' . $this->template)) {
+            return view('components.input.file.' . $this->template);
         }
-        if (View::exists('elfcms.components.input.image.'.$this->template)) {
-            return view('elfcms.components.input.image.'.$this->template);
+        if (View::exists('elfcms.components.input.file.'.$this->template)) {
+            return view('elfcms.components.input.file.'.$this->template);
         }
-        if (View::exists('elfcms::components.input.image.'.$this->template)) {
-            return view('elfcms::components.input.image.'.$this->template);
+        if (View::exists('elfcms::components.input.file.'.$this->template)) {
+            return view('elfcms::components.input.file.'.$this->template);
         }
         if (View::exists($this->template)) {
             return view($this->template);
