@@ -226,8 +226,246 @@ class Image
         return $result;
     }
 
+    public static function adaptResizeCache($filePath, $width = null, $height = null, $coef = 1) {
+        $file = str_replace('/storage/', 'public/', $filePath);
+        $cacheDir = 'public/images/cache/resized/';
+        $isDir = Storage::makeDirectory($cacheDir);
+        if (!$isDir) {
+            return $file;
+        }
+        $pathinfo = pathinfo($file);
+        $newFile = $cacheDir . $pathinfo['filename'] . '.' . $pathinfo['extension'];
+        if (Storage::exists($newFile)) {
+            return str_replace('public/', '/storage/', $newFile);
+        }
+        $resized = self::adaptResize($filePath, $width, $height, $coef, $newFile);
+        if (!$resized) {
+            return $file;
+        } else {
+            return str_replace('public/', '/storage/', $resized);
+        }
+    }
 
-    public static function watermarkGd(string|object $image, string|object $stamp, int|bool $top = null, int|bool $left = null, int $bottom = null, int $right = null)
+    public static function adaptResize($filePath, $width = null, $height = null, $coef = 1, $resultFile = null, $gd = false) {
+        $imageData = getimagesize($filePath);
+        $extension = image_type_to_extension($imageData[2], false);
+        $crateFunction = 'imagecreatefrom' . $extension;
+        $saveFunction = 'image' . $extension;
+        if ($extension == 'jpeg') {
+            $extension = 'jpg';
+        }
+        $image = $crateFunction($filePath);
+        $ratio = $imageData[0] / $imageData[1];
+
+        if (empty($width) && empty($height) && (empty($coef) || $coef == 1)) {
+            $newWidth = $imageData[0];
+            $newHeight = $imageData[1];
+        }
+        elseif (!empty($coef) && $coef != 1) {
+            $newWidth = round($imageData[0] * $coef);
+            $newHeight = round($imageData[1] * $coef);
+        }
+        elseif (!empty($width) && $width != $imageData[0]) {
+            $newWidth = $width;
+            $newHeight = round($newWidth / $ratio);
+        }
+        elseif (!empty($height) && $height != $imageData[1]) {
+            $newHeight = $height;
+            $newWidth = round($newHeight * $ratio);
+        }
+
+        if (empty($newWidth) || $newWidth < 1 || !is_numeric($newWidth) || empty($newHeight) || $newHeight < 1 || !is_numeric($newHeight)) {
+            $newWidth = $imageData[0];
+            $newHeight = $imageData[1];
+        }
+
+        if ($newWidth == $imageData[0] || $newHeight == $imageData[1]) {
+            $result = $image;
+        }
+        else {
+            $result = imagecreatetruecolor ($newWidth, $newHeight);
+            imagealphablending($result, false);
+            imagesavealpha($result, true);
+            imagecopyresampled($result, $image, 0, 0, 0, 0, $newWidth, $newHeight, $imageData[0], $imageData[1]);
+        }
+        imagedestroy($image);
+        imagedestroy($result);
+
+        if ($gd === true) return $result;
+
+        if (empty($resultFile)) {
+            $dir = is_dir(Storage::path('public/images/cache/')) ? 'public/images/cache/' : Storage::makeDirectory('public/images/cache/');
+            $resultFile = $dir . uniqid() . '.' . $extension;
+        }
+        $filePath = Storage::path($resultFile) ?? Storage::path('/public/images/cache/' . uniqid() . '.' . $extension) ?? $filePath;
+
+        $file = $saveFunction($result, $filePath);
+
+        if (!$file) return false;
+
+        return Storage::url($resultFile);
+    }
+
+
+    public static function adaptSize(string|object $image, $width = null, $height = null, $coef = 1, $resultFile = null, $gd = false) {
+        if (is_string($image)){
+            $imageData = getimagesize($image);
+            $extension = image_type_to_extension($imageData[2], false);
+            $crateFunction = 'imagecreatefrom' . $extension;
+            /* $saveFunction = 'image' . $extension;
+            if ($extension == 'jpeg') {
+                $extension = 'jpg';
+            } */
+            $imageWidth = $imageData[0] ?? 0;
+            $imageHeight = $imageData[1] ?? 0;
+            $image = $crateFunction($image);
+        }
+        if (is_object($image) && ($image instanceof GdImage)) {
+            $imageWidth = imagesx($image) ?? 0;
+            $imageHeight = imagesy($image) ?? 0;
+        }
+        else {
+            return false;
+        }
+
+        if ($imageWidth == 0 || $imageHeight == 0) {
+            return false;
+        }
+
+        $ratio = $imageWidth / $imageHeight;
+
+        if (empty($width) && empty($height) && (empty($coef) || $coef == 1)) {
+            $newWidth = $imageWidth;
+            $newHeight = $imageHeight;
+        }
+        elseif (!empty($coef) && $coef != 1) {
+            $newWidth = round($imageWidth * $coef);
+            $newHeight = round($imageHeight * $coef);
+        }
+        elseif (!empty($width) && $width != $imageWidth) {
+            $newWidth = $width;
+            $newHeight = round($newWidth / $ratio);
+        }
+        elseif (!empty($height) && $height != $imageHeight) {
+            $newHeight = $height;
+            $newWidth = round($newHeight * $ratio);
+        }
+
+        if (empty($newWidth) || $newWidth < 1 || !is_numeric($newWidth) || empty($newHeight) || $newHeight < 1 || !is_numeric($newHeight)) {
+            $newWidth = $imageWidth;
+            $newHeight = $imageHeight;
+        }
+
+        return [round($newWidth), round($newHeight)];
+    }
+
+    public static function stamp(string $image, string $stamp, int|string $stampsize = 50, int|string $indentH = 0, int|string $indentV = 0, string $horizontal = null, string $vertical = null, string $h = null, string $v = null, string $x = null, string $y = null) {
+        if (!$vertical && $v) $vertical = $v;
+        if (!$vertical && $y) $vertical = $y;
+        if (!$vertical || !in_array($vertical,['top','center','bottom'])) $vertical = 'center';
+        if (!$horizontal && $h) $horizontal = $h;
+        if (!$horizontal && $x) $horizontal = $x;
+        if (!$horizontal || !in_array($horizontal,['left','center','right'])) $horizontal = 'center';
+
+        $extension = strtolower(pathinfo($image, PATHINFO_EXTENSION));
+        if (!in_array($extension, ['gif', 'jpeg', 'jpg', 'png', 'webp'])) {
+            return false;
+        }
+        if ($extension == 'jpg') {
+            $extension = 'jpeg';
+        }
+        $saveFunction = 'image' . $extension;
+
+        //if (gettype($image) === 'string') {
+            $image = self::fromFile($image);
+        //}
+
+        if (gettype($image) !== 'object' || !($image instanceof GdImage)) {
+            return false;
+        }
+
+        //if (gettype($stamp) === 'string') {
+            //$stampPath = Storage::path($stamp);
+            $stamp = self::fromFile($stamp);
+        //}
+
+        if (gettype($stamp) !== 'object' || !($stamp instanceof GdImage)) {
+            return false;
+        }
+
+        $stampsize = intval($stampsize);
+
+        $imageWidth = imagesx($image) ?? 0;
+        $imageHeight = imagesy($image) ?? 0;
+
+        $stampWidth = imagesx($stamp) ?? 0;
+        $stampHeight = imagesy($stamp) ?? 0;
+
+        $imageRatio = $imageWidth / $imageHeight;
+        $stampRatio = $stampWidth / $stampHeight;
+
+        $maxStampWidth = $imageWidth - (2 * $indentH);
+        $maxStampHeight = $imageHeight - (2 * $indentV);
+
+        if ($imageRatio > 1) {
+            $stampNewWidth = min($maxStampWidth, $imageWidth * $stampsize / 100);
+            $stampNewHeight = $stampNewWidth / $stampRatio;
+            if ($stampNewHeight > $maxStampHeight) {
+                $stampNewHeight = $maxStampHeight;
+                $stampNewWidth = $stampNewHeight * $stampRatio;
+            }
+        } else {
+            $stampNewHeight = min($maxStampHeight, $imageHeight * $stampsize / 100);
+            $stampNewWidth = $stampNewHeight * $stampRatio;
+            if ($stampNewHeight > $maxStampWidth) {
+                $stampNewWidth = $maxStampWidth;
+                $stampNewHeight = $stampNewWidth / $stampRatio;
+            }
+        }
+
+        $left = 0;
+        $top = 0;
+
+        switch ($horizontal) {
+            case 'left':
+                $left = $indentH;
+                break;
+            case 'center':
+                $left = floor(($imageWidth - $stampNewWidth) / 2);
+                break;
+            case 'right':
+                $left = $imageWidth - $stampNewWidth - $indentH;
+                break;
+        }
+
+        switch ($vertical) {
+            case 'top':
+                $top = $indentV;
+                break;
+            case 'center':
+                $top = floor(($imageHeight - $stampNewHeight) / 2);
+                break;
+            case 'bottom':
+                $top = $imageHeight - $stampNewHeight - $indentV;
+                break;
+        }
+
+        $stampNewWidth = round($stampNewWidth);
+        $stampNewHeight= round($stampNewHeight);
+
+        imagecopyresampled($image, $stamp, $left, $top, 0, 0, $stampNewWidth, $stampNewHeight, $imageWidth, $imageHeight);
+
+        $dir = is_dir(Storage::path('public/images/stamped/')) ? 'public/images/stamped/' : Storage::makeDirectory('public/images/stamped/');
+        $file = $dir . uniqid() . '.' . $extension;
+
+        if ($saveFunction($image    , Storage::path($file))) {
+            return $file;
+        }
+
+        return false;
+    }
+
+    public static function watermarkGD(string|object $image, string|object $stamp, int|bool $top = null, int|bool $left = null, int $bottom = null, int $right = null)
     {
         if (gettype($image) === 'string') {
             $image = self::fromFile($image);
@@ -281,7 +519,7 @@ class Image
         }
         $saveFunction = 'image' . $extension;
 
-        if ($saveFunction(self::watermarkGd($image, $stamp, $top, $left, $bottom, $right), Storage::path($file))) {
+        if ($saveFunction(self::watermarkGD($image, $stamp, $top, $left, $bottom, $right), Storage::path($file))) {
             return $file;
         }
 
@@ -290,7 +528,16 @@ class Image
 
     public static function fromFile(string $file)
     {
-        $filePath = Storage::path($file);
+        if (file_exists($file)) {
+            $filePath = $file;
+        }
+        elseif (file_exists($_SERVER['DOCUMENT_ROOT']. '/'. trim($file,'/'))) {
+            $filePath = $_SERVER['DOCUMENT_ROOT'] . '/' .trim($file,'/');
+        }
+        else {
+            $filePath = Storage::path($file);
+        }
+
         if (empty($file) || empty($filePath) || !file_exists($filePath)) {
             return false;
         }
