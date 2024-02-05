@@ -11,7 +11,7 @@ class Image
     public static function cropCache(string $file, int $width, int $height, array $position = ['center', 'center'])
     {
         $file = str_replace('/storage/', 'public/', $file);
-        $cacheDir = 'public/images/cache/';
+        $cacheDir = 'public/elfcms/images/cache/';
         $isDir = Storage::makeDirectory($cacheDir);
         if (!$isDir) {
             return $file;
@@ -228,7 +228,7 @@ class Image
 
     public static function adaptResizeCache($filePath, $width = null, $height = null, $coef = 1) {
         $file = str_replace('/storage/', 'public/', $filePath);
-        $cacheDir = 'public/images/cache/resized/';
+        $cacheDir = 'public/elfcms/images/cache/resized/';
         $isDir = Storage::makeDirectory($cacheDir);
         if (!$isDir) {
             return $file;
@@ -294,10 +294,10 @@ class Image
         if ($gd === true) return $result;
 
         if (empty($resultFile)) {
-            $dir = is_dir(Storage::path('public/images/cache/')) ? 'public/images/cache/' : Storage::makeDirectory('public/images/cache/');
+            $dir = is_dir(Storage::path('public/elfcms/images/cache/')) ? 'public/elfcms/images/cache/' : Storage::makeDirectory('public/elfcms/images/cache/');
             $resultFile = $dir . uniqid() . '.' . $extension;
         }
-        $filePath = Storage::path($resultFile) ?? Storage::path('/public/images/cache/' . uniqid() . '.' . $extension) ?? $filePath;
+        $filePath = Storage::path($resultFile) ?? Storage::path('/public/elfcms/images/cache/' . uniqid() . '.' . $extension) ?? $filePath;
 
         $file = $saveFunction($result, $filePath);
 
@@ -359,7 +359,7 @@ class Image
         return [round($newWidth), round($newHeight)];
     }
 
-    public static function stamp(string $image, string $stamp, int|string $stampsize = 50, int|string $indentH = 0, int|string $indentV = 0, string $horizontal = null, string $vertical = null, string $h = null, string $v = null, string $x = null, string $y = null) {
+    public static function stamp(string $image, string $stamp, int|string $stampsize = 50, int|string $indentH = 0, int|string $indentV = 0, string $horizontal = null, string $vertical = null, string $h = null, string $v = null, string $x = null, string $y = null, string $savePath = null, string $module = null) {
         if (!$vertical && $v) $vertical = $v;
         if (!$vertical && $y) $vertical = $y;
         if (!$vertical || !in_array($vertical,['top','center','bottom'])) $vertical = 'center';
@@ -376,18 +376,13 @@ class Image
         }
         $saveFunction = 'image' . $extension;
 
-        //if (gettype($image) === 'string') {
-            $image = self::fromFile($image);
-        //}
+        $image = self::fromFile($image);
 
         if (gettype($image) !== 'object' || !($image instanceof GdImage)) {
             return false;
         }
 
-        //if (gettype($stamp) === 'string') {
-            //$stampPath = Storage::path($stamp);
-            $stamp = self::fromFile($stamp);
-        //}
+        $stamp = self::fromFile($stamp);
 
         if (gettype($stamp) !== 'object' || !($stamp instanceof GdImage)) {
             return false;
@@ -455,7 +450,16 @@ class Image
 
         imagecopyresampled($image, $stamp, $left, $top, 0, 0, $stampNewWidth, $stampNewHeight, $imageWidth, $imageHeight);
 
-        $dir = is_dir(Storage::path('public/images/stamped/')) ? 'public/images/stamped/' : Storage::makeDirectory('public/images/stamped/');
+        if (empty($savePath)) {
+            if (!empty($module)) {
+                $savePath = 'public/elfcms/' . $module . '/images/stamped/';
+            }
+            else {
+                $savePath =  'public/elfcms/images/stamped/';
+            }
+        }
+
+        $dir = is_dir(Storage::path($savePath)) ? $savePath : Storage::makeDirectory($savePath);
         $file = $dir . uniqid() . '.' . $extension;
 
         if ($saveFunction($image    , Storage::path($file))) {

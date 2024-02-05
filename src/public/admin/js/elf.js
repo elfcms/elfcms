@@ -71,7 +71,6 @@ function popup (params = {}) {
 
     if (params.buttons.length > 0) {
         params.buttons.forEach(button => {
-            //console.log(button)
             if (!button.title) {
                 return
             }
@@ -178,7 +177,6 @@ function inputFileImg (input) {
         return false
     }
     const wrapper = input.closest('.input-image-button')
-    console.log(wrapper)
     if (wrapper) {
         const img = wrapper.querySelector('.image-button-img img')
         const text = wrapper.querySelector('.image-button-text')
@@ -322,7 +320,6 @@ function autoSlug (checkbox, translit = true, space = '-') {
 
                 textElement.addEventListener('input',function(e) {
                     if (elem.checked) {
-                        //console.log(space);
                         slugElement.value = slug(this.value, space, translit)
                     }
                 })
@@ -630,7 +627,6 @@ function eventParamBoxInit(addSelector = '#addparamline', line = 0) {
     const addButton = document.querySelector(addSelector)
     if (addButton) {
         addButton.addEventListener('click',function(){
-            //console.log(paramNextLine);
             const lastLine = document.querySelector('.params-table-string-line[data-line="'+paramNextLine+'"]')
             paramNextLine++
             const htmlLine = `
@@ -667,7 +663,6 @@ function menuAttrBoxInit(addSelector = '#addattributeline', line = 0) {
     const addButton = document.querySelector(addSelector)
     if (addButton) {
         addButton.addEventListener('click',function(){
-            //console.log(attributeNextLine);
             const lastLine = document.querySelector('.attributes-table-string-line[data-line="'+attributeNextLine+'"]')
             attributeNextLine++
             const htmlLine = `
@@ -807,8 +802,6 @@ function onlyOneCheckedInit (elements,listSelector) {
             elements.forEach(element => {
                 element.addEventListener('change',function () {
 
-                    //console.log(this)
-                    //console.log(this.checked)
                     if (this.checked) {
                         list = document.querySelectorAll(listSelector)
                         if (typeof list === 'object' && list instanceof NodeList) {
@@ -896,8 +889,6 @@ function contextPopup(content, position = {}) {
     document.body.append(boxBg)
     document.body.append(box)
     document.body.style.overflowY = 'hidden'
-
-    //console.log(box.offsetHeight)
 
     if (top) {
         if (top + box.offsetHeight > window.innerHeight) {

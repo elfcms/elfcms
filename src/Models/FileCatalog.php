@@ -14,7 +14,7 @@ class FileCatalog extends Model
         'file',
     ];
 
-    public static function set($file, $name = null)
+    public static function set($file, $name = null, $module = null)
     {
         if (empty($name)) {
             $name = basename($file);
