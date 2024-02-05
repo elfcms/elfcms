@@ -116,15 +116,11 @@ class ElfcmsModuleProvider extends ServiceProvider
         $this->publishes([
             $moduleDir.'/resources/views/emails' => resource_path('views/elfcms/emails'),
         ],'emails');
-        /* $this->publishes([
-            $moduleDir.'/resources/views/public/layouts' => resource_path('views/public/layouts'),
-        ],'emails');
-        $this->publishes([
-            $moduleDir.'/resources/views/public/pages' => resource_path('views/public/pages'),
-        ],'emails'); */
+
         $this->publishes([
             $moduleDir.'/resources/views/welcome.blade.php' => resource_path('views').'/welcome.blade.php',
         ],'welcome');
+
         $this->publishes([
             $moduleDir.'/public/welcome' => public_path('elfcms/welcome/'),
         ], 'welcome');
