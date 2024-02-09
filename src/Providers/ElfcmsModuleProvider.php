@@ -164,6 +164,7 @@ class ElfcmsModuleProvider extends ServiceProvider
             VisitStatistics::class
         ));
 
+        Blade::component('elfcms-cookie-consent', \Elfcms\Elfcms\View\Components\CookieConsent::class);
         Blade::component('elfcms-form', \Elfcms\Elfcms\View\Components\Form::class);
         Blade::component('elfcms-menu', \Elfcms\Elfcms\View\Components\Menu::class);
         Blade::component('elfcms-fragment', \Elfcms\Elfcms\View\Components\Fragment::class);

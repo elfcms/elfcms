@@ -5,6 +5,7 @@ namespace Elfcms\Elfcms\Console\Commands;
 use Elfcms\Elfcms\Aux\Locales;
 use Elfcms\Elfcms\Http\Controllers\SettingController;
 use Elfcms\Elfcms\Models\AccessType;
+use Elfcms\Elfcms\Models\CookieSetting;
 use Elfcms\Elfcms\Models\DataType;
 use Elfcms\Elfcms\Models\EmailAddress;
 use Elfcms\Elfcms\Models\EmailEvent;
@@ -112,6 +113,14 @@ class ElfcmsInstall extends Command
 
         $this->line('Creating data types settings');
         $settings = new DataType();
+        if ($settings->start() !== false) {
+            $this->info('OK');
+        } else {
+            $this->error('Error');
+        }
+
+        $this->line('Creating cookie settings');
+        $settings = new CookieSetting();
         if ($settings->start() !== false) {
             $this->info('OK');
         } else {

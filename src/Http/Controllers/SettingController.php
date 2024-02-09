@@ -73,7 +73,7 @@ class SettingController extends \App\Http\Controllers\Controller
             $setting->save();
         }
         //dd($request);
-        return redirect(route('admin.settings.index'))->with('settingedited', 'Settings edited successfully');
+        return redirect(route('admin.settings.index'))->with('settingedited', __('elfcms::default.settings_edited_successfully'));
     }
 
     public function start()

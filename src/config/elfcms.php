@@ -22,7 +22,7 @@ return [
     |
     */
 
-    'version' => '1.5.4',
+    'version' => '1.6.0',
 
     /*
     |--------------------------------------------------------------------------
@@ -253,12 +253,20 @@ return [
             "position" => 80,
         ],
         [
+            "title" => "Cookies",
+            "lang_title" => "elfcms::default.cookies",
+            "route" => "admin.cookie-settings.index",
+            "parent_route" => "admin.cookie-settings.index",
+            "icon" => "/elfcms/admin/images/icons/cookie.png",
+            "position" => 90,
+        ],
+        [
             "title" => "Statistics",
             "lang_title" => "elfcms::default.statistics",
             "route" => "admin.statistics.index",
             "parent_route" => "admin.statistics.index",
             "icon" => "/elfcms/admin/images/icons/stats.png",
-            "position" => 90,
+            "position" => 100,
         ]
     ],
 

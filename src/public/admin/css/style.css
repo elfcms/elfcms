@@ -3066,3 +3066,19 @@ footer#footer {
     display: flex;
     justify-content: center;
 }
+
+.cookie-category-list {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.cookie-category-box {
+    display: flex;
+}
+.cookie-category-box label {
+    padding: 10px;
+}
+.cookie-add-button {
+    padding: 10px;
+}

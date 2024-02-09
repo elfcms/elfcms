@@ -12,6 +12,12 @@ $adminPath = config('elfcms.elfcms.admin_path') ?? '/admin';
 
 Route::group(['middleware'=>['web','cookie']],function() use ($adminPath) {
 
+    /* ---- Cookie consent ---- */
+
+    Route::post('/cookie-consent', Elfcms\Elfcms\Http\Controllers\CookieConsentController::class)->name('cookie-consent');
+
+    /* ------------------------ */
+
     /* Admin panel */
     Route::name('admin.')->middleware(['admin','access'])->group(function() use ($adminPath) {
 
@@ -33,12 +39,16 @@ Route::group(['middleware'=>['web','cookie']],function() use ($adminPath) {
 
         /* ------------------------ */
 
-
-
         Route::name('settings.')->group(function() use ($adminPath) {
             Route::get($adminPath . '/settings',[Elfcms\Elfcms\Http\Controllers\SettingController::class,'index'])->name('index');
             Route::post($adminPath . '/settings',[Elfcms\Elfcms\Http\Controllers\SettingController::class,'save'])->name('save');
         });
+
+        Route::name('cookie-settings.')->group(function() use ($adminPath) {
+            Route::get($adminPath . '/cookie-settings',[Elfcms\Elfcms\Http\Controllers\CookieSettingController::class,'index'])->name('index');
+            Route::post($adminPath . '/cookie-settings',[Elfcms\Elfcms\Http\Controllers\CookieSettingController::class,'save'])->name('save');
+        });
+
         Route::resource($adminPath . '/user/roles', Elfcms\Elfcms\Http\Controllers\Resources\RoleController::class)->names([
             'index' => 'user.roles',
             'create' => 'user.roles.create',
