@@ -769,40 +769,46 @@ class Gnommy {
         this.headerButton = this.createButton()
         this.headerButton.innerHTML = '<b>H</b>'
         this.headerButton.title = 'Header'
-        this.headerButton.addEventListener('click',function(){
+        this.headerButton.addEventListener('click',function(e){
+            e.preventDefault();
             self.openPopup(self.createHeaderPopup(),'header')
         })
 
         this.boldButton = this.createButton()
         this.boldButton.innerHTML = '<b>B</b>'
         this.boldButton.title = 'Bold'
-        this.boldButton.addEventListener('click',function(){
+        this.boldButton.addEventListener('click',function(e){
+            e.preventDefault();
             self.fragmentWrap('b')
         })
 
         this.italicButton = this.createButton()
         this.italicButton.innerHTML = '<i>I</i>'
         this.italicButton.title = 'Italic'
-        this.italicButton.addEventListener('click',function(){
+        this.italicButton.addEventListener('click',function(e){
+            e.preventDefault();
             self.fragmentWrap('i')
         })
         this.underlineButton = this.createButton()
         this.underlineButton.innerHTML = '<u>U</u>'
         this.underlineButton.title = 'Underline'
-        this.underlineButton.addEventListener('click',function(){
+        this.underlineButton.addEventListener('click',function(e){
+            e.preventDefault();
             self.fragmentWrap('u')
         })
         this.strikeButton = this.createButton()
         this.strikeButton.innerHTML = '<s>S</s>'
         this.strikeButton.title = 'Strike'
-        this.strikeButton.addEventListener('click',function(){
+        this.strikeButton.addEventListener('click',function(e){
+            e.preventDefault();
             self.fragmentWrap('s')
         })
 
         this.colorButton = this.createButton()
         this.colorButton.title = 'Text color'
         this.colorButton.insertAdjacentHTML('afterbegin',this.buttonPictures.color)
-        this.colorButton.addEventListener('click',function(){
+        this.colorButton.addEventListener('click',function(e){
+            e.preventDefault();
             self.createColorPopup()
         })
 
@@ -815,34 +821,39 @@ class Gnommy {
 
         this.ulButton = this.createButton()
         this.ulButton.title = 'Unordered list'
-        this.ulButton.addEventListener('click',function(){
+        this.ulButton.addEventListener('click',function(e){
+            e.preventDefault();
             self.setList()
         })
         this.ulButton.insertAdjacentHTML('afterbegin',this.buttonPictures.ul)
         this.olButton = this.createButton()
         this.olButton.title = 'Ordered list'
-        this.olButton.addEventListener('click',function(){
+        this.olButton.addEventListener('click',function(e){
+            e.preventDefault();
             self.setList(true)
         })
         this.olButton.insertAdjacentHTML('afterbegin',this.buttonPictures.ol)
 
         this.linkButton = this.createButton()
         this.linkButton.title = 'Link'
-        this.linkButton.addEventListener('click',function(){
+        this.linkButton.addEventListener('click',function(e){
+            e.preventDefault();
             self.getPopupLink()
         })
         this.linkButton.insertAdjacentHTML('afterbegin',this.buttonPictures.link)
 
         this.unlinkButton = this.createButton()
         this.unlinkButton.title = 'Remove link'
-        this.unlinkButton.addEventListener('click',function(){
+        this.unlinkButton.addEventListener('click',function(e){
+            e.preventDefault();
             self.unsetLink()
         })
         this.unlinkButton.insertAdjacentHTML('afterbegin',this.buttonPictures.unlink)
 
         this.imageButton = this.createButton()
         this.imageButton.title = 'Add image'
-        this.imageButton.addEventListener('click',function(){
+        this.imageButton.addEventListener('click',function(e){
+            e.preventDefault();
             self.getPopupImage()
         })
         this.imageButton.insertAdjacentHTML('afterbegin',this.buttonPictures.image)

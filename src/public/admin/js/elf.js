@@ -951,14 +951,20 @@ function runEditor(element) {
     let result = false
     if (element) {
         const form = element.closest('form')
-        const submitButton = form.querySelector('[type="submit"]')
-        if (form && submitButton) {
-            form.addEventListener('submit',function(e){
+        //const submitButton = form.querySelector('[type="submit"]')
+        const submitButtons = form.querySelectorAll('[type="submit"]')
+        if (form && submitButtons) {
+            /* form.addEventListener('submit',function(e){
                 e.preventDefault()
-            })
-            submitButton.addEventListener('click',function(){
+            }) */
+            /* submitButton.addEventListener('click',function(){
                 form.submit()
-            })
+            }) */
+            /* submitButtons.forEach(submitButton => {
+                submitButton.addEventListener('click',function(){
+                    form.submit();
+                })
+            }); */
         }
         if (typeof Gnommy != 'undefined') {
             result = new Gnommy(element)

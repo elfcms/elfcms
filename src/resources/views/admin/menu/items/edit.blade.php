@@ -87,7 +87,8 @@
                                     </div>
                                     <div class="attributes-table-head"></div>
                                 </div>
-                                @forelse ($item->attributes as $attribute_name => $attribute_value)
+                                @if(!empty($item->attributes))
+                                @foreach ($item->attributes as $attribute_name => $attribute_value)
                                 <div class="attributes-table-string-line" data-line="{{$loop->index}}">
                                     <div class="attributes-table-string">
                                         <input type="text" name="attributes_new[{{$loop->index}}][name]" id="attribute_new_name_{{$loop->index}}" data-attribute-name value="{{$attribute_name}}">
@@ -99,7 +100,8 @@
                                         <button type="button" class="default-btn" onclick="menuAttrDelete({{$loop->index}})">&#215;</button>
                                     </div>
                                 </div>
-                                @empty
+                                @endforeach
+                                @else
                                 <div class="attributes-table-string-line" data-line="0">
                                     <div class="attributes-table-string">
                                         <input type="text" name="attributes_new[0][name]" id="attribute_new_name_0" data-attribute-name>
@@ -111,7 +113,7 @@
                                         <button type="button" class="default-btn" onclick="menuAttrDelete(0)">&#215;</button>
                                     </div>
                                 </div>
-                                @endforelse
+                                @endif
 
                             </div>
                             <button type="button" class="default-btn attribute-table-add" id="addattributeline">{{ __('elfcms::default.add_attribute') }}</button>
@@ -122,12 +124,12 @@
             <div class="button-box single-box">
                 <button type="submit" class="default-btn submit-button">{{ __('elfcms::default.submit') }}</button>
                 <button type="submit" name="submit" value="save_and_close" class="default-btn alternate-button">{{ __('elfcms::default.save_and_close') }}</button>
-                <a href="{{ route('admin.messages.index') }}" class="default-btn">{{ __('elfcms::default.cancel') }}</a>
+                <a href="{{ route('admin.menus.show',$item->menu) }}" class="default-btn">{{ __('elfcms::default.cancel') }}</a>
             </div>
         </form>
     </div>
     <script>
-        menuAttrBoxInit('#addattributeline',{{ count($item->attributes)-1 }})
+        menuAttrBoxInit('#addattributeline',{{ count($item->attributes ?? [])-1 }})
     </script>
 
 @endsection
