@@ -2,6 +2,7 @@
 
 use Elfcms\Elfcms\Models\DataType;
 use Elfcms\Elfcms\Models\Page;
+use Elfcms\Elfcms\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Lang;
@@ -11,6 +12,8 @@ use Illuminate\Support\Facades\Schema;
 $adminPath = config('elfcms.elfcms.admin_path') ?? '/admin';
 
 Route::group(['middleware'=>['web','cookie']],function() use ($adminPath) {
+
+    Route::get('/maintenance', Elfcms\Elfcms\Http\Controllers\MaintenanceController::class)->name('maintenance');
 
     /* ---- Cookie consent ---- */
 

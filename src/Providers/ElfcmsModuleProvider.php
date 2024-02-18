@@ -16,6 +16,7 @@ use Elfcms\Elfcms\Http\Middleware\CookieCheck;
 use Elfcms\Elfcms\Http\Middleware\AccountUser;
 use Elfcms\Elfcms\Http\Middleware\AdminAccess;
 use Elfcms\Elfcms\Http\Middleware\AdminUser;
+use Elfcms\Elfcms\Http\Middleware\Maintenance;
 use Elfcms\Elfcms\Http\Middleware\VisitStatistics;
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
@@ -52,6 +53,12 @@ class ElfcmsModuleProvider extends ServiceProvider
         $loader->alias('Locales','Elfcms\Elfcms\Aux\Locales');
         $loader->alias('TextPrepare','Elfcms\Elfcms\Aux\TextPrepare');
         $loader->alias('AdminMenu','Elfcms\Elfcms\Aux\Admin\Menu');
+
+        $helpers = glob(base_path() . '/*/elfcms/*/src/Helpers/*{.php}',GLOB_BRACE | GLOB_MARK);
+
+        foreach ($helpers as $helper) {
+            require_once $helper;
+        }
 
     }
 
@@ -125,6 +132,15 @@ class ElfcmsModuleProvider extends ServiceProvider
             $moduleDir.'/public/welcome' => public_path('elfcms/welcome/'),
         ], 'welcome');
 
+        $this->publishes([
+            $moduleDir.'/resources/views/maintenance.blade.php' => resource_path('views').'/maintenance.blade.php',
+        ],'maintenance');
+
+        $this->publishes([
+            $moduleDir.'/public/maintenance' => public_path('elfcms/maintenance/'),
+        ], 'maintenance');
+
+
         config(['auth.providers.users.model' => \Elfcms\Elfcms\Models\User::class]);
         $disks = config('elfcms.elfcms.disks');
         if (!empty($disks)) {
@@ -143,6 +159,9 @@ class ElfcmsModuleProvider extends ServiceProvider
             //
         }
 
+
+        $router->pushMiddlewareToGroup('web', Maintenance::class);
+        //dd($router->middlewareGroups);
 
         $router->middlewareGroup('admin', array(
             AdminUser::class

@@ -7,6 +7,7 @@ return [
     'email' => 'Email',
     'email_address' => 'Email адрес',
     'email_addresses' => 'Email адреса',
+    'address' => 'Адрес',
     'addresses' => 'Адреса',
     'user_already_exists' => 'Пользователь уже существует',
     'login' => 'Вход',
@@ -460,4 +461,17 @@ return [
     'cookie_settings_title' => 'Настройки файлов cookie',
     'cookie_settings_text' => 'На нашем сайте хранятся четыре типа файлов cookie. В любое время вы можете выбрать, какие файлы cookie принять, а какие отклонить. Вы можете узнать больше о том, что такое файлы cookie и какие типы файлов cookie мы храним, в нашей <a href=":policyUrl" target="_blank" class="underline hover:no-underline">Политике использования файлов cookie</a>.',
     'cookie_lifetime' => 'Время жизни (в днях)',
+
+    'site_maintenance' => 'Режим обслуживания',
+    'site_maintenance_text' => 'Текст сообщения для режима обслуживания',
+    'site_under_construction' => 'Сайт находится в разработке',
+    'site_down' => 'В настоящее время сайт закрыт на техническое обслуживание. Мы скоро вернемся!',
+    'are_you_sure_to_enable_maintenance_mode' => 'Вы уверены, что хотите включить режим обслуживания?',
+    'are_you_sure_to_disable_maintenance_mode' =>  'Вы уверенны, что хотите отключить режим обслуживания?',
+
+    'firm_name' => 'Название фирмы',
+    'phone' => 'Номер телефона',
+    'tax_number' => 'ИНН',
+    'contact' => 'Контакт',
+    'contacts' => 'Контакты',
 ];

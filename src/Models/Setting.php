@@ -40,6 +40,8 @@ class Setting extends DefaultModel
         ['code' => 'site_description', 'name' => 'Site description', 'params' => '{"type": "text"}'],
         ['code' => 'site_locale', 'name' => 'Site locale', 'params' => '{"type": "list"}'],
         ['code' => 'site_statistics_use', 'name' => 'Use statistics', 'params' => '{"type": "checkbox"}', 'value' => 0],
+        ['code' => 'site_maintenance', 'name' => 'Maintenance mode', 'params' => '{"type": "checkbox"}', 'value' => 0],
+        ['code' => 'site_maintenance_text', 'name' => 'Message text for maintenance mode', 'params' => '{"type": "text"}'],
     ];
 
     public static function value($code)

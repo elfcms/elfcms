@@ -88,6 +88,71 @@
                 </div>
                 @endif
             @endforeach
+
+            <h4>{{ __('elfcms::default.contacts') }}</h4>
+            @foreach ($contacts as $contact)
+                @if (empty($contact['params']['type']) || $contact['params']['type'] == 'string')
+                <div class="input-box colored">
+                    <label for="{{ $contact['code'] }}">@if (__('elfcms::default.'.$contact['code']) != 'elfcms::default.'.$contact['code']) {{__('elfcms::default.'.$contact['code'])}} @else {{ $contact['name'] }} @endif</label>
+                    <div class="input-wrapper">
+                        <input type="text" name="{{ $contact['code'] }}" id="{{ $contact['code'] }}" autocomplete="off" value="{{ $contact['value'] }}">
+                    </div>
+                </div>
+                @elseif (in_array($contact['params']['type'],['number','tel','email','password','search','date','time','datetime','month','week','color']))
+                <div class="input-box colored">
+                    <label for="{{ $contact['code'] }}">@if (__('elfcms::default.'.$contact['code']) != 'elfcms::default.'.$contact['code']) {{__('elfcms::default.'.$contact['code'])}} @else {{ $contact['name'] }} @endif</label>
+                    <div class="input-wrapper">
+                        <input type="{{$contact['params']['type']}}" name="{{ $contact['code'] }}" id="{{ $contact['code'] }}" autocomplete="off" value="{{ $contact['value'] }}">
+                    </div>
+                </div>
+                @elseif ($contact['params']['type'] == 'text')
+                <div class="input-box colored">
+                    <label for="{{ $contact['code'] }}">@if (__('elfcms::default.'.$contact['code']) != 'elfcms::default.'.$contact['code']) {{__('elfcms::default.'.$contact['code'])}} @else {{ $contact['name'] }} @endif</label>
+                    <div class="input-wrapper">
+                        <textarea name="{{ $contact['code'] }}" id="{{ $contact['code'] }}" cols="30" rows="3">{{ $contact['value'] }}</textarea>
+                    </div>
+                </div>
+                @elseif ($contact['params']['type'] == 'checkbox')
+                <div class="input-box colored">
+                    <div class="checkbox-wrapper">
+                        <div class="checkbox-switch-wrapper">
+                            <div class="checkbox-switch blue">
+                                <input type="checkbox" name="{{ $contact['code'] }}" id="{{ $contact['code'] }}" value="1"
+                                @if ($contact['value'] && $contact['value'] == 1)
+                                    checked
+                                @endif>
+                                <i></i>
+                            </div>
+                            <label for="{{ $contact['code'] }}">
+                                @if (__('elfcms::default.'.$contact['code']) != 'elfcms::default.'.$contact['code'])
+                                {{__('elfcms::default.'.$contact['code'])}}
+                            @else
+                                {{ $contact['name'] }}
+                            @endif
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                @elseif ($contact['params']['type'] == 'image')
+                <div class="input-box colored">
+                    <label for="{{ $contact['code'] }}">@if (__('elfcms::default.'.$contact['code']) != 'elfcms::default.'.$contact['code']) {{__('elfcms::default.'.$contact['code'])}} @else {{ $contact['name'] }} @endif</label>
+                    <div class="input-wrapper">
+                        <x-elfcms-input-image :inputData=$contact />
+                    </div>
+                </div>
+                @elseif ($contact['code'] == 'site_locale')
+                <div class="input-box colored">
+                    <label for="{{ $contact['code'] }}">@if (__('elfcms::default.'.$contact['code']) != 'elfcms::default.'.$contact['code']) {{__('elfcms::default.'.$contact['code'])}} @else {{ $contact['name'] }} @endif</label>
+                    <div class="input-wrapper">
+                        <select name="{{ $contact['code'] }}" id="{{ $contact['code'] }}">
+                        @foreach ($locales as $locale)
+                            <option value="{{ $locale['code'] }}" @if ($locale['code'] == $contact['value']) selected @endif>{{ $locale['name'] }}</option>
+                        @endforeach
+                        </select>
+                    </div>
+                </div>
+                @endif
+            @endforeach
             </div>
             <div class="button-box single-box">
                 <button type="submit" class="default-btn success-button">{{ __('elfcms::default.submit') }}</button>
@@ -104,6 +169,61 @@ if (useStatisticCheckbox) {
             let aa = popup({
                 title:'{{ __('elfcms::default.warning') }}',
                 content:'<p>{!! __('elfcms::default.user_data_warning_html') !!}</p>',
+                buttons:[
+                    {
+                        title:'{{ __('elfcms::default.confirm') }}',
+                        class:'default-btn delete-button',
+                        callback: 'close'
+                    },
+                    {
+                        title:'{{ __('elfcms::default.cancel') }}',
+                        class:'default-btn cancel-button',
+                        callback: [
+                            function(){
+                                self.checked = false;
+                            },
+                            'close'
+                        ]
+                    }
+                ],
+                class:'danger'
+            })
+        }
+    })
+}
+const useMaintenanceCheckbox = document.querySelector('[name="site_maintenance"]')
+if (useMaintenanceCheckbox) {
+    useMaintenanceCheckbox.addEventListener('change',function(e){
+        if (this.checked) {
+            self = this
+            let aa = popup({
+                title:'{{ __('elfcms::default.warning') }}',
+                content:'<p>{!! __('elfcms::default.are_you_sure_to_enable_maintenance_mode') !!}</p>',
+                buttons:[
+                    {
+                        title:'{{ __('elfcms::default.confirm') }}',
+                        class:'default-btn delete-button',
+                        callback: 'close'
+                    },
+                    {
+                        title:'{{ __('elfcms::default.cancel') }}',
+                        class:'default-btn cancel-button',
+                        callback: [
+                            function(){
+                                self.checked = false;
+                            },
+                            'close'
+                        ]
+                    }
+                ],
+                class:'danger'
+            })
+        }
+        else {
+            self = this
+            let aa = popup({
+                title:'{{ __('elfcms::default.warning') }}',
+                content:'<p>{!! __('elfcms::default.are_you_sure_to_disable_maintenance_mode') !!}</p>',
                 buttons:[
                     {
                         title:'{{ __('elfcms::default.confirm') }}',

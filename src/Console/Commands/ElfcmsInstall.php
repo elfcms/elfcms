@@ -7,6 +7,7 @@ use Elfcms\Elfcms\Http\Controllers\SettingController;
 use Elfcms\Elfcms\Models\AccessType;
 use Elfcms\Elfcms\Models\CookieSetting;
 use Elfcms\Elfcms\Models\DataType;
+use Elfcms\Elfcms\Models\ElfcmsContact;
 use Elfcms\Elfcms\Models\EmailAddress;
 use Elfcms\Elfcms\Models\EmailEvent;
 use Elfcms\Elfcms\Models\FormFieldType;
@@ -81,6 +82,14 @@ class ElfcmsInstall extends Command
 
         $this->line('Creating basic settings');
         $settings = new SettingController;
+        if ($settings->start() !== false) {
+            $this->info('OK');
+        } else {
+            $this->error('Error');
+        }
+
+        $this->line('Creating contact settings');
+        $settings = new ElfcmsContact();
         if ($settings->start() !== false) {
             $this->info('OK');
         } else {

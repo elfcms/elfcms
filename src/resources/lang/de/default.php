@@ -7,6 +7,7 @@ return [
     'email' => 'E-Mail',
     'email_address' => 'E-Mail Adresse',
     'email_addresses' => 'E-Mail Adressen',
+    'address' => 'Adresse',
     'addresses' => 'Adressen',
     'user_already_exists' => 'Benutzer existiert bereits',
     'login' => 'Anmelden',
@@ -460,4 +461,17 @@ return [
     'cookie_settings_title' => 'Cookie-Einstellungen',
     'cookie_settings_text' => 'Unsere Website speichert vier Arten von Cookies. Sie können jederzeit wählen, welche Cookies Sie akzeptieren und welche Sie ablehnen. Weitere Informationen darüber, was Cookies sind und welche Arten von Cookies wir speichern, finden Sie in unserer <a href=":policyUrl" target="_blank" class="underline hover:no-underline">Cookie-Richtlinie</a>.',
     'cookie_lifetime' => 'Gültigkeit in Tagen',
+
+    'site_maintenance' => 'Wartungsmodus',
+    'site_maintenance_text' => 'Meldungstext für Wartungsmodus',
+    'site_under_construction' => 'Website im Aufbau',
+    'site_down' => 'Die Website ist derzeit wegen Wartungsarbeiten nicht verfügbar. Wir sollten bald zurück sein!',
+    'are_you_sure_to_enable_maintenance_mode' =>  'Sind Sie sicher, dass Sie den Wartungsmodus aktivieren möchten?',
+    'are_you_sure_to_disable_maintenance_mode' => 'Sind Sie sicher, dass Sie Wartungsmodus deaktivieren möchten?',
+
+    'firm_name' => 'Firmenname',
+    'phone' => 'Telefonnummer',
+    'tax_number' => 'Steuernummer',
+    'contact' => 'Kontakt',
+    'contacts' => 'Kontakte',
 ];

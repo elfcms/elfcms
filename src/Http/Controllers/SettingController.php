@@ -4,6 +4,7 @@ namespace Elfcms\Elfcms\Http\Controllers;
 
 use Elfcms\Elfcms\Aux\Locales;
 use Elfcms\Elfcms\Http\Requests\Admin\SettingRequest;
+use Elfcms\Elfcms\Models\ElfcmsContact;
 use Elfcms\Elfcms\Models\Setting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Lang;
@@ -31,6 +32,13 @@ class SettingController extends \App\Http\Controllers\Controller
                 $settings[$item]['name'] = __('elfcms::default.' . $setting['code']);
             }
         }
+        $contacts = ElfcmsContact::all()->toArray();
+        foreach ($contacts as $item => $contact) {
+            $contact[$item]['params'] = json_decode($contact['params'], true);
+            if (Lang::has('elfcms::default.' . $contact['code'])) {
+                $contact[$item]['name'] = __('elfcms::contact.' . $setting['code']);
+            }
+        }
         $locales = Locales::all();
         return view('elfcms::admin.settings.index', [
             'page' => [
@@ -38,7 +46,8 @@ class SettingController extends \App\Http\Controllers\Controller
                 'current' => url()->current(),
             ],
             'settings' => $settings,
-            'locales' => $locales
+            'locales' => $locales,
+            'contacts' => $contacts,
         ]);
     }
 
@@ -71,6 +80,24 @@ class SettingController extends \App\Http\Controllers\Controller
             }
             //dd($setting);
             $setting->save();
+        }
+
+        $contacts = Setting::all();
+        foreach ($contacts as $contact) {
+            $params = json_decode($setting->params, true);
+            if (!empty($params) && !empty($params['type']) && $params['type'] == 'image') {
+                if (!empty($request->file()[$contact->code])) {
+                    $image = $request->file()[$contact->code]->store('public/elfcms/contacts/site/image');
+                    $contact->value = str_ireplace('public/', '/storage/', $image);
+                } else {
+                    $contact->value = $requestArray[$contact->code . '_path'];
+                }
+            } elseif (!empty($params) && !empty($params['type']) && $params['type'] == 'checkbox') {
+                $contact->value = !empty($requestArray[$contact->code]) ? 1 : 0;
+            } else {
+                $contact->value = $requestArray[$contact->code];
+            }
+            $contact->save();
         }
         //dd($request);
         return redirect(route('admin.settings.index'))->with('settingedited', __('elfcms::default.settings_edited_successfully'));
