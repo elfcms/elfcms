@@ -82,9 +82,9 @@ class SettingController extends \App\Http\Controllers\Controller
             $setting->save();
         }
 
-        $contacts = Setting::all();
+        $contacts = ElfcmsContact::all();
         foreach ($contacts as $contact) {
-            $params = json_decode($setting->params, true);
+            $params = json_decode($contact->params, true);
             if (!empty($params) && !empty($params['type']) && $params['type'] == 'image') {
                 if (!empty($request->file()[$contact->code])) {
                     $image = $request->file()[$contact->code]->store('public/elfcms/contacts/site/image');
