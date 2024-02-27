@@ -234,7 +234,17 @@ class Image
             return $file;
         }
         $pathinfo = pathinfo($file);
-        $newFile = $cacheDir . $pathinfo['filename'] . '.' . $pathinfo['extension'];
+        $addInfo = '';
+        if ($width) {
+            $addInfo .= '_w' . $width;
+        }
+        if ($height) {
+            $addInfo .= '_h' . $height;
+        }
+        if ($coef && $coef != 1) {
+            $addInfo .= '_c' . $coef;
+        }
+        $newFile = $cacheDir . $pathinfo['filename'] . $addInfo . '.' . $pathinfo['extension'];
         if (Storage::exists($newFile)) {
             return str_replace('public/', '/storage/', $newFile);
         }
@@ -247,6 +257,10 @@ class Image
     }
 
     public static function adaptResize($filePath, $width = null, $height = null, $coef = 1, $resultFile = null, $gd = false) {
+        $basePath = base_path();
+        if (!file_exists($basePath . '/'. trim($filePath,'/'))) {
+            $filePath = str_replace('/storage/', $basePath . '/storage/app/public/', $filePath);
+        }
         $imageData = getimagesize($filePath);
         $extension = image_type_to_extension($imageData[2], false);
         $crateFunction = 'imagecreatefrom' . $extension;
