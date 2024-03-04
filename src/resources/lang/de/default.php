@@ -438,7 +438,7 @@ return [
     'use_default_text' => 'Standardmäßig Systemtext verwenden',
     'field_below_can_be_left_blank' => 'das Feld unten kann leer gelassen werden',
     'default_cookie_text' => 'Diese Website verwendet Cookies, um sicherzustellen, dass Sie auf unserer Website die bestmögliche Erfahrung machen. Indem Sie weiterhin auf der Website surfen, stimmen Sie der Verwendung von Cookies gemäß unserer Cookie-Richtlinie zu. Wir halten uns an die Datenschutz-Grundverordnung (DSGVO) in Bezug auf die Verwendung von Cookies und die Verarbeitung personenbezogener Daten. Weitere Informationen finden Sie in unserer Datenschutzrichtlinie.',
-    'default_cookie_text_link' => 'Diese Website verwendet Cookies, um sicherzustellen, dass Sie auf unserer Website die bestmögliche Erfahrung machen. Indem Sie weiterhin auf der Website surfen, stimmen Sie der Verwendung von Cookies gemäß unserer Cookie-Richtlinie zu. Wir halten uns an die Datenschutz-Grundverordnung (<a href="https://dsgvo-gesetz.de" rel="external nofollow noopener noreferrer" target="_blank">GDPR</a>) in Bezug auf die Verwendung von Cookies und die Verarbeitung personenbezogener Daten. Weitere Informationen finden Sie in unserer <a href=":privacy_link" target="_blank">Datenschutzrichtlinie</a>.',
+    'default_cookie_text_link' => 'Diese Website verwendet Cookies, um sicherzustellen, dass Sie auf unserer Website die bestmögliche Erfahrung machen. Indem Sie weiterhin auf der Website surfen, stimmen Sie der Verwendung von Cookies gemäß unserer Cookie-Richtlinie zu. Wir halten uns an die Datenschutz-Grundverordnung (<a href="https://dsgvo-gesetz.de" rel="external nofollow noopener noreferrer" target="_blank">DSGVO</a>) in Bezug auf die Verwendung von Cookies und die Verarbeitung personenbezogener Daten. Weitere Informationen finden Sie in unserer <a href=":privacy_link" target="_blank">Datenschutzrichtlinie</a>.',
     'cookie_accept' => 'Akzeptieren',
     'cookie_all_accept' => 'Alle Cookies akzeptieren',
     'cookie_essentials_only' => 'Nur notwendige Cookies akzeptieren',
@@ -461,6 +461,7 @@ return [
     'cookie_settings_title' => 'Cookie-Einstellungen',
     'cookie_settings_text' => 'Unsere Website speichert vier Arten von Cookies. Sie können jederzeit wählen, welche Cookies Sie akzeptieren und welche Sie ablehnen. Weitere Informationen darüber, was Cookies sind und welche Arten von Cookies wir speichern, finden Sie in unserer <a href=":policyUrl" target="_blank" class="underline hover:no-underline">Cookie-Richtlinie</a>.',
     'cookie_lifetime' => 'Gültigkeit in Tagen',
+    'cookie_technically_necessary' => 'Technisch notwendig',
 
     'site_maintenance' => 'Wartungsmodus',
     'site_maintenance_text' => 'Meldungstext für Wartungsmodus',

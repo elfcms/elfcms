@@ -4,6 +4,9 @@ use Elfcms\Elfcms\Aux\Fragment;
 use Elfcms\Elfcms\Aux\Image;
 use Elfcms\Elfcms\Models\ElfcmsContact;
 use Elfcms\Elfcms\Models\Setting;
+use Illuminate\Support\Facades\Cookie;
+
+/* Settings */
 
 if (!function_exists('settings')) {
 
@@ -37,6 +40,8 @@ if (!function_exists('contact')) {
     }
 }
 
+/* /Settings */
+
 if (!function_exists('fragment')) {
 
     function fragment(string $code)
@@ -44,6 +49,8 @@ if (!function_exists('fragment')) {
         return Fragment::get($code);
     }
 }
+
+/* Image */
 
 if (!function_exists('imgCrop')) {
 
@@ -63,16 +70,38 @@ if (!function_exists('imgCropCache')) {
 
 if (!function_exists('imgResize')) {
 
-    function imgResize($filePath, $width = null, $height = null, $coef = 1, $resultFile = null, $gd = false)
+    function imgResize($filePath, $width = null, $height = null, $coef = 1, $resultFile = null, $gd = false, $maxDimension = null)
     {
-        return Image::adaptResize($filePath, $width, $height, $coef, $resultFile, $gd);
+        return Image::adaptResize($filePath, $width, $height, $coef, $resultFile, $gd, $maxDimension);
     }
 }
 
 if (!function_exists('imgResizeCache')) {
 
-    function imgResizeCache($filePath, $width = null, $height = null, $coef = 1)
+    function imgResizeCache($filePath, $width = null, $height = null, $coef = 1, $maxDimension = null)
     {
-        return Image::adaptResizeCache($filePath, $width, $height, $coef);
+        return Image::adaptResizeCache($filePath, $width, $height, $coef, $maxDimension);
     }
 }
+
+/* /Image */
+
+/* Cookies */
+
+if (!function_exists('cookieConsent')) {
+
+    function cookieConsent()
+    {
+        return json_decode(Cookie::get('cookie_consent'),true);
+    }
+}
+
+if (!function_exists('cookieGet')) {
+
+    function cookieGet($name)
+    {
+        return Cookie::get($name);
+    }
+}
+
+/* /Cookies */

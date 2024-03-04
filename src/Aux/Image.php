@@ -271,7 +271,7 @@ class Image
         return $result;
     }
 
-    public static function adaptResizeCache($filePath, $width = null, $height = null, $coef = 1) {
+    public static function adaptResizeCache($filePath, $width = null, $height = null, $coef = 1, $maxDimension = null) {
         $file = str_replace('/storage/', 'public/', $filePath);
         $cacheDir = 'public/elfcms/images/cache/resized/';
         $isDir = Storage::makeDirectory($cacheDir);
@@ -289,11 +289,14 @@ class Image
         if ($coef && $coef != 1) {
             $addInfo .= '_c' . $coef;
         }
+        if ($maxDimension) {
+            $addInfo .= '_m' . $maxDimension;
+        }
         $newFile = $cacheDir . $pathinfo['filename'] . $addInfo . '.' . $pathinfo['extension'];
         if (Storage::exists($newFile)) {
             return str_replace('public/', '/storage/', $newFile);
         }
-        $resized = self::adaptResize($filePath, $width, $height, $coef, $newFile);
+        $resized = self::adaptResize($filePath, $width, $height, $coef, $newFile, $maxDimension);
         if (!$resized) {
             return $file;
         } else {
@@ -301,7 +304,7 @@ class Image
         }
     }
 
-    public static function adaptResize($filePath, $width = null, $height = null, $coef = 1, $resultFile = null, $gd = false) {
+    public static function adaptResize($filePath, $width = null, $height = null, $coef = 1, $resultFile = null, $gd = false, $maxDimension = null) {
         $basePath = base_path();
         if (!file_exists($basePath . '/'. trim($filePath,'/'))) {
             $filePath = str_replace('/storage/', $basePath . '/storage/app/public/', $filePath);
@@ -314,7 +317,47 @@ class Image
             $extension = 'jpg';
         }
         $image = $crateFunction($filePath);
+
         $ratio = $imageData[0] / $imageData[1];
+        if ($maxDimension) {
+            if ($ratio > 1) {
+                $maxDim = $imageData[0];
+            }
+            else {
+                $maxDim = $imageData[1];
+            }
+            if ($maxDimension < $maxDim) {
+                $coef = $maxDimension / $maxDim;
+            }
+        }
+
+        if ($extension == 'jpg') {
+            $exif = exif_read_data($filePath);
+            if ($image && $exif && isset($exif['Orientation'])) {
+                $ort = $exif['Orientation'];
+
+                if ($ort == 6 || $ort == 5) {
+                    $image = imagerotate($image, 270, 0);
+                    $id0 = $imageData[0];
+                    $imageData[0] = $imageData[1];
+                    $imageData[1] = $id0;
+                }
+                if ($ort == 3 || $ort == 4) {
+                    $image = imagerotate($image, 180, 0);
+                }
+                if ($ort == 8 || $ort == 7) {
+                    $image = imagerotate($image, 90, 0);
+                    $id0 = $imageData[0];
+                    $imageData[0] = $imageData[1];
+                    $imageData[1] = $id0;
+                }
+
+                if ($ort == 5 || $ort == 4 || $ort == 7) {
+                    imageflip($image, IMG_FLIP_HORIZONTAL);
+                }
+            }
+        }
+
 
         if (empty($width) && empty($height) && (empty($coef) || $coef == 1)) {
             $newWidth = $imageData[0];

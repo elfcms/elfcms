@@ -461,6 +461,7 @@ return [
     'cookie_settings_title' => 'Настройки файлов cookie',
     'cookie_settings_text' => 'На нашем сайте хранятся четыре типа файлов cookie. В любое время вы можете выбрать, какие файлы cookie принять, а какие отклонить. Вы можете узнать больше о том, что такое файлы cookie и какие типы файлов cookie мы храним, в нашей <a href=":policyUrl" target="_blank" class="underline hover:no-underline">Политике использования файлов cookie</a>.',
     'cookie_lifetime' => 'Время жизни (в днях)',
+    'cookie_technically_necessary' => 'Технически необходимые',
 
     'site_maintenance' => 'Режим обслуживания',
     'site_maintenance_text' => 'Текст сообщения для режима обслуживания',

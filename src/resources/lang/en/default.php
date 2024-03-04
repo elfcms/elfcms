@@ -461,6 +461,7 @@ return [
     'cookie_settings_title' => 'Cookie settings',
     'cookie_settings_text' => 'Our website stores four types of cookies. At any time you can choose which cookies you accept and which you refuse. You can read more about what cookies are and what types of cookies we store in our  <a href=":policyUrl" target="_blank" class="underline hover:no-underline">Cookie Policy</a>.',
     'cookie_lifetime' => 'Lifetime (in days)',
+    'cookie_technically_necessary' => 'Technically necessary',
 
     'site_maintenance' => 'Maintenance mode',
     'site_maintenance_text' => 'Website under construction',

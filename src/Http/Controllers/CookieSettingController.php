@@ -72,8 +72,20 @@ class CookieSettingController extends Controller
                 $remove = $request->category_remove[$id] ?? 0;
                 $setting = CookieCategory::find($id);
                 if ($setting) {
-                    if ($setting->name != $category['name'] || $setting->required != $required)
-                    $setting->update(['name'=>$category['name'],'required'=>$required]);
+                    if (!empty($remove)) {
+                        $setting->delete();
+                    }
+                    elseif ($setting->name != $category || $setting->required != $required)
+                    $setting->update(['name'=>$category,'required'=>$required]);
+                }
+            }
+        }
+        if (!empty($request->category_new)) {
+            foreach($request->category_new as $id => $category) {
+                $required = $request->category_required[$id] ?? 0;
+                $remove = $request->category_remove[$id] ?? 0;
+                if (empty($remove) && !empty($category)) {
+                    $newCategory = CookieCategory::create(['name'=>$category,'required'=>$required]);
                 }
             }
         }

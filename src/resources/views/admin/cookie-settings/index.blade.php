@@ -50,7 +50,7 @@
                         <input type="number" min="0" name="cookie_lifetime" id="cookie_lifetime" value="{{ $cookie_lifetime }}">
                     </div>
                 </div>
-                {{-- <div class="cookie-categories-box">
+                <div class="cookie-categories-box">
                     <h4>{{ __('elfcms::default.categories') }}</h4>
                     <div class="cookie-category-list">
                     @forelse ($categories as $category)
@@ -70,7 +70,7 @@
                 </div>
                 <div class="cookie-add-button">
                     <button id="cookieCategorieAdd" type="button" class="default-btn success-button icon-text-button light-icon plus-button">{{ __('elfcms::default.create_category') }}</button>
-                </div> --}}
+                </div>
             </div>
             <div class="button-box single-box">
                 <button type="submit" class="default-btn success-button">{{ __('elfcms::default.submit') }}</button>
@@ -81,7 +81,7 @@
 <script>
 runEditor('#text');
 let cookieCategoryNum = 0;
-/* function addCookieCategory(e) {
+function addCookieCategory(e) {
     e.preventDefault();
     const cookieCategoryList = document.querySelector('.cookie-category-list');
     if (cookieCategoryList) {
@@ -115,6 +115,6 @@ let cookieCategoryNum = 0;
 const cookieCategorieAdd = document.querySelector('#cookieCategorieAdd');
 if (cookieCategorieAdd) {
     cookieCategorieAdd.addEventListener('click',addCookieCategory);
-} */
+}
 </script>
 @endsection

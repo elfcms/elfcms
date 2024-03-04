@@ -20,20 +20,12 @@ class CookieConsent extends Component
      */
     public function __construct($template='default')
     {
-        /* $this->active = $active ?? 0;
-        $this->text = $value ?? $inputData['value'];
-        $this->code = $code ?? $inputData['code'];
-        $this->accept = $accept;
-        $this->template = $template;
-        $this->download = $download;
-        $this->boxId = uniqid();
-        $this->jsName = Str::camel(str_replace(']','',str_replace('[','_',$this->code))); */
         $settings = CookieSetting::first() ?? new CookieSetting();
         $this->categories = CookieCategory::all()->toArray() ?? [];
         $this->active = $settings->active ?? 0;
         $this->use_default_text = $settings->use_default_text ?? 0;
         $this->privacy_path = $settings->privacy_path;
-        if (!empty($this->use_default_text) || empty($this->text)) {
+        if (!empty($this->use_default_text) || empty($settings->text)) {
             if (!empty($this->privacy_path)) {
                 $this->text = __('elfcms::default.default_cookie_text_link',['privacy_link'=>$this->privacy_path]);
             }
@@ -45,11 +37,11 @@ class CookieConsent extends Component
             $this->text = $settings->text;
         }
         $this->template = $template;
-        $this->consented = json_decode(Cookie::get('cookie_consent'));
-        if (!empty($this->categories) && !empty($this->consented) && !empty($this->consented['categories'])) {
+        $this->consented = json_decode(Cookie::get('cookie_consent'),true);
+        if (!empty($this->categories)) {
             foreach ($this->categories as $key => $category) {
                 $consented = false;
-                if (!empty($this->consented) && !empty($this->consented['categories']) && in_array($category['name'], $this->consented)) {
+                if (!empty($this->consented) && !empty($this->consented['categories']) && !empty($this->consented['categories'][$category['name']])) {
                     $consented = true;
                 }
                 $this->categories[$key]['consented'] = $consented;

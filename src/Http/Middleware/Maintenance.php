@@ -25,18 +25,16 @@ class Maintenance
     {
         $isMaintenance = boolval(Setting::value('site_maintenance')) ?? false;
         if ($isMaintenance && !Str::startsWith(Route::current()->getName(), 'admin')) {
-            //return redirect()->route('maintenance');
             $text = Setting::value('site_maintenance_text') ?? __('elfcms::default.site_under_construction');
-        return response(view('maintenance',[
-            'page' => [
-                'title' => __('elfcms::default.site_under_construction'),
-                'current' => url()->current(),
-                'keywords' => '',
-                'description' => ''
-            ],
-            'text' => $text
-        ]));
-            //return MaintenanceController::index();
+            return response(view('maintenance',[
+                'page' => [
+                    'title' => __('elfcms::default.site_under_construction'),
+                    'current' => url()->current(),
+                    'keywords' => '',
+                    'description' => ''
+                ],
+                'text' => $text
+            ]));
         }
         return $next($request);
     }
