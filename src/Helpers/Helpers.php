@@ -95,6 +95,17 @@ if (!function_exists('cookieConsent')) {
         return json_decode(Cookie::get('cookie_consent'),true);
     }
 }
+if (!function_exists('cookieIsCategory')) {
+
+    function cookieIsCategory($name)
+    {
+        $data = json_decode(Cookie::get('cookie_consent'),true);
+        if (is_array($data) && !empty($data['categories']) && !empty($data['categories'][$name])) {
+            return true;
+        }
+        return false;
+    }
+}
 
 if (!function_exists('cookieGet')) {
 
