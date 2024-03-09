@@ -162,6 +162,10 @@ class ElfcmsModuleProvider extends ServiceProvider
 
         $router->pushMiddlewareToGroup('web', Maintenance::class);
 
+        $router->middlewareGroup('maintenance', array(
+            Maintenance::class
+        ));
+
         $router->middlewareGroup('admin', array(
             AdminUser::class
         ));
