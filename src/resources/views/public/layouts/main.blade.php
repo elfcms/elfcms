@@ -8,7 +8,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ !empty($page['title']) ? $page['title'].' | ' : '' }} {{ $elfSiteSettings['title'] }}</title>
     @isset($elfSiteSettings['icon'])
-    <link rel="shortcut icon" href="{{ asset($elfSiteSettings['icon']) }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ asset(file_path($elfSiteSettings['icon'])) }}" type="image/x-icon">
     @endisset
     @isset($elfSiteSettings['keywords'])
     <meta name="keywords" content="{{ $page['keywords'] ?? $elfSiteSettings['keywords'] }}">

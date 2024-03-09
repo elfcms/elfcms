@@ -339,12 +339,10 @@ class UserController extends Controller
         ])->validate();
 
         if (!empty($request->file('data')['thumbnail'])) {
-            $thumb = $request->file('data')['thumbnail']->store('public/elfcms/users/avatars/thumbnails');
-            $thumb = str_ireplace('public/','/storage/',$thumb);
+            $thumb = $request->file('data')['thumbnail']->store('elfcms/users/avatars/thumbnails');
         }
         if (!empty($request->file('data')['photo'])) {
-            $photo = $request->file('data')['photo']->store('public/elfcms/users/avatars/photos');
-            $photo = str_ireplace('public/','/storage/',$photo);
+            $photo = $request->file('data')['photo']->store('elfcms/users/avatars/photos');
         }
 
         $dataValidated['thumbnail'] = null;

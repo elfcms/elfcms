@@ -8,7 +8,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>ELF CMS Login</title>
     @isset($elfSiteSettings['icon'])
-    <link rel="shortcut icon" href="{{ asset($elfSiteSettings['icon']) }}" type="image/x-icon">
+    <link rel="shortcut icon" href="{{ asset(file_path($elfSiteSettings['icon'])) }}" type="image/x-icon">
     @endisset
     <link rel="stylesheet" href="{{ asset('elfcms/admin/fonts/roboto/roboto.css') }}">
     <link rel="stylesheet" href="{{ asset('elfcms/admin/css/style.css') }}">

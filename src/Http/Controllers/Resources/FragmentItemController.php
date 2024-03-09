@@ -7,6 +7,7 @@ use Elfcms\Elfcms\Models\DataType;
 use Elfcms\Elfcms\Models\FragmentItem;
 use Elfcms\Elfcms\Models\FragmentItemOption;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class FragmentItemController extends Controller
@@ -81,8 +82,7 @@ class FragmentItemController extends Controller
 
         $image_path = '';
         if (!empty($request->file()['image'])) {
-            $image = $request->file()['image']->store('public/fragment/items/image');
-            $image_path = str_ireplace('public/', '/storage/', $image);
+            $image_path = $request->file()['image']->store('fragment/items/image');
         }
 
         $validated['image'] = $image_path;
@@ -178,8 +178,7 @@ class FragmentItemController extends Controller
         }
         $image_path = $request->image_path;
         if (!empty($request->file()['image'])) {
-            $image = $request->file()['image']->store('public/fragment/items/image');
-            $image_path = str_ireplace('public/', '/storage/', $image);
+            $image_path = $request->file()['image']->store('fragment/items/image');
         }
 
         $item->code = $request->code;

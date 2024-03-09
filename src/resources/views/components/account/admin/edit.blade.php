@@ -48,13 +48,13 @@
         <div class="input-box">
             <label for="photo">{{ __('elfcms::default.photo') }}</label>
             <div class="input-wrapper">
-                <input type="hidden" name="data[photo_path]" id="photo_path" value="@if(!empty($user->data['photo'])) {{ asset($user->data['photo']) }} @else '' @endif">
+                <input type="hidden" name="data[photo_path]" id="photo_path" value="@if(!empty($user->data['photo'])) {{ asset(file_path($user->data['photo'])) }} @else '' @endif">
                 <div class="image-button">
                     <div class="image-button-img">
                     @if (!empty($user->data['photo']))
-                        <img src="{{ asset($user->data['photo']) }}" alt="User avatar">
+                        <img src="{{ asset(file_path($user->data['photo'])) }}" alt="User avatar">
                     @else
-                        <img src="{{ asset('/public/elfcms/admin/images/icons/upload.png') }}" alt="Upload file">
+                        <img src="{{ asset('/elfcms/admin/images/icons/upload.png') }}" alt="Upload file">
                     @endif
                     </div>
                     {{-- <div class="image-button-text">

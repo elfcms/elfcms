@@ -22,7 +22,7 @@ return [
     |
     */
 
-    'version' => '1.9.2',
+    'version' => '2.0',
 
     /*
     |--------------------------------------------------------------------------
@@ -30,7 +30,7 @@ return [
     |--------------------------------------------------------------------------
     */
 
-    'is_beta' => false,
+    'is_beta' => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -119,6 +119,10 @@ return [
         'elfcmsviews' => [
             'driver' => 'local',
             'root' => base_path('vendor/elfcms/elfcms/src/resources/views'),
+        ],
+        'publicdata' => [
+            'driver' => 'local',
+            'root' => public_path('data'),
         ],
         'publicviews' => [
             'driver' => 'local',

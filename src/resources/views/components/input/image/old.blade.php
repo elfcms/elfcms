@@ -3,9 +3,9 @@
     <div class="delete-image @if (empty($inputData['value'] ?? $value)) hidden @endif">&#215;</div>
     <div class="image-button-img">
     @if (!empty($inputData['value']))
-        <img src="{{ asset($inputData['value']) }}" alt="">
+        <img src="{{ asset(file_path($inputData['value'])) }}" alt="">
     @elseif (!empty($value))
-        <img src="{{ asset($value) }}" alt="">
+        <img src="{{ asset(file_path($value)) }}" alt="">
     @else
         <img src="{{ asset('/elfcms/admin/images/icons/upload.png') }}" alt="">
     @endif

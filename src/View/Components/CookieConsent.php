@@ -9,6 +9,9 @@ use Illuminate\Support\Facades\View;
 use Illuminate\View\Component;
 use Illuminate\Support\Str;
 
+use Illuminate\Contracts\Encryption\DecryptException;
+use Illuminate\Support\Facades\Crypt;
+
 class CookieConsent extends Component
 {
     public $active, $text, $use_default_text, $privacy_path, $categories, $template, $consented;
@@ -38,6 +41,21 @@ class CookieConsent extends Component
         }
         $this->template = $template;
         $this->consented = json_decode(Cookie::get('cookie_consent'),true);
+        if ($this->consented === null) {
+            $cookie = null;
+            try {
+                $cookie = Crypt::decryptString(Cookie::get('cookie_consent'));
+                if ($cookie) {
+                    $cookieArray = explode('|', $cookie);
+                    if (!empty($cookieArray[1])) {
+                        $this->consented = json_decode($cookieArray[1],true);
+                    }
+                }
+            }
+            catch (DecryptException $e) {
+                //
+            }
+        }
         if (!empty($this->categories)) {
             foreach ($this->categories as $key => $category) {
                 $consented = false;

@@ -17,7 +17,7 @@ class AdminImageUpload extends Component
 
     public function save()
     {
-        $this->image->store('public/elfcms/settings/site/image');
+        $this->image->store('elfcms/settings/site/image');
     }
 
     public function render()

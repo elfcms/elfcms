@@ -1,5 +1,6 @@
 <?php
 
+use Elfcms\Elfcms\Aux\Files;
 use Elfcms\Elfcms\Aux\Fragment;
 use Elfcms\Elfcms\Aux\Image;
 use Elfcms\Elfcms\Models\ElfcmsContact;
@@ -86,20 +87,40 @@ if (!function_exists('imgResizeCache')) {
 
 /* /Image */
 
+/* Files */
+
+if (!function_exists('data_path')) {
+
+    function data_path(string $path = null)
+    {
+        return Files::data_path($path);
+    }
+}
+
+if (!function_exists('file_path')) {
+
+    function file_path(string $file = null, bool $full = false, $disk = null)
+    {
+        return Files::file_path($file, $full, $disk);
+    }
+}
+
+/* /Files */
+
 /* Cookies */
 
 if (!function_exists('cookieConsent')) {
 
     function cookieConsent()
     {
-        return json_decode(Cookie::get('cookie_consent'),true);
+        return json_decode(Cookie::get('cookie_consent'), true);
     }
 }
 if (!function_exists('cookieIsCategory')) {
 
     function cookieIsCategory($name)
     {
-        $data = json_decode(Cookie::get('cookie_consent'),true);
+        $data = json_decode(Cookie::get('cookie_consent'), true);
         if (is_array($data) && !empty($data['categories']) && !empty($data['categories'][$name])) {
             return true;
         }

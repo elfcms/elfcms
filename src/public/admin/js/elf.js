@@ -287,6 +287,7 @@ function slug (text, space = '-', translit = true) {
             .replace(/\u00f6/g, 'oe')
             .replace(/\u00fc/g, 'ue')
             .replace(/\u00df/g, 'ss')
+            .replace('.', '_')
             .replace(/\s+/g, space)
             .replace(/[^\w\-]+/g, '')
             .replace(/\-\-+/g, '-')

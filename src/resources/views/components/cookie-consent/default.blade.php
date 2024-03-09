@@ -160,7 +160,7 @@
                 @endif
                 @forelse ($categories as $category)
                     <div class="cookie-consent-category">
-                        <x-elfcms-input-checkbox code="categories[{{ $category['name'] }}]" label="{{ $category['name'] }}" :checked="($category['required'] || $category['consented'] || !$consented || )" :readonly="$category['required']" style="blue" />
+                        <x-elfcms-input-checkbox code="categories[{{ $category['name'] }}]" label="{{ $category['name'] }}" :checked="($category['required'] || $category['consented'] || !$consented)" :readonly="$category['required']" style="blue" />
                     </div>
                 @empty
 
@@ -178,7 +178,6 @@
     const  cookieConsentButton = document.createElement('button.cookie-consent-accept');
     const  cookieConsentLabel = document.querySelector('.cookie-consent-label');
     const cookieConsentForm = document.querySelector('form[name=cookie-consent]');
-
 
     function saveCookie() {
         const formData = new FormData(cookieConsentForm);

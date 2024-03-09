@@ -68,8 +68,8 @@ class SettingController extends \App\Http\Controllers\Controller
             $params = json_decode($setting->params, true);
             if (!empty($params) && !empty($params['type']) && $params['type'] == 'image') {
                 if (!empty($request->file()[$setting->code])) {
-                    $image = $request->file()[$setting->code]->store('public/elfcms/settings/site/image');
-                    $setting->value = str_ireplace('public/', '/storage/', $image);
+                    $image = $request->file()[$setting->code]->store('elfcms/settings/site/image');
+                    $setting->value =  $image;
                 } else {
                     $setting->value = $requestArray[$setting->code . '_path'];
                 }
@@ -87,8 +87,8 @@ class SettingController extends \App\Http\Controllers\Controller
             $params = json_decode($contact->params, true);
             if (!empty($params) && !empty($params['type']) && $params['type'] == 'image') {
                 if (!empty($request->file()[$contact->code])) {
-                    $image = $request->file()[$contact->code]->store('public/elfcms/contacts/site/image');
-                    $contact->value = str_ireplace('public/', '/storage/', $image);
+                    $image = $request->file()[$contact->code]->store('elfcms/contacts/site/image');
+                    $contact->value = $image;
                 } else {
                     $contact->value = $requestArray[$contact->code . '_path'];
                 }

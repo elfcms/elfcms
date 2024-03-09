@@ -170,48 +170,14 @@
                 <label for="photo">{{ __('elfcms::default.photo') }}</label>
                 <div class="input-wrapper">
                     <x-elfcms-input-image-alt inputName="data[photo]" valueName="data[photo_path]" valueId="photo_path" value="{{$user->data['photo']}}" />
-                    {{-- <input type="hidden" name="data[photo_path]" id="photo_path" value="{{$user->data['photo']}}">
-                    <div class="image-button">
-                        <div class="image-button-img">
-                        @if (!empty($user->data['photo']))
-                            <img src="{{ asset($user->data['photo']) }}" alt="User avatar">
-                        @else
-                            <img src="{{ asset('/elfcms/admin/images/icons/upload.png') }}" alt="Upload file">
-                        @endif
-                        </div>
-                        <div class="image-button-text">
-                        @if (!empty($user->data['photo']))
-                            {{ __('elfcms::default.change_file') }}
-                        @else
-                            {{ __('elfcms::default.choose_file') }}
-                        @endif
-                        </div>
-                        <input type="file" name="data[photo]" id="photo">
-                    </div> --}}
+
                 </div>
             </div>
             <div class="input-box colored">
                 <label for="thumbnail">{{ __('elfcms::default.thumbnail') }}</label>
                 <div class="input-wrapper">
                     <x-elfcms-input-image-alt inputName="data[thumbnail]" valueName="data[thumbnail_path]" valueId="thumbnail_path" value="{{$user->data['thumbnail']}}" />
-                    {{-- <input type="hidden" name="data[thumbnail_path]" id="thumbnail_path" value="{{$user->data['thumbnail']}}">
-                    <div class="image-button">
-                        <div class="image-button-img">
-                        @if (!empty($user->data['thumbnail']))
-                            <img src="{{ asset($user->data['thumbnail']) }}" alt="User avatar thumbnail">
-                        @else
-                            <img src="{{ asset('/elfcms/admin/images/icons/upload.png') }}" alt="Upload file">
-                        @endif
-                        </div>
-                        <div class="image-button-text">
-                        @if (!empty($user->data['thumbnail']))
-                            {{ __('elfcms::default.change_file') }}
-                        @else
-                            {{ __('elfcms::default.choose_file') }}
-                        @endif
-                        </div>
-                        <input type="file" name="data[thumbnail]" id="thumbnail">
-                    </div> --}}
+
                 </div>
             </div>
         </div>

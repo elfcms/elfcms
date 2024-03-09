@@ -7,7 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{ $page['title'] }}</title>
     @isset($elfSiteSettings['icon'])
-        <link rel="shortcut icon" href="{{ asset($elfSiteSettings['icon']) }}" type="image/x-icon">
+        <link rel="shortcut icon" href="{{ asset(file_path($elfSiteSettings['icon'])) }}" type="image/x-icon">
     @endisset
     <link rel="stylesheet" href="{{ asset('elfcms/admin/fonts/roboto/roboto.css') }}">
     <link href="{{ asset('elfcms/admin/css/gnommy.min.css') }}" rel="stylesheet">
@@ -29,7 +29,7 @@
         <a href="/" class="logobox">
             <div class="logoimg">
                 @isset($elfSiteSettings['logo'])
-                    <img src="{{ asset($elfSiteSettings['logo']) }}" alt="logo">
+                    <img src="{{ asset(file_path($elfSiteSettings['logo'])) }}" alt="logo">
                 @else
                 @endisset
             </div>
