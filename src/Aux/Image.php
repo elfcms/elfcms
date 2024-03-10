@@ -10,8 +10,8 @@ class Image
 
     public static function cropCache(string $file, int $width, int $height, array $position = ['center', 'center'])
     {
-        $file = str_replace('/storage/', 'public/', $file);
-        $cacheDir = 'public/elfcms/images/cache/';
+        //$file = str_replace('/storage/', 'public/', $file);
+        $cacheDir = 'elfcms/images/cache/';
         $isDir = Storage::makeDirectory($cacheDir);
         if (!$isDir) {
             return $file;
@@ -19,13 +19,15 @@ class Image
         $pathinfo = pathinfo($file);
         $newFile = $cacheDir . $pathinfo['filename'] . '_' . $width . '_' . $height . '.' . $pathinfo['extension'];
         if (Storage::exists($newFile)) {
-            return str_replace('public/', '/storage/', $newFile);
+            //return str_replace('public/', '/storage/', $newFile);
+            return $newFile;
         }
         $crop = self::crop($file, $cacheDir, $width, $height, $position);
         if (!$crop) {
-            return $file;
+            return file_path($file);
         } else {
-            return str_replace('public/', '/storage/', $crop);
+            //return str_replace('public/', '/storage/', $crop);
+            return file_path($crop);
         }
     }
 
@@ -272,8 +274,9 @@ class Image
     }
 
     public static function adaptResizeCache($filePath, $width = null, $height = null, $coef = 1, $maxDimension = null) {
-        $file = str_replace('/storage/', 'public/', $filePath);
-        $cacheDir = 'public/elfcms/images/cache/resized/';
+        //$file = str_replace('/storage/', 'public/', $filePath);
+        $file = $filePath;
+        $cacheDir = 'elfcms/images/cache/resized/';
         $isDir = Storage::makeDirectory($cacheDir);
         if (!$isDir) {
             return $file;
@@ -294,21 +297,23 @@ class Image
         }
         $newFile = $cacheDir . $pathinfo['filename'] . $addInfo . '.' . $pathinfo['extension'];
         if (Storage::exists($newFile)) {
-            return str_replace('public/', '/storage/', $newFile);
+            //return str_replace('public/', '/storage/', $newFile);
+            return  $newFile;
         }
         $resized = self::adaptResize($filePath, $width, $height, $coef, $newFile, $maxDimension);
         if (!$resized) {
             return $file;
         } else {
-            return str_replace('public/', '/storage/', $resized);
+            //return str_replace('public/', '/storage/', $resized);
+            return $resized;
         }
     }
 
     public static function adaptResize($filePath, $width = null, $height = null, $coef = 1, $resultFile = null, $gd = false, $maxDimension = null) {
         $basePath = base_path();
-        if (!file_exists($basePath . '/'. trim($filePath,'/'))) {
+        /* if (!file_exists($basePath . '/'. trim($filePath,'/'))) {
             $filePath = str_replace('/storage/', $basePath . '/storage/app/public/', $filePath);
-        }
+        } */
         $imageData = getimagesize($filePath);
         $extension = image_type_to_extension($imageData[2], false);
         $crateFunction = 'imagecreatefrom' . $extension;
@@ -396,16 +401,16 @@ class Image
         if ($gd === true) return $result;
 
         if (empty($resultFile)) {
-            $dir = is_dir(Storage::path('public/elfcms/images/cache/')) ? 'public/elfcms/images/cache/' : Storage::makeDirectory('public/elfcms/images/cache/');
+            $dir = is_dir(Storage::path('elfcms/images/cache/')) ? 'elfcms/images/cache/' : Storage::makeDirectory('elfcms/images/cache/');
             $resultFile = $dir . uniqid() . '.' . $extension;
         }
-        $filePath = Storage::path($resultFile) ?? Storage::path('/public/elfcms/images/cache/' . uniqid() . '.' . $extension) ?? $filePath;
+        $filePath = Storage::path($resultFile) ?? Storage::path('/elfcms/images/cache/' . uniqid() . '.' . $extension) ?? $filePath;
 
         $file = $saveFunction($result, $filePath);
 
         if (!$file) return false;
 
-        return Storage::url($resultFile);
+        return file_path($resultFile);
     }
 
 
