@@ -4,7 +4,7 @@
         <div class="delete-image @if (empty($value)) hidden @endif">&#215;</div>
         <div class="image-button-img">
         @if (!empty($value))
-            <img src="{{ asset(file_path($value)) }}" alt="">
+            <img src="{{ file_path($value) }}" alt="">
         @else
             <img src="{{ asset('/elfcms/admin/images/icons/upload.png') }}" alt="">
         @endif
