@@ -177,7 +177,7 @@ class Image
         if (!file_exists($destination)) {
             Storage::makeDirectory($destination);
         }
-        $result = $saveFunction($resultImage, $resultPath);
+        $result = $saveFunction($resultImage, Storage::path($resultPath));
 
         imagedestroy($tmpImage);
         imagedestroy($image);
@@ -313,11 +313,15 @@ class Image
         }
     }
 
-    public static function adaptResize($filePath, $width = null, $height = null, $coef = 1, $resultFile = null, $gd = false, $maxDimension = null) {
-        $basePath = base_path();
-        /* if (!file_exists($basePath . '/'. trim($filePath,'/'))) {
+    public static function adaptResize($file, $width = null, $height = null, $coef = 1, $resultFile = null, $gd = false, $maxDimension = null) {
+        /* $basePath = base_path();
+        if (!file_exists($basePath . '/'. trim($filePath,'/'))) {
             $filePath = str_replace('/storage/', $basePath . '/storage/app/public/', $filePath);
         } */
+        $filePath = Storage::path($file);
+        if (!file_exists($filePath)) {
+            return null;
+        }
         $imageData = getimagesize($filePath);
         $extension = image_type_to_extension($imageData[2], false);
         $crateFunction = 'imagecreatefrom' . $extension;
@@ -414,7 +418,7 @@ class Image
 
         if (!$file) return false;
 
-        return file_path($resultFile);
+        return $resultFile;
     }
 
 
