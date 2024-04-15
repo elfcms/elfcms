@@ -1422,7 +1422,8 @@ input[type="color"]::-webkit-color-swatch {
     height: 40px;
 }
 .color-picture-wrapper .image-button .image-button-img img {
-    height: initial;
+    height: 40px;
+    object-fit: cover;
 }
 .color-picture-wrapper .image-button .image-button-text {
     height: 0;
