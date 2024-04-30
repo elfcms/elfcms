@@ -627,6 +627,41 @@ input[type="submit"] {
     background-color: var(--main-contrast-color);
 }
 
+.back-button {
+    display: inline-block;
+    position: relative;
+    text-decoration: none;
+    color: var(--main-contrast-color);
+    background-color: var(--main-select-color);
+    padding: 0.5em;
+    height: 2em;
+    line-height: 1em;
+    box-sizing: border-box;
+    border-radius: 0 0.2em 0.2em 0;
+    margin-left: 0.7em;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.2);
+}
+.back-button::before {
+    content: '';
+    position: absolute;
+    top: 0.3em;
+    right: calc(100% - 0.7em);
+    width: 1.4em;
+    height: 1.4em;
+    background-color: var(--main-select-color);
+    transform: rotate(45deg);
+    z-index: -1;
+    border-radius: 0 0 0 0.1em;
+}
+
+.back-button:hover {
+    color: var(--main-contrast-color) !important;
+    box-shadow: 4px 6px 4px -4px rgba(0, 0, 0, 0.4);
+}
+.back-button:hover::before {
+    box-shadow: 6px -1px 4px 0px rgba(0, 0, 0, 0.4);
+}
+
 
 .non-text-buttons {
     display: flex;
@@ -958,6 +993,12 @@ input[type="submit"] {
 .input-box .input-wrapper {
     padding: 10px 10px;
     display: flex;
+}
+.input-box .input-wrapper.wrap-wrapper {
+    flex-wrap: wrap;
+}
+.input-box .input-wrapper.column-wrapper {
+    flex-direction: column;
 }
 .input-box .input-wrapper input[type="text"],
 .input-box .input-wrapper input[type="email"],

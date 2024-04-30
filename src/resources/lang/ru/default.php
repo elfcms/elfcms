@@ -286,6 +286,7 @@ return [
     /* First start */
     'select_language' => 'Выберите язык',
     'this_user_will_have_administrator_rights' => 'Этот пользователь будет обладать правами администратора',
+    'back' => 'Назад',
     'continue' => 'Продолжить',
     'proceed' => 'Продолжить',
     'next_button' => 'Далее',
@@ -401,6 +402,7 @@ return [
     'edit_item' => 'Изменить элемент #',
     'text' => 'Текст',
     'image' => 'Изображение',
+    'images' => 'Изображения',
     'item' => 'Элемент',
     'items' => 'Элементы',
     'show_items' => 'Показать элемент',

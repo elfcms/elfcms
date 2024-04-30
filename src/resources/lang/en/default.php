@@ -286,6 +286,7 @@ return [
     /* First start */
     'select_language' => 'Select language',
     'this_user_will_have_administrator_rights' => 'This user will have administrator rights',
+    'back' => 'Back',
     'continue' => 'Continue',
     'proceed' => 'Proceed',
     'next_button' => 'Next',
@@ -401,6 +402,7 @@ return [
     'edit_item' => 'Edit item #',
     'text' => 'Text',
     'image' => 'Image',
+    'images' => 'Images',
     'item' => 'Item',
     'items' => 'Items',
     'show_items' => 'Show items',

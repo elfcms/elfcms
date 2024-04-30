@@ -286,6 +286,7 @@ return [
     /* First start */
     'select_language' => 'Sprache auswählen',
     'this_user_will_have_administrator_rights' => 'Dieser Benutzer hat Administratorrechte',
+    'back' => 'Zurück',
     'continue' => 'Weiter',
     'proceed' => 'Fortfahren',
     'next_button' => 'Weiter',
@@ -401,6 +402,7 @@ return [
     'edit_item' => 'Element bearbeiten #',
     'text' => 'Text',
     'image' => 'Bild',
+    'images' => 'Bilder',
     'item' => 'Element',
     'items' => 'Elemente',
     'show_items' => 'Element zeigen',
