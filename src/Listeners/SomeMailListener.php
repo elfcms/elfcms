@@ -34,6 +34,8 @@ class SomeMailListener
 
         $emailEvent = EmailEvent ::where('code',$event->eventCode)->first();
 
+        if (empty($emailEvent)) return false;
+
         if (!empty($event->eventProps['text'])) {
             $emailEvent->text = $event->eventProps['text'];
         }

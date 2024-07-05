@@ -8,14 +8,14 @@ use Illuminate\View\Component;
 
 class Menu extends Component
 {
-    public $menu, $template;
+    public $menu, $template, $params;
 
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($menu, $template='default')
+    public function __construct($menu, $template='default', $params=[])
     {
         $result = $menu;
         if (is_numeric($menu)) {
@@ -27,6 +27,7 @@ class Menu extends Component
         }
         $this->menu = $result;
         $this->template = $template;
+        $this->params = $params;
     }
 
     /**

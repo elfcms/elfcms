@@ -127,9 +127,9 @@ class User extends ModelsUser
     {
         $name = $this->fullname();
 
-        if (empty(trim($name ?? ' '))) {
+        /* if (empty(trim($name ?? ' '))) {
             $name = $this->name;
-        }
+        } */
         if (empty(trim($name ?? ' '))) {
             $name = $this->email;
             if ($emailname) {

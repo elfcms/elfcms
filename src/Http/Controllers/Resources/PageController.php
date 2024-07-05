@@ -3,6 +3,7 @@
 namespace Elfcms\Elfcms\Http\Controllers\Resources;
 
 use App\Http\Controllers\Controller;
+use Elfcms\Elfcms\Aux\Views;
 use Elfcms\Elfcms\Models\Page;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -42,11 +43,20 @@ class PageController extends Controller
      */
     public function create()
     {
+        $templates = Views::list('elfcms/public/pages','publicviews');
+        if (empty($templates)) {
+            $templates = array_merge($templates,Views::list('pages','elfcmsviews','elfcms'));
+        }
+        if (empty($templates)) {
+            $templates = array_merge($templates,Views::list('resources/views/pages','elfcmsdev','elfcms'));
+        }
+        $templates = array_merge($templates,Views::list('public/pages','publicviews'));
         return view('elfcms::admin.page.pages.create',[
             'page' => [
                 'title' => __('elfcms::default.create_page'),
                 'current' => url()->current(),
-            ]
+            ],
+            'templates' => $templates
         ]);
     }
 
@@ -115,12 +125,21 @@ class PageController extends Controller
     public function edit(Page $page)
     {
         //$page->content = $page->getOriginal('content');
+        $templates = Views::list('elfcms/public/pages','publicviews');
+        if (empty($templates)) {
+            $templates = array_merge($templates,Views::list('pages','elfcmsviews','elfcms'));
+        }
+        if (empty($templates)) {
+            $templates = array_merge($templates,Views::list('resources/views/pages','elfcmsdev','elfcms'));
+        }
+        $templates = array_merge($templates,Views::list('public/pages','publicviews'));
         return view('elfcms::admin.page.pages.edit',[
             'page' => [
                 'title' => __('elfcms::default.edit_page').' #' . $page->id,
                 'current' => url()->current(),
             ],
-            'pageData' => $page
+            'pageData' => $page,
+            'templates' => $templates,
         ]);
     }
 

@@ -126,7 +126,7 @@ return [
         ],
         'publicviews' => [
             'driver' => 'local',
-            'root' => base_path('public/resources/views'),
+            'root' => base_path('resources/views'),
         ],
         'elfcmsdev' => [
             'driver' => 'local',

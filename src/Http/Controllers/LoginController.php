@@ -138,4 +138,14 @@ class LoginController extends \App\Http\Controllers\Controller
         return back()->withErrors([__('elfcms::default.password_change_error')]);
     }
 
+    public function logout(Request $request)
+    {
+        Auth::logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect(route('index'));
+    }
 }

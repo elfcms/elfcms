@@ -65,9 +65,17 @@ class EmailEventController extends Controller
         //dd($el->emailFields);
         $addresses = EmailAddress::all();
         //dd(config('filesystems'));
-        $views = Views::list('emails/events');
+        /* $views = Views::list('emails/events');
         if (empty($views)) {
-            $views = array_merge($views,Views::list('resources/views//emails/events','elfcmsdev'));
+            $views = array_merge($views,Views::list('resources/views/emails/events','elfcmsdev'));
+        }
+        $views = array_merge($views,Views::list('emails/events','publicviews')); */
+        $views = Views::list('elfcms/emails/events','publicviews');
+        if (empty($views)) {
+            $views = array_merge($views,Views::list('emails/events','elfcmsviews','elfcms'));
+        }
+        if (empty($views)) {
+            $views = array_merge($views,Views::list('resources/views/emails/events','elfcmsdev','elfcms'));
         }
         $views = array_merge($views,Views::list('emails/events','publicviews'));
         return view('elfcms::admin.email.events.create',[
@@ -180,9 +188,12 @@ class EmailEventController extends Controller
 
         $params = $event->contentparams ?? [];
 
-        $views = Views::list('emails/events');
+        $views = Views::list('elfcms/emails/events','publicviews');
         if (empty($views)) {
-            $views = array_merge($views,Views::list('resources/views/emails/events','elfcmsdev'));
+            $views = array_merge($views,Views::list('emails/events','elfcmsviews','elfcms'));
+        }
+        if (empty($views)) {
+            $views = array_merge($views,Views::list('resources/views/emails/events','elfcmsdev','elfcms'));
         }
         $views = array_merge($views,Views::list('emails/events','publicviews'));
 

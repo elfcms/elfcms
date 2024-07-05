@@ -563,7 +563,7 @@ class Image
         $stampNewWidth = round($stampNewWidth);
         $stampNewHeight= round($stampNewHeight);
 
-        imagecopyresampled($image, $stamp, $left, $top, 0, 0, $stampNewWidth, $stampNewHeight, $imageWidth, $imageHeight);
+        imagecopyresampled($image, $stamp, $left, $top, 0, 0, $stampNewWidth, $stampNewHeight,  $stampWidth, $stampHeight);
 
         if (empty($savePath)) {
             if (!empty($module)) {

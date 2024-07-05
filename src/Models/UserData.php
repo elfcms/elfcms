@@ -23,7 +23,8 @@ class UserData extends Model
         'phone_code',
         'phone_number',
         'photo',
-        'thumbnail'
+        'thumbnail',
+        'birthday',
     ];
 
     public function user()

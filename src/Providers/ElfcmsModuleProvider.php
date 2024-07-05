@@ -115,6 +115,9 @@ class ElfcmsModuleProvider extends ServiceProvider
         $this->publishes([
             $moduleDir.'/public/admin' => public_path('elfcms/admin/'),
         ], 'admin');
+        $this->publishes([
+            $moduleDir.'/resources/views/public' => resource_path('views/elfcms/public'),
+        ],'public');
 
         $this->publishes([
             $moduleDir.'/resources/views/components' => resource_path('views/elfcms/components'),

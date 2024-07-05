@@ -32,7 +32,7 @@ class Views
         foreach ($list as $file) {
             if (!Str::endsWith($file, '.blade.php')) continue;
             $result[] = [
-                'name' => str_replace('/', '.', substr_replace(str_replace('.blade.php', '', str_replace('resources.views.','',$file)), self::$alias . '::', 0, strlen(self::$alias . '/'))),
+                'name' => str_replace('/', '.', substr_replace(str_replace('.blade.php', '', str_replace('resources.views.', '', $file)), self::$alias . '::', 0, strlen(self::$alias . '/'))),
                 'path' => $file,
             ];
         }
@@ -40,7 +40,7 @@ class Views
         return $result;
     }
 
-    public static function list($path = null, $disk = 'elfcmsviews')
+    public static function list($path = null, $disk = 'elfcmsviews', $alias = false)
     {
         self::$alias = trim(self::$alias, '/');
 
@@ -52,21 +52,21 @@ class Views
 
         $list = [];
         try {
-            $list = Storage::disk($disk)->files(self::$alias. $path, true);
-        }
-        catch(\Exception $e) {
+            $list = Storage::disk($disk)->files(self::$alias . $path, true);
+        } catch (\Exception $e) {
             //
         }
 
         $result = [];
 
-        $alias = 'elfcms';
-        if (self::$alias != '')  {
+        $alias === false ? $alias = '' : $alias = 'elfcms';
+        if (self::$alias != '') {
             $alias = self::$alias;
         }
+        if (!empty($alias)) $alias .= '::';
         foreach ($list as $file) {
             if (!Str::endsWith($file, '.blade.php')) continue;
-            $result[] =  str_replace('/', '.', substr_replace(str_replace('.blade.php', '', str_ireplace('resources/views/','',$file)), $alias . '::', 0, strlen(self::$alias)));
+            $result[] =  str_replace('/', '.', substr_replace(str_replace('.blade.php', '', str_ireplace('resources/views/', '', $file)), $alias, 0, strlen(self::$alias)));
         }
 
         return $result;

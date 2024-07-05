@@ -6,13 +6,13 @@
         <div class="alert alert-success">{{ Session::get('pageedited') }}</div>
     @endif
     @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul class="errors-list">
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
+        <div class="alert alert-danger">
+            <ul class="errors-list">
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
     @endif
 
     <div class="item-form">
@@ -22,7 +22,8 @@
             @method('POST')
             <div class="colored-rows-box">
                 <div class="input-box colored">
-                    <x-elfcms-input-checkbox code="active" label="{{ __('elfcms::default.active') }}" checked style="blue" />
+                    <x-elfcms-input-checkbox code="active" label="{{ __('elfcms::default.active') }}" checked
+                        style="blue" />
                 </div>
                 <div class="input-box colored">
                     <label for="name">{{ __('elfcms::default.name') }}</label>
@@ -77,10 +78,22 @@
                         <textarea name="content" id="content" cols="30" rows="10"></textarea>
                     </div>
                 </div>
-                <div class="input-box colored">
+                {{-- <div class="input-box colored">
                     <label for="template">{{ __('elfcms::default.template') }}</label>
                     <div class="input-wrapper">
                         <input type="text" name="template" id="template" autocomplete="off">
+                    </div>
+                </div> --}}
+                <div class="input-box colored">
+                    <label for="template">{{ __('elfcms::default.template') }}</label>
+                    <div class="input-wrapper">
+                        <select name="template" id="template">
+                            <option value="">--default--</option>
+                            @foreach ($templates as $template)
+                                <option value="{{ $template }}">
+                                    {{ $template }}</option>
+                            @endforeach
+                        </select>
                     </div>
                 </div>
                 <div class="input-box colored">
@@ -98,16 +111,17 @@
             </div>
             <div class="button-box single-box">
                 <button type="submit" class="default-btn submit-button">{{ __('elfcms::default.submit') }}</button>
-                <button type="submit" name="submit_close" value="save_and_close" class="default-btn alternate-button">{{ __('elfcms::default.save_and_close') }}</button>
+                <button type="submit" name="submit_close" value="save_and_close"
+                    class="default-btn alternate-button">{{ __('elfcms::default.save_and_close') }}</button>
                 <a href="{{ route('admin.page.pages') }}" class="default-btn">{{ __('elfcms::default.cancel') }}</a>
             </div>
         </form>
     </div>
     <script>
-    autoSlug('.autoslug')
-    checkInactive()
-    //add editor
-    runEditor('#content')
+        autoSlug('.autoslug')
+        checkInactive()
+        //add editor
+        runEditor('#content')
     </script>
 
 @endsection
