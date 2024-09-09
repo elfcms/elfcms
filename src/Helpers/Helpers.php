@@ -41,6 +41,18 @@ if (!function_exists('contact')) {
     }
 }
 
+if (!function_exists('phone')) {
+
+    function phone($phone, $code = 49)
+    {
+        $nums = preg_replace('/[^0-9]/', '', $phone);
+        if (str_starts_with($nums,0)) {
+            $nums = substr($nums,1);
+        }
+        return '+' . $code . $nums;
+    }
+}
+
 /* /Settings */
 
 if (!function_exists('fragment')) {

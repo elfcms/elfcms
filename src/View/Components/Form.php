@@ -10,14 +10,14 @@ use Illuminate\View\Component;
 
 class Form extends \Illuminate\View\Component
 {
-    public $form, $submit, $reset, $template;
+    public $form, $submit, $reset, $template, $params;
 
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($form, $template = 'default')
+    public function __construct($form, $template = 'default', $params = [])
     {
         $result = $form;
         if (is_numeric($form)) {
@@ -56,6 +56,7 @@ class Form extends \Illuminate\View\Component
         }
 
         $this->template = $template;
+        $this->params = $params;
     }
 
     /**
