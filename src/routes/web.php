@@ -176,6 +176,10 @@ Route::group(['middleware'=>['web','cookie']],function() use ($adminPath) {
                 Route::get('/elfcms/api/fragment/datatypes', [Elfcms\Elfcms\Http\Controllers\Ajax\FragmentDataTypeController::class, 'get']);
             });
 
+            Route::name('csrf.')->group(function() {
+                Route::get('/elfcms/api/csrf', [Elfcms\Elfcms\Http\Controllers\Ajax\CSRFController::class, 'get']);
+            });
+
         });
 
     });
