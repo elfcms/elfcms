@@ -58,6 +58,7 @@ return [
     'email_confirmation_success' => 'E-Mail-Bestätigung erfolgreich',
     'error_of_email_confirmation' => 'Fehler bei der E-Mail-Bestätigung',
     'roles' => 'Rollen',
+    'users_and_roles' => 'Benutzer und Rollen',
     'user_data' => 'Benutzerdaten',
     'first_name' => 'Vorname',
     'second_name' => 'Zweitname',
@@ -275,7 +276,8 @@ return [
     'site_slogan' => 'Slogan',
     'site_keywords' => 'Zeile keywords',
     'site_description' => 'Zeile description',
-    'site_locale' => 'Sprache',
+    'site_locale' => 'Sprache der Website',
+    'admin_locale' => 'Sprache des Admin-Panels',
     'settings_edited_successfully' => 'Einstellungen erfolgreich bearbeitet',
     'basic_settings_for_your_site' => 'Grundeinstellungen für Ihre Website',
     'static_pages_of_your_site' => 'Statische Seiten Ihrer Website',
@@ -477,4 +479,10 @@ return [
     'tax_number' => 'Steuernummer',
     'contact' => 'Kontakt',
     'contacts' => 'Kontakte',
+
+    'you_dont_have_permission_to_access_this_page' => "Sie haben keine Berechtigung, auf diese Seite zuzugreifen",
+    'you_dont_have_write_permissions' => "Sie haben keine Schreibberechtigung",
+
+    'form_result' => 'Formularergebnis',
+    'form_results' => 'Formularergebnisse',
 ];

@@ -42,7 +42,7 @@
 
         <nav id="mainmenu">
             <ul>
-                @forelse ($menu::get() as $item)
+                @forelse ($menu::accessGet() as $item)
                     <li @if (Str::startsWith(Route::currentRouteName(), $item['parent_route'])) class="active" @endif>
                         <a href="{{ route($item['route']) }}">
                             <img src="{{ $item['icon'] }}" alt="">

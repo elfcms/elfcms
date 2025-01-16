@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\Schema;
 
 $adminPath = config('elfcms.elfcms.admin_path') ?? '/admin';
 
-Route::group(['middleware'=>['web','cookie']],function() use ($adminPath) {
+Route::group(['middleware'=>['web', 'locales','cookie']],function() use ($adminPath) {
 
     Route::get('/maintenance', Elfcms\Elfcms\Http\Controllers\MaintenanceController::class)->name('maintenance');
 
@@ -113,7 +113,12 @@ Route::group(['middleware'=>['web','cookie']],function() use ($adminPath) {
             Route::resource($adminPath . '/forms/{form}/fields', Elfcms\Elfcms\Http\Controllers\Resources\FormFieldController::class)
             ->names(['index' => 'fields']);
             Route::resource($adminPath . '/forms/{form}/fields/{field}/options', Elfcms\Elfcms\Http\Controllers\Resources\FormFieldOptionController::class)->names(['index' => 'options']);
-            Route::resource($adminPath . '/forms/{form}/results', Elfcms\Elfcms\Http\Controllers\Resources\FormResultController::class)->names(['index' => 'results']);
+            //Route::resource($adminPath . '/forms/{form}/results', Elfcms\Elfcms\Http\Controllers\Resources\FormResultController::class)->names(['index' => 'results']);
+        });
+        Route::name('form-results.')->group(function() use ($adminPath){
+            Route::get($adminPath . '/form-results', [Elfcms\Elfcms\Http\Controllers\FormResultController::class,'index'])->name('index');
+            Route::get($adminPath . '/form-results/{form}', [Elfcms\Elfcms\Http\Controllers\FormResultController::class,'form'])->name('form');
+            Route::get($adminPath . '/form-results/{form}/{result}', [Elfcms\Elfcms\Http\Controllers\FormResultController::class,'show'])->name('show');
         });
 
         Route::name('menus.')->group(function() use ($adminPath) {

@@ -197,24 +197,20 @@ return [
             ]
         ],
         [
-            "title" => "Email",
-            "lang_title" => "elfcms::default.email",
+            "title" => "Email addresses",
+            "lang_title" => "elfcms::default.email_addresses",
             "route" => "admin.email.addresses",
-            "parent_route" => "admin.email",
+            "parent_route" => "admin.email.addresses",
             "icon" => "/elfcms/admin/images/icons/email.png",
             "position" => 30,
-            "submenu" => [
-                [
-                    "title" => "Addresses",
-                    "lang_title" => "elfcms::default.addresses",
-                    "route" => "admin.email.addresses"
-                ],
-                [
-                    "title" => "Events",
-                    "lang_title" => "elfcms::default.events",
-                    "route" => "admin.email.events"
-                ],
-            ]
+        ],
+        [
+            "title" => "Email events",
+            "lang_title" => "elfcms::default.email_events",
+            "route" => "admin.email.events",
+            "parent_route" => "admin.email.events",
+            "icon" => "/elfcms/admin/images/icons/event.png",
+            "position" => 35,
         ],
         [
             "title" => "Form",
@@ -223,6 +219,14 @@ return [
             "parent_route" => "admin.forms",
             "icon" => "/elfcms/admin/images/icons/forms.png",
             "position" => 40,
+        ],
+        [
+            "title" => "Form results",
+            "lang_title" => "elfcms::default.form_results",
+            "route" => "admin.form-results.index",
+            "parent_route" => "admin.form-results",
+            "icon" => "/elfcms/admin/images/icons/formresult.png",
+            "position" => 45,
         ],
         [
             "title" => "Menu",
@@ -291,26 +295,20 @@ return [
             "actions" => ["read", "write"],
         ],
         [
-            "title" => "Users",
-            "lang_title" => "elfcms::default.users",
-            "route" => "admin.user.users",
+            "title" => "Users and roles",
+            "lang_title" => "elfcms::default.users_and_roles",
+            "route" => "admin.user",
             "actions" => ["read", "write"],
         ],
         [
-            "title" => "User roles",
-            "lang_title" => "elfcms::default.roles",
-            "route" => "admin.user.roles",
-            "actions" => ["read", "write"],
-        ],
-        [
-            "title" => "Addresses",
-            "lang_title" => "elfcms::default.addresses",
+            "title" => "Email addresses",
+            "lang_title" => "elfcms::default.email_addresses",
             "route" => "admin.email.addresses",
             "actions" => ["read", "write"],
         ],
         [
-            "title" => "Events",
-            "lang_title" => "elfcms::default.events",
+            "title" => "Email events",
+            "lang_title" => "elfcms::default.email_events",
             "route" => "admin.email.events",
             "actions" => ["read", "write"],
         ],
@@ -318,6 +316,12 @@ return [
             "title" => "Form",
             "lang_title" => "elfcms::default.form",
             "route" => "admin.forms",
+            "actions" => ["read", "write"],
+        ],
+        [
+            "title" => "Form results",
+            "lang_title" => "elfcms::default.form_results",
+            "route" => "admin.form-results",
             "actions" => ["read", "write"],
         ],
         [

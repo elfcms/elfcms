@@ -58,6 +58,7 @@ return [
     'email_confirmation_success' => 'Адрес электронной почты успешно подтвержден',
     'error_of_email_confirmation' => 'Ошибка подтверждения адреса электронной почты',
     'roles' => 'Роли',
+    'users_and_roles' => 'Пользователи и роли',
     'user_data' => 'Данные пользователя',
     'first_name' => 'Имя',
     'second_name' => 'Отчество',
@@ -275,7 +276,8 @@ return [
     'site_slogan' => 'Слоган',
     'site_keywords' => 'Строка keywords',
     'site_description' => 'Строка description',
-    'site_locale' => 'Язык',
+    'site_locale' => 'Язык сайта',
+    'admin_locale' => 'Язык админ-панели',
     'settings_edited_successfully' => 'Настройки успешно сохранены',
     'basic_settings_for_your_site' => 'Базовые настройки вашего сайта',
     'static_pages_of_your_site' => 'Статические страницы вашего сайта',
@@ -477,4 +479,11 @@ return [
     'tax_number' => 'ИНН',
     'contact' => 'Контакт',
     'contacts' => 'Контакты',
+
+    'you_dont_have_permission_to_access_this_page' => "У вас нет разрешения на доступ к этой странице",
+    'you_dont_have_write_permissions' => "У вас нет разрешения на запись",
+
+    'form_result' => 'Результат формы',
+    'form_results' => 'Результаты форм',
+
 ];

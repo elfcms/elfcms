@@ -39,7 +39,7 @@ class Menu
         $user = Auth::user();
 
         $userPerms = Permissions::userRoutes($user,false);
-
+        //dd($userPerms);
         $menu = [];
         $configs = config('elfcms');
         if (!empty($configs)) {

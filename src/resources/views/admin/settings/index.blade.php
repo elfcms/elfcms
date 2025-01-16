@@ -86,6 +86,17 @@
                         </select>
                     </div>
                 </div>
+                @elseif ($setting['code'] == 'admin_locale')
+                <div class="input-box colored">
+                    <label for="{{ $setting['code'] }}">@if (__('elfcms::default.'.$setting['code']) != 'elfcms::default.'.$setting['code']) {{__('elfcms::default.'.$setting['code'])}} @else {{ $setting['name'] }} @endif</label>
+                    <div class="input-wrapper">
+                        <select name="{{ $setting['code'] }}" id="{{ $setting['code'] }}">
+                        @foreach ($locales as $locale)
+                            <option value="{{ $locale['code'] }}" @if ($locale['code'] == $setting['value']) selected @endif>{{ $locale['name'] }}</option>
+                        @endforeach
+                        </select>
+                    </div>
+                </div>
                 @endif
             @endforeach
 

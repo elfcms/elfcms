@@ -54,10 +54,10 @@ class AdminAccess
                     }
                 }
                 if ($read == 0) {
-                    abort(403, __("You don't have permission to access this page"));
+                    abort(403, __('elfcms::default.you_dont_have_permission_to_access_this_page'));
                 }
-                if (Str::endsWith($currentRoute,['edit','store','update','destroy','delete']) && $write == 0)  {
-                    abort(403,__('You do not have write permissions'));
+                if (($request->isMethod('post') || Str::endsWith($currentRoute,['edit','store','update','destroy','delete','save'])) && $write == 0)  {
+                    return redirect()->back()->withErrors([__('elfcms::default.you_dont_have_write_permissions')]);
                 }
 
             }

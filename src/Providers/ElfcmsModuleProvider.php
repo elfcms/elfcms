@@ -17,6 +17,7 @@ use Elfcms\Elfcms\Http\Middleware\AccountUser;
 use Elfcms\Elfcms\Http\Middleware\AdminAccess;
 use Elfcms\Elfcms\Http\Middleware\AdminUser;
 use Elfcms\Elfcms\Http\Middleware\Maintenance;
+use Elfcms\Elfcms\Http\Middleware\SetLocale;
 use Elfcms\Elfcms\Http\Middleware\VisitStatistics;
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
@@ -187,6 +188,10 @@ class ElfcmsModuleProvider extends ServiceProvider
 
         $router->middlewareGroup('statistics', array(
             VisitStatistics::class
+        ));
+
+        $router->middlewareGroup('locales', array(
+            SetLocale::class
         ));
 
         Blade::component('elfcms-cookie-consent', \Elfcms\Elfcms\View\Components\CookieConsent::class);

@@ -58,6 +58,7 @@ return [
     'email_confirmation_success' => 'Email confirmation success',
     'error_of_email_confirmation' => 'Error of email confirmation',
     'roles' => 'Roles',
+    'users_and_roles' => 'Users and roles',
     'user_data' => 'User data',
     'first_name' => 'First name',
     'second_name' => 'Second name',
@@ -275,7 +276,8 @@ return [
     'site_slogan' => 'Site slogan',
     'site_keywords' => 'Site keywords',
     'site_description' => 'Site description',
-    'site_locale' => 'Language',
+    'site_locale' => 'Website language',
+    'admin_locale' => 'Interface language',
     'settings_edited_successfully' => 'Settings edited successfully',
     'basic_settings_for_your_site' => 'Basic settings for your site',
     'static_pages_of_your_site' => 'Static pages of your site',
@@ -477,4 +479,10 @@ return [
     'tax_number' => 'Tax number',
     'contact' => 'Contact',
     'contacts' => 'Contacts',
+
+    'you_dont_have_permission_to_access_this_page' => "You don't have permission to access this page",
+    'you_dont_have_write_permissions' => "You don't have write permissions",
+
+    'form_result' => 'Form result',
+    'form_results' => 'Form results',
 ];
