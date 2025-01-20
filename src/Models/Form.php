@@ -57,4 +57,9 @@ class Form extends Model
     {
         return $this->hasMany(FormFieldGroup::class, 'form_id')->orderByRaw('position ASC');
     }
+
+    public function results()
+    {
+        return $this->hasMany(FormResult::class, 'form_id');
+    }
 }

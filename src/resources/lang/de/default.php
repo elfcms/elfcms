@@ -485,4 +485,7 @@ return [
 
     'form_result' => 'Formularergebnis',
     'form_results' => 'Formularergebnisse',
+
+    'filestorage' => 'FileStorage',
+    'file_storage' => 'Dateiablage',
 ];

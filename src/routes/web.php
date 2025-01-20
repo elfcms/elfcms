@@ -142,6 +142,15 @@ Route::group(['middleware'=>['web', 'locales','cookie']],function() use ($adminP
             ]);
         });
 
+        Route::name('filestorage.')->group(function() use ($adminPath){
+            Route::get($adminPath . '/filestorage', function(){
+                //return 'a';
+            })->name('index');
+            /* Route::get($adminPath . '/form-results', [Elfcms\Elfcms\Http\Controllers\FormResultController::class,'index'])->name('index');
+            Route::get($adminPath . '/form-results/{form}', [Elfcms\Elfcms\Http\Controllers\FormResultController::class,'form'])->name('form');
+            Route::get($adminPath . '/form-results/{form}/{result}', [Elfcms\Elfcms\Http\Controllers\FormResultController::class,'show'])->name('show'); */
+        });
+
         Route::name('page.')->group(function() use ($adminPath) {
             Route::resource($adminPath . '/page/pages', Elfcms\Elfcms\Http\Controllers\Resources\PageController::class)->names(['index' => 'pages']);
         });

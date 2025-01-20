@@ -22,7 +22,7 @@ return [
     |
     */
 
-    'version' => '2.1',
+    'version' => '2.2',
 
     /*
     |--------------------------------------------------------------------------
@@ -30,7 +30,7 @@ return [
     |--------------------------------------------------------------------------
     */
 
-    'is_beta' => false,
+    'is_beta' => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -261,6 +261,14 @@ return [
             "position" => 80,
         ],
         [
+            "title" => "FileStorage",
+            "lang_title" => "elfcms::default.filestorage",
+            "route" => "admin.filestorage.index",
+            "parent_route" => "admin.filestorage",
+            "icon" => "/elfcms/admin/images/icons/filestorage.png",
+            "position" => 85,
+        ],
+        [
             "title" => "Cookies",
             "lang_title" => "elfcms::default.cookies",
             "route" => "admin.cookie-settings.index",
@@ -346,6 +354,12 @@ return [
             "title" => "Fragment",
             "lang_title" => "elfcms::default.fragment",
             "route" => "admin.fragment",
+            "actions" => ["read", "write"],
+        ],
+        [
+            "title" => "FileStorage",
+            "lang_title" => "elfcms::default.filestorage",
+            "route" => "admin.filestorage",
             "actions" => ["read", "write"],
         ],
         [

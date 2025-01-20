@@ -164,7 +164,7 @@ class ElfcmsInstall extends Command
         ];
 
         config(['app.locale' => $langCodes[$lang] ?? 'en']);
-        Locales::setSetting($langCodes[$lang] ?? 'en');
+        Locales::setAdminLocale($langCodes[$lang] ?? 'en');
 
         $this->line('Language set:');
         $this->info($codesLang[config('app.locale')]);

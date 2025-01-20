@@ -8,6 +8,7 @@ class Locales
 {
 
     protected static $settingCode = 'site_locale';
+    protected static $adminCode = 'admin_locale';
 
     public static function getSetting($full = false)
     {
@@ -57,6 +58,17 @@ class Locales
     {
         if (self::isset($code)) {
             $setting = Setting::where('code', self::$settingCode)->first();
+            $setting->value = $code;
+            return $setting->save();
+        }
+
+        return false;
+    }
+
+    public static function setAdminLocale(String $code)
+    {
+        if (self::isset($code)) {
+            $setting = Setting::where('code', self::$adminCode)->first();
             $setting->value = $code;
             return $setting->save();
         }

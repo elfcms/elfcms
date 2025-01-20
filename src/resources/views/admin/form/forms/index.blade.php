@@ -22,7 +22,7 @@
     </div>
     @endif
     <div class="widetable-wrapper">
-        <table class="grid-table table-cols-8" style="--first-col:65px; --last-col:140px; --minw:800px">
+        <table class="grid-table table-cols-8" style="--first-col:65px; --last-col:180px; --minw:800px">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -54,6 +54,7 @@
                     <td>{{ $form->updated_at }}</td>
                     <td>{{ $form->active != 1 ? __('elfcms::default.inactive') : '' }}</td>
                     <td class="button-column non-text-buttons">
+                        <a href="{{ route('admin.form-results.form',$form->id) }}" class="default-btn result-button" title="{{ __('elfcms::default.showing_results_for_item') }}"></a>
                         <a href="{{ route('admin.forms.show',$form->id) }}" class="default-btn content-button" title="{{ __('elfcms::default.edit_form_contents') }}"></a>
                         <a href="{{ route('admin.forms.edit',$form->id) }}" class="default-btn edit-button" title="{{ __('elfcms::default.edit_form_params') }}"></a>
                         <form action="{{ route('admin.forms.destroy',$form->id) }}" method="POST" data-submit="check">

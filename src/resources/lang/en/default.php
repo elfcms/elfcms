@@ -485,4 +485,7 @@ return [
 
     'form_result' => 'Form result',
     'form_results' => 'Form results',
+
+    'filestorage' => 'FileStorage',
+    'file_storage' => 'File storage',
 ];

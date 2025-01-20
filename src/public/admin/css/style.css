@@ -715,6 +715,9 @@ input[type="submit"] {
 .non-text-buttons .default-btn.content-button {
     background-position: -2px -290px;
 }
+.non-text-buttons .default-btn.result-button {
+    background-position: -2px -322px;
+}
 
 .default-btn.icon-text-button {
     padding-left: 32px;
@@ -785,7 +788,8 @@ input[type="submit"] {
     font-size: 1.4em;
     color: var(--main-text-dark-color);
 }
-.table-search-box form .input-box label {
+.table-search-box form .input-box label,
+.table-search-box form .input-box .input-box-label {
     min-width: initial;
     display: flex;
     align-items: center;
@@ -986,7 +990,8 @@ input[type="submit"] {
     transition: max-height .3s;
     overflow: hidden;
 }
-.input-box label {
+.input-box label,
+.input-box .input-box-label {
     min-width: 160px;
     padding: 10px 10px;
 }
@@ -1741,9 +1746,9 @@ header#header {
     padding: 10px 10px 10px 20px;
     box-sizing: border-box;
     color: var(--main-contrast-color);
-    min-width: 160px;
+    min-width: 180px;
     min-height: 100vh;
-    max-width: 200px;
+    max-width: 220px;
 }
 header#header .logobox {
     display: block;
@@ -1765,7 +1770,7 @@ header#header nav#mainmenu {
     padding: 20px 0px;
 }
 header#header nav#mainmenu ul li {
-    padding: 0px 12px 0px 12px;
+    padding: 0px 8px 0px 8px;
     margin: 6px auto;
     /* &:hover ul.submenu {
         max-height: 500px;
@@ -1774,9 +1779,10 @@ header#header nav#mainmenu ul li {
 header#header nav#mainmenu ul li a {
     display: flex;
     flex-wrap: nowrap;
+    align-items: center;
     text-decoration: none;
-    font-size: 16px;
-    font-weight: 300;
+    font-size: 14px;
+    font-weight: 400;
     padding: 10px 0px;
 }
 header#header nav#mainmenu ul li a img {
@@ -2539,7 +2545,7 @@ button.option-table-add {
 }
 .tile-item h3 {
     margin: 5px 0px 20px;
-    font-size: 1.8rem;
+    font-size: 1.5rem;
     font-weight: 500;
 }
 .tile-item:nth-child(2) {
@@ -2614,7 +2620,7 @@ button.option-table-add {
 .tile-description {
     padding: 5px 0px;
     font-weight: 300;
-    font-size: 1.2rem;
+    font-size: .9rem;
 }
 
 .tile-data {
@@ -3107,6 +3113,15 @@ footer#footer {
     header#header.opened {
         right: 70px;
     }
+    header#header nav#mainmenu {
+        padding: 20px 10px;
+    }
+    header#header nav#mainmenu ul li a {
+        font-size: 15px;
+    }
+    header#header nav#mainmenu ul li a img {
+        height: 24px;
+    }
     /* #toppanel .userinfo {
         grid-column-gap: 0;
         &_name {
@@ -3137,7 +3152,8 @@ footer#footer {
     }
 }
 @media screen and (max-width: 450px) {
-    .input-box label {
+    .input-box label,
+    .input-box .input-box-label {
         width: 100%;
     }
     .input-box .input-wrapper {

@@ -486,4 +486,6 @@ return [
     'form_result' => 'Результат формы',
     'form_results' => 'Результаты форм',
 
+    'filestorage' => 'FileStorage',
+    'file_storage' => 'Хранилище файлов',
 ];

@@ -21,29 +21,25 @@
     </div>
     @endif
     <div class="widetable-wrapper">
-        <table class="grid-table table-cols-4" style="--first-col:65px; --last-col:200px; --minw:600px">
+        <table class="grid-table table-cols-{{ count($fields) + 2 }}" style="--first-col:65px; --last-col:200px; --minw:800px">
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>{{ __('elfcms::default.form') }}</th>
-                    <th>{{ __('elfcms::default.content') }}</th>
+                    @foreach (array_values($fields) as $title)
+                    <th>{{ $title }}</th>
+                    @endforeach
                     <th>{{ __('elfcms::default.created') }}</th>
                 </tr>
             </thead>
             <tbody>
             @foreach ($results as $result)
                 <tr data-id="{{ $result->id }}">
-                    <td>{{ $result->form->id }}</td>
+                    <td>{{ $result->id }}</td>
+                    @foreach (array_keys($fields) as $name)
                     <td>
-                        <a href="{{ route('admin.form-results.form',$result->form->id) }}">
-                            {{ $result->form->title  ?? $result->form->name }}
-                        </a>
+                        <a href="{{ route('admin.form-results.show',['form'=>$result->form->id,'result'=>$result->id]) }}">{{ mb_strimwidth($result->data[$name],0,20,'...') }}</a>
                     </td>
-                    <td>
-                        <a href="{{ route('admin.form-results.show',['form'=>$result->form->id,'result'=>$result->id]) }}">
-                            {{ isset($result->data['message']) ? mb_strimwidth($result->data['message'],0,20,'...') : (isset($result->data['name']) ? $result->data['name'] : __('elfcms::default.message').' #'.$result->id) }}
-                        </a>
-                    </td>
+                    @endforeach
                     <td>{{ $result->created_at }}</td>
                 </tr>
             @endforeach
