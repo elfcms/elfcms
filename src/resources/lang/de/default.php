@@ -75,7 +75,7 @@ return [
     'change_file' => 'Datei wechseln',
     'choose_file' => 'Datei wählen',
     'thumbnail' => 'Miniaturansicht', //Vorschaubild
-    'submit' => 'Speichern',//'Absenden',
+    'submit' => 'Speichern', //'Absenden',
     'create_user' => 'Benutzer anlegen',
     'create_new_user' => 'Neuen Benutzer anlegen',
     'show_user' => 'Benutzer anzeigen',
@@ -89,7 +89,7 @@ return [
     'edit_role' => 'Rolle bearbeiten',
     'errors' => 'Fehler',
     'create_post' => 'Beitrag erstellen', //Post erstellen
-    'edit_post' => 'Beitrag bearbeiten. Beitrag #',//Beitrag ändern | Post bearbeiten
+    'edit_post' => 'Beitrag bearbeiten. Beitrag #', //Beitrag ändern | Post bearbeiten
     'active' => 'Aktiv',
     'not_active' => 'Nicht aktiv',
     'inactive' => 'inaktiv',
@@ -101,7 +101,7 @@ return [
     'end_time' => 'Endzeit',
     'category' => 'Kategorie',
     'categories' => 'Kategorien',
-    'post' => 'Beitrag',//Post
+    'post' => 'Beitrag', //Post
     'posts' => 'Beiträge',
     'tag' => 'Tag',
     'tags' => 'Tags',
@@ -202,8 +202,8 @@ return [
     'field_is_checked' => 'Feld ist angekreuzt',
     'readonly_field' => 'Schreibgeschütztes Feld',
     'placeholder' => 'Placeholder',
-    'disabled' => 'Disabled',//Deaktiviert
-    'selected' => 'Selected',//Ausgewählt
+    'disabled' => 'Disabled', //Deaktiviert
+    'selected' => 'Selected', //Ausgewählt
     'add_option' => 'Option hinzufügen',
     'groups_of_form_name_id' => 'Gruppen von Formularen ":name" [:id]',
     'fields_of_form_name_id' => 'Felder von Formularen ":name" [:id]',
@@ -256,7 +256,7 @@ return [
     'reset_search' => 'Suche zurücksetzen',
     'nothing_was_found' => 'Es wurde nichts gefunden',
     'no_results_were_found' => 'Es wurden keine Ergebnisse gefunden',
-    'error_of_authentication' => 'Fehler bei der Authentifizierung',//Anmeldung
+    'error_of_authentication' => 'Fehler bei der Authentifizierung', //Anmeldung
     'error_of_creating_user' => 'Fehler beim Erstellen des Benutzers',
     'error_of_editing_user' => 'Fehler beim Speichern des Benutzers',
     'user_created_successfully' => 'Benutzer erfolgreich erstellt',
@@ -505,4 +505,21 @@ return [
     'group_delete_error' => 'Fehler beim Löschen der Gruppe',
     'create_group' => 'Gruppe erstellen',
     'edit_group' => 'Gruppe bearbeiten',
+
+    'method_must_be' => 'Die Anforderungsmethode muss :method sein',
+    'error_of_deleting' => 'Fehler bei der Entfernung',
+    'error_of_saving_id' => 'Fehler beim Speichern des Elements ID :id',
+    'error_of_creating_element_with_name' => 'Fehler beim Erstellen des Elements mit dem Namen ":name"',
+    'view_not_found' => 'Ansicht nicht gefunden',
+    'data_saved_successfully' => 'Daten erfolgreich gespeichert',
+    'error' => 'Fehler',
+    'done' => 'Fertig',
+    'warning' => 'Warnung',
+    'do_you_want_to_save_your_changes' => 'Möchten Sie Ihre Änderungen zu speichern?',
+    'marked_items_will_be_removed' => 'Markierte Elemente werden entfernt',
+    'are_you_sure' => 'Sind Sie sicher?',
+
+    'mime_prefix' => 'MIME-Präfix',
+    'mime_type' => 'MIME-Typ',
+    'mime_types' => 'MIME-Typen',
 ];

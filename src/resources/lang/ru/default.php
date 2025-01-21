@@ -505,4 +505,21 @@ return [
     'group_delete_error' => 'Ошибка удаления группы',
     'create_group' => 'Создать группу',
     'edit_group' => 'Редактировать группу',
+
+    'method_must_be' => 'Метод запроса должен быть :method',
+    'error_of_deleting' => 'Ошибка удаления',
+    'error_of_saving_id' => 'Ощибка сохранения элемента с ID :id',
+    'error_of_creating_element_with_name' => 'Ошибка создания элемента c именем ":name"',
+    'view_not_found' => 'Представление не найдено',
+    'data_saved_successfully' => 'Данные успешно сохранены',
+    'error' => 'Ошибка',
+    'done' => 'Готово',
+    'warning' => 'Предупреждение',
+    '' => 'Сохранить внесенные изменения?',
+    'marked_items_will_be_removed' => 'Отмеченные элементы будут удалены',
+    'are_you_sure' => 'Вы уверены?',
+
+    'mime_prefix' => 'MIME-префикс',
+    'mime_type' => 'MIME-тип',
+    'mime_types' => 'MIME-типы',
 ];

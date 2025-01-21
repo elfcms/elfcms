@@ -505,4 +505,21 @@ return [
     'group_delete_error' => 'Error of group deleting',
     'create_group' => 'Create group',
     'edit_group' => 'Edit group',
+
+    'method_must_be' => 'The request method must be :method',
+    'error_of_deleting' => 'Error of deleting',
+    'error_of_saving_id' => 'Error of saving element id :id',
+    'error_of_creating_element_with_name' => 'Error of creating element with name ":name"',
+    'view_not_found' => 'View not found',
+    'data_saved_successfully' => 'Data saved successfully',
+    'error' => 'Error',
+    'done' => 'Done',
+    'warning' => 'Warning',
+    'do_you_want_to_save_your_changes' => 'Do you want to save your changes?',
+    'marked_items_will_be_removed' => 'Marked items will be removed',
+    'are_you_sure' => 'Are you sure?',
+
+    'mime_prefix' => 'MIME-prefix',
+    'mime_type' => 'MIME-type',
+    'mime_types' => 'MIME-types',
 ];

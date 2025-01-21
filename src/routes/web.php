@@ -222,6 +222,14 @@ Route::group(['middleware' => ['web', 'locales', 'cookie']], function () use ($a
             Route::name('csrf.')->group(function () {
                 Route::get('/elfcms/api/csrf', [Elfcms\Elfcms\Http\Controllers\Ajax\CSRFController::class, 'get']);
             });
+
+            Route::name('filestorage.')->group(function () {
+                Route::name('group.')->group(function() {
+                    Route::get('/elfcms/api/filestorage/group/list/{byId?}', [\Elfcms\Elfcms\Http\Controllers\Ajax\FilestorageFilegroupController::class, 'list'])->name('list');
+                    Route::get('/elfcms/api/filestorage/group/empty-group', [\Elfcms\Elfcms\Http\Controllers\Ajax\FilestorageFilegroupController::class, 'emptyItem'])->name('empty-item');
+                    Route::post('/elfcms/api/filestorage/group/fullsave', [\Elfcms\Elfcms\Http\Controllers\Ajax\FilestorageFilegroupController::class, 'save'])->name('fullsave');
+                });
+            });
         });
     });
     /* /Admin panel */

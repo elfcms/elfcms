@@ -1164,3 +1164,158 @@ const csrfInterval = setInterval(function () {
             });
     }
 }, 3600000);
+
+/* Dynamic table */
+/*
+function checkParamChange(th,props=false) {
+    const row = th.closest('tr[data-id]');
+    if (row) {
+        let inputName = 'parameter';
+        if (props) {
+            inputName = 'property';
+        }
+        const id = row.dataset.id;
+        const name = th.dataset.name;
+        const editInput = row.querySelector('input[name="'+inputName+'['+id+'][edited]"]');
+        const optionDeleteInput = row.querySelector('.shop-option-table input[type="checkbox"]:checked');
+        if (id && name) {
+            let value = th.value;
+            if (th.type == 'checkbox') {
+                if (th.checked) {
+                    value = 1;
+                }
+                else {
+                    value = 0;
+                }
+            }
+            if (value === '') {
+                value = null;
+            }
+            controlData[id][name] = value;
+            if (!optionDeleteInput && objectCompare(controlData[id],unitListData.data[id]) && objectCompare(controlData[id]['options'],unitListData.data[id]['options'])) {
+                row.classList.remove('edited');
+                if (editInput) {
+                    editInput.value="0";
+                }
+            }
+            else {
+                row.classList.add('edited');
+                if (editInput) {
+                    editInput.value="1";
+                }
+            }
+        }
+        setSaveEnabled();
+    }
+} */
+
+function setDynamicSaveEnabled() {
+    const saveButton = document.querySelector('.dynamic-table-buttons button[data-action="save"]');
+    if (saveButton) {
+        saveButton.disabled = false;
+    }
+}
+
+function setDynamicUnitRowDelete(th) {
+    const row = th.closest('tr[data-id]');
+    if (row) {
+        if (th.checked) {
+            row.classList.add('deletable');
+        }
+        else {
+            row.classList.remove('deletable');
+        }
+        setDynamicSaveEnabled();
+    }
+}
+
+/* Dynamic table */
+
+/* Filestorage */
+
+function isFilestorageEditedUnits() {
+    const editedRows = document.querySelectorAll('tr[data-id].edited');
+    if (editedRows && editedRows.length) {
+        return true;
+    }
+    return false;
+}
+
+function isFilestorageDeletableUnits() {
+    const editedRows = document.querySelectorAll('tr[data-id].deletable');
+    if (editedRows && editedRows.length) {
+        return true;
+    }
+    return false;
+}
+
+function setFilestorageSaveEnabled() {
+    const saveButton = document.querySelector('button[data-action="save"]');
+    if (saveButton) {
+        if (isFilestorageDeletableUnits() || isFilestorageEditedUnits()) {
+            saveButton.disabled = false;
+        }
+        else {
+            saveButton.disabled = true;
+        }
+    }
+}
+
+function addFilestorageGroupItem() {
+    if (!emptyItem) return false;
+    if (!newItemId && newItemId !== 0) return false;
+    const container = document.querySelector('table.filestorage-group-table tbody');
+    if (container) {
+        let itemString = emptyItem.replaceAll('btn" data-id="newgroup"','btn" data-id="'+newItemId+'"').replaceAll('id="newgroup"','id="new_'+newItemId+'"').replaceAll('group[newgroup]','newgroup['+newItemId+']').replaceAll('group_newgroup','newgroup_'+newItemId).replaceAll('<span>newgroup</span>','');
+        container.insertAdjacentHTML('beforeend',itemString);
+        const newRow = container.lastElementChild;
+        if (newRow) {
+            newRow.classList.add('edited');
+        }
+        newItemId++;
+        autoSlug(newRow.querySelectorAll('.autoslug'));
+        setFilestorageSaveEnabled();
+    }
+}
+
+/*
+function checkFilestorageGroupChange(th) {
+    const row = th.closest('tr[data-id]');
+    if (row) {
+        let inputName = 'group';
+        const id = row.dataset.id;
+        const name = th.dataset.name;
+        const editInput = row.querySelector('input[name="'+inputName+'['+id+'][edited]"]');
+        const optionDeleteInput = row.querySelector('.shop-option-table input[type="checkbox"]:checked');
+        if (id && name) {
+            let value = th.value;
+            if (th.type == 'checkbox') {
+                if (th.checked) {
+                    value = 1;
+                }
+                else {
+                    value = 0;
+                }
+            }
+            if (value === '') {
+                value = null;
+            }
+            controlData[id][name] = value;
+            if (!optionDeleteInput && objectCompare(controlData[id],unitListData.data[id]) && objectCompare(controlData[id]['options'],unitListData.data[id]['options'])) {
+                row.classList.remove('edited');
+                if (editInput) {
+                    editInput.value="0";
+                }
+            }
+            else {
+                row.classList.add('edited');
+                if (editInput) {
+                    editInput.value="1";
+                }
+            }
+        }
+        setSaveEnabled();
+    }
+} */
+
+/* /Filestorage */
