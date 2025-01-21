@@ -1,6 +1,6 @@
 <?php
 
-namespace Elfcms\Elfcms\Http\Controllers;
+namespace Elfcms\Elfcms\Http\Controllers\Resources;
 
 use App\Http\Controllers\Controller;
 use Elfcms\Elfcms\Models\FilestorageFiletype;

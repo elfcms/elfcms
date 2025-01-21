@@ -1,6 +1,6 @@
 <?php
 
-namespace Elfcms\Elfcms\Http\Controllers;
+namespace Elfcms\Elfcms\Http\Controllers\Resources;
 
 use App\Http\Controllers\Controller;
 use Elfcms\Elfcms\Models\Filestorage;
@@ -13,7 +13,14 @@ class FilestorageController extends Controller
      */
     public function index()
     {
-        //
+        $storages = Filestorage::all();
+        return view('elfcms::admin.filestorage.index',[
+            'page' => [
+                'title' => __('elfcms::default.filestorage'),
+                'current' => url()->current(),
+            ],
+            'storages' => $storages
+        ]);
     }
 
     /**
@@ -21,7 +28,7 @@ class FilestorageController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**

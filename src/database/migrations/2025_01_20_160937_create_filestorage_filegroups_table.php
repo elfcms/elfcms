@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('filestorage_filegroups', function (Blueprint $table) {
             $table->id();
+            $table->string('name')->unique();
+            $table->string('code')->unique();
+            $table->string('description')->nullable();
+            $table->string('mime_prefix')->nullable();
             $table->timestamps();
         });
     }

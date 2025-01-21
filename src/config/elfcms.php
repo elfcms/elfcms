@@ -132,6 +132,10 @@ return [
             'driver' => 'local',
             'root' => base_path('packages/elfcms/elfcms/src'),
         ],
+        'filestorage' => [
+            'driver' => 'local',
+            'root' => storage_path('paappckages/elfcms/filestorage'),
+        ],
     ],
 
     /*
@@ -267,6 +271,18 @@ return [
             "parent_route" => "admin.filestorage",
             "icon" => "/elfcms/admin/images/icons/filestorage.png",
             "position" => 85,
+            "submenu" => [
+                [
+                    "title" => "Storage",
+                    "lang_title" => "elfcms::default.storage",
+                    "route" => "admin.filestorage.index"
+                ],
+                [
+                    "title" => "Groups",
+                    "lang_title" => "elfcms::default.groups",
+                    "route" => "admin.filestorage.groups.index"
+                ],
+            ]
         ],
         [
             "title" => "Cookies",

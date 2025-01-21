@@ -488,4 +488,21 @@ return [
 
     'filestorage' => 'FileStorage',
     'file_storage' => 'Dateiablage',
+
+    'storage' => 'Storage',
+    'create_storage' => 'Storage erstellen',
+    'storage_created_successfully' => 'Storage erfolgreich erstellt',
+    'storage_edited_successfully' => 'Storage erfolgreich bearbeitet',
+    'storage_deleted_successfully' => 'Storage erfolgreich gelöscht',
+    'storage_save_error' => 'Fehler beim Speichern des Storages',
+    'storage_delete_error' => 'Fehler beim Löschen des Storages',
+    'edit_storage' => 'Storage bearbeiten',
+
+    'group_created_successfully' => 'Gruppe erfolgreich erstellt',
+    'group_edited_successfully' => 'Gruppe erfolgreich bearbeitet',
+    'group_deleted_successfully' => 'Gruppe erfolgreich gelöscht',
+    'group_save_error' => 'Fehler beim Speichern der Gruppe',
+    'group_delete_error' => 'Fehler beim Löschen der Gruppe',
+    'create_group' => 'Gruppe erstellen',
+    'edit_group' => 'Gruppe bearbeiten',
 ];

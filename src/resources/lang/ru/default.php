@@ -488,4 +488,21 @@ return [
 
     'filestorage' => 'FileStorage',
     'file_storage' => 'Хранилище файлов',
+
+    'storage' => 'Хранилище',
+    'create_storage' => 'Создать хранилище',
+    'storage_created_successfully' => 'Хранилище успешно создана',
+    'storage_edited_successfully' => 'Хранилище успешно отредактирована',
+    'storage_deleted_successfully' => 'Хранилище успешно удалена',
+    'storage_save_error' => 'Ошибка сохранения хранилища',
+    'storage_delete_error' => 'Ошибка удаления хранилища',
+    'edit_storage' => 'Редактировать хранилище',
+
+    'group_created_successfully' => 'Группа успешно создана',
+    'group_edited_successfully' => 'Группа успешно отредактирована',
+    'group_deleted_successfully' => 'Группа успешно удалена',
+    'group_save_error' => 'Ошибка сохранения группы',
+    'group_delete_error' => 'Ошибка удаления группы',
+    'create_group' => 'Создать группу',
+    'edit_group' => 'Редактировать группу',
 ];

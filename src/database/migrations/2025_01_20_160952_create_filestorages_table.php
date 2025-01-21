@@ -11,15 +11,16 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('filestorage_filetypes', function (Blueprint $table) {
+        Schema::create('filestorages', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->unique();
+            $table->string('name');
             $table->string('code')->unique();
+            $table->string('path')->nullable();
             $table->bigInteger('group_id')->unsigned()->nullable();
             $table->foreign('group_id')->references('id')->on('filestorage_filegroups')->constrained()->onDelete('set null');
-            $table->string('description')->nullable();
-            $table->string('mime_prefix')->nullable();
-            $table->string('mime_type')->nullable();
+            $table->bigInteger('type_id')->unsigned()->nullable();
+            $table->foreign('type_id')->references('id')->on('filestorage_filetypes')->constrained()->onDelete('set null');
+            $table->text('description');
             $table->timestamps();
         });
     }
@@ -29,6 +30,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('filestorage_filetypes');
+        Schema::dropIfExists('filestorages');
     }
 };

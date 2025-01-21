@@ -1824,7 +1824,7 @@ header#header nav#mainmenu ul li ul.submenu li.active {
     box-shadow: none;
 }
 header#header nav#mainmenu ul li ul.submenu li.active a {
-    font-weight: 400;
+    font-weight: 500;
 }
 header#header nav#mainmenu ul li.active {
     background-color: var(--main-header-color);

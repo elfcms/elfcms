@@ -488,4 +488,21 @@ return [
 
     'filestorage' => 'FileStorage',
     'file_storage' => 'File storage',
+
+    'storage' => 'Storage',
+    'create_storage' => 'Create storage',
+    'storage_created_successfully' => 'Storage created successfully',
+    'storage_edited_successfully' => 'Storage edited successfully',
+    'storage_deleted_successfully' => 'Storage deleted successfully',
+    'storage_save_error' => 'Storage save error',
+    'storage_delete_error' => 'Error of storage deleting',
+    'edit_storage' => 'Edit storage',
+
+    'group_created_successfully' => 'Group created successfully',
+    'group_edited_successfully' => 'Group edited successfully',
+    'group_deleted_successfully' => 'Group deleted successfully',
+    'group_save_error' => 'Group save error',
+    'group_delete_error' => 'Error of group deleting',
+    'create_group' => 'Create group',
+    'edit_group' => 'Edit group',
 ];

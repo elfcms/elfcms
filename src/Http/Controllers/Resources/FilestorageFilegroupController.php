@@ -1,6 +1,6 @@
 <?php
 
-namespace Elfcms\Elfcms\Http\Controllers;
+namespace Elfcms\Elfcms\Http\Controllers\Resources;
 
 use App\Http\Controllers\Controller;
 use Elfcms\Elfcms\Models\FilestorageFilegroup;
@@ -13,7 +13,14 @@ class FilestorageFilegroupController extends Controller
      */
     public function index()
     {
-        //
+        $groups = FilestorageFilegroup::all();
+        return view('elfcms::admin.filestorage.groups.index',[
+            'page' => [
+                'title' => __('elfcms::default.groups'),
+                'current' => url()->current(),
+            ],
+            'groups' => $groups
+        ]);
     }
 
     /**
