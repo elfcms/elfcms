@@ -18,9 +18,7 @@ return new class extends Migration
             $table->string('path')->nullable();
             $table->bigInteger('group_id')->unsigned()->nullable();
             $table->foreign('group_id')->references('id')->on('filestorage_filegroups')->constrained()->onDelete('set null');
-            $table->bigInteger('type_id')->unsigned()->nullable();
-            $table->foreign('type_id')->references('id')->on('filestorage_filetypes')->constrained()->onDelete('set null');
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }

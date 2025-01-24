@@ -273,14 +273,19 @@ return [
             "position" => 85,
             "submenu" => [
                 [
-                    "title" => "Storage",
-                    "lang_title" => "elfcms::default.storage",
+                    "title" => "Storages",
+                    "lang_title" => "elfcms::default.storages",
                     "route" => "admin.filestorage.index"
                 ],
                 [
                     "title" => "Groups",
                     "lang_title" => "elfcms::default.groups",
                     "route" => "admin.filestorage.groups.index"
+                ],
+                [
+                    "title" => "Types",
+                    "lang_title" => "elfcms::default.types",
+                    "route" => "admin.filestorage.types.index"
                 ],
             ]
         ],

@@ -3,6 +3,7 @@
 namespace Elfcms\Elfcms\Http\Controllers\Resources;
 
 use App\Http\Controllers\Controller;
+use Elfcms\Elfcms\Models\FilestorageFilegroup;
 use Elfcms\Elfcms\Models\FilestorageFiletype;
 use Illuminate\Http\Request;
 
@@ -13,7 +14,16 @@ class FilestorageFiletypeController extends Controller
      */
     public function index()
     {
-        //
+        $types = FilestorageFiletype::all();
+        $groups = FilestorageFilegroup::all();
+        return view('elfcms::admin.filestorage.types.index',[
+            'page' => [
+                'title' => __('elfcms::default.types'),
+                'current' => url()->current(),
+            ],
+            'types' => $types,
+            'groups' => $groups,
+        ]);
     }
 
     /**

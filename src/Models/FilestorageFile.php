@@ -37,4 +37,19 @@ class FilestorageFile extends Model
     protected $primaryKey = 'id';
 
     public $incrementing = false;
+
+    public function storage()
+    {
+        return $this->belongsTo(Filestorage::class, 'storage_id');
+    }
+
+    public function type()
+    {
+        return $this->belongsTo(FilestorageFiletype::class, 'type_id');
+    }
+
+    public function group()
+    {
+        return $this->belongsTo(FilestorageFilegroup::class, 'group_id');
+    }
 }

@@ -146,13 +146,13 @@ Route::group(['middleware' => ['web', 'locales', 'cookie']], function () use ($a
             //Route::name('storages.')->group(function () use ($adminPath) {
             //});
             //Route::name('groups.')->group(function () use ($adminPath) {
-                Route::resource($adminPath . '/filestorage/groups', \Elfcms\Elfcms\Http\Controllers\Resources\FilestorageFilegroupController::class);
+            Route::resource($adminPath . '/filestorage/groups', \Elfcms\Elfcms\Http\Controllers\Resources\FilestorageFilegroupController::class);
             //});
             //Route::name('types.')->group(function () use ($adminPath) {
-                Route::resource($adminPath . '/filestorage/types', \Elfcms\Elfcms\Http\Controllers\Resources\FilestorageFiletypeController::class);
+            Route::resource($adminPath . '/filestorage/types', \Elfcms\Elfcms\Http\Controllers\Resources\FilestorageFiletypeController::class);
             //});
             //Route::name('files.')->group(function () use ($adminPath) {
-                Route::resource($adminPath . '/filestorage/files', \Elfcms\Elfcms\Http\Controllers\Resources\FilestorageFileController::class);
+            //Route::resource($adminPath . '/filestorage/files', \Elfcms\Elfcms\Http\Controllers\Resources\FilestorageFileController::class);
             //});
             /* Route::get($adminPath . '/filestorage', function(){
                 $f = file_get_contents(storage_path('app/public/test/65bbda84004a3.jpg'));
@@ -178,6 +178,20 @@ Route::group(['middleware' => ['web', 'locales', 'cookie']], function () use ($a
                 'update' => 'update',
                 'destroy' => 'destroy'
             ]);
+
+            Route::resource($adminPath . '/filestorage/{filestorage}/files', Elfcms\Elfcms\Http\Controllers\Resources\FilestorageFileController::class)
+                ->parameters(['files' => 'filestorageFile'])
+                ->names([
+                    'index' => 'files.index',
+                    'create' => 'files.create',
+                    'edit' => 'files.edit',
+                    'store' => 'files.store',
+                    'show' => 'files.show',
+                    'edit' => 'files.edit',
+                    'update' => 'files.update',
+                    'destroy' => 'files.destroy',
+                ]);
+            /* Route::post($adminPath . '/filestorage/{filestorage}/files/group', [\Elfcms\Elfcms\Http\Controllers\AdminController::class, 'filestorageFileGroupSave'])->name('filestorage.files.groupSave'); */
         });
 
         Route::name('page.')->group(function () use ($adminPath) {
@@ -224,11 +238,17 @@ Route::group(['middleware' => ['web', 'locales', 'cookie']], function () use ($a
             });
 
             Route::name('filestorage.')->group(function () {
-                Route::name('group.')->group(function() {
+                Route::name('group.')->group(function () {
                     Route::get('/elfcms/api/filestorage/group/list/{byId?}', [\Elfcms\Elfcms\Http\Controllers\Ajax\FilestorageFilegroupController::class, 'list'])->name('list');
                     Route::get('/elfcms/api/filestorage/group/empty-group', [\Elfcms\Elfcms\Http\Controllers\Ajax\FilestorageFilegroupController::class, 'emptyItem'])->name('empty-item');
                     Route::post('/elfcms/api/filestorage/group/fullsave', [\Elfcms\Elfcms\Http\Controllers\Ajax\FilestorageFilegroupController::class, 'save'])->name('fullsave');
                 });
+                Route::name('type.')->group(function () {
+                    Route::get('/elfcms/api/filestorage/type/list/{byId?}', [\Elfcms\Elfcms\Http\Controllers\Ajax\FilestorageFiletypeController::class, 'list'])->name('list');
+                    Route::get('/elfcms/api/filestorage/type/empty-type', [\Elfcms\Elfcms\Http\Controllers\Ajax\FilestorageFiletypeController::class, 'emptyItem'])->name('empty-item');
+                    Route::post('/elfcms/api/filestorage/type/fullsave', [\Elfcms\Elfcms\Http\Controllers\Ajax\FilestorageFiletypeController::class, 'save'])->name('fullsave');
+                });
+                Route::post('/elfcms/api/filestorage/{filestorage}/files/group', [\Elfcms\Elfcms\Http\Controllers\Ajax\FilestorageFileController::class, 'filestorageFileGroupSave'])->name('filestorage.files.groupSave');
             });
         });
     });

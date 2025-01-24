@@ -1278,6 +1278,55 @@ function addFilestorageGroupItem() {
     }
 }
 
+function addFilestorageTypeItem() {
+    if (!emptyItem) return false;
+    if (!newItemId && newItemId !== 0) return false;
+    const container = document.querySelector('table.filestorage-type-table tbody');
+    if (container) {
+        let itemString = emptyItem.replaceAll('btn" data-id="newtype"','btn" data-id="'+newItemId+'"').replaceAll('id="newtype"','id="new_'+newItemId+'"').replaceAll('type[newtype]','newtype['+newItemId+']').replaceAll('type_newtype','newtype_'+newItemId).replaceAll('<span>newtype</span>','');
+        container.insertAdjacentHTML('beforeend',itemString);
+        const newRow = container.lastElementChild;
+        if (newRow) {
+            newRow.classList.add('edited');
+        }
+        newItemId++;
+        autoSlug(newRow.querySelectorAll('.autoslug'));
+        setFilestorageSaveEnabled();
+    }
+}
+
+function inputCheckValue(values, invert=false) {
+    if (!values) return;
+    const checkers = document.querySelectorAll('.input-checker[data-inpcheck]');
+    if (checkers) {
+        checkers.forEach(checker => {
+            const name = checker.getAttribute('data-inpcheck');
+            const input = document.querySelector(`input[name="${name}"]`);
+            const listen = document.querySelector(`input[name="${checker.getAttribute('data-listen')}"]`);
+            if (listen && input) {
+            listen.addEventListener('input', function () {
+                    if (!values[name] || typeof values[name] !== 'object' || !Array.isArray(values[name])) return;
+                    let value = input.value.toLowerCase();
+                    let incl = values[name].includes(value);
+                    if (input.value.length == 0) {
+                        checker.classList.remove('failed');
+                        checker.classList.remove('checked');
+                        checker.classList.add('none');
+                    } else if (invert && !incl || !invert && incl) {
+                        checker.classList.remove('none');
+                        checker.classList.remove('checked');
+                        checker.classList.add('failed');
+                    } else {
+                        checker.classList.remove('none');
+                        checker.classList.remove('failed');
+                        checker.classList.add('checked');
+                    }
+                })
+            }
+        })
+    }
+}
+
 /*
 function checkFilestorageGroupChange(th) {
     const row = th.closest('tr[data-id]');

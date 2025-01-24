@@ -22,37 +22,31 @@
     </div>
     @endif
     <div class="widetable-wrapper">
-        <table class="grid-table table-cols-8" style="--first-col:65px; --last-col:180px; --minw:800px">
+        <table class="grid-table table-cols-7" style="--first-col:65px; --last-col:180px; --minw:800px">
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>{{ __('elfcms::default.title') }}</th>
                     <th>{{ __('elfcms::default.name') }}</th>
-                    <th>{{ __('elfcms::default.code') }}</th>
+                    <th>{{ __('elfcms::default.path') }}</th>
+                    <th>{{ __('elfcms::default.files') }}</th>
                     <th>{{ __('elfcms::default.created') }}</th>
                     <th>{{ __('elfcms::default.updated') }}</th>
-                    <th></th>
                     <th></th>
                 </tr>
             </thead>
             <tbody>
             @foreach ($storages as $storage)
-                <tr data-id="{{ $storage->id }}" @class(['inactive' => $storage->active != 1])>
+                <tr data-id="{{ $storage->id }}">
                     <td>{{ $storage->id }}</td>
-                    <td>
-                        <a href="{{ route('admin.filestorage.show',$storage->id) }}">
-                            {{ $storage->title }}
-                        </a>
-                    </td>
                     <td>
                         <a href="{{ route('admin.filestorage.show',$storage->id) }}">
                             {{ $storage->name }}
                         </a>
                     </td>
-                    <td>{{ $storage->code }}</td>
+                    <td>{{ $storage->path }}</td>
+                    <td>{{ $storage->files->count() }}</td>
                     <td>{{ $storage->created_at }}</td>
                     <td>{{ $storage->updated_at }}</td>
-                    <td>{{ $storage->active != 1 ? __('elfcms::default.inactive') : '' }}</td>
                     <td class="button-column non-text-buttons">
                         <a href="{{ route('admin.filestorage.show',$storage->id) }}" class="default-btn content-button" title="{{ __('elfcms::default.edit_storage_contents') }}"></a>
                         <a href="{{ route('admin.filestorage.edit',$storage->id) }}" class="default-btn edit-button" title="{{ __('elfcms::default.edit_storage_params') }}"></a>
@@ -77,12 +71,12 @@
             checkForms.forEach(form => {
                 form.addEventListener('submit',function(e){
                     e.preventDefault();
-                    let formId = this.querySelector('[name="id"]').value,
-                        formName = this.querySelector('[name="name"]').value,
+                    let storageId = this.querySelector('[name="id"]').value,
+                        storageName = this.querySelector('[name="name"]').value,
                         self = this
                     popup({
-                        title:'{{ __('elfcms::default.deleting_of_element') }}' + formId,
-                        content:'<p>{{ __('elfcms::default.are_you_sure_to_deleting_form') }} "' + formName + '" (ID ' + formId + ')?</p>',
+                        title:'{{ __('elfcms::default.deleting_of_storage') }}' + storageId,
+                        content:'<p>{{ __('elfcms::default.are_you_sure_to_deleting_storage') }} "' + storageName + '" (ID ' + storageId + ')?</p>',
                         buttons:[
                             {
                                 title:'{{ __('elfcms::default.delete') }}',

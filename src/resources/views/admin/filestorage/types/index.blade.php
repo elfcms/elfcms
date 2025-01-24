@@ -1,7 +1,7 @@
 @extends('elfcms::admin.layouts.default')
 @section('innerpage-content')
 {{-- <div class="pagenav">
-    <a href="{{ route('admin.filestorage.groups.edit', $infobox) }}">{{ __('infobox::default.infobox') . ' "' . $infobox->title . '"' }}</a>
+    <a href="{{ route('admin.filestorage.types.edit', $infobox) }}">{{ __('infobox::default.infobox') . ' "' . $infobox->title . '"' }}</a>
 </div> --}}
     @if (Session::has('action_result'))
     <div class="alert alert-alternate">{{ Session::get('action_result') }}</div>
@@ -15,29 +15,31 @@
         </ul>
     </div>
     @endif
-<form name="groupform" class="data-table-box" method="post" action="{{ route('admin.ajax.filestorage.group.fullsave') }}">
+<form name="typeform" class="data-table-box" method="post" action="{{ route('admin.ajax.filestorage.type.fullsave') }}">
     @csrf
     <div class="widetable-wrapper">
-        <table class="grid-table filestorage-group-table table-cols-7" style="--first-col:60px; --last-col:100px; --minw:800px">
+        <table class="grid-table filestorage-type-table table-cols-9" style="--first-col:60px; --last-col:100px; --minw:800px">
             <thead>
                 <tr>
                     <th>ID</th>
                     <th>{{ __('elfcms::default.name') }}</th>
                     <th></th>
                     <th>{{ __('elfcms::default.code') }}</th>
+                    <th>{{ __('elfcms::default.group') }}</th>
                     <th>{{ __('elfcms::default.description') }}</th>
                     <th>{{ __('elfcms::default.mime_prefix') }}</th>
+                    <th>{{ __('elfcms::default.mime_type') }}</th>
                     {{-- <th>{{ __('infobox::default.is_filter') }}</th> --}}
                     <th></th>
                 </tr>
             </thead>
             <tbody>
-                @include('elfcms::admin.filestorage.groups.content.list')
+                @include('elfcms::admin.filestorage.types.content.list')
             </tbody>
         </table>
     </div>
     <div class="dynamic-table-buttons">
-        <button class="default-btn alternate-button" title="{{__('elfcms::default.add_group')}}" data-action="additem">{{ __('elfcms::default.add_group') }}</button>
+        <button class="default-btn alternate-button" title="{{__('elfcms::default.add_type')}}" data-action="additem">{{ __('elfcms::default.add_type') }}</button>
         {{-- <button class="default-btn" title="{{__('elfcms::default.reset_button')}}" data-action="reset">{{ __('elfcms::default.reset_button') }}</button> --}}
         <button type="submit" class="default-btn submit-button" disabled="" data-action="save">{{ __('elfcms::default.save') }}</button>
     </div>
@@ -46,14 +48,14 @@
         const inputs = document.querySelectorAll('tr[data-id] td [data-name]');
         const addButton = document.querySelector('button[data-action="additem"]');
         const saveButton = document.querySelector('button[data-action="save"]');
-        const form = document.querySelector('form[name="groupform"]');
+        const form = document.querySelector('form[name="typeform"]');
         let emptyItem;
         let unitListData;
         let controlData = {};
         let newItemId = 0;
 
         async function getEmptyItem() {
-            let response = await fetch('{{ route("admin.ajax.filestorage.group.empty-item") }}',{headers: {'X-Requested-With': 'XMLHttpRequest'}});
+            let response = await fetch('{{ route("admin.ajax.filestorage.type.empty-item") }}',{headers: {'X-Requested-With': 'XMLHttpRequest'}});
             emptyItem = await response.text();
 
             return emptyItem;
@@ -63,7 +65,7 @@
             if (unitListData !== null && typeof unitListData == 'object') {
                 return unitListData;
             }
-            let response = await fetch('{{ route("admin.ajax.filestorage.group.list",true) }}',{headers: {'X-Requested-With': 'XMLHttpRequest'}});
+            let response = await fetch('{{ route("admin.ajax.filestorage.type.list",true) }}',{headers: {'X-Requested-With': 'XMLHttpRequest'}});
             unitListData = await response.json();
             return unitListData;
         }
@@ -131,7 +133,7 @@
             }
         } */
 
-        let startPreload = preloadSet('form[name="groupform"]');
+        let startPreload = preloadSet('form[name="typeform"]');
 
         let dataLoadInterval = setInterval(() => {
             if (typeof unitListData === 'object') {
@@ -160,7 +162,7 @@
         }
 
         if (addButton) {
-            addButton.addEventListener('click',addFilestorageGroupItem);
+            addButton.addEventListener('click',addFilestorageTypeItem);
         }
 
         if (form) {
