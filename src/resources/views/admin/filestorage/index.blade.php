@@ -48,9 +48,9 @@
                     <td>{{ $storage->created_at }}</td>
                     <td>{{ $storage->updated_at }}</td>
                     <td class="button-column non-text-buttons">
-                        <a href="{{ route('admin.filestorage.show',$storage->id) }}" class="default-btn content-button" title="{{ __('elfcms::default.edit_storage_contents') }}"></a>
-                        <a href="{{ route('admin.filestorage.edit',$storage->id) }}" class="default-btn edit-button" title="{{ __('elfcms::default.edit_storage_params') }}"></a>
-                        <form action="{{ route('admin.filestorage.destroy',$storage->id) }}" method="POST" data-submit="check">
+                        <a href="{{ route('admin.filestorage.files.index',$storage) }}" class="default-btn content-button" title="{{ __('elfcms::default.edit_storage_contents') }}"></a>
+                        <a href="{{ route('admin.filestorage.edit',$storage) }}" class="default-btn edit-button" title="{{ __('elfcms::default.edit_storage_params') }}"></a>
+                        <form action="{{ route('admin.filestorage.destroy',$storage) }}" method="POST" data-submit="check">
                             @csrf
                             @method('DELETE')
                             <input type="hidden" name="id" value="{{ $storage->id }}">

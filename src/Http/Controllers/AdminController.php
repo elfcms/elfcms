@@ -155,5 +155,8 @@ class AdminController extends Controller
         ]);
     } */
 
+    public function fileIcon($extension) {
+        return fsIcon($extension);
+    }
 
 }

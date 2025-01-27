@@ -191,8 +191,11 @@ Route::group(['middleware' => ['web', 'locales', 'cookie']], function () use ($a
                     'update' => 'files.update',
                     'destroy' => 'files.destroy',
                 ]);
-            /* Route::post($adminPath . '/filestorage/{filestorage}/files/group', [\Elfcms\Elfcms\Http\Controllers\AdminController::class, 'filestorageFileGroupSave'])->name('filestorage.files.groupSave'); */
+            Route::post($adminPath . '/filestorage/{filestorage}/files/group', [\Elfcms\Elfcms\Http\Controllers\AdminController::class, 'filestorageFileGroupSave'])->name('files.groupSave');
         });
+
+        // File icons
+        Route::get($adminPath . '/helper/file-icon/{extension}', [\Elfcms\Elfcms\Http\Controllers\AdminController::class, 'fileIcon'])->name('file-icon');
 
         Route::name('page.')->group(function () use ($adminPath) {
             Route::resource($adminPath . '/page/pages', Elfcms\Elfcms\Http\Controllers\Resources\PageController::class)->names(['index' => 'pages']);

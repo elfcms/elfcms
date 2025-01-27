@@ -134,7 +134,7 @@ return [
         ],
         'filestorage' => [
             'driver' => 'local',
-            'root' => storage_path('paappckages/elfcms/filestorage'),
+            'root' => storage_path('packages/elfcms/filestorage'),
         ],
     ],
 

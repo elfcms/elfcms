@@ -20,8 +20,8 @@ return new class extends Migration
             $table->string('alt_text')->nullable();
             $table->string('link_title')->nullable();
             $table->string('link')->nullable();
-            $table->string('mimetype');
-            $table->integer('size');
+            $table->string('mimetype')->nullable();
+            $table->integer('size')->nullable();
             $table->integer('width')->nullable();
             $table->integer('height')->nullable();
             $table->integer('length')->nullable();
@@ -34,7 +34,7 @@ return new class extends Migration
             $table->foreign('group_id')->references('id')->on('filestorage_filegroups')->constrained()->onDelete('set null');
             $table->bigInteger('type_id')->unsigned()->nullable();
             $table->foreign('type_id')->references('id')->on('filestorage_filetypes')->constrained()->onDelete('set null');
-            $table->text('description');
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }

@@ -149,3 +149,85 @@ if (!function_exists('cookieGet')) {
 }
 
 /* /Cookies */
+
+
+/* Filestorage */
+
+if (!function_exists('fsExtension')) {
+
+    function fsExtension($file)
+    {
+        return pathinfo($file, PATHINFO_EXTENSION);
+    }
+
+}
+
+if (!function_exists('fsIcon')) {
+
+    function fsIcon($extension) {
+        $icons = [
+            'jpg' => 'jpeg',
+            'jpeg' => 'jpeg',
+            'png' => 'png',
+            'gif' => 'gif',
+            'bmp' => 'bmp',
+            //'svg' => 'svg',
+            'pdf' => 'pdf',
+            'doc' => 'doc',
+            'docx' => 'doc',
+            'xls' => 'xls',
+            'xlsx' => 'xls',
+            'odt' => 'odt',
+            'ods' => 'ods',
+            'txt' => 'txt',
+            'html' => 'html',
+            'css' => 'css',
+            'js' => 'js',
+            'mp4' => 'mp4',
+            'avi' => 'avi',
+            'webm' => 'webm',
+            'mp3' => 'mp3',
+            'wav' => 'wav',
+            'zip' => 'zip',
+            'rar' => 'rar',
+            '7z' => '7z',
+            'tar' => 'tar',
+            'default' => 'any',
+        ];
+        if (!isset($icons[$extension])) {
+            $extension = 'default';
+        }
+        $file = '/elfcms/admin/images/icons/filestorage/' . $icons[$extension] . '.svg';
+        file_exists(public_path($file)) ? $icon = $file : $icon = '/elfcms/admin/images/icons/filestorage/any.svg';
+        return $icon;
+    }
+}
+
+if (!function_exists('fsMime')) {
+
+    function fsMime($file)
+    {
+        return mime_content_type($file);
+    }
+
+}
+
+if (!function_exists('fsFile')) {
+
+    function fsFile($file)
+    {
+        return file_path($file, false, 'filestorage');
+    }
+
+}
+
+if (!function_exists('fsFullFile')) {
+
+    function fsFullFile($file)
+    {
+        return file_path($file, true, 'filestorage');
+    }
+
+}
+
+/* /Filestorage */

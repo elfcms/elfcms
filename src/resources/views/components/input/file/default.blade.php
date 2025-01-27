@@ -16,7 +16,6 @@
                 {{ __('elfcms::default.choose_file') }}
             @endif"
             />
-        </div>
     </div>
     @if ($download && !empty($value))
         <a href="{{ $value }}" class="input-file-download" download title="{{ __('elfcms::default.download') }}"></a>

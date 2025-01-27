@@ -69,7 +69,7 @@ class FilestorageController extends Controller
 
         $validated = $validator->validated();
 
-        $types = $request->types;
+        $types = $request->types ?? [];
 
         $newGroup = FilestorageFilegroup::find($request->group_id)->load('types');
 
@@ -157,7 +157,7 @@ class FilestorageController extends Controller
 
         $validated = $validator->validated();
 
-        $types = $request->types;
+        $types = $request->types ?? [];
 
         $newGroup = FilestorageFilegroup::find($request->group_id)->load('types');
 
@@ -174,7 +174,7 @@ class FilestorageController extends Controller
         $filestorage->types()->sync($types);
 
         if ($request->input('submit') == 'save_and_open') {
-            return redirect(route('admin.filestorage.show',$filestorage))->with('success',__('elfcms::default.storage_edited_successfully'));
+            return redirect(route('admin.filestorage.files.index',$filestorage))->with('success',__('elfcms::default.storage_edited_successfully'));
         }
 
         if ($request->input('submit') == 'save_and_close') {

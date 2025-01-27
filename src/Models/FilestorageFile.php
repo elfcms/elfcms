@@ -29,7 +29,9 @@ class FilestorageFile extends Model
         'description',
         'storage_id',
         'type_id',
-        'group_id'
+        'group_id',
+        'active',
+        'position',
     ];
 
     protected $table = 'filestorage_files';
