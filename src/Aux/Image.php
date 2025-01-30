@@ -320,6 +320,7 @@ class Image
         } */
         $filePath = Storage::path($file);
         if (!file_exists($filePath)) {
+            dd($filePath);
             return null;
         }
         $imageData = getimagesize($filePath);

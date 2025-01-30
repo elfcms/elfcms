@@ -518,6 +518,8 @@ return [
     'deleting_of_file' => 'Deleting of file',
     'are_you_sure_to_deleting_file' => 'Are you sure to deleting file? File name:',
     'file_already_exists' => 'File already exists',
+    'alt_text' => 'Alt text',
+    'link_title' => 'Link title',
 
     'group_created_successfully' => 'Group created successfully',
     'group_edited_successfully' => 'Group edited successfully',

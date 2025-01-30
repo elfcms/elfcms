@@ -11,6 +11,7 @@ class FilestorageFile extends Model
     use HasFactory, HasUlids;
 
     protected $fillable = [
+        'id',
         'name',
         'path',
         'extension',
@@ -39,6 +40,11 @@ class FilestorageFile extends Model
     protected $primaryKey = 'id';
 
     public $incrementing = false;
+
+    public function getRouteKeyName()
+    {
+        return 'id';
+    }
 
     public function storage()
     {

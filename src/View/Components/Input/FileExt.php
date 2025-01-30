@@ -26,7 +26,7 @@ class FileExt extends Component
             ];
         }
         $extension = $inputData['extension'] ?? fsExtension($inputData['value']) ?? fsExtension($value) ?? null;
-        $mime = $inputData['mime'] ?? mime_content_type(fsFullFile($inputData['value'])) ?? mime_content_type(fsFullFile($value)) ?? null;
+        $mime = $inputData['mime'] ?? mime_content_type(file_path($inputData['value'],true,'filestorage')) ?? mime_content_type(file_path($value),true,'filestorage') ?? null;
         $icon = fsIcon($extension);
         $this->inputData = $inputData;
         $this->value = $value ?? $inputData['value'];

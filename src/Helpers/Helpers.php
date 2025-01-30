@@ -1,6 +1,7 @@
 <?php
 
 use Elfcms\Elfcms\Aux\Files;
+use Elfcms\Elfcms\Aux\Filestorage;
 use Elfcms\Elfcms\Aux\Fragment;
 use Elfcms\Elfcms\Aux\Image;
 use Elfcms\Elfcms\Models\ElfcmsContact;
@@ -165,41 +166,7 @@ if (!function_exists('fsExtension')) {
 if (!function_exists('fsIcon')) {
 
     function fsIcon($extension) {
-        $icons = [
-            'jpg' => 'jpeg',
-            'jpeg' => 'jpeg',
-            'png' => 'png',
-            'gif' => 'gif',
-            'bmp' => 'bmp',
-            //'svg' => 'svg',
-            'pdf' => 'pdf',
-            'doc' => 'doc',
-            'docx' => 'doc',
-            'xls' => 'xls',
-            'xlsx' => 'xls',
-            'odt' => 'odt',
-            'ods' => 'ods',
-            'txt' => 'txt',
-            'html' => 'html',
-            'css' => 'css',
-            'js' => 'js',
-            'mp4' => 'mp4',
-            'avi' => 'avi',
-            'webm' => 'webm',
-            'mp3' => 'mp3',
-            'wav' => 'wav',
-            'zip' => 'zip',
-            'rar' => 'rar',
-            '7z' => '7z',
-            'tar' => 'tar',
-            'default' => 'any',
-        ];
-        if (!isset($icons[$extension])) {
-            $extension = 'default';
-        }
-        $file = '/elfcms/admin/images/icons/filestorage/' . $icons[$extension] . '.svg';
-        file_exists(public_path($file)) ? $icon = $file : $icon = '/elfcms/admin/images/icons/filestorage/any.svg';
-        return $icon;
+        return Filestorage::icon($extension);
     }
 }
 
@@ -216,16 +183,16 @@ if (!function_exists('fsFile')) {
 
     function fsFile($file)
     {
-        return file_path($file, false, 'filestorage');
+        return Filestorage::file($file);
     }
 
 }
 
-if (!function_exists('fsFullFile')) {
+if (!function_exists('fsPreview')) {
 
-    function fsFullFile($file)
+    function fsPreview($file)
     {
-        return file_path($file, true, 'filestorage');
+        return Filestorage::preview($file);
     }
 
 }

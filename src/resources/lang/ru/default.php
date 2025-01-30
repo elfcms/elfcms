@@ -518,6 +518,8 @@ return [
     'deleting_of_file' => 'Удаление файла',
     'are_you_sure_to_deleting_file' => 'Вы действительно хотите удалить файл? Имя файла: ',
     'file_already_exists' => 'Файл уже существует',
+    'alt_text' => 'Alt текст',
+    'link_title' => 'Заголовок ссылки',
 
     'group_created_successfully' => 'Группа успешно создана',
     'group_edited_successfully' => 'Группа успешно отредактирована',

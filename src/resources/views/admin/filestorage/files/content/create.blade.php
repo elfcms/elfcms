@@ -3,6 +3,7 @@
     <form action="{{ route('admin.filestorage.files.store',$filestorage) }}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('POST')
+        <input type="hidden" name="storage_id" value="{{ $filestorage->id }}">
         <div class="colored-rows-box">
             <div class="input-box colored">
                 <label>{{ __('elfcms::default.storage') }}</label>
@@ -60,21 +61,21 @@
                 </div>
             </div> --}}
             <div class="input-box colored">
-                <label for="desctiption">{{ __('elfcms::default.description') }}</label>
-                <div class="input-wrapper">
-                    <textarea name="description" id="description"></textarea>
-                </div>
-            </div>
-            <div class="input-box colored">
-                <label for="alt_text">{{ __('elfcms::default.description') }}</label>
+                <label for="alt_text">{{ __('elfcms::default.alt_text') }}</label>
                 <div class="input-wrapper">
                     <input type="text" name="alt_text" id="alt_text">
                 </div>
             </div>
             <div class="input-box colored">
-                <label for="link_title">{{ __('elfcms::default.description') }}</label>
+                <label for="link_title">{{ __('elfcms::default.link_title') }}</label>
                 <div class="input-wrapper">
                     <input type="text" name="link_title" id="link_title">
+                </div>
+            </div>
+            <div class="input-box colored">
+                <label for="desctiption">{{ __('elfcms::default.description') }}</label>
+                <div class="input-wrapper">
+                    <textarea name="description" id="description"></textarea>
                 </div>
             </div>
             {{-- <div class="input-box colored">

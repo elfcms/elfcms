@@ -221,13 +221,17 @@ function fileUpload (file, key = null) {
     if (!(file instanceof File)) {
         return false;
     }
-
+    let type = file.type.split('/')[1];
+    if (type == 'svg+xml') {
+        type = 'svg';
+    }
     const fileItem = createItem({
         id: key,
-        slug: key,
+        //slug: key,
+        type: type,
         name: file.name,
         position: 1000,
-        image: '/elfcms/admin/modules/filestorage/images/empty.png',
+        image: '/elfcms/admin/images/icons/filestorage/any.svg',
     },true);
 
     fileItem.href = 'javascript:void(0)';
@@ -239,7 +243,7 @@ function fileUpload (file, key = null) {
     fileItem.append(loader.box);
 
     const formData = new FormData();
-    formData.append('image', file, file.name);
+    formData.append('file', file, file.name);
     formData.append('_token','{{csrf_token()}}');
     formData.append('_method','POST');
     formData.append('active','1');
@@ -314,14 +318,14 @@ function setItemData (file, data, empty=false, callback=null) {
         return false;
     }
 
-    file.href = '/admin/filestorage/{{$filestorage->slug}}/files/'+data.slug+'/edit';
-    file.dataset.slug = data.slug;
+    file.href = '/admin/filestorage/{{$filestorage->id}}/files/'+data.id+'/edit';
+    //file.dataset.slug = data.slug;
     file.dataset.id = data.id;
     file.style.order = data.position;
     file.title = '__("elfcms::default.edit") ' + data.name;
     const img = file.querySelector('img');
     if (img) {
-        if (data.thumbnail) {
+        /* if (data.thumbnail) {
             img.src = data.thumbnail;
         }
         else if (data.preview) {
@@ -329,7 +333,9 @@ function setItemData (file, data, empty=false, callback=null) {
         }
         else {
             img.src = data.image;
-        }
+        } */
+        console.log(1,data);
+        img.src = '/files/preview/'+data.id;
     }
     const h5 = file.querySelector('h5');
     if (h5) {
@@ -376,16 +382,16 @@ function setItemData (file, data, empty=false, callback=null) {
 
 function createItem (data, empty = false) {
     const newItem = document.createElement('a');
-    newItem.href = '/admin/filestorage/{{$filestorage->slug}}/files/'+data.slug+'/edit';
+    newItem.href = '/admin/filestorage/{{$filestorage->id}}/files/'+data.id+'/edit';
     newItem.classList.add('filestorage-file-tile','filestorage-file-element');
-    newItem.dataset.slug = data.slug;
+    //newItem.dataset.slug = data.slug;
     newItem.dataset.id = data.id;
     newItem.style.order = data.position;
     newItem.title = '__("elfcms::default.edit") ' + data.name;
     newItem.draggable = true;
     const img = document.createElement('img');
     if (img) {
-        if (data.thumbnail) {
+        /* if (data.thumbnail) {
             img.src = data.thumbnail;
         }
         else if (data.preview) {
@@ -393,7 +399,9 @@ function createItem (data, empty = false) {
         }
         else {
             img.src = data.image;
-        }
+        } */
+        console.log(2,data);
+        img.src = '/admin/helper/file-icon/'+data.type;
         newItem.append(img)
     }
     const h5 = document.createElement('h5');
@@ -627,11 +635,10 @@ function editItem(action,currentItem,isEdit=true){
                             (result) => result.json()
                         ).then (
                             (data) => {
-                                console.log(data);
                                 if (data.result && data.result == 'success' && data.data) {
                                     const filesBox = document.querySelector('.filestorage-files-content');
                                     if (isEdit) {
-                                        currentItem.dataset.slug = data.data.slug;
+                                        //currentItem.dataset.slug = data.data.slug;
                                         currentItem.style.order = data.data.position;
                                         currentItem.title = '__("elfcms::default.edit") ' + data.data.name;
                                         const h5 = currentItem.querySelector('h5');
@@ -640,7 +647,7 @@ function editItem(action,currentItem,isEdit=true){
                                         }
                                         const img = currentItem.querySelector('img');
                                         if (img) {
-                                            if (data.data.thumbnail) {
+                                            /* if (data.data.thumbnail) {
                                                 img.src = data.data.thumbnail;
                                             }
                                             else if (data.data.preview) {
@@ -648,22 +655,25 @@ function editItem(action,currentItem,isEdit=true){
                                             }
                                             else {
                                                 img.src = data.data.image;
-                                            }
+                                            } */
+        console.log(3,data);
+                                            img.src = '/files/preview/'+data.id;
                                         }
-                                        currentItem.href = '/admin/filestorage/{{$filestorage->slug}}/files/'+data.data.slug+'/edit';
+                                        currentItem.href = '/admin/filestorage/{{$filestorage->id}}/files/'+data.data.id+'/edit';
                                     }
                                     else if (filesBox) {
                                         const newItem = document.createElement('a');
-                                        newItem.href = '/admin/filestorage/{{$filestorage->slug}}/files/'+data.data.slug+'/edit';
+                                        newItem.href = '/admin/filestorage/{{$filestorage->id}}/files/'+data.data.id+'/edit';
                                         newItem.classList.add('filestorage-file-tile','filestorage-file-element');
-                                        newItem.dataset.slug = data.data.slug;
+                                        //newItem.dataset.slug = data.data.slug;
                                         newItem.dataset.id = data.data.id;
                                         newItem.style.order = data.data.position;
                                         newItem.title = '__("elfcms::default.edit") ' + data.data.name;
                                         newItem.draggable = true;
                                         const img = document.createElement('img');
                                         if (img) {
-                                            img.src = data.data.image;
+                                            console.log(4,data);
+                                            img.src = '/files/preview/'+data.data.id;
                                             newItem.append(img)
                                         }
                                         const h5 = document.createElement('h5');

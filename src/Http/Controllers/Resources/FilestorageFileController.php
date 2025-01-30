@@ -3,7 +3,9 @@
 namespace Elfcms\Elfcms\Http\Controllers\Resources;
 
 use App\Http\Controllers\Controller;
+use Elfcms\Elfcms\Aux\Filestorage as AuxFilestorage;
 use Elfcms\Elfcms\Aux\Image;
+use Elfcms\Elfcms\Http\Requests\Admin\FilestorageFileStorRequest;
 use Elfcms\Elfcms\Models\Filestorage;
 use Elfcms\Elfcms\Models\FilestorageFile;
 use Elfcms\Elfcms\Models\FilestorageFilegroup;
@@ -53,6 +55,7 @@ class FilestorageFileController extends Controller
         $mimes = [];
 
 
+        //dd(AuxFilestorage::image('01jjmerk586e9dd07n9xhk95s8'));
 
         if (!empty($filestorage->group_id) && $filestorage->group->code != 'mixed') {
             $groups = [$filestorage->group];
@@ -108,15 +111,28 @@ class FilestorageFileController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(FilestorageFileStorRequest $request)
     {
-        //
+        $request->validated();
+        $validated = $request->all();
+        $file = FilestorageFile::create($validated);
+
+        if ($request->ajax()) {
+            $data = $file->toArray();
+            if ($data['path']) $data['path'] = file_path($data['path']);
+            return response()->json([
+                'result' => 'success',
+                'message' => __('elfcms::default.file_created_successfully'),
+                'data' => $data,
+            ]);
+        }
+        return redirect(route('admin.filestorage.files.index', $file->storage_id))->with('success', __('elfcms::default.file_created_successfully'));
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(FilestorageFile $filestorageFile)
+    public function show(Filestorage $filestorage, FilestorageFile $file)
     {
         //
     }
@@ -124,15 +140,15 @@ class FilestorageFileController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(FilestorageFile $filestorageFile)
+    public function edit(Filestorage $filestorage, FilestorageFile $file)
     {
-        //
+
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, FilestorageFile $filestorageFile)
+    public function update(Request $request, Filestorage $filestorage, FilestorageFile $file)
     {
         //
     }
@@ -140,7 +156,7 @@ class FilestorageFileController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(FilestorageFile $filestorageFile)
+    public function destroy(Filestorage $filestorage, FilestorageFile $file)
     {
         //
     }

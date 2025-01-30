@@ -134,7 +134,7 @@ return [
         ],
         'filestorage' => [
             'driver' => 'local',
-            'root' => storage_path('packages/elfcms/filestorage'),
+            'root' => storage_path('app/elfcms/packages/filestorage'),
         ],
     ],
 
@@ -160,6 +160,46 @@ return [
             'code' => 'ru',
             'name' => 'Русский'
         ]
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | File storage
+    |--------------------------------------------------------------------------
+    |
+    | File storage settings
+    |
+    */
+
+    'filestorage' => [
+        'disk' => 'filestorage',
+        'path' => 'files',
+        'max_size' => 1024 * 1024 * 10,
+        'types' => [
+            'image' => [
+                'extensions' => ['jpg', 'jpeg', 'png', 'gif', 'svg'],
+                'max_size' => 1024 * 1024 * 5,
+                'width' => 1920,
+                'height' => 1080,
+                'quality' => 80,
+            ],
+            'document' => [
+                'extensions' => ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx', 'txt'],
+                'max_size' => 1024 * 1024 * 10,
+            ],
+            'archive' => [
+                'extensions' => ['zip', 'rar', '7z', 'tar', 'gz'],
+                'max_size' => 1024 * 1024 * 20,
+            ],
+            'audio' => [
+                'extensions' => ['mp3', 'wav', 'ogg'],
+                'max_size' => 1024 * 1024 * 10,
+            ],
+            'video' => [
+                'extensions' => ['mp4', 'avi', 'mov', 'mkv'],
+                'max_size' => 1024 * 1024 * 50,
+            ],
+        ],
     ],
 
     /*

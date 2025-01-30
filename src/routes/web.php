@@ -180,7 +180,7 @@ Route::group(['middleware' => ['web', 'locales', 'cookie']], function () use ($a
             ]);
 
             Route::resource($adminPath . '/filestorage/{filestorage}/files', Elfcms\Elfcms\Http\Controllers\Resources\FilestorageFileController::class)
-                ->parameters(['files' => 'filestorageFile'])
+                //->parameters(['files' => 'filestorageFile'])
                 ->names([
                     'index' => 'files.index',
                     'create' => 'files.create',
@@ -191,7 +191,7 @@ Route::group(['middleware' => ['web', 'locales', 'cookie']], function () use ($a
                     'update' => 'files.update',
                     'destroy' => 'files.destroy',
                 ]);
-            Route::post($adminPath . '/filestorage/{filestorage}/files/group', [\Elfcms\Elfcms\Http\Controllers\AdminController::class, 'filestorageFileGroupSave'])->name('files.groupSave');
+            Route::post($adminPath . '/filestorage/{filestorage}/files/group', [\Elfcms\Elfcms\Http\Controllers\Ajax\FilestorageFileController::class, 'filestorageFileGroupSave'])->name('files.groupSave');
         });
 
         // File icons
@@ -256,6 +256,17 @@ Route::group(['middleware' => ['web', 'locales', 'cookie']], function () use ($a
         });
     });
     /* /Admin panel */
+
+    /* File Storage */
+
+    Route::get('/files/preview/{file}', [\Elfcms\Elfcms\Http\Controllers\Publics\FilestorageFile::class, 'preview'])
+        ->where('file', '.*')
+        ->name('files.preview');
+    Route::get('/files/{file}', [\Elfcms\Elfcms\Http\Controllers\Publics\FilestorageFile::class, 'show'])
+        ->where('file', '.*')
+        ->name('files');
+
+    /* /File Storage */
 
     /* Form processing */
     Route::post('/form/send', [\Elfcms\Elfcms\Http\Controllers\Publics\FormSendController::class, 'send'])->name('form-send');

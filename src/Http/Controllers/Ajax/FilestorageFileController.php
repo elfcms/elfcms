@@ -35,7 +35,7 @@ class FilestorageFileController extends Controller
                     'filestorage_id' => $filestorage->id,
                     'position' => $fileData['position']
                 ]; */
-                FilestorageFile::where('id',$fileId)->where('filestorage_id',$filestorage->id)->update(['position'=>$fileData['position']]);
+                FilestorageFile::where('id',$fileId)->where('storage_id',$filestorage->id)->update(['position'=>$fileData['position']]);
             }
         }
         if (!empty($toDelete)) {

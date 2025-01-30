@@ -518,6 +518,8 @@ return [
     'deleting_of_file' => 'Datei löschen',
     'are_you_sure_to_deleting_file' => 'Möchten Sie den Datei wirklich löschen? Name der Datei: ',
     'file_already_exists' => 'Datei existiert bereits',
+    'alt_text' => 'Alt-Text',
+    'link_title' => 'Link-Titel',
 
     'group_created_successfully' => 'Gruppe erfolgreich erstellt',
     'group_edited_successfully' => 'Gruppe erfolgreich bearbeitet',
