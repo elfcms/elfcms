@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Elfcms\Elfcms\Aux\Filestorage as AuxFilestorage;
 use Elfcms\Elfcms\Aux\Image;
 use Elfcms\Elfcms\Http\Requests\Admin\FilestorageFileStorRequest;
+use Elfcms\Elfcms\Http\Requests\Admin\FilestorageFileUpdateRequest;
 use Elfcms\Elfcms\Models\Filestorage;
 use Elfcms\Elfcms\Models\FilestorageFile;
 use Elfcms\Elfcms\Models\FilestorageFilegroup;
@@ -26,16 +27,15 @@ class FilestorageFileController extends Controller
             $filestorage->preview = Image::cropCache($filestorage->preview,270,270);
         } */
         if ($request->ajax()) {
-            return view('elfcms::admin.filestorage.files.content.index',[
+            return view('elfcms::admin.filestorage.files.content.index', [
                 'page' => [
                     'title' => __('elfcms::default.files'),
                     'current' => url()->current(),
                 ],
                 'filestorage' => $filestorage,
             ]);
-
         }
-        return view('elfcms::admin.filestorage.files.index',[
+        return view('elfcms::admin.filestorage.files.index', [
             'page' => [
                 'title' => __('elfcms::default.files'),
                 'current' => url()->current(),
@@ -49,7 +49,7 @@ class FilestorageFileController extends Controller
      */
     public function create(Request $request, Filestorage $filestorage)
     {
-        $maxPosition = FilestorageFile::where('storage_id',$filestorage->id)->max('position');
+        $maxPosition = FilestorageFile::where('storage_id', $filestorage->id)->max('position');
         $position = empty($maxPosition) && $maxPosition !== 0 ? 0 : $maxPosition + 1;
 
         $mimes = [];
@@ -59,18 +59,15 @@ class FilestorageFileController extends Controller
 
         if (!empty($filestorage->group_id) && $filestorage->group->code != 'mixed') {
             $groups = [$filestorage->group];
-        }
-        else {
+        } else {
             $groups = FilestorageFilegroup::all();
         }
 
         if (!empty($filestorage->types) && $filestorage->types->count() > 0) {
             $types = $filestorage->types;
-        }
-        elseif (!empty($filestorage->group_id) && $filestorage->group->code != 'mixed') {
+        } elseif (!empty($filestorage->group_id) && $filestorage->group->code != 'mixed') {
             $types = $filestorage->group->types;
-        }
-        else {
+        } else {
             $types = FilestorageFiletype::all();
         }
 
@@ -83,7 +80,7 @@ class FilestorageFileController extends Controller
 
         $mimes = array_unique($mimes);
         if ($request->ajax()) {
-            return view('elfcms::admin.filestorage.files.content.create',[
+            return view('elfcms::admin.filestorage.files.content.create', [
                 'page' => [
                     'title' => __('elfcms::default.create_file'),
                     'current' => url()->current(),
@@ -95,7 +92,7 @@ class FilestorageFileController extends Controller
                 'types' => $types,
             ]);
         }
-        return view('elfcms::admin.filestorage.files.create',[
+        return view('elfcms::admin.filestorage.files.create', [
             'page' => [
                 'title' => __('elfcms::default.create_file'),
                 'current' => url()->current(),
@@ -140,17 +137,110 @@ class FilestorageFileController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Filestorage $filestorage, FilestorageFile $file)
+    public function edit(Request $request, Filestorage $filestorage, FilestorageFile $file)
     {
+        $mimes = [];
+        if (!empty($filestorage->group_id) && $filestorage->group->code != 'mixed') {
+            $groups = [$filestorage->group];
+        } else {
+            $groups = FilestorageFilegroup::all();
+        }
 
+        if (!empty($filestorage->types) && $filestorage->types->count() > 0) {
+            $types = $filestorage->types;
+        } elseif (!empty($filestorage->group_id) && $filestorage->group->code != 'mixed') {
+            $types = $filestorage->group->types;
+        } else {
+            $types = FilestorageFiletype::all();
+        }
+
+        $acceptGroup = $filestorage->group->mime_prefix ?? '*';
+        foreach ($types as $type) {
+            $code = $type->code == 'any' ? '*' : $type->code;
+            $mimes[] .= '.' . $code;
+            $mimes[] .= ($type->mime_prefix ?? $acceptGroup ?? '*') . '/' . ($type->mime_type ?? '*');
+        }
+
+        $mimes = array_unique($mimes);
+        if ($request->ajax()) {
+            return view('elfcms::admin.filestorage.files.content.edit', [
+                'page' => [
+                    'title' => __('elfcms::default.edit_file'),
+                    'current' => url()->current(),
+                ],
+                'filestorage' => $filestorage,
+                'file' => $file,
+                'mimes' => $mimes,
+                'groups' => $groups,
+                'types' => $types,
+                'isAjax' => true,
+            ]);
+        }
+        return view('elfcms::admin.filestorage.files.edit', [
+            'page' => [
+                'title' => __('elfcms::default.edit_file'),
+                'current' => url()->current(),
+            ],
+            'filestorage' => $filestorage,
+            'file' => $file,
+            'mimes' => $mimes,
+            'groups' => $groups,
+            'types' => $types,
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Filestorage $filestorage, FilestorageFile $file)
+    public function update(FilestorageFileUpdateRequest $request, Filestorage $filestorage, FilestorageFile $file)
     {
-        //
+        if ($request->notedit && $request->notedit == 1) {
+            $file->active = empty($request->active) ? 0 : 1;
+            $file->save();
+            if ($request->ajax()) {
+                return response()->json([
+                    'result' => 'success',
+                    'message' => __('elfcms::default.file_edited_successfully'),
+                    'data' => $file->toArray(),
+                ]);
+            }
+            if ($request->input('submit') == 'save_and_close') {
+                return redirect(route('admin.filestorage.files.index', $file->storage_id))->with('success', __('elfcms::default.file_edited_successfully'));
+            }
+            return redirect(route('admin.filestorage.files.edit', [$filestorage, $file]))->with('success', __('elfcms::default.file_edited_successfully'));
+        } elseif ($request->posedit && $request->posedit == 1) {
+            $file->position = $request->position ?? 0;
+            $file->save();
+            if ($request->ajax()) {
+                return response()->json([
+                    'result' => 'success',
+                    'message' => __('elfcms::default.file_edited_successfully'),
+                    'data' => $file->toArray(),
+                ]);
+            }
+            if ($request->input('submit') == 'save_and_close') {
+                return redirect(route('admin.filestorage.files.index', $file->storage_id))->with('success', __('elfcms::default.file_edited_successfully'));
+            }
+            return redirect(route('admin.filestorage.files.edit', [$filestorage, $file]))->with('success', __('elfcms::default.file_edited_successfully'));
+        } else {
+            $request->validated();
+            $validated = $request->all();
+            $file->update($validated);
+
+            if ($request->ajax()) {
+                $data = $file->toArray();
+                if ($data['path']) $data['path'] = file_path($data['path']);
+                return response()->json([
+                    'result' => 'success',
+                    'message' => __('elfcms::default.file_edited_successfully'),
+                    'data' => $data,
+                ]);
+            }
+            if ($request->input('submit') == 'save_and_close') {
+                return redirect(route('admin.filestorage.files.index', $file->storage_id))->with('success', __('elfcms::default.file_edited_successfully'));
+            }
+            return redirect(route('admin.filestorage.files.edit', [$filestorage, $file]))->with('success', __('elfcms::default.file_edited_successfully'));
+        }
     }
 
     /**

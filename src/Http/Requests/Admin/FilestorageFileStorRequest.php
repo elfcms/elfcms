@@ -71,12 +71,6 @@ class FilestorageFileStorRequest extends FormRequest
             $this->filePath = '/' . $storage->code;
         }
 
-        /* Log::debug('FilestorageFileStorRequest', [
-            'ulid' => $this->ulid,
-            'file' => $this->file,
-            'filePath' => $this->filePath,
-            'groupId' => $groupId,
-        ]); */
         $this->merge([
             'id' => $this->ulid,
             'path' => $this->file ? file_path($this->ulid . '.' . $this->file->extension(),false,'filestorage') : null,
@@ -94,13 +88,14 @@ class FilestorageFileStorRequest extends FormRequest
      */
     protected function passedValidation(): void
     {
-        $storedFile = $this->file->storeAs($this->filePath, $this->ulid . '.' . $this->file->extension(), 'filestorage');
+        //$storedFile = $this->file->storeAs($this->filePath, $this->ulid . '.' . $this->file->extension(), 'filestorage');
+        $storedFile = $this->file->storeAs($this->filePath, uniqid() . '.' . $this->file->extension(), 'filestorage');
         /* Log::debug('FilestorageFileStorRequest', [
             'storedFile' => $this->file,
         ]); */
         if (str_starts_with($this->file?->getMimeType(), 'image/')) {
             $imageSize = getimagesize($this->file);
-            if ($imageSize) {
+            if ($imageSize && is_array($imageSize)) {
                 $this->merge([
                     'width' => $imageSize[0],
                     'height' => $imageSize[1],

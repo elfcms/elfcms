@@ -1,4 +1,4 @@
-<a href="{{ route('admin.filestorage.files.edit',['filestorage'=>$filestorage,'filestorageFile'=>$file]) }}" class="filestorage-file-tile filestorage-file-element" title="{{ __('elfcms::default.edit') . ' ' . $file->name }}" style="order:{{$file->position}};" data-id="{{ $file->id }}" data-slug="{{ $file->slug }}">
+<a href="{{ route('admin.filestorage.files.edit',['filestorage'=>$filestorage,'file'=>$file]) }}" class="filestorage-file-tile filestorage-file-element" title="{{ __('elfcms::default.edit') . ' ' . $file->name }}" style="order:{{$file->position}};" data-id="{{ $file->id }}" data-slug="{{ $file->slug }}">
     <img src="
         {{ route('files.preview',$file) }}
     " alt="">

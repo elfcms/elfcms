@@ -18,7 +18,7 @@ class FilestorageFile extends Controller
         return fsFile($file);
     }
 
-    public static function preview(string|ModelsFilestorageFile $file)
+    public static function preview(null|string|ModelsFilestorageFile $file = null)
     {
         if (is_string($file)) {
             $file = ModelsFilestorageFile::find($file);

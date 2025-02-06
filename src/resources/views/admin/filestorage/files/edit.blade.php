@@ -1,9 +1,9 @@
-@extends('elfcms::admin.layouts.gallery')
+@extends('elfcms::admin.layouts.default')
 
-@section('gallery-content')
+@section('innerpage-content')
 
-    @if (Session::has('itemsuccess'))
-        <div class="alert alert-success">{{ Session::get('itemsuccess') }}</div>
+    @if (Session::has('success'))
+        <div class="alert alert-success">{{ Session::get('success') }}</div>
     @endif
     @if ($errors->any())
     <div class="alert alert-danger">
@@ -15,6 +15,6 @@
     </div>
     @endif
 
-    @include('elfcms::admin.gallery.items.content.edit')
+    @include('elfcms::admin.filestorage.files.content.edit')
 
 @endsection

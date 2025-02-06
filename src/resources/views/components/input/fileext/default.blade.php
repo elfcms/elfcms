@@ -5,18 +5,18 @@
         <div class="image-button-img">
             @if (!empty($inputData['value']))
                 @if ($mime === 'image')
-                    <img src="{{ file_path($inputData['value']) }}" alt="">
+                    <img src="{{ file_path($inputData['value']) ?? fsPreview($inputData['value']) }}" alt="" data-i="1">
                 @else
-                    <img src="{{ asset($icon) }}" alt="">
+                    <img src="{{ asset($icon) }}" alt="" data-i="2">
                 @endif
             @elseif (!empty($value))
                 @if ($mime === 'image')
-                    <img src="{{ file_path($value) }}" alt="">
+                    <img src="{{ file_path($value) ?? fsPreview($value) }}" alt="" data-i="3">
                 @else
-                    <img src="{{ asset($icon) }}" alt="">
+                    <img src="{{ asset($icon) }}" alt="" data-i="4">
                 @endif
             @else
-                <img src="{{ asset('/elfcms/admin/images/icons/upload.png') }}" alt="">
+                <img src="{{ asset('/elfcms/admin/images/icons/upload.png') }}" alt="" data-i="5">
             @endif
         </div>
         <div class="image-button-text">
@@ -28,9 +28,9 @@
         </div>
         <input type="file" name="{{ $code }}" id="{{ $code }}" accept="{{ $accept ?? '*/*' }}">
     </div>
-    @if ($download && !empty($value))
-        <a href="{{ file_path($value) }}" class="input-file-download" download
-            title="{{ __('elfcms::default.download') }}"></a>
+    @if ($download && !empty($file))
+        <a href="{{ route('files',$file->id) }}" class="input-file-download" download
+            title="{{ $file->download_name ?? $file->name ?? __('elfcms::default.download') }}"></a>
     @endif
 </div>
 <script src="{{ asset('elfcms/admin/js/fileextinput.js') }}"></script>

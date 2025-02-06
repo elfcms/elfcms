@@ -8,8 +8,11 @@ use Elfcms\Elfcms\Models\FilestorageFile;
 class Filestorage
 {
 
-    public static function extension(string|FilestorageFile $file)
+    public static function extension(null|string|FilestorageFile $file)
     {
+        if (empty($file)) {
+            return null;
+        }
         if (is_string($file) && !file_exists($file)) {
             $file = FilestorageFile::find($file);
             if (empty($file)) {
@@ -112,7 +115,7 @@ class Filestorage
         if (empty($fileResource)) {
             return response()->file(public_path(self::icon('none'), true));
         }
-        if (in_array($extension, ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'svg', 'svg+xml'])) {
+        if (in_array($extension, ['jpg', 'jpeg', 'png', 'gif', 'bmp', 'svg', 'svg+xml', 'webp'])) {
             return $fileResource;
             /* $file = Image::adaptResizeCache(route('files',$file), $width, $height, $coef, $maxDimension);
             dd($file);

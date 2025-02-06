@@ -259,7 +259,7 @@ Route::group(['middleware' => ['web', 'locales', 'cookie']], function () use ($a
 
     /* File Storage */
 
-    Route::get('/files/preview/{file}', [\Elfcms\Elfcms\Http\Controllers\Publics\FilestorageFile::class, 'preview'])
+    Route::get('/files/preview/{file?}', [\Elfcms\Elfcms\Http\Controllers\Publics\FilestorageFile::class, 'preview'])
         ->where('file', '.*')
         ->name('files.preview');
     Route::get('/files/{file}', [\Elfcms\Elfcms\Http\Controllers\Publics\FilestorageFile::class, 'show'])

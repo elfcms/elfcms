@@ -7,17 +7,34 @@ use Illuminate\Support\Facades\View;
 use Illuminate\View\Component;
 use Illuminate\Support\Str;
 
-class FileExt extends Component
+class FSFile extends Component
 {
-    public $inputData, $value, $code, $accept, $template, $boxId, $jsName, $download, $extension, $mime, $icon, $file;
+    //public $inputData, $value, $code, $accept, $template, $boxId, $jsName, $download, $extension, $mime, $icon, $file;
+
+    public $template, $file, $name, $id, $download, $boxId, $value, $accept, $height, $width;
 
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($inputData = [], $value = null, $code = null, $accept = null, $template='default', $download = false, filestorageFile $file = null)
+    //public function __construct($inputData = [], $value = null, $code = null, $accept = null, $template='default', $download = false, filestorageFile $file = null)
+    public function __construct(filestorageFile $file = null, $name = null, $id = null, $download = false, $accept = null, $template = 'default', $width = null, $height = null, $value = null)
     {
+        $width = intval($width);
+        $height = intval($height);
+        $this->boxId = uniqid();
+        $this->file = $file;
+        $this->name = $name ?? $this->boxId . '_file';
+        $this->id = $id ?? $this->boxId . '_file';
+        $this->download = $download ? true : false;
+        $this->template = $template;
+        $this->value = $file ? $file->id : $value;
+        $this->accept = $accept;
+        $this->height = (!empty($height) && $height > 50) ? $height : 150;
+        $this->width = !empty($width && $width > 100) ? $width : 150;
+    }
+    /* {
         if (empty($inputData)) {
             $inputData = [
                 'code' => null,
@@ -48,7 +65,7 @@ class FileExt extends Component
         $this->file = $file;
         $this->boxId = uniqid();
         $this->jsName = Str::camel(str_replace(']','',str_replace('[','_',$this->code)));
-    }
+    } */
 
     /**
      * Get the view / contents that represent the component.
@@ -57,14 +74,14 @@ class FileExt extends Component
      */
     public function render()
     {
-        if (View::exists('components.input.fileext.' . $this->template)) {
-            return view('components.input.fileext.' . $this->template);
+        if (View::exists('components.input.fsfile.' . $this->template)) {
+            return view('components.input.fsfile.' . $this->template);
         }
-        if (View::exists('elfcms.components.input.fileext.'.$this->template)) {
-            return view('elfcms.components.input.fileext.'.$this->template);
+        if (View::exists('elfcms.components.input.fsfile.' . $this->template)) {
+            return view('elfcms.components.input.fsfile.' . $this->template);
         }
-        if (View::exists('elfcms::components.input.fileext.'.$this->template)) {
-            return view('elfcms::components.input.fileext.'.$this->template);
+        if (View::exists('elfcms::components.input.fsfile.' . $this->template)) {
+            return view('elfcms::components.input.fsfile.' . $this->template);
         }
         if (View::exists($this->template)) {
             return view($this->template);

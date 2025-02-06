@@ -5,7 +5,7 @@ main:has(.filestorage-files-box) {
     background-color: gray;
     border-color: #696969;
     text-shadow: 1px 1px 1px #696969;
-    opacity: .3;
+    opacity: 0.3;
     cursor: not-allowed;
 }
 .big-container:has(.filestorage-files-box) {
@@ -61,7 +61,7 @@ main:has(.filestorage-files-box) {
 .grid-table .full-width td[colspan] .table-collapse {
     overflow: hidden;
     max-height: 0px;
-    transition: .4s linear;
+    transition: 0.4s linear;
 }
 .grid-table .full-width td[colspan] .table-collapse.expanded {
     max-height: 5000px;
@@ -96,7 +96,7 @@ main:has(.filestorage-files-box) {
     height: 90%;
     object-fit: cover;
     border-radius: 8px;
-    box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, .3);
+    box-shadow: 3px 3px 5px 0px rgba(0, 0, 0, 0.3);
 }
 
 .filestorage-data-box {
@@ -123,7 +123,7 @@ main:has(.filestorage-files-box) {
     color: #ffffff;
     border-color: var(--main-success-dark-color);
     text-shadow: 1px 1px 1px var(--main-success-dark-color);
-    background-image: url('/elfcms/admin/images/buttons/edit-white.png');
+    background-image: url("/elfcms/admin/images/buttons/edit-white.png");
     background-repeat: no-repeat;
     background-position: 50% 5px;
 }
@@ -147,7 +147,7 @@ main:has(.filestorage-files-box) {
     width: 140px;
     padding: 5px;
     border-radius: 4px;
-    box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, .3);
+    box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.3);
     background-color: #ffffff;
     display: flex;
     flex-direction: column;
@@ -159,7 +159,7 @@ main:has(.filestorage-files-box) {
     position: relative;
 }
 .filestorage-file-tile::after {
-    content: '';
+    content: "";
     position: absolute;
     top: 0;
     left: 0;
@@ -168,13 +168,13 @@ main:has(.filestorage-files-box) {
     z-index: 10;
 }
 .filestorage-file-tile:hover {
-    box-shadow: 3px 3px 6px 0px rgba(0, 0, 0, .3);
+    box-shadow: 3px 3px 6px 0px rgba(0, 0, 0, 0.3);
 }
 .filestorage-file-tile.dropready {
-    translate: (5px,0px);
+    translate: (5px, 0px);
 }
 .filestorage-file-tile.dragged {
-    opacity: .5;
+    opacity: 0.5;
 }
 .filestorage-file-tile h5 {
     margin: 0 auto;
@@ -195,8 +195,8 @@ main:has(.filestorage-files-box) {
     background-color: rgba(255, 255, 255, 0.3);
 }
 .filestorage-file-tile.fordelete img {
-    opacity: .7;
-    filter: grayscale(.7);
+    opacity: 0.7;
+    filter: grayscale(0.7);
 }
 .filestorage-file-tile .delete-file-box {
     position: absolute;
@@ -228,21 +228,25 @@ main:has(.filestorage-files-box) {
     display: flex;
     align-items: center;
     justify-content: center;
-    filter: drop-shadow(1px 1px 1px #ffffff) drop-shadow(-1px -1px 1px #ffffff) drop-shadow(-1px 1px 1px #ffffff) drop-shadow(1px -1px 1px #ffffff);
+    filter: drop-shadow(1px 1px 1px #ffffff) drop-shadow(-1px -1px 1px #ffffff)
+        drop-shadow(-1px 1px 1px #ffffff) drop-shadow(1px -1px 1px #ffffff);
     opacity: 0;
 }
 .filestorage-file-tile:hover .delete-file-box input[data-field="delete"] + i {
-    opacity: .5;
+    opacity: 0.5;
 }
-.filestorage-file-tile:hover .delete-file-box input[data-field="delete"]:hover + i {
-    opacity: .8;
+.filestorage-file-tile:hover
+    .delete-file-box
+    input[data-field="delete"]:hover
+    + i {
+    opacity: 0.8;
 }
 .filestorage-file-tile .delete-file-box input[data-field="delete"]:checked + i {
     opacity: 1;
 }
 .filestorage-file-tile .delete-file-box input[data-field="delete"] + i::before,
 .filestorage-file-tile .delete-file-box input[data-field="delete"] + i::after {
-    content: '';
+    content: "";
     position: absolute;
     width: 100%;
     height: 3px;
@@ -264,7 +268,7 @@ main:has(.filestorage-files-box) {
     order: -5000;
 }
 .filestorage-file-add::before {
-    content: '\002B';
+    content: "\002B";
     color: var(--main-success-dark-color);
     /* text-shadow: 1px 1px 3px rgba(0, 0, 0, .3); */
     font-size: 100px;
@@ -281,12 +285,11 @@ main:has(.filestorage-files-box) {
     padding: 15px 20px;
     background-color: #ffffff;
     text-align: center;
-    box-shadow: 0px -4px 4px -4px rgba(0,0,0,0.3);
+    box-shadow: 0px -4px 4px -4px rgba(0, 0, 0, 0.3);
     z-index: 10;
 }
 
-
- .filestorage-file-create-popup-wrapper {
+.filestorage-file-create-popup-wrapper {
     position: fixed;
     top: 0;
     left: 0;
@@ -298,22 +301,22 @@ main:has(.filestorage-files-box) {
     align-content: center;
     justify-content: center;
     z-index: 50;
-    background-color: rgba(0,0,0,0.2);
+    background-color: rgba(0, 0, 0, 0.2);
     backdrop-filter: blur(1px);
- }
+}
 
- .filestorage-file-create-popup-box {
+.filestorage-file-create-popup-box {
     color: #222222;
     max-height: 100%;
     height: calc(100px - 40px);
     position: relative;
- }
- .filestorage-file-create-popup-box .colored-rows-box {
+}
+.filestorage-file-create-popup-box .colored-rows-box {
     height: calc(100vh - 160px);
     overflow-y: auto;
- }
+}
 
- .filestorage-file-create-popup-close {
+.filestorage-file-create-popup-close {
     display: flex;
     align-content: center;
     justify-content: center;
@@ -324,13 +327,13 @@ main:has(.filestorage-files-box) {
     width: 40px;
     height: 40px;
     cursor: pointer;
- }
- .filestorage-file-create-popup-close::before {
-    content: '\002B';
+}
+.filestorage-file-create-popup-close::before {
+    content: "\002B";
     font-size: 50px;
     font-weight: 100;
     rotate: 45deg;
- }
+}
 .filestorage-file-create-popup-box .button-box .alert {
     margin: 0px auto;
 }
@@ -398,7 +401,7 @@ main:has(.filestorage-files-box) {
     overflow: hidden;
 }
 .file-loader-bar > div {
-    content: '';
+    content: "";
     top: 0;
     left: 0;
     width: 0%;
@@ -454,7 +457,7 @@ main:has(.filestorage-files-box) {
 
 .watermark-position-box {
     display: grid;
-    grid-template-columns: repeat(3,auto);
+    grid-template-columns: repeat(3, auto);
     background-color: var(--main-select-shade-color);
     padding: 1px;
     gap: 1px;
@@ -540,3 +543,9 @@ main:has(.filestorage-files-box) {
         left: 0px;
     }
 }
+
+
+/* Components */
+
+
+/* /Components */
