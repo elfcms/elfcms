@@ -195,7 +195,7 @@
                                     };
                                     img.src =
                                         "/elfcms/admin/images/icons/filestorage/any.svg";
-                                    fetch('/admin/helper/file-icon/' + (type ?? 'any'), {
+                                    fetch('{{ $adminPath }}/helper/file-icon/' + (type ?? 'any'), {
                                             headers: {
                                                 'X-Requested-With': 'XMLHttpRequest'
                                             }

@@ -32,6 +32,7 @@ class ViewServiceProvider extends ServiceProvider
             if (Schema::hasTable('elfcms_settings')) {
 
                 View::composer('*::admin.*', function($view) {
+                    $adminPath = config('elfcms.elfcms.admin_path') ?? '/admin';
                     $configs = config('elfcms');
                     $vendorPath = 'elfcms/admin';
                     $cssPath = '/css/style.css';
@@ -55,7 +56,8 @@ class ViewServiceProvider extends ServiceProvider
                         }
                     }
                     $view->with('admin_styles',$styles)
-                        ->with('admin_scripts',$scripts);
+                        ->with('admin_scripts',$scripts)
+                        ->with('adminPath',$adminPath);
                 });
                 View::composer('*layouts*.main', function($view) {
                     $view->with('elfSiteSettings',Setting::values());

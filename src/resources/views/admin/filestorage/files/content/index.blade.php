@@ -318,7 +318,7 @@ function setItemData (file, data, empty=false, callback=null) {
         return false;
     }
 
-    file.href = '/admin/filestorage/{{$filestorage->id}}/files/'+data.id+'/edit';
+    file.href = '{{ $adminPath }}/filestorage/{{$filestorage->id}}/files/'+data.id+'/edit';
     //file.dataset.slug = data.slug;
     file.dataset.id = data.id;
     file.style.order = data.position;
@@ -382,7 +382,7 @@ function setItemData (file, data, empty=false, callback=null) {
 
 function createItem (data, empty = false) {
     const newItem = document.createElement('a');
-    newItem.href = '/admin/filestorage/{{$filestorage->id}}/files/'+data.id+'/edit';
+    newItem.href = '{{ $adminPath }}/filestorage/{{$filestorage->id}}/files/'+data.id+'/edit';
     newItem.classList.add('filestorage-file-tile','filestorage-file-element');
     //newItem.dataset.slug = data.slug;
     newItem.dataset.id = data.id;
@@ -401,7 +401,7 @@ function createItem (data, empty = false) {
             img.src = data.image;
         } */
         console.log(2,data);
-        img.src = '/admin/helper/file-icon/'+data.type;
+        img.src = '{{ $adminPath }}/helper/file-icon/'+data.type;
         newItem.append(img)
     }
     const h5 = document.createElement('h5');
@@ -656,14 +656,13 @@ function editItem(action,currentItem,isEdit=true){
                                             else {
                                                 img.src = data.data.image;
                                             } */
-        console.log(3,data);
                                             img.src = '/files/preview/'+data.id;
                                         }
-                                        currentItem.href = '/admin/filestorage/{{$filestorage->id}}/files/'+data.data.id+'/edit';
+                                        currentItem.href = '{{ $adminPath }}/filestorage/{{$filestorage->id}}/files/'+data.data.id+'/edit';
                                     }
                                     else if (filesBox) {
                                         const newItem = document.createElement('a');
-                                        newItem.href = '/admin/filestorage/{{$filestorage->id}}/files/'+data.data.id+'/edit';
+                                        newItem.href = '{{ $adminPath }}/filestorage/{{$filestorage->id}}/files/'+data.data.id+'/edit';
                                         newItem.classList.add('filestorage-file-tile','filestorage-file-element');
                                         //newItem.dataset.slug = data.data.slug;
                                         newItem.dataset.id = data.data.id;

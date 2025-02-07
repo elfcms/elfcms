@@ -254,6 +254,13 @@ Route::group(['middleware' => ['web', 'locales', 'cookie']], function () use ($a
                 Route::post('/elfcms/api/filestorage/{filestorage}/files/group', [\Elfcms\Elfcms\Http\Controllers\Ajax\FilestorageFileController::class, 'filestorageFileGroupSave'])->name('filestorage.files.groupSave');
             });
         });
+        /* JS admin const */
+        Route::get('/js/system.js', function () use ($adminPath) {
+            $content = "var adminPath = '$adminPath';";
+            header('Content-Type: text/javascript');
+            return $content;
+        });
+        /* /JS admin const */
     });
     /* /Admin panel */
 

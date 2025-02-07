@@ -14,6 +14,7 @@
     @foreach ($admin_styles as $style)
         <link rel="stylesheet" href="{{ asset($style) }}">
     @endforeach
+    <script src="/js/system.js"></script>
     <script src="{{ asset('elfcms/admin/js/gnommy.js') }}"></script>
     @foreach ($admin_scripts as $script)
         <script src="{{ asset($script) }}"></script>
@@ -83,7 +84,7 @@
                 @endforelse
 
                 <li class="only-mobile">
-                    <a href="/admin/logout">
+                    <a href="{{ $adminPath }}/logout">
                         <img src="/elfcms/admin/images/icons/logout.png" alt="">
                         <span>Logout</span>
                     </a>
@@ -104,7 +105,7 @@
                 </div>
                 <nav class="userdata">
                     <ul>
-                        <li><a href="/admin/logout">Logout</a></li>
+                        <li><a href="{{ $adminPath }}/logout">Logout</a></li>
                     </ul>
                 </nav>
             </div>
