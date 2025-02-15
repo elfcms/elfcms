@@ -118,6 +118,22 @@ if (!function_exists('file_path')) {
     }
 }
 
+if (!function_exists('iconHtml')) {
+
+    function iconHtml(string $file = null, int $width = null, int $height = null, bool $svg = false)
+    {
+        return Files::iconHtml($file, $width, $height, $svg);
+    }
+}
+
+if (!function_exists('iconHtmlLocal')) {
+
+    function iconHtmlLocal(string $file = null, int $width = null, int $height = null, bool $svg = false)
+    {
+        return Files::iconHtmlLocal($file, $width, $height, $svg);
+    }
+}
+
 /* /Files */
 
 /* Cookies */

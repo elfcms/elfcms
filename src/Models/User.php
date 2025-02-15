@@ -5,6 +5,7 @@ namespace Elfcms\Elfcms\Models;
 use App\Models\User as ModelsUser;
 use Elfcms\Elfcms\Events\SomeMailEvent;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -139,6 +140,29 @@ class User extends ModelsUser
 
         return $name;
     }
+
+    protected function avatar(): Attribute
+    {
+        $avatar = $this->data->photo ?? $this->data->thumbnail ?? null;
+        return Attribute::make(
+            get: fn () => $avatar,
+        );
+    }
+
+    /* public function avatar($isThumbnail = false)
+    {
+        $avatar = null;
+        if (($isThumbnail && !empty($this->data->thumbnail)) || (!$isThumbnail && empty($this->data->photo))) {
+            if (!empty($this->data->thumbnail)) {
+                $avatar = $this->data->thumbnail;
+            }
+        } elseif (($isThumbnail && empty($this->data->thumbnail)) || (!$isThumbnail && !empty($this->data->photo))) {
+            if (!empty($this->data->photo)) {
+                $avatar = $this->data->photo;
+            }
+        }
+        return $avatar;
+    } */
 
     public function isAdmin()
     {

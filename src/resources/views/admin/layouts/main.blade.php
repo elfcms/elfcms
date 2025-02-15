@@ -9,7 +9,9 @@
     @isset($elfSiteSettings['icon'])
         <link rel="shortcut icon" href="{{ asset(file_path($elfSiteSettings['icon'])) }}" type="image/x-icon">
     @endisset
-    <link rel="stylesheet" href="{{ asset('elfcms/admin/fonts/roboto/roboto.css') }}">
+    <link rel="stylesheet" href="{{ asset('elfcms/admin/fonts/afacad/afacad.css') }}">
+    <link rel="stylesheet" href="{{ asset('elfcms/admin/fonts/teachers/teachers.css') }}">
+    <link rel="stylesheet" href="{{ asset('elfcms/admin/fonts/inter/inter.css') }}">
     <link href="{{ asset('elfcms/admin/css/gnommy.min.css') }}" rel="stylesheet">
     @foreach ($admin_styles as $style)
         <link rel="stylesheet" href="{{ asset($style) }}">
@@ -23,7 +25,7 @@
     @show
 </head>
 
-<body>
+<body class="dark-scheme">
     @inject('currentUser', 'Elfcms\Elfcms\Aux\User')
     @inject('menu', 'Elfcms\Elfcms\Aux\Admin\Menu')
     <header id="header">
@@ -32,33 +34,31 @@
                 @isset($elfSiteSettings['logo'])
                     <img src="{{ asset(file_path($elfSiteSettings['logo'])) }}" alt="logo">
                 @else
+                    <div class="logoimg-empty"></div>
                 @endisset
             </div>
             <div class="logoname">
-                @isset($elfSiteSettings['name'])
-                    {{ $elfSiteSettings['name'] }}
-                @endisset
+                {{-- @isset($elfSiteSettings['name'])
+                    {{ $elfSiteSettings['name'] ?? 'Website' }}
+                @endisset --}}
+                {{ $elfSiteSettings['name'] ?? 'Website' }}
             </div>
         </a>
 
         <nav id="mainmenu">
             <ul>
                 @forelse ($menu::accessGet() as $item)
-                    <li @if (Str::startsWith(Route::currentRouteName(), $item['parent_route'])) class="active" @endif>
+                    <li @class([
+                        'active' => Str::startsWith(
+                            Route::currentRouteName(),
+                            $item['parent_route']),
+                    ]) style="--i-color:{{ $item['color'] }}">
                         <a href="{{ route($item['route']) }}">
-                            <img src="{{ $item['icon'] }}" alt="">
-                            <span>
-                                @if (empty($item['lang_title']))
-                                    {{ $item['title'] }}
-                                @else
-                                    {{ __($item['lang_title']) }}
-                                @endif
-                                @if (!empty($item['lang_subtitle']))
-                                    <br><span>{{ __($item['lang_subtitle']) }}</span>
-                                @elseif (!empty($item['subtitle']))
-                                    <br><span>{{ $item['subtitle'] }}</span>
-                                @endif
-                            </span>
+                            {{--  <img src="{{ $item['icon'] }}" alt=""> --}}
+                            <div class="menu-icon">
+                                {!! iconHtmlLocal($item['icon'], 24, 24, true) !!}
+                            </div>
+                            <div class="menu-title">{{ $item['title'] }}</div>
                         </a>
                         @if (!empty($item['submenu']))
                             <ul class="submenu">
@@ -95,19 +95,30 @@
     <main>
         <div id="toppanel">
             <div class="pageinfo">
-                <div class="paginfo_title">
+                <div class="paginfo-title">
                     <h1>{{ $page['title'] }}</h1>
                 </div>
             </div>
             <div class="userinfo">
-                {{ $currentUser->user->name() }}
-                <div class="userinfo_avatar">
+                <div class="userinfo-content">
+                    <div class="userinfo-content-inner">
+                        <div class="userinfo-top">
+                            <div class="userinfo-name">{{ $currentUser->user->name() }}</div>
+                            <div class="userinfo-avatar">
+                                @if ($currentUser->user->avatar)
+                                    <img src="{{ $currentUser->user->avatar }}" alt="User avatar">
+                                @else
+                                    {!! iconHtmlLocal('/elfcms/admin/images/icons/user.svg', svg: true) !!}
+                                @endif
+                            </div>
+                        </div>
+                        <nav class="userdata">
+                            <ul>
+                                <li class="logout"><a href="{{ $adminPath }}/logout">Logout</a></li>
+                            </ul>
+                        </nav>
+                    </div>
                 </div>
-                <nav class="userdata">
-                    <ul>
-                        <li><a href="{{ $adminPath }}/logout">Logout</a></li>
-                    </ul>
-                </nav>
             </div>
             <div class="menubutton closed"></div>
         </div>
@@ -121,9 +132,15 @@
     @section('footerscript')
     @show
     <footer id="footer">
-        &copy; M.Klassen, 2022-{{ date('Y') }}. ELF CMS v{{ config('elfcms.elfcms.version') }} @if (config('elfcms.elfcms.is_beta'))
+        ELF CMS v{{ config('elfcms.elfcms.version') }}
+        @if (config('elfcms.elfcms.is_dev'))
+            (dev)
+        @elseif (config('elfcms.elfcms.is_alpha'))
+            (alpha)
+        @elseif (config('elfcms.elfcms.is_beta'))
             (beta)
         @endif
+        | &copy; M.Klassen, 2022-{{ date('Y') }}.
     </footer>
     <script src="{{ asset('elfcms/admin/js/app.js') }}"></script>
 </body>

@@ -22,15 +22,10 @@ return [
     |
     */
 
-    'version' => '2.2',
-
-    /*
-    |--------------------------------------------------------------------------
-    | Version is beta
-    |--------------------------------------------------------------------------
-    */
-
-    'is_beta' => true,
+    'version' => '3.0',
+    'is_beta' => false,
+    'is_alpha' => false,
+    'is_dev' => true,
 
     /*
     |--------------------------------------------------------------------------
@@ -95,7 +90,7 @@ return [
     |--------------------------------------------------------------------------
     */
 
-    'admin_path' => '/mypanel',
+    'admin_path' => '/admin',
 
     /*
     |--------------------------------------------------------------------------
@@ -213,19 +208,30 @@ return [
 
     "menu" => [
         [
+            "title" => "Start",
+            "lang_title" => "elfcms::default.start",
+            "route" => "admin.index",
+            "parent_route" => "admin.index",
+            "icon" => "/elfcms/admin/images/icons/home.svg",
+            "color" => "var(--purple-color)",
+            "position" => 1
+        ],
+        [
             "title" => "Settings",
             "lang_title" => "elfcms::default.settings",
             "route" => "admin.settings.index",
             "parent_route" => "admin.settings.index",
-            "icon" => "/elfcms/admin/images/icons/settings.png",
+            "icon" => "/elfcms/admin/images/icons/settings.svg",
+            "color" => "var(--lilac-color)",
             "position" => 10
         ],
         [
-            "title" => "Users",
-            "lang_title" => "elfcms::default.users",
+            "title" => "Users & Roles",
+            "lang_title" => "elfcms::default.users_n_roles",
             "route" => "admin.user.users",
             "parent_route" => "admin.user",
-            "icon" => "/elfcms/admin/images/icons/users.png",
+            "icon" => "/elfcms/admin/images/icons/users.svg",
+            "color" => "var(--green-color)",
             "position" => 20,
             "submenu" => [
                 [
@@ -245,7 +251,8 @@ return [
             "lang_title" => "elfcms::default.email_addresses",
             "route" => "admin.email.addresses",
             "parent_route" => "admin.email.addresses",
-            "icon" => "/elfcms/admin/images/icons/email.png",
+            "icon" => "/elfcms/admin/images/icons/email_addresses.svg",
+            "color" => "var(--cyan-color)",
             "position" => 30,
         ],
         [
@@ -253,7 +260,8 @@ return [
             "lang_title" => "elfcms::default.email_events",
             "route" => "admin.email.events",
             "parent_route" => "admin.email.events",
-            "icon" => "/elfcms/admin/images/icons/event.png",
+            "icon" => "/elfcms/admin/images/icons/email_events.svg",
+            "color" => "var(--blue-color)",
             "position" => 35,
         ],
         [
@@ -261,7 +269,8 @@ return [
             "lang_title" => "elfcms::default.form",
             "route" => "admin.forms.index",
             "parent_route" => "admin.forms",
-            "icon" => "/elfcms/admin/images/icons/forms.png",
+            "icon" => "/elfcms/admin/images/icons/form.svg",
+            "color" => "var(--gold-color)",
             "position" => 40,
         ],
         [
@@ -269,7 +278,8 @@ return [
             "lang_title" => "elfcms::default.form_results",
             "route" => "admin.form-results.index",
             "parent_route" => "admin.form-results",
-            "icon" => "/elfcms/admin/images/icons/formresult.png",
+            "icon" => "/elfcms/admin/images/icons/formresult.svg",
+            "color" => "var(--orange-color)",
             "position" => 45,
         ],
         [
@@ -277,7 +287,8 @@ return [
             "lang_title" => "elfcms::default.menu",
             "route" => "admin.menus.index",
             "parent_route" => "admin.menus",
-            "icon" => "/elfcms/admin/images/icons/menu.png",
+            "icon" => "/elfcms/admin/images/icons/menu.svg",
+            "color" => "var(--purple-color)",
             "position" => 50,
         ],
         [
@@ -285,23 +296,26 @@ return [
             "lang_title" => "elfcms::default.pages",
             "route" => "admin.page.pages",
             "parent_route" => "admin.page",
-            "icon" => "/elfcms/admin/images/icons/pages.png",
+            "icon" => "/elfcms/admin/images/icons/pages.svg",
+            "color" => "var(--pink-color)",
             "position" => 60,
         ],
-        [
+        /* [
             "title" => "Messages",
             "lang_title" => "elfcms::default.messages",
             "route" => "admin.messages.index",
             "parent_route" => "admin.messages",
-            "icon" => "/elfcms/admin/images/icons/info.png",
+            "icon" => "/elfcms/admin/images/icons/info.svg",
+            "color" => "var(--blue-color)",
             "position" => 70,
-        ],
+        ], */
         [
             "title" => "Fragment",
             "lang_title" => "elfcms::default.fragment",
             "route" => "admin.fragment.items",
             "parent_route" => "admin.fragment.items",
-            "icon" => "/elfcms/admin/images/icons/fragment.png",
+            "icon" => "/elfcms/admin/images/icons/fragment.svg",
+            "color" => "var(--marin-color)",
             "position" => 80,
         ],
         [
@@ -309,7 +323,8 @@ return [
             "lang_title" => "elfcms::default.filestorage",
             "route" => "admin.filestorage.index",
             "parent_route" => "admin.filestorage",
-            "icon" => "/elfcms/admin/images/icons/filestorage.png",
+            "icon" => "/elfcms/admin/images/icons/filestorage.svg",
+            "color" => "var(--lime-color)",
             "position" => 85,
             "submenu" => [
                 [
@@ -334,7 +349,8 @@ return [
             "lang_title" => "elfcms::default.cookies",
             "route" => "admin.cookie-settings.index",
             "parent_route" => "admin.cookie-settings.index",
-            "icon" => "/elfcms/admin/images/icons/cookie.png",
+            "icon" => "/elfcms/admin/images/icons/cookie.svg",
+            "color" => "var(--yellow-color)",
             "position" => 90,
         ],
         [
@@ -342,7 +358,8 @@ return [
             "lang_title" => "elfcms::default.statistics",
             "route" => "admin.statistics.index",
             "parent_route" => "admin.statistics.index",
-            "icon" => "/elfcms/admin/images/icons/stats.png",
+            "icon" => "/elfcms/admin/images/icons/stats.svg",
+            "color" => "var(--red-color)",
             "position" => 100,
         ]
     ],
@@ -357,6 +374,12 @@ return [
     */
 
     "access_routes" => [
+        [
+            "title" => "Start",
+            "lang_title" => "elfcms::default.start",
+            "route" => "admin.index",
+            //"actions" => ["read", "write"],
+        ],
         [
             "title" => "Settings",
             "lang_title" => "elfcms::default.settings",

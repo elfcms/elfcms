@@ -59,6 +59,7 @@ return [
     'error_of_email_confirmation' => 'Fehler bei der E-Mail-Bestätigung',
     'roles' => 'Rollen',
     'users_and_roles' => 'Benutzer und Rollen',
+    'users_n_roles' => 'Benutzer & Rollen',
     'user_data' => 'Benutzerdaten',
     'first_name' => 'Vorname',
     'second_name' => 'Zweitname',

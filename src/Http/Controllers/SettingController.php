@@ -20,7 +20,10 @@ class SettingController extends \App\Http\Controllers\Controller
         ['code' => 'site_keywords', 'name' => 'Site keywords', 'params' => '{"type": "text"}'],
         ['code' => 'site_description', 'name' => 'Site description', 'params' => '{"type": "text"}'],
         ['code' => 'site_locale', 'name' => 'Site locale', 'params' => '{"type": "list"}'],
+        ['code' => 'admin_locale', 'name' => 'Interface Language', 'params' => '{"type": "list"}'],
         ['code' => 'site_statistics_use', 'name' => 'Use statistics', 'params' => '{"type": "checkbox"}', 'value' => 0],
+        ['code' => 'site_maintenance', 'name' => 'Maintenance mode', 'params' => '{"type": "checkbox"}', 'value' => 0],
+        ['code' => 'site_maintenance_text', 'name' => 'Message text for maintenance mode', 'params' => '{"type": "text"}'],
     ];
 
     public function index()

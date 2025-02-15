@@ -59,6 +59,7 @@ return [
     'error_of_email_confirmation' => 'Ошибка подтверждения адреса электронной почты',
     'roles' => 'Роли',
     'users_and_roles' => 'Пользователи и роли',
+    'users_n_roles' => 'Пользователи&роли',
     'user_data' => 'Данные пользователя',
     'first_name' => 'Имя',
     'second_name' => 'Отчество',

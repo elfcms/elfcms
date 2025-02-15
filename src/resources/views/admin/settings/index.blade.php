@@ -20,7 +20,7 @@
     @endif
 
     <div class="item-form">
-        <h3>{{ __('elfcms::default.edit_site_settings') }}</h3>
+        <h2>{{ __('elfcms::default.edit_site_settings') }}</h2>
         <form action="{{ route('admin.settings.save') }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('POST')

@@ -7,6 +7,7 @@ use Elfcms\Elfcms\Models\Role;
 use Elfcms\Elfcms\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Route;
 
 class AdminController extends Controller
 {
@@ -25,6 +26,10 @@ class AdminController extends Controller
     {
         $menuData = config('elfcms.elfcms.menu');
         foreach ($menuData as $key => $data) {
+            if ($data['route'] == Route::currentRouteName()) { //'admin.index') {
+                unset($menuData[$key]);
+                continue;
+            }
             $subdata = [];
             $text = '';
             if ($data['route'] == 'admin.user.users' && !empty($data['submenu'])) {
@@ -46,39 +51,6 @@ class AdminController extends Controller
                     }
                 }
             }
-            /* if ($data['route'] == 'admin.email.addresses' && !empty($data['submenu'])) {
-                foreach ($data['submenu'] as $submenu) {
-                    if ($submenu['route'] == 'admin.email.addresses') {
-                        $addrCount = EmailAddress::count();
-                        $subdata['addresses'] = [
-                            'title' => __('elfcms::default.addresses'),
-                            'value' => $addrCount
-                        ];
-                    }
-                    if ($submenu['route'] == 'admin.email.events') {
-                        $eventsCount = EmailEvent::count();
-                        $subdata['users'] = [
-                            'title' => __('elfcms::default.events'),
-                            'value' => $eventsCount
-                        ];
-                    }
-                }
-            } */
-            /* if ($data['route'] == 'admin.menus.menus') {
-                $menuCount = Menu::count();
-                $subdata[] = [
-                    'title' => __('elfcms::default.menus'),
-                    'value' => $menuCount
-                ];
-            }
-            if ($data['route'] == 'admin.form.forms') {
-                $formCount = Form::count();
-                $subdata[] = [
-                    'title' => __('elfcms::default.forms'),
-                    'value' => $formCount
-                ];
-            } */
-
 
             if ($data['route'] == 'admin.settings.index')  {
                 $text = __('elfcms::default.basic_settings_for_your_site');
@@ -89,6 +61,8 @@ class AdminController extends Controller
 
             $menuData[$key]['subdata'] = $subdata;
             $menuData[$key]['text'] = $text;
+            $langTitle = __($data['lang_title']);
+            $menuData[$key]['title'] = $langTitle == $data['lang_title'] ? $data['title'] : $langTitle;
         }
 
         return view('elfcms::admin.index',[

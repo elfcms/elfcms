@@ -59,6 +59,7 @@ return [
     'error_of_email_confirmation' => 'Error of email confirmation',
     'roles' => 'Roles',
     'users_and_roles' => 'Users and roles',
+    'users_n_roles' => 'Users & roles',
     'user_data' => 'User data',
     'first_name' => 'First name',
     'second_name' => 'Second name',
