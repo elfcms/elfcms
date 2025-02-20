@@ -200,7 +200,7 @@ class ElfcmsModuleProvider extends ServiceProvider
         Blade::component('elfcms-fragment', \Elfcms\Elfcms\View\Components\Fragment::class);
         Blade::component('elfcms-message', \Elfcms\Elfcms\View\Components\Message::class);
         Blade::component('elfcms-input-checkbox', \Elfcms\Elfcms\View\Components\Input\Checkbox::class);
-        Blade::component('elfcms-input-file', \Elfcms\Elfcms\View\Components\Input\File::class);
+        Blade::component('elfcms-input-file', \Elfcms\Elfcms\View\Components\Legacy\Input\File::class);
         Blade::component('elfcms-input-fsfile', \Elfcms\Elfcms\View\Components\Input\FSFile::class);
         Blade::component('elfcms-input-fileext', \Elfcms\Elfcms\View\Components\Input\FileExt::class);
         Blade::component('elfcms-input-image', \Elfcms\Elfcms\View\Components\Input\Image::class);
@@ -210,6 +210,8 @@ class ElfcmsModuleProvider extends ServiceProvider
         Blade::component('elfcms-account-edit', \Elfcms\Elfcms\View\Components\Account\Edit::class);
         Blade::component('elfcms-account-getrestore', \Elfcms\Elfcms\View\Components\Account\GetRestore::class);
         Blade::component('elfcms-account-setrestore', \Elfcms\Elfcms\View\Components\Account\SetRestore::class);
+
+        Blade::component('elf-input-file', \Elfcms\Elfcms\View\Components\Input\File::class);
 
         //Livewire::component('admin-image-upload', AdminImageUpload::class);
     }

@@ -37,9 +37,9 @@
         </table>
     </div>
     <div class="dynamic-table-buttons">
-        <button class="default-btn alternate-button" title="{{__('elfcms::default.add_group')}}" data-action="additem">{{ __('elfcms::default.add_group') }}</button>
-        {{-- <button class="default-btn" title="{{__('elfcms::default.reset_button')}}" data-action="reset">{{ __('elfcms::default.reset_button') }}</button> --}}
-        <button type="submit" class="default-btn submit-button" disabled="" data-action="save">{{ __('elfcms::default.save') }}</button>
+        <button class="button alternate-button" title="{{__('elfcms::default.add_group')}}" data-action="additem">{{ __('elfcms::default.add_group') }}</button>
+        {{-- <button class="button" title="{{__('elfcms::default.reset_button')}}" data-action="reset">{{ __('elfcms::default.reset_button') }}</button> --}}
+        <button type="submit" class="button submit-button" disabled="" data-action="save">{{ __('elfcms::default.save') }}</button>
     </div>
 </form>
     <script>
@@ -179,7 +179,7 @@
                     buttons:[
                         {
                             title:'OK',
-                            class:'default-btn alternate-button',
+                            class:'button alternate-button',
                             callback: [
                                 saveForm,
                                 'close'
@@ -187,7 +187,7 @@
                         },
                         {
                             title:'{{__("elfcms::default.cancel")}}',
-                            class:'default-btn cancel-button',
+                            class:'button cancel-button',
                             callback:'close'
                         }
                     ],
@@ -230,7 +230,7 @@
                                     buttons:[
                                         {
                                             title:'OK',
-                                            class:'default-btn alternate-button',
+                                            class:'button alternate-button',
                                             callback:'close'
                                         }
                                     ],
@@ -248,7 +248,7 @@
                                         buttons:[
                                             {
                                                 title:'OK',
-                                                class:'default-btn delete-button',
+                                                class:'button delete-button',
                                                 callback:'close'
                                             }
                                         ],

@@ -17,7 +17,7 @@
     @endif
 
     <div class="table-search-box">
-        <a href="{{ route('admin.forms.groups.create',$form) }}" class="default-btn success-button icon-text-button light-icon plus-button">{{__('elfcms::default.create_form_field_group')}}</a>
+        <a href="{{ route('admin.forms.groups.create',$form) }}" class="button success-button icon-text-button light-icon plus-button">{{__('elfcms::default.create_form_field_group')}}</a>
     </div>
 
     @if (!empty($form->groups))
@@ -55,7 +55,7 @@
                     @endif
                     </div>
                         <div class="form-group-fields-buttons">
-                            <a href="{{ route('admin.forms.fields.create',['form'=>$form, 'group'=>$group->id]) }}" class="default-btn success-button icon-text-button light-icon plus-button">{{-- {{__('elfcms::default.create_field')}} --}}</a>
+                            <a href="{{ route('admin.forms.fields.create',['form'=>$form, 'group'=>$group->id]) }}" class="button success-button icon-text-button light-icon plus-button">{{-- {{__('elfcms::default.create_field')}} --}}</a>
                         </div>
                 </div>
             </div>
@@ -70,7 +70,7 @@
     @endif
 
     <div class="table-search-box">
-        <a href="{{ route('admin.forms.fields.create',$form) }}" class="default-btn success-button icon-text-button light-icon plus-button">{{__('elfcms::default.create_field')}}</a>
+        <a href="{{ route('admin.forms.fields.create',$form) }}" class="button success-button icon-text-button light-icon plus-button">{{__('elfcms::default.create_field')}}</a>
     </div>
 
 <script>
@@ -90,14 +90,14 @@ if (checkForms) {
                 buttons:[
                     {
                         title:'{{ __('elfcms::default.delete') }}',
-                        class:'default-btn delete-button',
+                        class:'button delete-button',
                         callback: function(){
                             self.submit()
                         }
                     },
                     {
                         title:'{{ __('elfcms::default.cancel') }}',
-                        class:'default-btn cancel-button',
+                        class:'button cancel-button',
                         callback:'close'
                     }
                 ],

@@ -28,7 +28,7 @@
         </div>
     </div>
     <div>
-        <button type="submit" class="default-btn submit-button">{{ __('elfcms::default.sign_up') }}</button>
+        <button type="submit" class="button submit-button">{{ __('elfcms::default.sign_up') }}</button>
     </div>
 </form>
 <div class="register-link">

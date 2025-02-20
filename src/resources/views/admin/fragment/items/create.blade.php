@@ -89,13 +89,13 @@
                                     </div>
                                 </div>
                             </div>
-                            <button type="button" class="default-btn option-table-add" id="addoptionline">{{ __('elfcms::default.add_option') }}</button>
+                            <button type="button" class="button option-table-add" id="addoptionline">{{ __('elfcms::default.add_option') }}</button>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="button-box single-box">
-                <button type="submit" class="default-btn submit-button">{{ __('elfcms::default.submit') }}</button>
+                <button type="submit" class="button submit-button">{{ __('elfcms::default.submit') }}</button>
             </div>
         </form>
     </div>

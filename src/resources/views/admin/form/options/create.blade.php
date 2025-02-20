@@ -101,7 +101,7 @@
                 </div>
             </div>
             <div class="button-box single-box">
-                <button type="submit" class="default-btn submit-button">{{ __('elfcms::default.submit') }}</button>
+                <button type="submit" class="button submit-button">{{ __('elfcms::default.submit') }}</button>
             </div>
         </form>
     </div>

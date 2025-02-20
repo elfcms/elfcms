@@ -62,13 +62,13 @@
                     <td>{{ $field->created_at }}</td>
                     <td>{{ $field->updated_at }}</td>
                     <td class="button-column non-text-buttons">
-                        <a href="{{ route('admin.form.fields.edit',$field->id) }}" class="default-btn edit-button" title="{{ __('elfcms::default.edit') }}"></a>
+                        <a href="{{ route('admin.form.fields.edit',$field->id) }}" class="button edit-button" title="{{ __('elfcms::default.edit') }}"></a>
                         <form action="{{ route('admin.form.fields.destroy',$field->id) }}" method="POST" data-submit="check">
                             @csrf
                             @method('DELETE')
                             <input type="hidden" name="id" value="{{ $field->id }}">
                             <input type="hidden" name="name" value="{{ $field->name }}">
-                            <button type="submit" class="default-btn delete-button" title="{{ __('elfcms::default.delete') }}"></button>
+                            <button type="submit" class="button delete-button" title="{{ __('elfcms::default.delete') }}"></button>
                         </form>
                     </td>
                 </tr>
@@ -93,14 +93,14 @@
                         buttons:[
                             {
                                 title:'{{ __('elfcms::default.delete') }}',
-                                class:'default-btn delete-button',
+                                class:'button delete-button',
                                 callback: function(){
                                     self.submit()
                                 }
                             },
                             {
                                 title:'{{ __('elfcms::default.cancel') }}',
-                                class:'default-btn cancel-button',
+                                class:'button cancel-button',
                                 callback:'close'
                             }
                         ],

@@ -24,7 +24,7 @@
         <input type="password" name="password_confirmation" id="password_confirmation" class="form-control" placeholder="{{ __('elfcms::default.confirm_password') }}" required>
     </div>
     <div>
-        <button type="submit" class="default-btn submit-button">{{ __('elfcms::default.save') }}</button>
+        <button type="submit" class="button submit-button">{{ __('elfcms::default.save') }}</button>
     </div>
     @endif
 </form>

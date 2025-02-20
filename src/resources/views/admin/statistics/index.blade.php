@@ -32,7 +32,7 @@
                             placeholder="{{ __('elfcms::default.date_placeholder') }}">
                     </div>
                     <div class="non-text-buttons">
-                        <button type="submit" class="default-btn search-button"></button>
+                        <button type="submit" class="button search-button"></button>
                     </div>
                 </div>
             </form>

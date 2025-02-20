@@ -81,7 +81,7 @@
                 @endif
                 </div>
                 <div class="infobox-option-table-add">
-                    <button class="default-btn" data-id="{{$group->id}}" onclick="addOption(this{{!$group->code ? '' : ',false' }})">{{ __('elfcms::default.add_option') }}</button>
+                    <button class="button" data-id="{{$group->id}}" onclick="addOption(this{{!$group->code ? '' : ',false' }})">{{ __('elfcms::default.add_option') }}</button>
                 </div>
             </div>
         </div>

@@ -40,10 +40,10 @@
             </table>
         </div>
         <div class="dynamic-table-buttons">
-            <button class="default-btn alternate-button" title="{{ __('elfcms::default.add_type') }}"
+            <button class="button alternate-button" title="{{ __('elfcms::default.add_type') }}"
                 data-action="additem">{{ __('elfcms::default.add_type') }}</button>
-            {{-- <button class="default-btn" title="{{__('elfcms::default.reset_button')}}" data-action="reset">{{ __('elfcms::default.reset_button') }}</button> --}}
-            <button type="submit" class="default-btn submit-button" disabled=""
+            {{-- <button class="button" title="{{__('elfcms::default.reset_button')}}" data-action="reset">{{ __('elfcms::default.reset_button') }}</button> --}}
+            <button type="submit" class="button submit-button" disabled=""
                 data-action="save">{{ __('elfcms::default.save') }}</button>
         </div>
     </form>
@@ -191,7 +191,7 @@
                     content: '{{ __('elfcms::default.do_you_want_to_save_your_changes') }}',
                     buttons: [{
                             title: 'OK',
-                            class: 'default-btn alternate-button',
+                            class: 'button alternate-button',
                             callback: [
                                 saveForm,
                                 'close'
@@ -199,7 +199,7 @@
                         },
                         {
                             title: '{{ __('elfcms::default.cancel') }}',
-                            class: 'default-btn cancel-button',
+                            class: 'button cancel-button',
                             callback: 'close'
                         }
                     ],
@@ -246,7 +246,7 @@
                                     content: data.message,
                                     buttons: [{
                                         title: 'OK',
-                                        class: 'default-btn alternate-button',
+                                        class: 'button alternate-button',
                                         callback: 'close'
                                     }],
                                     class: 'alternate'
@@ -261,7 +261,7 @@
                                         content: data.message,
                                         buttons: [{
                                             title: 'OK',
-                                            class: 'default-btn delete-button',
+                                            class: 'button delete-button',
                                             callback: 'close'
                                         }],
                                         class: 'danger'
@@ -278,7 +278,7 @@
                             buttons:[
                                 {
                                     title:'OK',
-                                    class:'default-btn delete-button',
+                                    class:'button delete-button',
                                     callback:'close'
                                 }
                             ],

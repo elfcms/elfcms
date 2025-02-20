@@ -3,7 +3,7 @@
 @section('emailpage-content')
     <div class="table-search-box">
         <a href="{{ route('admin.email.addresses.create') }}"
-            class="default-btn success-button icon-text-button light-icon plus-button">{{ __('elfcms::default.create_email_address') }}</a>
+            class="button success-button icon-text-button light-icon plus-button">{{ __('elfcms::default.create_email_address') }}</a>
     </div>
     @if (Session::has('fielddeleted'))
         <div class="alert alert-alternate">{{ Session::get('fielddeleted') }}</div>
@@ -71,14 +71,14 @@
                         <td>{{ $address->updated_at }}</td>
                         <td class="button-column non-text-buttons">
                             <a href="{{ route('admin.email.addresses.edit', $address->id) }}"
-                                class="default-btn edit-button" title="{{ __('elfcms::default.edit') }}"></a>
+                                class="button edit-button" title="{{ __('elfcms::default.edit') }}"></a>
                             <form action="{{ route('admin.email.addresses.destroy', $address->id) }}" method="POST"
                                 data-submit="check">
                                 @csrf
                                 @method('DELETE')
                                 <input type="hidden" name="id" value="{{ $address->id }}">
                                 <input type="hidden" name="name" value="{{ $address->name }}">
-                                <button type="submit" class="default-btn delete-button"
+                                <button type="submit" class="button delete-button"
                                     title="{{ __('elfcms::default.delete') }}"></button>
                             </form>
                         </td>
@@ -103,14 +103,14 @@
                             addressName + '" (ID ' + addressId + ')?</p>',
                         buttons: [{
                                 title: '{{ __('elfcms::default.delete') }}',
-                                class: 'default-btn delete-button',
+                                class: 'button delete-button',
                                 callback: function() {
                                     self.submit()
                                 }
                             },
                             {
                                 title: '{{ __('elfcms::default.cancel') }}',
-                                class: 'default-btn cancel-button',
+                                class: 'button cancel-button',
                                 callback: 'close'
                             }
                         ],

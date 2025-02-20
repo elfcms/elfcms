@@ -17,7 +17,7 @@
         <input type="email" name="email" id="email" class="form-control" placeholder="{{ __('elfcms::default.email') }}" required>
     </div>
     <div>
-        <button type="submit" class="default-btn submit-button">{{ __('elfcms::default.restore_password') }}</button>
+        <button type="submit" class="button submit-button">{{ __('elfcms::default.restore_password') }}</button>
     </div>
     @endif
 </form>

@@ -84,7 +84,7 @@
                                 </div>
 
                             </div>
-                            <button type="button" class="default-btn param-table-add" id="addparamline">{{ __('elfcms::default.add_parameter') }}</button>
+                            <button type="button" class="button param-table-add" id="addparamline">{{ __('elfcms::default.add_parameter') }}</button>
                         </div>
                     </div>
                 </div>
@@ -129,8 +129,8 @@
             </div>
 
             <div class="button-box single-box">
-                <button type="submit" class="default-btn success-button">{{ __('elfcms::default.submit') }}</button>
-                <a href="{{ route('admin.email.events') }}" class="default-btn">{{ __('elfcms::default.cancel') }}</a>
+                <button type="submit" class="button success-button">{{ __('elfcms::default.submit') }}</button>
+                <a href="{{ route('admin.email.events') }}" class="button">{{ __('elfcms::default.cancel') }}</a>
             </div>
         </form>
     </div>

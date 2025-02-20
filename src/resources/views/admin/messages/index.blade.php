@@ -2,7 +2,7 @@
 
 @section('message-content')
 <div class="table-search-box">
-    <a href="{{ route('admin.messages.create') }}" class="default-btn success-button icon-text-button light-icon plus-button">{{__('elfcms::default.create_message')}}</a>
+    <a href="{{ route('admin.messages.create') }}" class="button success-button icon-text-button light-icon plus-button">{{__('elfcms::default.create_message')}}</a>
 </div>
 @if (Session::has('success'))
 <div class="alert alert-alternate">{{ Session::get('success') }}</div>
@@ -44,14 +44,14 @@
                 </td>
                 <td>{{ $message->active != 1 ? __('elfcms::default.inactive') : '' }}</td>
                 <td class="button-column non-text-buttons">
-                    <a href="{{ route('admin.messages.edit',$message) }}" class="default-btn edit-button" title="{{ __('elfcms::default.edit_message') }}"></a>
+                    <a href="{{ route('admin.messages.edit',$message) }}" class="button edit-button" title="{{ __('elfcms::default.edit_message') }}"></a>
                     <form action="{{ route('admin.messages.update',$message) }}" method="POST">
                         @csrf
                         @method('PUT')
                         <input type="hidden" name="id" id="id" value="{{ $message->id }}">
                         <input type="hidden" name="active" id="active" value="{{ (int)!(bool)$message->active }}">
                         <input type="hidden" name="notedit" value="1">
-                        <button type="submit" @if ($message->is_confirmed == 1) class="default-btn deactivate-button" title="{{__('elfcms::default.deactivate') }}" @else class="default-btn activate-button" title="{{ __('elfcms::default.activate') }}" @endif>
+                        <button type="submit" @if ($message->is_confirmed == 1) class="button deactivate-button" title="{{__('elfcms::default.deactivate') }}" @else class="button activate-button" title="{{ __('elfcms::default.activate') }}" @endif>
 
                         </button>
                     </form>
@@ -60,7 +60,7 @@
                         @method('DELETE')
                         <input type="hidden" name="id" value="{{ $message->id }}">
                         <input type="hidden" name="name" value="{{ $message->name }}">
-                        <button type="submit" class="default-btn delete-button" title="{{ __('elfcms::default.delete') }}"></button>
+                        <button type="submit" class="button delete-button" title="{{ __('elfcms::default.delete') }}"></button>
                     </form>
                 </td>
             </tr>
@@ -85,14 +85,14 @@
                     buttons:[
                         {
                             title:'{{ __('elfcms::default.delete') }}',
-                            class:'default-btn delete-button',
+                            class:'button delete-button',
                             callback: function(){
                                 self.submit()
                             }
                         },
                         {
                             title:'{{ __('elfcms::default.cancel') }}',
-                            class:'default-btn cancel-button',
+                            class:'button cancel-button',
                             callback:'close'
                         }
                     ],

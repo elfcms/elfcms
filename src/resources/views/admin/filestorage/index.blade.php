@@ -2,7 +2,7 @@
 
 @section('innerpage-content')
     <div class="table-search-box">
-        <a href="{{ route('admin.filestorage.create') }}" class="default-btn success-button icon-text-button light-icon plus-button">{{__('elfcms::default.create_storage')}}</a>
+        <a href="{{ route('admin.filestorage.create') }}" class="button success-button icon-text-button light-icon plus-button">{{__('elfcms::default.create_storage')}}</a>
         <div class="table-search-result-title">
             @if (!empty($search))
                 {{ __('elfcms::default.search_result_for') }} "{{ $search }}" <a href="{{ route('admin.user.users') }}" title="{{ __('elfcms::default.reset_search') }}">&#215;</a>
@@ -48,14 +48,14 @@
                     <td>{{ $storage->created_at }}</td>
                     <td>{{ $storage->updated_at }}</td>
                     <td class="button-column non-text-buttons">
-                        <a href="{{ route('admin.filestorage.files.index',$storage) }}" class="default-btn content-button" title="{{ __('elfcms::default.edit_storage_contents') }}"></a>
-                        <a href="{{ route('admin.filestorage.edit',$storage) }}" class="default-btn edit-button" title="{{ __('elfcms::default.edit_storage_params') }}"></a>
+                        <a href="{{ route('admin.filestorage.files.index',$storage) }}" class="button content-button" title="{{ __('elfcms::default.edit_storage_contents') }}"></a>
+                        <a href="{{ route('admin.filestorage.edit',$storage) }}" class="button edit-button" title="{{ __('elfcms::default.edit_storage_params') }}"></a>
                         <form action="{{ route('admin.filestorage.destroy',$storage) }}" method="POST" data-submit="check">
                             @csrf
                             @method('DELETE')
                             <input type="hidden" name="id" value="{{ $storage->id }}">
                             <input type="hidden" name="name" value="{{ $storage->name }}">
-                            <button type="submit" class="default-btn delete-button" title="{{ __('elfcms::default.delete') }}"></button>
+                            <button type="submit" class="button delete-button" title="{{ __('elfcms::default.delete') }}"></button>
                         </form>
                     </td>
                 </tr>
@@ -80,14 +80,14 @@
                         buttons:[
                             {
                                 title:'{{ __('elfcms::default.delete') }}',
-                                class:'default-btn delete-button',
+                                class:'button delete-button',
                                 callback: function(){
                                     self.submit()
                                 }
                             },
                             {
                                 title:'{{ __('elfcms::default.cancel') }}',
-                                class:'default-btn cancel-button',
+                                class:'button cancel-button',
                                 callback:'close'
                             }
                         ],

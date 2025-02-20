@@ -69,11 +69,11 @@
                     </div>
                 </div>
                 <div class="cookie-add-button">
-                    <button id="cookieCategorieAdd" type="button" class="default-btn success-button icon-text-button light-icon plus-button">{{ __('elfcms::default.create_category') }}</button>
+                    <button id="cookieCategorieAdd" type="button" class="button success-button icon-text-button light-icon plus-button">{{ __('elfcms::default.create_category') }}</button>
                 </div>
             </div>
             <div class="button-box single-box">
-                <button type="submit" class="default-btn success-button">{{ __('elfcms::default.submit') }}</button>
+                <button type="submit" class="button success-button">{{ __('elfcms::default.submit') }}</button>
             </div>
         </form>
     </div>

@@ -1,4 +1,30 @@
-<div class="input-file-button-box" id="{{ $boxId }}">
+<div class="inputfile" id="{{ $boxId }}">
+    <input type="hidden" name="{{ $params['value_name'] }}" value="{{ $params['value'] }}">
+    @if (empty($params['value']))
+        <div class="inputfile-icon default-icon">
+            {!! iconHtmlLocal('/elfcms/admin/images/icons/upload.svg', svg:true) !!}
+        </div>
+    @elseif ($params['isImage']))
+        <img src="{{ file_path($params['value']) }}" alt="" class="inputfile-icon image-icon">
+    @elseif (!empty($params['icon']))
+        <div class="inputfile-icon svg-icon">
+            {!! iconHtmlLocal($params['icon'], svg:true) !!}
+        </div>
+    @else
+    <div class="inputfile-icon svg-icon">
+        {!! iconHtmlLocal('/elfcms/admin/images/icons/filestorage/none.svg', svg:true) !!}
+    </div>
+    @endif
+</div>
+
+
+
+
+
+
+
+
+{{-- <div class="input-file-button-box" id="{{ $boxId }}">
     <input type="hidden" name="{{ $code }}_path" id="{{ $jsName }}_path" value="{{$value}}">
     <div class="input-file-button">
         <div class="delete-file @if (empty($value)) hidden @endif">&#215;</div>
@@ -28,3 +54,4 @@
         inputFileComponent({{ $jsName }})
     }
 </script>
+ --}}

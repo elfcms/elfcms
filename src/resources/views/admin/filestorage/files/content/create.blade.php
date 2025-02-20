@@ -173,7 +173,7 @@
                         <div class="tag-list-box"></div>
                         <div class="tag-input-box">
                             <input type="text" class="tag-input">
-                            <button type="button" class="default-btn tag-add-button">Add</button>
+                            <button type="button" class="button tag-add-button">Add</button>
                             <div class="tag-prompt-list"></div>
                         </div>
                     </div>
@@ -181,7 +181,7 @@
             </div> --}}
         </div>
         <div class="button-box single-box">
-            <button type="submit" class="default-btn submit-button">{{ __('elfcms::default.submit') }}</button>
+            <button type="submit" class="button submit-button">{{ __('elfcms::default.submit') }}</button>
         </div>
     </form>
 </div>

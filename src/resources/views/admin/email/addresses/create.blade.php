@@ -42,8 +42,8 @@
             </div>
 
             <div class="button-box single-box">
-                <button type="submit" class="default-btn success-button">{{ __('elfcms::default.submit') }}</button>
-                <a href="{{ route('admin.email.addresses') }}" class="default-btn">{{ __('elfcms::default.cancel') }}</a>
+                <button type="submit" class="button success-button">{{ __('elfcms::default.submit') }}</button>
+                <a href="{{ route('admin.email.addresses') }}" class="button">{{ __('elfcms::default.cancel') }}</a>
             </div>
         </form>
     </div>

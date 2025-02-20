@@ -32,14 +32,16 @@ class SettingController extends \App\Http\Controllers\Controller
         foreach ($settings as $item => $setting) {
             $settings[$item]['params'] = json_decode($setting['params'], true);
             if (Lang::has('elfcms::default.' . $setting['code'])) {
-                $settings[$item]['name'] = __('elfcms::default.' . $setting['code']);
+                $settings[$item]['title'] = __('elfcms::default.' . $setting['code']);
+                $settings[$item]['name'] = $setting['code'];
             }
         }
         $contacts = ElfcmsContact::all()->toArray();
         foreach ($contacts as $item => $contact) {
             $contact[$item]['params'] = json_decode($contact['params'], true);
             if (Lang::has('elfcms::default.' . $contact['code'])) {
-                $contact[$item]['name'] = __('elfcms::contact.' . $setting['code']);
+                $contact[$item]['title'] = __('elfcms::contact.' . $setting['code']);
+                $contact[$item]['name'] = $setting['code'];
             }
         }
         $locales = Locales::all();

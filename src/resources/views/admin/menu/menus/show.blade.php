@@ -15,7 +15,7 @@
     </div>
     @endif
     <div class="table-search-box">
-        <a href="{{ route('admin.menus.items.create',$menu) }}" class="default-btn success-button icon-text-button light-icon plus-button">{{__('elfcms::default.create_menu_item')}}</a>
+        <a href="{{ route('admin.menus.items.create',$menu) }}" class="button success-button icon-text-button light-icon plus-button">{{__('elfcms::default.create_menu_item')}}</a>
     </div>
     <div class="menu-items" data-menu="{{ $menu->id }}">
         @foreach ($menu->topitems as $item)
@@ -38,14 +38,14 @@
                         buttons:[
                             {
                                 title:'{{ __('elfcms::default.delete') }}',
-                                class:'default-btn delete-button',
+                                class:'button delete-button',
                                 callback: function(){
                                     self.submit()
                                 }
                             },
                             {
                                 title:'{{ __('elfcms::default.cancel') }}',
-                                class:'default-btn cancel-button',
+                                class:'button cancel-button',
                                 callback:'close'
                             }
                         ],

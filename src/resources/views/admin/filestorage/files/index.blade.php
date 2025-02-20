@@ -29,7 +29,7 @@
         {{-- <div class="filestorage-addtitional-text">{{ $filestorage->addtitional_text }}</div> --}}
     </div>
     <div class="dallery-edit-button-box">
-        <a href="{{ route('admin.filestorage.edit',$filestorage) }}" class="default-btn big-square-button edit-button">
+        <a href="{{ route('admin.filestorage.edit',$filestorage) }}" class="button big-square-button edit-button">
             {{__('elfcms::default.edit')}}
         </a>
     </div>

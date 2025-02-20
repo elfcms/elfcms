@@ -32,7 +32,7 @@
             <div class="menu-not-item"></div>
         </div>
         <div class="menu-item-buttons">
-            <a href="{{ route('admin.menus.items.create',['menu'=>$menu, 'item'=>$item->id]) }}" class="default-btn success-button icon-text-button light-icon plus-button"></a>
+            <a href="{{ route('admin.menus.items.create',['menu'=>$menu, 'item'=>$item->id]) }}" class="button success-button icon-text-button light-icon plus-button"></a>
         </div>
     </div>
 </div>

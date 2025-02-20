@@ -47,7 +47,7 @@
                             @method('DELETE')
                             <input type="hidden" name="id" value="{{ $result->id }}">
                             <input type="hidden" name="name" value="{{ $result->name }}">
-                            <button type="submit" class="default-btn delete-button">{{ __('elfcms::default.delete') }}</button>
+                            <button type="submit" class="button delete-button">{{ __('elfcms::default.delete') }}</button>
                         </form>
                     </td>
                 </tr>
@@ -72,14 +72,14 @@
                         buttons:[
                             {
                                 title:'{{ __('elfcms::default.delete') }}',
-                                class:'default-btn delete-button',
+                                class:'button delete-button',
                                 callback: function(){
                                     self.submit()
                                 }
                             },
                             {
                                 title:'{{ __('elfcms::default.cancel') }}',
-                                class:'default-btn cancel-button',
+                                class:'button cancel-button',
                                 callback:'close'
                             }
                         ],

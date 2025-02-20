@@ -2,7 +2,7 @@
 
 @section('menupage-content')
 <div class="table-search-box">
-    <a href="{{ route('admin.menus.items.create',$menu) }}" class="default-btn success-button icon-text-button light-icon plus-button">{{__('elfcms::default.create_menu_item')}}</a>
+    <a href="{{ route('admin.menus.items.create',$menu) }}" class="button success-button icon-text-button light-icon plus-button">{{__('elfcms::default.create_menu_item')}}</a>
 </div>
     @if (Session::has('menuitemdeleted'))
     <div class="alert alert-alternate">{{ Session::get('menuitemdeleted') }}</div>
@@ -75,15 +75,15 @@
                     <td class="button-column non-text-buttons">
                         <form action="{{ route('admin.menus.items.create',$menu) }}" method="GET">
                             <input type="hidden" name="parent_id" value="{{ $item->id }}">
-                            <button type="submit" class="default-btn submit-button create-button" title="{{ __('elfcms::default.add_subitem') }}"></button>
+                            <button type="submit" class="button submit-button create-button" title="{{ __('elfcms::default.add_subitem') }}"></button>
                         </form>
-                        <a href="{{ route('admin.menus.items.edit',['item'=>$item->id,'menu'=>$menu]) }}" class="default-btn edit-button" title="{{ __('elfcms::default.edit') }}"></a>
+                        <a href="{{ route('admin.menus.items.edit',['item'=>$item->id,'menu'=>$menu]) }}" class="button edit-button" title="{{ __('elfcms::default.edit') }}"></a>
                         <form action="{{ route('admin.menus.items.destroy',['item'=>$item->id,'menu'=>$menu]) }}" method="POST" data-submit="check">
                             @csrf
                             @method('DELETE')
                             <input type="hidden" name="id" value="{{ $item->id }}">
                             <input type="hidden" name="name" value="{{ $item->name }}">
-                            <button type="submit" class="default-btn delete-button" title="{{ __('elfcms::default.delete') }}"></button>
+                            <button type="submit" class="button delete-button" title="{{ __('elfcms::default.delete') }}"></button>
                         </form>
                     </td>
                 </tr>
@@ -107,14 +107,14 @@
                         buttons:[
                             {
                                 title:'{{ __('elfcms::default.delete') }}',
-                                class:'default-btn delete-button',
+                                class:'button delete-button',
                                 callback: function(){
                                     self.submit()
                                 }
                             },
                             {
                                 title:'{{ __('elfcms::default.cancel') }}',
-                                class:'default-btn cancel-button',
+                                class:'button cancel-button',
                                 callback:'close'
                             }
                         ],

@@ -56,15 +56,15 @@
                     <td class="button-column non-text-buttons">
                         <form action="{{ route('admin.form.fields.create') }}" method="GET">
                             <input type="hidden" name="group_id" value="{{ $group->id }}">
-                            <button type="submit" class="default-btn submit-button create-button" title="{{ __('elfcms::default.add_field') }}"></button>
+                            <button type="submit" class="button submit-button create-button" title="{{ __('elfcms::default.add_field') }}"></button>
                         </form>
-                        <a href="{{ route('admin.form.groups.edit',$group->id) }}" class="default-btn edit-button" title="{{ __('elfcms::default.edit') }}"></a>
+                        <a href="{{ route('admin.form.groups.edit',$group->id) }}" class="button edit-button" title="{{ __('elfcms::default.edit') }}"></a>
                         <form action="{{ route('admin.form.groups.destroy',$group->id) }}" method="POST" data-submit="check">
                             @csrf
                             @method('DELETE')
                             <input type="hidden" name="id" value="{{ $group->id }}">
                             <input type="hidden" name="name" value="{{ $group->name }}">
-                            <button type="submit" class="default-btn delete-button" title="{{ __('elfcms::default.delete') }}"></button>
+                            <button type="submit" class="button delete-button" title="{{ __('elfcms::default.delete') }}"></button>
                         </form>
                     </td>
                 </tr>
@@ -89,14 +89,14 @@
                         buttons:[
                             {
                                 title:'{{ __('elfcms::default.delete') }}',
-                                class:'default-btn delete-button',
+                                class:'button delete-button',
                                 callback: function(){
                                     self.submit()
                                 }
                             },
                             {
                                 title:'{{ __('elfcms::default.cancel') }}',
-                                class:'default-btn cancel-button',
+                                class:'button cancel-button',
                                 callback:'close'
                             }
                         ],

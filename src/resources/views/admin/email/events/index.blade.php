@@ -3,7 +3,7 @@
 @section('emailpage-content')
     <div class="table-search-box">
         <a href="{{ route('admin.email.events.create') }}"
-            class="default-btn success-button icon-text-button light-icon plus-button">{{ __('elfcms::default.create_email_event') }}</a>
+            class="button success-button icon-text-button light-icon plus-button">{{ __('elfcms::default.create_email_event') }}</a>
     </div>
     @if (Session::has('fielddeleted'))
     <div class="alert alert-alternate">{{ Session::get('fielddeleted') }}</div>
@@ -74,17 +74,17 @@
                     <td>{{ $event->created_at }}</td>
                     <td>{{ $event->updated_at }}</td>
                     <td class="button-column non-text-buttons">
-                        <a href="{{ route('admin.email.events.edit',$event->id) }}" class="default-btn edit-button" title="{{ __('elfcms::default.edit') }}"></a>
+                        <a href="{{ route('admin.email.events.edit',$event->id) }}" class="button edit-button" title="{{ __('elfcms::default.edit') }}"></a>
                         @if(!in_array($event->code,$protected))
                         <form action="{{ route('admin.email.events.destroy',$event->id) }}" method="POST" data-submit="check">
                             @csrf
                             @method('DELETE')
                             <input type="hidden" name="id" value="{{ $event->id }}">
                             <input type="hidden" name="name" value="{{ $event->name }}">
-                            <button type="submit" class="default-btn delete-button" title="{{ __('elfcms::default.delete') }}"></button>
+                            <button type="submit" class="button delete-button" title="{{ __('elfcms::default.delete') }}"></button>
                         </form>
                         @else
-                        <button class="default-btn delete-button" title="{{ __('elfcms::default.delete') }}" disabled></button>
+                        <button class="button delete-button" title="{{ __('elfcms::default.delete') }}" disabled></button>
                         @endif
                     </td>
                 </tr>
@@ -108,14 +108,14 @@
                         buttons:[
                             {
                                 title:'{{ __('elfcms::default.delete') }}',
-                                class:'default-btn delete-button',
+                                class:'button delete-button',
                                 callback: function(){
                                     self.submit()
                                 }
                             },
                             {
                                 title:'{{ __('elfcms::default.cancel') }}',
-                                class:'default-btn cancel-button',
+                                class:'button cancel-button',
                                 callback:'close'
                             }
                         ],

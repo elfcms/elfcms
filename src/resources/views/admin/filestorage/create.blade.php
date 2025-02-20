@@ -109,13 +109,13 @@
                 </div>
             </div>
             <div class="button-box single-box">
-                <button type="submit" class="default-btn success-button">{{ __('elfcms::default.submit') }}</button>
+                <button type="submit" class="button success-button">{{ __('elfcms::default.submit') }}</button>
                 <button type="submit" name="submit" value="save_and_open"
-                    class="default-btn alternate-button">{{ __('elfcms::default.save_and_open') }}</button>
+                    class="button alternate-button">{{ __('elfcms::default.save_and_open') }}</button>
                 <button type="submit" name="submit" value="save_and_close"
-                    class="default-btn alternate-button">{{ __('elfcms::default.save_and_close') }}</button>
+                    class="button alternate-button">{{ __('elfcms::default.save_and_close') }}</button>
                 <a href="{{ route('admin.filestorage.index') }}"
-                    class="default-btn">{{ __('elfcms::default.cancel') }}</a>
+                    class="button">{{ __('elfcms::default.cancel') }}</a>
             </div>
         </form>
     </div>

@@ -8,7 +8,7 @@
         @endforeach
     </div>
     <div class="filestorage-files-buttons">
-        <button class="default-btn submit-button" disabled>{{ __('elfcms::default.save') }}</button>
+        <button class="button submit-button" disabled>{{ __('elfcms::default.save') }}</button>
     </div>
 </form>
 
@@ -45,7 +45,7 @@ if (submitItems) {
                 buttons:[
                     {
                         title:'{{__("elfcms::default.delete")}}',
-                        class:'default-btn delete-button',
+                        class:'button delete-button',
                         callback: [
                             function(){
                                 fileListSave (form);
@@ -55,7 +55,7 @@ if (submitItems) {
                     },
                     {
                         title:'{{__("elfcms::default.cancel")}}',
-                        class:'default-btn cancel-button',
+                        class:'button cancel-button',
                         callback:'close'
                     }
                 ],
@@ -126,7 +126,7 @@ function fileListSave(form) {
                     buttons:[
                         {
                             title:'OK',
-                            class:'default-btn submit-button',
+                            class:'button submit-button',
                             callback:'close'
                         }
                     ],
@@ -141,7 +141,7 @@ function fileListSave(form) {
                         buttons:[
                             {
                                 title:'OK',
-                                class:'default-btn submit-button',
+                                class:'button submit-button',
                                 callback:'close'
                             }
                         ],
@@ -176,12 +176,12 @@ function filesUpload (files) {
             buttons:[
                 {
                     title:'{{__("elfcms::default.cancel")}}',
-                    class:'default-btn',
+                    class:'button',
                     callback:'close'
                 },
                 {
                     title:'OK',
-                    class:'default-btn alternate-button',
+                    class:'button alternate-button',
                     callback: [
                         function(){
                             for(key in files) {
@@ -275,7 +275,7 @@ function fileUpload (file, key = null) {
                 buttons:[
                     {
                         title:'OK',
-                        class:'default-btn cancel-button',
+                        class:'button cancel-button',
                         callback:[
                             function(){
                                 fileItem.remove();

@@ -2,7 +2,7 @@
 
 @section('menupage-content')
 <div class="table-search-box">
-    <a href="{{ route('admin.menus.create') }}" class="default-btn success-button icon-text-button light-icon plus-button">{{__('elfcms::default.create_menu')}}</a>
+    <a href="{{ route('admin.menus.create') }}" class="button success-button icon-text-button light-icon plus-button">{{__('elfcms::default.create_menu')}}</a>
 </div>
     @if (Session::has('success'))
     <div class="alert alert-alternate">{{ Session::get('success') }}</div>
@@ -61,14 +61,14 @@
                     <td>{{ $menu->created_at }}</td>
                     <td>{{ $menu->updated_at }}</td>
                     <td class="button-column non-text-buttons">
-                        <a href="{{ route('admin.menus.show',$menu) }}" class="default-btn content-button" title="{{ __('elfcms::default.edit_menu_contents') }}"></a>
-                        <a href="{{ route('admin.menus.edit',$menu->id) }}" class="default-btn edit-button" title="{{ __('elfcms::default.edit') }}"></a>
+                        <a href="{{ route('admin.menus.show',$menu) }}" class="button content-button" title="{{ __('elfcms::default.edit_menu_contents') }}"></a>
+                        <a href="{{ route('admin.menus.edit',$menu->id) }}" class="button edit-button" title="{{ __('elfcms::default.edit') }}"></a>
                         <form action="{{ route('admin.menus.destroy',$menu->id) }}" method="POST" data-submit="check">
                             @csrf
                             @method('DELETE')
                             <input type="hidden" name="id" value="{{ $menu->id }}">
                             <input type="hidden" name="name" value="{{ $menu->name }}">
-                            <button type="submit" class="default-btn delete-button" title="{{ __('elfcms::default.delete') }}"></button>
+                            <button type="submit" class="button delete-button" title="{{ __('elfcms::default.delete') }}"></button>
                         </form>
                     </td>
                 </tr>
@@ -92,14 +92,14 @@
                         buttons:[
                             {
                                 title:'{{ __('elfcms::default.delete') }}',
-                                class:'default-btn delete-button',
+                                class:'button delete-button',
                                 callback: function(){
                                     self.submit()
                                 }
                             },
                             {
                                 title:'{{ __('elfcms::default.cancel') }}',
-                                class:'default-btn cancel-button',
+                                class:'button cancel-button',
                                 callback:'close'
                             }
                         ],

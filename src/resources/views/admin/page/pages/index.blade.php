@@ -2,7 +2,7 @@
 
 @section('pagepage-content')
 <div class="table-search-box">
-    <a href="{{ route('admin.page.pages.create') }}" class="default-btn success-button icon-text-button light-icon plus-button">{{__('elfcms::default.create_page')}}</a>
+    <a href="{{ route('admin.page.pages.create') }}" class="button success-button icon-text-button light-icon plus-button">{{__('elfcms::default.create_page')}}</a>
 </div>
     @if (Session::has('pagedeleted'))
     <div class="alert alert-alternate">{{ Session::get('pagedeleted') }}</div>
@@ -73,13 +73,13 @@
                     <td>{{ $pageData->created_at }}</td>
                     <td>{{ $pageData->updated_at }}</td>
                     <td class="button-column non-text-buttons">
-                        <a href="{{ route('admin.page.pages.edit',$pageData->id) }}" class="default-btn edit-button" title="{{ __('elfcms::default.edit') }}"></a>
+                        <a href="{{ route('admin.page.pages.edit',$pageData->id) }}" class="button edit-button" title="{{ __('elfcms::default.edit') }}"></a>
                         <form action="{{ route('admin.page.pages.destroy',$pageData->id) }}" method="POST" data-submit="check">
                             @csrf
                             @method('DELETE')
                             <input type="hidden" name="id" value="{{ $pageData->id }}">
                             <input type="hidden" name="name" value="{{ $pageData->name }}">
-                            <button type="submit" class="default-btn delete-button" title="{{ __('elfcms::default.delete') }}"></button>
+                            <button type="submit" class="button delete-button" title="{{ __('elfcms::default.delete') }}"></button>
                         </form>
                     </td>
                 </tr>
@@ -105,14 +105,14 @@
                         buttons:[
                             {
                                 title:'{{ __('elfcms::default.delete') }}',
-                                class:'default-btn delete-button',
+                                class:'button delete-button',
                                 callback: function(){
                                     self.submit()
                                 }
                             },
                             {
                                 title:'{{ __('elfcms::default.cancel') }}',
-                                class:'default-btn cancel-button',
+                                class:'button cancel-button',
                                 callback:'close'
                             }
                         ],

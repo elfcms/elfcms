@@ -3,7 +3,7 @@
 @section('userpage-content')
 
     <div class="table-search-box">
-        <a href="{{ route('admin.user.users.create') }}" class="default-btn success-button icon-text-button light-icon plus-button">{{__('elfcms::default.create_new_user')}}</a>
+        <a href="{{ route('admin.user.users.create') }}" class="button success-button icon-text-button light-icon plus-button">{{__('elfcms::default.create_new_user')}}</a>
         <div class="table-search-result-title">
             @if (!empty($search))
                 {{ __('elfcms::default.search_result_for') }} "{{ $search }}" <a href="{{ route('admin.user.users') }}" title="{{ __('elfcms::default.reset_search') }}">&#215;</a>
@@ -18,7 +18,7 @@
                     <input type="text" name="search" id="search" value="{{ $search ?? '' }}" placeholder="">
                 </div>
                 <div class="non-text-buttons">
-                    <button type="submit" class="default-btn search-button"></button>
+                    <button type="submit" class="button search-button"></button>
                 </div>
             </div>
         </form>
@@ -85,14 +85,14 @@
                     @endif
                     </td>
                     <td class="button-column non-text-buttons">
-                        <a href="{{ route('admin.user.users.edit',$user->id) }}" class="default-btn edit-button" title="{{ __('elfcms::default.edit') }}"></a>
+                        <a href="{{ route('admin.user.users.edit',$user->id) }}" class="button edit-button" title="{{ __('elfcms::default.edit') }}"></a>
                         <form action="{{ route('admin.user.users.update',$user->id) }}" method="POST">
                             @csrf
                             @method('PUT')
                             <input type="hidden" name="id" id="id" value="{{ $user->id }}">
                             <input type="hidden" name="is_confirmed" id="is_confirmed" value="{{ (int)!(bool)$user->is_confirmed }}">
                             <input type="hidden" name="notedit" value="1">
-                            <button type="submit" @if ($user->is_confirmed == 1) class="default-btn deactivate-button" title="{{__('elfcms::default.deactivate') }}" @else class="default-btn activate-button" title="{{ __('elfcms::default.activate') }}" @endif>
+                            <button type="submit" @if ($user->is_confirmed == 1) class="button deactivate-button" title="{{__('elfcms::default.deactivate') }}" @else class="button activate-button" title="{{ __('elfcms::default.activate') }}" @endif>
 
                             </button>
                         </form>
@@ -101,7 +101,7 @@
                             @method('DELETE')
                             <input type="hidden" name="id" value="{{ $user->id }}">
                             <input type="hidden" name="email" value="{{ $user->email }}">
-                            <button type="submit" class="default-btn delete-button" title="{{ __('elfcms::default.delete') }}"></button>
+                            <button type="submit" class="button delete-button" title="{{ __('elfcms::default.delete') }}"></button>
                         </form>
                         <div class="contextmenu-content-box">
                             <a href="{{ route('admin.user.users.edit',$user->id) }}" class="contextmenu-item">{{ __('elfcms::default.edit') }}</a>
@@ -156,14 +156,14 @@
                         buttons:[
                             {
                                 title:'{{ __('elfcms::default.delete') }}',
-                                class:'default-btn delete-button',
+                                class:'button delete-button',
                                 callback: function(){
                                     self.submit()
                                 }
                             },
                             {
                                 title:'{{ __('elfcms::default.cancel') }}',
-                                class:'default-btn cancel-button',
+                                class:'button cancel-button',
                                 callback:'close'
                             }
                         ],
@@ -187,14 +187,14 @@
                             buttons:[
                                 {
                                     title:'{{ __('elfcms::default.delete') }}',
-                                    class:'default-btn delete-button',
+                                    class:'button delete-button',
                                     callback: function(){
                                         self.submit()
                                     }
                                 },
                                 {
                                     title:'{{ __('elfcms::default.cancel') }}',
-                                    class:'default-btn cancel-button',
+                                    class:'button cancel-button',
                                     callback:'close'
                                 }
                             ],

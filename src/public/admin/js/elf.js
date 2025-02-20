@@ -725,7 +725,7 @@ function eventParamBoxInit(addSelector = "#addparamline", line = 0) {
                     <input type="text" name="params_new[${paramNextLine}][value]" id="param_new_value_${paramNextLine}" data-param-value>
                 </div>
                 <div class="params-table-string">
-                    <button type="button" class="default-btn" onclick="eventParamDelete(${paramNextLine})">&#215;</button>
+                    <button type="button" class="button" onclick="eventParamDelete(${paramNextLine})">&#215;</button>
                 </div>
             </div>
             `;
@@ -767,7 +767,7 @@ function menuAttrBoxInit(addSelector = "#addattributeline", line = 0) {
                     <input type="text" name="attributes_new[${attributeNextLine}][value]" id="attribute_new_value_${attributeNextLine}" data-attribute-value>
                 </div>
                 <div class="attributes-table-string">
-                    <button type="button" class="default-btn" onclick="menuAttrDelete(${attributeNextLine})">&#215;</button>
+                    <button type="button" class="button" onclick="menuAttrDelete(${attributeNextLine})">&#215;</button>
                 </div>
             </div>
             `;
@@ -920,14 +920,14 @@ function deleteConfirm(e) {
         buttons: [
             {
                 title: elfLang.delete,
-                class: "default-btn delete-button",
+                class: "button delete-button",
                 callback: function () {
                     self.submit();
                 },
             },
             {
                 title: elfLang.cancel,
-                class: "default-btn cancel-button",
+                class: "button cancel-button",
                 callback: "close",
             },
         ],

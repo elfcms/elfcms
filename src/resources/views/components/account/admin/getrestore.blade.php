@@ -20,7 +20,7 @@
         </div>
     </div>
     <div class="button-box single-box">
-        <button type="submit" class="default-btn submit-button">{{ __('elfcms::default.restore_password') }}</button>
+        <button type="submit" class="button submit-button">{{ __('elfcms::default.restore_password') }}</button>
     </div>
     @endif
 </form>

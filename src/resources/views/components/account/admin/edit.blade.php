@@ -71,7 +71,7 @@
     </div>
 
     <div>
-        <button type="submit" class="default-btn submit-button">{{ __('elfcms::default.save') }}</button>
+        <button type="submit" class="button submit-button">{{ __('elfcms::default.save') }}</button>
     </div>
 </form>
 <h2>{{ __('elfcms::default.change_password') }}</h2>
@@ -99,7 +99,7 @@
         </div>
     </div>
     <div>
-        <button type="submit" class="default-btn submit-button">{{ __('elfcms::default.change_password') }}</button>
+        <button type="submit" class="button submit-button">{{ __('elfcms::default.change_password') }}</button>
     </div>
 </form>
 <script>
