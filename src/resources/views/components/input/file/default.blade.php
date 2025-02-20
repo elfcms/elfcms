@@ -15,6 +15,7 @@
         {!! iconHtmlLocal('/elfcms/admin/images/icons/filestorage/none.svg', svg:true) !!}
     </div>
     @endif
+    <input type="file" name="{{ $params['value_name'] }}">
 </div>
 
 
