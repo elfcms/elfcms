@@ -36,7 +36,7 @@ class AdminController extends Controller
                 foreach ($data['submenu'] as $submenu) {
                     if ($submenu['route'] == 'admin.user.users') {
                         $usersCount = User::count();
-                        $inactiveUserCount = User::where('is_confirmed','<>',1)->count();
+                        $inactiveUserCount = User::where('is_confirmed', '<>', 1)->count();
                         $subdata['users'] = [
                             'title' => __('elfcms::default.users'),
                             'value' => $usersCount . ' (' . $inactiveUserCount . ' ' . __('elfcms::default.inactive') . ')'
@@ -52,10 +52,10 @@ class AdminController extends Controller
                 }
             }
 
-            if ($data['route'] == 'admin.settings.index')  {
+            if ($data['route'] == 'admin.settings.index') {
                 $text = __('elfcms::default.basic_settings_for_your_site');
             }
-            if ($data['route'] == 'admin.page.pages')  {
+            if ($data['route'] == 'admin.page.pages') {
                 $text = __('elfcms::default.static_pages_of_your_site');
             }
 
@@ -65,19 +65,18 @@ class AdminController extends Controller
             $menuData[$key]['title'] = $langTitle == $data['lang_title'] ? $data['title'] : $langTitle;
         }
 
-        return view('elfcms::admin.index',[
+        return view('elfcms::admin.index', [
             'page' => [
                 'title' => __('elfcms::default.administration_panel'),
                 'current' => url()->current(),
             ],
             'menuData' => $menuData,
         ]);
-
     }
 
     public function users()
     {
-        return view('elfcms::admin.user.users.index',[
+        return view('elfcms::admin.user.users.index', [
             'page' => [
                 'title' => 'Users',
                 'current' => url()->current(),
@@ -88,7 +87,7 @@ class AdminController extends Controller
 
     public function settings()
     {
-        return view('elfcms::admin.settings.index',[
+        return view('elfcms::admin.settings.index', [
             'page' => [
                 'title' => 'Settings',
                 'current' => url()->current(),
@@ -98,7 +97,7 @@ class AdminController extends Controller
 
     public function form()
     {
-        return view('elfcms::admin.forms.index',[
+        return view('elfcms::admin.forms.index', [
             'page' => [
                 'title' => 'Forms',
                 'current' => url()->current(),
@@ -108,7 +107,7 @@ class AdminController extends Controller
 
     public function email()
     {
-        return view('elfcms::admin.email.index',[
+        return view('elfcms::admin.email.index', [
             'page' => [
                 'title' => 'Email',
                 'current' => url()->current(),
@@ -129,8 +128,18 @@ class AdminController extends Controller
         ]);
     } */
 
-    public function fileIcon($extension) {
+    public function fileIcon($extension)
+    {
         return fsIcon($extension);
     }
 
+    public function license()
+    {
+        return view('elfcms::admin.license.index', [
+            'page' => [
+                'title' => __('elfcms::default.license'),
+                'current' => url()->current(),
+            ]
+        ]);
+    }
 }

@@ -1,0 +1,149 @@
+.notify-box {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-block: 30px;
+    padding-inline: 30px;
+    z-index: 900;
+    font-size: 10px;
+}
+.notify-box:empty {
+    padding-block: 0;
+}
+
+.notify-box.notify-left-box {
+    align-items: flex-start;
+}
+.notify-box.notify-right-box {
+    align-items: flex-end;
+}
+
+.notify {
+    --notify-color: #6cd3ff;
+    --notify-color-light: hsl(from var(--notify-color) h s calc(l + 7));
+    --notify-color-dark: hsl(from var(--notify-color) h s calc(l - 45));
+    --notify-color-middle: hsl(from var(--notify-color) h s calc(l - 5));
+    --notify-close-time: var(--close-time, .5s);
+    position: relative;
+    margin-bottom: 2em;
+    width: clamp(30em, 30vw, 80em);
+    background-color: var(--notify-color);
+    color: var(--notify-color-dark);
+    border-radius: .4em;
+    box-shadow: -0.1em -0.1em 0 0 var(--notify-color-light), 0.1em 0.1em 0 0 var(--notify-color-middle), 0 0 3em rgb(0 0 0 / 30%);
+    overflow: hidden;
+    max-height: 100em;
+    opacity: 1;
+    transition: max-height calc(var(--notify-close-time) * .6) linear calc(var(--notify-close-time) * .4), opacity var(--notify-close-time) linear 0s, margin-bottom var(--notify-close-time) linear 0s;
+}
+
+.notify.closed {
+    max-height: 0;
+    opacity: 0;
+    margin-bottom: 0;
+}
+
+.notify-data {
+    display: flex;
+    justify-content: space-between;
+    gap: 2em;
+    padding: 2em;
+}
+
+.notify-content {
+    flex: 1 0 auto;
+}
+
+.notify-title {
+    font-size: 1.6em;
+    font-weight: bold;
+    margin-bottom: 1em;
+}
+.notify-title:empty {
+    margin-bottom: 0;
+}
+
+.notify-icon {
+    flex: 0 0 4em;
+    width: 4em;
+    height: 4em;
+    background-color: var(--notify-color-dark);
+    -webkit-mask: url("icons/info_i.svg") no-repeat center / contain;
+    mask: url("icons/info_i.svg") no-repeat center / contain;
+}
+
+.notify-text {
+    font-size: 1.3em;
+    line-height: 1.5em;
+}
+
+.notify-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1em;
+    margin-top: 2em;
+}
+.notify-buttons:empty {
+    margin-top: 0;
+}
+
+.notify-buttons button {
+    border: 1px solid var(--notify-color-middle);
+    background-color: var(--notify-color-light);
+    color: var(--notify-color-dark);
+    padding: 0.5em 1em;
+    border-radius: .4em;
+    cursor: pointer;
+}
+
+.notify-buttons button:hover {
+    box-shadow: .1em .1em .4em 0 #00000020;
+}
+
+.notify-close {
+    position: absolute;
+    top: 1em;
+    right: 1em;
+    font-size: 2em;
+    cursor: pointer;
+}
+.notify-close:hover {
+    text-shadow: .1em .1em .2em #00000020;
+}
+
+.notify.notify-error {
+    --notify-color: #ffa3a3;
+
+    .notify-icon {
+        -webkit-mask: url("icons/dangerous.svg") no-repeat center / contain;
+        mask: url("icons/dangerous.svg") no-repeat center / contain;
+    }
+}
+.notify.notify-warning {
+    --notify-color: #ffde72;
+
+    .notify-icon {
+        -webkit-mask: url("icons/warning.svg") no-repeat center / contain;
+        mask: url("icons/warning.svg") no-repeat center / contain;
+    }
+}
+.notify.notify-success {
+    --notify-color: #56ffae;
+
+    .notify-icon {
+        -webkit-mask: url("icons/check_circle.svg") no-repeat center / contain;
+        mask: url("icons/check_circle.svg") no-repeat center / contain;
+    }
+}
+.notify.notify-info {
+    --notify-color: #6cd3ff;
+
+    .notify-icon {
+        -webkit-mask: url("icons/info.svg") no-repeat center / contain;
+        mask: url("icons/info.svg") no-repeat center / contain;
+    }
+}

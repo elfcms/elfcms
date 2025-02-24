@@ -1,5 +1,5 @@
 <header id="header">
-    <a href="/" class="logobox">
+    <a href="/" class="logobox" target="_blank">
         <div class="logoimg">
             @isset($elfSiteSettings['logo'])
                 <img src="{{ asset(file_path($elfSiteSettings['logo'])) }}" alt="logo">

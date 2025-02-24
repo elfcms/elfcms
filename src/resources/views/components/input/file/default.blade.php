@@ -1,26 +1,30 @@
 <div class="inputfile" id="{{ $boxId }}">
+    <div @class(['inputfile-buttons', 'hidden' => empty($params['value'])])>
+        <div class="inputfile-delete"></div>
+        @if ($params['download'] && !empty($params['value']))
+            <a href="{{ file_path($params['value']) }}" class="inputfile-download" download
+                title="{{ __('elfcms::default.download') }}">{!! iconHtmlLocal('/elfcms/admin/images/icons/download.svg', svg: true) !!}</a>
+        @endif
+    </div>
     <input type="hidden" name="{{ $params['value_name'] }}" value="{{ $params['value'] }}">
     @if (empty($params['value']))
         <div class="inputfile-icon default-icon">
-            {!! iconHtmlLocal('/elfcms/admin/images/icons/upload.svg', svg:true) !!}
+            {!! iconHtmlLocal('/elfcms/admin/images/icons/upload.svg', svg: true) !!}
         </div>
-    @elseif ($params['isImage']))
+    @elseif ($params['isImage'])
         <img src="{{ file_path($params['value']) }}" alt="" class="inputfile-icon image-icon">
     @elseif (!empty($params['icon']))
         <div class="inputfile-icon svg-icon">
-            {!! iconHtmlLocal($params['icon'], svg:true) !!}
+            {!! iconHtmlLocal($params['icon'], svg: true) !!}
         </div>
     @else
-    <div class="inputfile-icon svg-icon">
-        {!! iconHtmlLocal('/elfcms/admin/images/icons/filestorage/none.svg', svg:true) !!}
-    </div>
+        <div class="inputfile-icon svg-icon">
+            {!! iconHtmlLocal('/elfcms/admin/images/icons/filestorage/none.svg', svg: true) !!}
+        </div>
     @endif
-    <input type="file" name="{{ $params['value_name'] }}">
+    <div class="inputfile-title">{{ $params['file_name'] }}</div>
+    <input type="file" name="{{ $params['name'] }}" accept="{{ $params['accept'] ?? '*/*' }}">
 </div>
-
-
-
-
 
 
 

@@ -212,6 +212,7 @@ class ElfcmsModuleProvider extends ServiceProvider
         Blade::component('elfcms-account-setrestore', \Elfcms\Elfcms\View\Components\Account\SetRestore::class);
 
         Blade::component('elf-input-file', \Elfcms\Elfcms\View\Components\Input\File::class);
+        Blade::component('elf-notify', \Elfcms\Elfcms\View\Components\Notify::class);
 
         //Livewire::component('admin-image-upload', AdminImageUpload::class);
     }

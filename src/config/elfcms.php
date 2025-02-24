@@ -22,10 +22,11 @@ return [
     |
     */
 
+    'module_name' => 'elfcms',
+    'module_title' => 'Basic',
     'version' => '3.0',
-    'is_beta' => false,
-    'is_alpha' => false,
-    'is_dev' => true,
+    'release_status' => 'dev',
+    'release_date' => date('Y-m-d'),
 
     /*
     |--------------------------------------------------------------------------
@@ -361,6 +362,15 @@ return [
             "icon" => "/elfcms/admin/images/icons/stats.svg",
             "color" => "var(--red-color)",
             "position" => 100,
+        ],
+        [
+            "title" => "System",
+            "lang_title" => "elfcms::default.system",
+            "route" => "admin.system.index",
+            "parent_route" => "admin.system.index",
+            "icon" => "/elfcms/admin/images/logo/logo-outline-color-let.svg",
+            "color" => "var(--text-color-default)",
+            "position" => 110,
         ]
     ],
 
@@ -450,6 +460,12 @@ return [
             "title" => "Statistics",
             "lang_title" => "elfcms::default.statistics",
             "route" => "admin.statistics",
+            "actions" => ["read"],
+        ],
+        [
+            "title" => "System",
+            "lang_title" => "elfcms::default.system",
+            "route" => "admin.system",
             "actions" => ["read"],
         ]
     ],

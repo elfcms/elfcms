@@ -220,6 +220,14 @@ Route::group(['middleware' => ['web', 'locales', 'cookie']], function () use ($a
             Route::get($adminPath . '/statistics', [Elfcms\Elfcms\Http\Controllers\VisitStatisticController::class, 'index'])->name('index');
         });
 
+        Route::name('system.')->group(function () use ($adminPath) {
+            Route::get($adminPath . '/system', [Elfcms\Elfcms\Http\Controllers\SystemController::class, 'index'])->name('index');
+        });
+
+        Route::name('license.')->group(function () use ($adminPath) {
+            Route::get($adminPath . '/license', [Elfcms\Elfcms\Http\Controllers\AdminController::class, 'license'])->name('index');
+        });
+
 
         Route::name('ajax.')->group(function () {
 

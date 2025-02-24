@@ -3,20 +3,18 @@
 @section('pagecontent')
 
     <div class="big-container">
-        @if (Session::has('settingedited'))
-            <div class="alert alert-success">{{ Session::get('settingedited') }}</div>
-        @endif
-        @if (Session::has('settingcreated  '))
-            <div class="alert alert-success">{{ Session::get('settingcreated') }}</div>
+        @if (Session::has('success'))
+            <x-elf-notify type="success" title="{{ __('elfcms::default.success') }}" text="{{ Session::get('success') }}" />
         @endif
         @if ($errors->any())
-            <div class="alert alert-danger">
+            {{-- <div class="alert alert-danger">
                 <ul class="errors-list">
                     @foreach ($errors->all() as $error)
                         <li>{{ $error }}</li>
                     @endforeach
                 </ul>
-            </div>
+            </div> --}}
+            <x-elf-notify type="error" title="{{ __('elfcms::default.error') }}" text="{!! '<ul><li>' . implode('</li><li>',$errors->all()) . '</li></ul>' !!}" />
         @endif
 
         <div class="item-form">
@@ -125,7 +123,7 @@
                                 </label>
                                 <div class="input-wrapper">
                                     {{-- @dd($setting) --}}
-                                    <x-elf-input-file :params=$setting />
+                                    <x-elf-input-file :params="$setting" :download="true" />
                                 </div>
                             </div>
                         @elseif ($setting['code'] == 'site_locale')
@@ -280,7 +278,8 @@
                     @endforeach
                 </div>
                 <div class="button-box single-box">
-                    <button type="submit" class="button color-button green-button">{{ __('elfcms::default.submit') }}</button>
+                    <button type="submit"
+                        class="button color-button green-button">{{ __('elfcms::default.submit') }}</button>
                 </div>
             </form>
         </div>

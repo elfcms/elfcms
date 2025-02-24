@@ -13,7 +13,8 @@
         <link rel="stylesheet" href="{{ asset('elfcms/admin/fonts/afacad/afacad.css') }}">
         <link rel="stylesheet" href="{{ asset('elfcms/admin/fonts/teachers/teachers.css') }}">
         <link rel="stylesheet" href="{{ asset('elfcms/admin/fonts/inter/inter.css') }}">
-        <link href="{{ asset('elfcms/admin/css/gnommy.min.css') }}" rel="stylesheet">
+        <link rel="stylesheet" href="{{ asset('elfcms/admin/css/gnommy.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('elfcms/admin/notify/notify.css') }}">
         @foreach ($admin_styles as $style)
             <link rel="stylesheet" href="{{ asset($style) }}">
         @endforeach
@@ -22,6 +23,7 @@
     @push('scripts')
         <script src="/js/system.js"></script>
         <script src="{{ asset('elfcms/admin/js/gnommy.js') }}"></script>
+        <script src="{{ asset('elfcms/admin/notify/notify.js') }}"></script>
         @foreach ($admin_scripts as $script)
             <script src="{{ asset($script) }}"></script>
         @endforeach

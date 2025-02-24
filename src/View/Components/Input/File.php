@@ -31,6 +31,14 @@ class File extends Component
         $params['extension'] = empty($params['value']) ? null : fsExtension($params['value']);
         $params['icon'] = empty($params['extension']) ? null : fsIcon($params['extension']);
         $params['isImage'] = in_array(strtolower($params['extension']),['jpg','jpeg','gif','png','bmp','webp','svg']);
+        if (empty($params['file_name'])) {
+            if (!empty($params['value'])) {
+                $params['file_name'] = basename($params['value']);
+            }
+            else {
+                $params['file_name'] = __('elfcms::default.choose_file');
+            }
+        }
         $this->params = $params;
         $this->boxId = uniqid();
         $this->template = $template ?? 'default';
