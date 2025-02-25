@@ -22,7 +22,7 @@
                     <p>{{ __('elfcms::default.developed_by_mk') }}</p>
                     <p>&copy; 2022-{{ date('Y') }}</p>
                     <p>
-                        <a href="{{ route('admin.license.index') }}"></a>
+                        <a href="{{ route('admin.system.license') }}">{{ __('elfcms::default.license_MIT') }}</a>
                     </p>
                     <p>
                         <a href="https://github.com/elfcms/elfcms" target="_blank">GitHub</a>

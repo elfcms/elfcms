@@ -1,6 +1,6 @@
 @extends('elfcms::admin.layouts.users')
 
-@section('userpage-content')
+@section('pagecontent')
 
     <div class="table-search-box">
         <a href="{{ route('admin.user.users.create') }}" class="button success-button icon-text-button light-icon plus-button">{{__('elfcms::default.create_new_user')}}</a>

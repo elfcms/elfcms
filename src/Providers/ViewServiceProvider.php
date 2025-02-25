@@ -2,12 +2,14 @@
 
 namespace Elfcms\Elfcms\Providers;
 
+use Elfcms\Elfcms\Aux\Admin\Menu;
 use Elfcms\Elfcms\Models\Setting;
 use Elfcms\Elfcms\View\Composers\EmailEventComposer;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Support\Str;
 
 class ViewServiceProvider extends ServiceProvider
 {
@@ -32,8 +34,25 @@ class ViewServiceProvider extends ServiceProvider
             if (Schema::hasTable('elfcms_settings')) {
 
                 View::composer('*::admin.*', function($view) {
-                    $adminPath = config('elfcms.elfcms.admin_path') ?? '/admin';
                     $configs = config('elfcms');
+                    //$menu = Menu::getByRoute($configs);
+                    //dd([$menu,Route::currentRouteName()]);
+                    $pageConfig = null;
+                    if (!empty($configs)) {
+                        foreach ($configs as $package => $config) {
+                            if (!empty($config['menu'])) {
+                                foreach ($config['menu'] as $item) {
+                                    if (empty($item['parent_route'])) {
+                                        $item['parent_route'] = $item['route'];
+                                    }
+                                    if (Str::startsWith(Route::currentRouteName(),$item['parent_route'])) {
+                                        $pageConfig = $item;
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    $adminPath = $config['elfcms']['admin_path'] ?? '/admin';
                     $vendorPath = 'elfcms/admin';
                     $cssPath = '/css/style.css';
                     $jsPath = '/js/elf.js';
@@ -57,7 +76,8 @@ class ViewServiceProvider extends ServiceProvider
                     }
                     $view->with('admin_styles',$styles)
                         ->with('admin_scripts',$scripts)
-                        ->with('adminPath',$adminPath);
+                        ->with('adminPath',$adminPath)
+                        ->with('pageConfig',$pageConfig);
                 });
                 View::composer('*layouts*.main', function($view) {
                     $view->with('elfSiteSettings',Setting::values());

@@ -34,6 +34,28 @@ class Menu
         return $menu;
     }
 
+    public static function getByRoute($configs = [])
+    {
+        $menu = [];
+        if (empty($configs)) {
+            $configs = config('elfcms');
+        }
+        if (!empty($configs)) {
+            foreach ($configs as $package => $config) {
+                if (!empty($config['menu'])) {
+                    foreach ($config['menu'] as $item) {
+                        if (empty($item['parent_route'])) {
+                            $item['parent_route'] = $item['route'];
+                        }
+                        $menu[$item['parent_route']] = $item;
+                    }
+                }
+            }
+        }
+        //ksort($menu);
+        return $menu;
+    }
+
     public static function accessGet()
     {
         $user = Auth::user();

@@ -11,7 +11,7 @@
             <link rel="shortcut icon" href="{{ asset(file_path($elfSiteSettings['icon'])) }}" type="image/x-icon">
         @endisset
         <link rel="stylesheet" href="{{ asset('elfcms/admin/fonts/afacad/afacad.css') }}">
-        <link rel="stylesheet" href="{{ asset('elfcms/admin/fonts/teachers/teachers.css') }}">
+        {{-- <link rel="stylesheet" href="{{ asset('elfcms/admin/fonts/teachers/teachers.css') }}"> --}}
         <link rel="stylesheet" href="{{ asset('elfcms/admin/fonts/inter/inter.css') }}">
         <link rel="stylesheet" href="{{ asset('elfcms/admin/css/gnommy.min.css') }}">
         <link rel="stylesheet" href="{{ asset('elfcms/admin/notify/notify.css') }}">
@@ -34,7 +34,7 @@
     @show
 </head>
 
-<body class="dark-scheme">
+<body class="dark-scheme" style="--default-color:{{ $pageConfig['color'] ?? 'transparent' }}">
     @inject('currentUser', 'Elfcms\Elfcms\Aux\User')
     @inject('menu', 'Elfcms\Elfcms\Aux\Admin\Menu')
     @include('elfcms::admin.layouts.main.header')

@@ -246,6 +246,10 @@ header#header {
     font-size: 1.375rem;
     padding: var(--header-padding);
     font-family: "Afacad", "Inter", sans-serif;
+    max-width: 12rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 #mainmenu ul {
@@ -591,6 +595,7 @@ footer {
     background-color: var(--background-color-light);
     box-shadow: 0 0.0625rem 0 0 var(--shade-color-10),
         0 0.5rem 0.5rem -0.5rem var(--shade-color-20);
+    border-bottom: .125rem solid var(--default-color);
 }
 
 .item-form form {
@@ -865,8 +870,8 @@ footer {
     gap: var(--main-padding-giant);
 }
 .system-top-logo svg {
-    width: 12rem;
-    height: 7rem;
+    width: 15rem;
+    height: auto;
     max-width: 100%;
 }
 .system-top-data p {
@@ -898,6 +903,17 @@ footer {
 }
 .system-top-data a:hover {
     color: var(--blue-color);
+}
+
+.system-license-text {
+    margin: var(--main-padding);
+    padding: var(--main-padding-small);
+    background-color: var(--background-color-dark);
+    background-image: radial-gradient(circle at 10% -20%, var(--background-color-default), var(--background-color-dark));
+    border-radius: var(--bradius-medium);
+    box-shadow: inset 0 0 .5rem 0 var(--shade-color-20);
+    font-size: 1rem;
+    font-family: monospace;
 }
 
 /* Dark theme */
