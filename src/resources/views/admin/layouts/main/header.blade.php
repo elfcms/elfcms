@@ -53,12 +53,48 @@
 
             @endforelse
 
-            <li class="only-mobile">
+            {{-- <li class="only-mobile">
                 <a href="{{ $adminPath }}/logout">
                     <img src="/elfcms/admin/images/icons/logout.png" alt="">
                     <span>Logout</span>
                 </a>
-            </li>
+            </li> --}}
         </ul>
     </nav>
+    <div class="mode-switch-box">
+        <div class="mode-switc-icon mode-switch-dark">
+            {!! iconHtmlLocal('elfcms/admin/images/icons/buttons/dark_mode.svg', width: 24, height: 24, svg: true) !!}
+        </div>
+        <div class="switchbox double-color"
+            style="--switch-color:var(--gold-color);--switch-color-alt:var(--blue-color)">
+            <input type="checkbox" name="color-mode" id="color-mode" value="1" {{-- @if ($setting['value'] && $setting['value'] == 1) checked @endif --}}>
+            <i></i>
+        </div>
+        <div class="mode-switc-icon mode-switch-light">
+            {!! iconHtmlLocal('elfcms/admin/images/icons/buttons/light_mode.svg', width: 24, height: 24, svg: true) !!}
+        </div>
+    </div>
+    @push('footerscript')
+        <script>
+            const modeSwitch = document.querySelector('input[name="color-mode"]');
+            if (modeSwitch) {
+                modeSwitch.addEventListener('change', function() {
+                    if (modeSwitch.checked) {
+                        localStorage.setItem('colorMode', 'light');
+                        document.body.classList.remove('dark-mode');
+                    } else {
+                        document.body.classList.add('dark-mode');
+                        localStorage.setItem('colorMode', 'dark');
+                    }
+                });
+            }
+            if (localStorage.getItem('colorMode') == 'dark') {
+                document.body.classList.add('dark-mode');
+                if (modeSwitch) modeSwitch.checked = false;
+            } else {
+                document.body.classList.remove('dark-mode');
+                if (modeSwitch) modeSwitch.checked = true;
+            }
+        </script>
+    @endpush
 </header>

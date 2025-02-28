@@ -34,7 +34,7 @@
     @show
 </head>
 
-<body class="dark-scheme" style="--default-color:{{ $pageConfig['color'] ?? 'transparent' }}">
+<body class="dark-mode" style="--default-color:{{ $pageConfig['color'] ?? 'transparent' }}">
     @inject('currentUser', 'Elfcms\Elfcms\Aux\User')
     @inject('menu', 'Elfcms\Elfcms\Aux\Admin\Menu')
     @include('elfcms::admin.layouts.main.header')
