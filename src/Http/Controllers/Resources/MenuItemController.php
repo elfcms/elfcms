@@ -105,7 +105,7 @@ class MenuItemController extends Controller
             return redirect(route('admin.menus.show',$menu))->with('success',__('elfcms::default.menu_edited_successfully'));
         }
 
-        return redirect(route('admin.menus.items.edit',['item'=>$item,'menu'=>$menu]))->with('menuitemedited',__('elfcms::default.menu_item_created_successfully'));
+        return redirect(route('admin.menus.items.edit',['item'=>$item,'menu'=>$menu]))->with('success',__('elfcms::default.menu_item_created_successfully'));
     }
 
     /**
@@ -197,6 +197,6 @@ class MenuItemController extends Controller
             return redirect(route('admin.menus.show', $menu))->withErrors(['menuitemdelerror'=>'Error of menu item deleting']);
         }
 
-        return redirect(route('admin.menus.show', $menu))->with('menuitemdeleted','Menu item deleted successfully');
+        return redirect(route('admin.menus.show', $menu))->with('success','Menu item deleted successfully');
     }
 }

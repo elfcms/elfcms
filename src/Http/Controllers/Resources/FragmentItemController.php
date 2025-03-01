@@ -245,6 +245,6 @@ class FragmentItemController extends Controller
             return redirect(route('admin.fragment.items'))->withErrors(['itemdelerror' => __('elfcms::default.error_of_item_deleting')]);
         }
 
-        return redirect(route('admin.fragment.items'))->with('itemdeleted', __('elfcms::default.item_deleted_successfully'));
+        return redirect(route('admin.fragment.items'))->with('success', __('elfcms::default.item_deleted_successfully'));
     }
 }

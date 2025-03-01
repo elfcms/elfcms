@@ -76,7 +76,7 @@ class LoginController extends \App\Http\Controllers\Controller
             if (!$message) {
                 $message = 'A password reset link has been sent to your email account';
             }
-            return redirect(route('admin.getrestore'))->with('requestissended',$message);
+            return redirect(route('admin.getrestore'))->with('success',$message);
         }
 
         return back()->withErrors(['email' => __('elfcms::default.email_not_found')]);
@@ -133,7 +133,7 @@ class LoginController extends \App\Http\Controllers\Controller
         $user->password = $request->password;
         if ($user->save()) {
             $user->setConfirmationToken();
-            return back()->with('passwordchangesuccess',__('elfcms::default.password_changed_successfully'));
+            return back()->with('success',__('elfcms::default.password_changed_successfully'));
         }
         return back()->withErrors([__('elfcms::default.password_change_error')]);
     }

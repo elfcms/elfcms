@@ -159,7 +159,7 @@ class EmailEventController extends Controller
             return json_encode(['result'=>$result,'message'=>$message,'data'=>$data]);
         }
 
-        return redirect(route('admin.email.events.edit',$event->id))->with('eeventedited',__('elfcms::default.email_event_created_successfully'));
+        return redirect(route('admin.email.events.edit',$event->id))->with('success',__('elfcms::default.email_event_created_successfully'));
     }
 
     /**
@@ -327,7 +327,7 @@ class EmailEventController extends Controller
 
         $event->save($validated);
 
-        return redirect(route('admin.email.events.edit',$event->id))->with('eeventedited',__('elfcms::default.email_event_created_successfully'));
+        return redirect(route('admin.email.events.edit',$event->id))->with('success',__('elfcms::default.email_event_created_successfully'));
     }
 
     /**
@@ -342,6 +342,6 @@ class EmailEventController extends Controller
             return redirect(route('admin.email.events'))->withErrors(['eeventdelerror'=>'Error of event deleting']);
         }
 
-        return redirect(route('admin.email.events'))->with('eeventdeleted','Event deleted successfully');
+        return redirect(route('admin.email.events'))->with('success','Event deleted successfully');
     }
 }

@@ -90,6 +90,6 @@ class CookieSettingController extends Controller
             }
         }
 
-        return redirect(route('admin.cookie-settings.index'))->with('settingedited', __('elfcms::default.settings_edited_successfully'));
+        return redirect(route('admin.cookie-settings.index'))->with('success', __('elfcms::default.settings_edited_successfully'));
     }
 }
