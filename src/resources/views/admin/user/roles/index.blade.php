@@ -10,9 +10,6 @@
         </span>
     </a>
     <form action="{{ route('admin.user.roles') }}" method="get">
-        {{-- <label for="search">
-            {{ __('elfcms::default.search') }}
-        </label> --}}
         <div class="round-input-wrapper">
             <button type="submit" class="button round-button theme-button inner-button default-highlight-button">
                 {!! iconHtmlLocal('elfcms/admin/images/icons/search.svg', width: 18, height: 18, svg: true) !!}
@@ -27,12 +24,12 @@
         @endif
     </div>
 </div>
-@if (Session::has('success'))
+{{-- @if (Session::has('success'))
     <x-elf-notify type="success" title="{{ __('elfcms::default.success') }}" text="{{ Session::get('success') }}" />
 @endif
 @if ($errors->any())
     <x-elf-notify type="error" title="{{ __('elfcms::default.error') }}" text="{!! '<ul><li>' . implode('</li><li>', $errors->all()) . '</li></ul>' !!}" />
-@endif
+@endif --}}
 {{-- 
     <div class="table-search-box">
         <a href="{{ route('admin.user.roles.create') }}" class="button success-button icon-text-button light-icon plus-button">{{__('elfcms::default.create_new_role')}}</a>
@@ -105,7 +102,7 @@
                     <td>{{ $role->description }}</td>
                     <td>{{ $role->created_at }}</td>
                     <td>{{ $role->updated_at }}</td>
-                    <td class="button-column  non-text-buttons">
+                    <td class="table-button-column">
                         @if ($notedit && !in_array($role->code,$notedit))
                         <a href="{{ route('admin.user.roles.edit',$role->id) }}" class="button icon-button" title="{{ __('elfcms::default.edit') }}">
                             {!! iconHtmlLocal('elfcms/admin/images/icons/buttons/edit.svg', svg: true) !!}

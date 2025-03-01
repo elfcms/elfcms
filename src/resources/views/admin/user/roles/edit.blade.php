@@ -2,7 +2,7 @@
 
 @section('userpage-content')
 
-@if (Session::has('roleedited'))
+{{-- @if (Session::has('roleedited'))
     <div class="alert alert-success">{{ Session::get('roleedited') }}</div>
 @endif
 @if (Session::has('rolecreated'))
@@ -17,7 +17,7 @@
         @endforeach
     </ul>
 </div>
-@endif
+@endif --}}
 <div class="user-form item-form">
     <h3>{{ __('elfcms::default.edit_role') }} #{{ $role->id }}</h3>
     <form action="{{ route('admin.user.roles.update',$role->id) }}" method="POST">

@@ -12,7 +12,8 @@
                         <div class="userinfo-name">{{ $currentUser->user->name() }}</div>
                         <div class="userinfo-avatar">
                             @if ($currentUser->user->avatar)
-                                <img src="{{ file_path(imgCropCache($currentUser->user->avatar, 32, 32)) }}" alt="User avatar">
+                                <img src="{{ file_path(imgCropCache($currentUser->user->avatar, 32, 32)) }}"
+                                    alt="User avatar">
                             @else
                                 {!! iconHtmlLocal('/elfcms/admin/images/icons/user.svg', svg: true) !!}
                             @endif
@@ -29,6 +30,13 @@
         <div class="menubutton closed"></div>
     </div>
     <div class="main-container">
+        @if (Session::has('success'))
+            <x-elf-notify type="success" title="{{ __('elfcms::default.success') }}"
+                text="{{ Session::get('success') }}" />
+        @endif
+        @if ($errors->any())
+            <x-elf-notify type="error" title="{{ __('elfcms::default.error') }}" text="{!! '<ul><li>' . implode('</li><li>', $errors->all()) . '</li></ul>' !!}" />
+        @endif
         @section('pagecontent')
 
         @show

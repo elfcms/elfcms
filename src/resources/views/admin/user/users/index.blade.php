@@ -27,12 +27,12 @@
             @endif
         </div>
     </div>
-    @if (Session::has('success'))
+    {{-- @if (Session::has('success'))
         <x-elf-notify type="success" title="{{ __('elfcms::default.success') }}" text="{{ Session::get('success') }}" />
     @endif
     @if ($errors->any())
         <x-elf-notify type="error" title="{{ __('elfcms::default.error') }}" text="{!! '<ul><li>' . implode('</li><li>', $errors->all()) . '</li></ul>' !!}" />
-    @endif
+    @endif --}}
     @if (!empty($role))
         <div class="alert alert-standard">
             {{ __('elfcms::default.show_users_for_lole', ['name' => $role->name, 'id' => $role->id]) }}
