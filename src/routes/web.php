@@ -196,6 +196,7 @@ Route::group(['middleware' => ['web', 'locales', 'cookie']], function () use ($a
 
         // File icons
         Route::get($adminPath . '/helper/file-icon/{extension}', [\Elfcms\Elfcms\Http\Controllers\AdminController::class, 'fileIcon'])->name('file-icon');
+        Route::get($adminPath . '/helper/file-icon-data/{extension}', [\Elfcms\Elfcms\Http\Controllers\AdminController::class, 'fileIconData'])->name('file-icon-data');
 
         Route::name('page.')->group(function () use ($adminPath) {
             Route::resource($adminPath . '/page/pages', Elfcms\Elfcms\Http\Controllers\Resources\PageController::class)->names(['index' => 'pages']);

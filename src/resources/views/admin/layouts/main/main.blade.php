@@ -12,7 +12,7 @@
                         <div class="userinfo-name">{{ $currentUser->user->name() }}</div>
                         <div class="userinfo-avatar">
                             @if ($currentUser->user->avatar)
-                                <img src="{{ $currentUser->user->avatar }}" alt="User avatar">
+                                <img src="{{ file_path(imgCropCache($currentUser->user->avatar, 32, 32)) }}" alt="User avatar">
                             @else
                                 {!! iconHtmlLocal('/elfcms/admin/images/icons/user.svg', svg: true) !!}
                             @endif

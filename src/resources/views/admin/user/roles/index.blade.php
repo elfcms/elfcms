@@ -1,6 +1,39 @@
-@extends('elfcms::admin.layouts.users')
+@extends('elfcms::admin.layouts.main')
 
-@section('userpage-content')
+@section('pagecontent')
+
+<div class="table-search-box">
+    <a href="{{ route('admin.user.roles.create') }}" class="button round-button theme-button">
+        {!! iconHtmlLocal('elfcms/admin/images/icons/plus.svg', svg: true) !!}
+        <span class="button-collapsed-text">
+            {{ __('elfcms::default.create_new_role') }}
+        </span>
+    </a>
+    <form action="{{ route('admin.user.roles') }}" method="get">
+        {{-- <label for="search">
+            {{ __('elfcms::default.search') }}
+        </label> --}}
+        <div class="round-input-wrapper">
+            <button type="submit" class="button round-button theme-button inner-button default-highlight-button">
+                {!! iconHtmlLocal('elfcms/admin/images/icons/search.svg', width: 18, height: 18, svg: true) !!}
+            </button>
+            <input type="search" name="search" id="search" value="{{ $search ?? '' }}" placeholder="">
+        </div>
+    </form>
+    <div class="table-search-result-title">
+        @if (!empty($search))
+            {{ __('elfcms::default.search_result_for') }} "{{ $search }}" <a
+                href="{{ route('admin.user.roles') }}" title="{{ __('elfcms::default.reset_search') }}">&#215;</a>
+        @endif
+    </div>
+</div>
+@if (Session::has('success'))
+    <x-elf-notify type="success" title="{{ __('elfcms::default.success') }}" text="{{ Session::get('success') }}" />
+@endif
+@if ($errors->any())
+    <x-elf-notify type="error" title="{{ __('elfcms::default.error') }}" text="{!! '<ul><li>' . implode('</li><li>', $errors->all()) . '</li></ul>' !!}" />
+@endif
+{{-- 
     <div class="table-search-box">
         <a href="{{ route('admin.user.roles.create') }}" class="button success-button icon-text-button light-icon plus-button">{{__('elfcms::default.create_new_role')}}</a>
         <div class="table-search-result-title">
@@ -25,9 +58,9 @@
             @endforeach
         </ul>
     </div>
-    @endif
-    <div class="widetable-wrapper">
-        <table class="grid-table table-cols-7" style="--first-col:65px; --last-col:100px; --minw:800px">
+    @endif --}}
+    <div class="grid-table-wrapper">
+        <table class="grid-table table-cols" style="--first-col:65px; --last-col:100px; --minw:800px;  --cols-count:7;">
             <thead>
                 <tr>
                     <th>
@@ -74,16 +107,20 @@
                     <td>{{ $role->updated_at }}</td>
                     <td class="button-column  non-text-buttons">
                         @if ($notedit && !in_array($role->code,$notedit))
-                        <a href="{{ route('admin.user.roles.edit',$role->id) }}" class="button edit-button" title="{{ __('elfcms::default.edit') }}"></a>
+                        <a href="{{ route('admin.user.roles.edit',$role->id) }}" class="button icon-button" title="{{ __('elfcms::default.edit') }}">
+                            {!! iconHtmlLocal('elfcms/admin/images/icons/buttons/edit.svg', svg: true) !!}
+                        </a>
                         <form action="{{ route('admin.user.roles.destroy',$role->id) }}" method="POST" data-submit="check">
                             @csrf
                             @method('DELETE')
                             <input type="hidden" name="id" value="{{ $role->id }}">
                             <input type="hidden" name="name" value="{{ $role->name }}">
-                            <button type="submit" class="button delete-button" title="{{ __('elfcms::default.delete') }}"></button>
+                            <button type="submit" class="button icon-button icon-alarm-button" title="{{ __('elfcms::default.delete') }}">
+                                {!! iconHtmlLocal('elfcms/admin/images/icons/buttons/delete.svg', svg: true) !!}
+                            </button>
                         </form>
                         @endif
-                        <div class="contextmenu-content-box">
+                        {{-- <div class="contextmenu-content-box">
                             <a href="{{ route('admin.user.users',UrlParams::addArr(['role'=>$role->id])) }}" class="contextmenu-item">{{ __('elfcms::default.show_users') }}</a>
                         @if ($notedit && !in_array($role->code,$notedit))
                             <a href="{{ route('admin.user.roles.edit',$role->id) }}" class="contextmenu-item">{{ __('elfcms::default.edit') }}</a>
@@ -95,7 +132,7 @@
                                 <button type="submit" class="contextmenu-item">{{ __('elfcms::default.delete') }}</button>
                             </form>
                         @endif
-                        </div>
+                        </div> --}}
                     </td>
                 </tr>
             @endforeach

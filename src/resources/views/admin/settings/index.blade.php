@@ -7,13 +7,6 @@
             <x-elf-notify type="success" title="{{ __('elfcms::default.success') }}" text="{{ Session::get('success') }}" />
         @endif
         @if ($errors->any())
-            {{-- <div class="alert alert-danger">
-                <ul class="errors-list">
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div> --}}
             <x-elf-notify type="error" title="{{ __('elfcms::default.error') }}" text="{!! '<ul><li>' . implode('</li><li>',$errors->all()) . '</li></ul>' !!}" />
         @endif
 
@@ -79,24 +72,6 @@
                             </div>
                         @elseif ($setting['params']['type'] == 'checkbox')
                             <div class="input-box colored">
-                                {{-- <div class="checkbox-wrapper">
-                        <div class="checkbox-switch-wrapper">
-                            <div class="checkbox-switch blue">
-                                <input type="checkbox" name="{{ $setting['code'] }}" id="{{ $setting['code'] }}" value="1"
-                                @if ($setting['value'] && $setting['value'] == 1)
-                                    checked
-                                @endif>
-                                <i></i>
-                            </div>
-                            <label for="{{ $setting['code'] }}">
-                                @if (__('elfcms::default.' . $setting['code']) != 'elfcms::default.' . $setting['code'])
-                                {{__('elfcms::default.'.$setting['code'])}}
-                            @else
-                                {{ $setting['title'] }}
-                            @endif
-                            </label>
-                        </div>
-                    </div> --}}
                                 <label for="{{ $setting['code'] }}">
                                     @if (__('elfcms::default.' . $setting['code']) != 'elfcms::default.' . $setting['code'])
                                         {{ __('elfcms::default.' . $setting['code']) }}
@@ -122,7 +97,6 @@
                                     @endif
                                 </label>
                                 <div class="input-wrapper">
-                                    {{-- @dd($setting) --}}
                                     <x-elf-input-file :params="$setting" :download="true" />
                                 </div>
                             </div>
@@ -167,7 +141,7 @@
                         @endif
                     @endforeach
 
-                    <h4>{{ __('elfcms::default.contacts') }}</h4>
+                    <h3>{{ __('elfcms::default.contacts') }}</h3>
                     @foreach ($contacts as $contact)
                         @if (empty($contact['params']['type']) || $contact['params']['type'] == 'string')
                             <div class="input-box colored">

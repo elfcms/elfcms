@@ -42,6 +42,8 @@ return [
     'are_you_sure_to_deleting_user' => 'Are you sure to deleting user ',
     'user' => 'User',
     'users' => 'Users',
+    'user_activated_successfully' => 'User activated successfully',
+    'user_deactivated_successfully' => 'User deactivated successfully',
     'edit_user' => 'Edit user #',
     'password' => 'Password',
     'current_password' => 'Current password',

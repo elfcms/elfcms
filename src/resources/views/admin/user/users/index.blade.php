@@ -1,4 +1,4 @@
-@extends('elfcms::admin.layouts.users')
+@extends('elfcms::admin.layouts.main')
 
 @section('pagecontent')
 
@@ -27,20 +27,11 @@
             @endif
         </div>
     </div>
-    @if (Session::has('userdeleted'))
-        <div class="alert alert-alternate">{{ Session::get('userdeleted') }}</div>
-    @endif
-    @if (Session::has('useredited'))
-        <div class="alert alert-alternate">{{ Session::get('useredited') }}</div>
+    @if (Session::has('success'))
+        <x-elf-notify type="success" title="{{ __('elfcms::default.success') }}" text="{{ Session::get('success') }}" />
     @endif
     @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
+        <x-elf-notify type="error" title="{{ __('elfcms::default.error') }}" text="{!! '<ul><li>' . implode('</li><li>', $errors->all()) . '</li></ul>' !!}" />
     @endif
     @if (!empty($role))
         <div class="alert alert-standard">
@@ -48,7 +39,7 @@
         </div>
     @endif
     <div class="grid-table-wrapper">
-        <table class="grid-table table-cols" style="--first-col:65px; --last-col:140px; --minw:800px; --cols-count:6">
+        <table class="grid-table table-cols" style="--first-col:65px; --last-col:140px; --minw:800px; --cols-count:6;">
             <thead>
                 <tr>
                     <th>
@@ -113,7 +104,7 @@
                                 @else
                                     <button type="submit" class="button icon-button"
                                         title="{{ __('elfcms::default.activate') }}">
-                                        {!! iconHtmlLocal('elfcms/admin/images/icons/buttons/person_active.svg', svg: true) !!}
+                                        {!! iconHtmlLocal('elfcms/admin/images/icons/buttons/person_disable.svg', svg: true) !!}
                                     </button>
                                 @endif
                             </form>
@@ -128,34 +119,6 @@
                                     {!! iconHtmlLocal('elfcms/admin/images/icons/buttons/delete.svg', svg: true) !!}
                                 </button>
                             </form>
-                            {{-- <div class="contextmenu-content-box">
-                                <a href="{{ route('admin.user.users.edit', $user->id) }}"
-                                    class="contextmenu-item">{{ __('elfcms::default.edit') }}</a>
-                                <form action="{{ route('admin.user.users.update', $user->id) }}" method="POST">
-                                    @csrf
-                                    @method('PUT')
-                                    <input type="hidden" name="id" id="id" value="{{ $user->id }}">
-                                    <input type="hidden" name="is_confirmed" id="is_confirmed"
-                                        value="{{ (int) !(bool) $user->is_confirmed }}">
-                                    <input type="hidden" name="notedit" value="1">
-                                    <button type="submit" class="contextmenu-item">
-                                        @if ($user->is_confirmed == 1)
-                                            {{ __('elfcms::default.deactivate') }}
-                                        @else
-                                            {{ __('elfcms::default.activate') }}
-                                        @endif
-                                    </button>
-                                </form>
-                                <form action="{{ route('admin.user.users.destroy', $user->id) }}" method="POST"
-                                    data-submit="check">
-                                    @csrf
-                                    @method('DELETE')
-                                    <input type="hidden" name="id" value="{{ $user->id }}">
-                                    <input type="hidden" name="email" value="{{ $user->email }}">
-                                    <button type="submit"
-                                        class="contextmenu-item">{{ __('elfcms::default.delete') }}</button>
-                                </form>
-                            </div> --}}
                         </td>
                     </tr>
                 @endforeach
@@ -171,37 +134,6 @@
 
     <script>
         const checkForms = document.querySelectorAll('form[data-submit="check"]')
-
-        /* if (checkForms) {
-            checkForms.forEach(form => {
-                form.addEventListener('submit',function(e){
-                    e.preventDefault();
-                    let userId = this.querySelector('[name="id"]').value,
-                        userName = this.querySelector('[name="email"]').value,
-                        self = this
-                    popup({
-                        title:'{{ __('elfcms::default.deleting_of_element') }}' + userId,
-                        content:'<p>{{ __('elfcms::default.are_you_sure_to_deleting_user') }} "' + userName + '" (ID ' + userId + ')?</p>',
-                        buttons:[
-                            {
-                                title:'{{ __('elfcms::default.delete') }}',
-                                class:'button delete-button',
-                                callback: function(){
-                                    self.submit()
-                                }
-                            },
-                            {
-                                title:'{{ __('elfcms::default.cancel') }}',
-                                class:'button cancel-button',
-                                callback:'close'
-                            }
-                        ],
-                        class:'danger'
-                    })
-                })
-            })
-        } */
-
         function setConfirmDelete(forms) {
             if (forms) {
                 forms.forEach(form => {

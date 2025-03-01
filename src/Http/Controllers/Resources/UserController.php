@@ -149,7 +149,7 @@ class UserController extends Controller
             $user->is_confirmed = empty($request->is_confirmed) ? 0 : 1;
             $user->save();
 
-            return redirect(route('admin.user.users.edit',['user'=>$user->id]))->with('usercreated','User created successfully');
+            return redirect(route('admin.user.users.edit',['user'=>$user->id]))->with('success','User created successfully');
         }
     }
 
@@ -233,7 +233,7 @@ class UserController extends Controller
 
             $user->save();
 
-            return redirect(route('admin.user.users'))->with('useredited','User ' . $userAction . ' successfully');
+            return redirect(route('admin.user.users'))->with('success',__('elfcms::default.user_'.$userAction.'_successfully'));
         }
 
         $defaultRoleCode = Config::get('elfcms.elfcms.user_default_role');
@@ -371,7 +371,7 @@ class UserController extends Controller
             $user->data()->create($dataValidated);
         }
 
-        return redirect(route('admin.user.users.edit',['user'=>$user->id]))->with('useredited','User edited successfully');
+        return redirect(route('admin.user.users.edit',['user'=>$user->id]))->with('success','User edited successfully');
 
     }
 
@@ -412,6 +412,6 @@ class UserController extends Controller
             return redirect(route('admin.user.users'))->withErrors(['userdelerror'=>'Error of user deleting']);
         }
 
-        return redirect(route('admin.user.users'))->with('userdeleted','User deleted successfully');
+        return redirect(route('admin.user.users'))->with('success','User deleted successfully');
     }
 }

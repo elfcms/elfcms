@@ -42,6 +42,8 @@ return [
     'are_you_sure_to_deleting_user' => 'Вы действительно хотите удалить пользователя ',
     'user' => 'Пользователь',
     'users' => 'Пользователи',
+    'user_activated_successfully' => 'Пользователь успешно активирован',
+    'user_deactivated_successfully' => 'Пользователь успешно деактивирован',
     'edit_user' => 'Редактировать пользователя #',
     'password' => 'Пароль',
     'current_password' => 'Текущий пароль',
