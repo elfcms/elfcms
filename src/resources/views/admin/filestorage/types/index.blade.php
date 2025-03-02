@@ -261,7 +261,7 @@
                                         content: data.message,
                                         buttons: [{
                                             title: 'OK',
-                                            class: 'button delete-button',
+                                            class: 'button color-button red-button',
                                             callback: 'close'
                                         }],
                                         class: 'danger'

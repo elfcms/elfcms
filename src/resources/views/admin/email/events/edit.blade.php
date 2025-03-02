@@ -1,8 +1,8 @@
-@extends('elfcms::admin.layouts.email')
+@extends('elfcms::admin.layouts.main')
 
-@section('emailpage-content')
+@section('pagecontent')
 
-    @if (Session::has('eeventedited'))
+    {{-- @if (Session::has('eeventedited'))
         <div class="alert alert-success">{{ Session::get('eeventedited') }}</div>
     @endif
     @if ($errors->any())
@@ -13,10 +13,10 @@
             @endforeach
         </ul>
     </div>
-    @endif
+    @endif --}}
 
     <div class="item-form">
-        <h3>{{ __('elfcms::default.edit_email_event') }} #{{ $event->id }}</h3>
+        <h2>{{ __('elfcms::default.edit_email_event') }} #{{ $event->id }}</h2>
         <form action="{{ route('admin.email.events.update',$event->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
@@ -33,10 +33,7 @@
                         <input type="text" name="code" id="code" autocomplete="off" value="{{ $event->code }}">
                     </div>
                     <div class="input-wrapper">
-                        <div class="autoslug-wrapper">
-                            <input type="checkbox" data-text-id="name" data-slug-id="code" class="autoslug" checked>
-                            <div class="autoslug-button"></div>
-                        </div>
+                        <x-elfcms::ui.checkbox.autoslug checked="true" textid="name" slugid="code" />
                     </div>
                 </div>
                 <div class="input-box colored">
@@ -100,7 +97,7 @@
 
 
                             </div>
-                            <button type="button" class="button param-table-add" id="addparamline">{{ __('elfcms::default.add_parameter') }}</button>
+                            <button type="button" class="button simple-button" id="addparamline">{{ __('elfcms::default.add_parameter') }}</button>
                         </div>
                     </div>
                 </div>
@@ -150,13 +147,12 @@
             </div>
 
             <div class="button-box single-box">
-                <button type="submit" class="button success-button">{{ __('elfcms::default.submit') }}</button>
+                <button type="submit" class="button color-button green-button">{{ __('elfcms::default.submit') }}</button>
                 <a href="{{ route('admin.email.events') }}" class="button">{{ __('elfcms::default.cancel') }}</a>
             </div>
         </form>
     </div>
     <script>
-        autoSlug('.autoslug');
         eventParamBoxInit('#addparamline', {{count($params)-1}})
 
         //add editor

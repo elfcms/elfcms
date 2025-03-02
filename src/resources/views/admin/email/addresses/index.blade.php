@@ -117,7 +117,7 @@
                             addressName + '" (ID ' + addressId + ')?</p>',
                         buttons: [{
                                 title: '{{ __('elfcms::default.delete') }}',
-                                class: 'button delete-button',
+                                class: 'button color-button red-button',
                                 callback: function() {
                                     self.submit()
                                 }

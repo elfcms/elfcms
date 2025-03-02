@@ -93,7 +93,7 @@
                         content: '<p>{{ __('elfcms::default.are_you_sure_to_deleting_group') }}</p>',
                         buttons: [{
                                 title: '{{ __('elfcms::default.delete') }}',
-                                class: 'button delete-button',
+                                class: 'button color-button red-button',
                                 callback: function() {
                                     self.submit()
                                 }

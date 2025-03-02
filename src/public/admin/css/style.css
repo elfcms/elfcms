@@ -1,9 +1,9 @@
 :root {
-    --background-color-default: #dfe7f2;
+    --background-color-default: #e7eef8; /* #dfe7f2; */
     --background-color-light: #f0f5fc; /* #e8eef6; */
-    --background-color-middle: #e8eef6;
-    --background-color-shade: #d9e1eb;
-    --background-color-dark: #d4dded;
+    --background-color-middle: #dfe7f1; /* #e8eef6; */
+    --background-color-shade: #d8e2ef; /* #d9e1eb; */
+    --background-color-dark: #c4cede; /* #d4dded; */
     --text-color-default: #15181d;
     --text-color-middle: #242f3f;
     --text-color-second: #3f5274;
@@ -138,7 +138,7 @@ body {
     min-height: 100vh;
     width: max(100%, 320px);
     display: flex;
-    transition: all .3s;
+    transition: all 0.3s;
 }
 
 h1,
@@ -199,9 +199,8 @@ textarea {
     border-right-color: var(--background-color-middle);
     border-radius: var(--bradius-small);
     box-shadow: inset 1em 1em 2em -1.5em var(--background-color-dark);
-    width: 15rem; 
+    width: 15rem;
     max-width: 100%;
-
 }
 
 input[type="search"]::-webkit-search-cancel-button {
@@ -638,7 +637,7 @@ footer {
     margin: 0;
     padding: var(--main-padding-small);
     background-color: var(--background-color-light);
-    box-shadow: 0 -.0625rem 0 0 var(--background-color-shade);
+    box-shadow: 0 -0.0625rem 0 0 var(--background-color-shade);
 }
 
 .item-form form {
@@ -692,18 +691,22 @@ footer {
 .input-password-wrapper .password-visiblity {
     position: absolute;
     top: 50%;
-    right: .5em;
+    right: 0.5em;
     transform: translateY(-50%);
     width: 1.5em;
     height: 100%;
-    background-color: var(--input-color,var(--text-color-default));
-    -webkit-mask: url('/elfcms/admin/images/icons/buttons/visibility_off.svg') no-repeat center / contain;
-    mask: url('/elfcms/admin/images/icons/buttons/visibility_off.svg') no-repeat center / contain;
+    background-color: var(--input-color, var(--text-color-default));
+    -webkit-mask: url("/elfcms/admin/images/icons/buttons/visibility_off.svg")
+        no-repeat center / contain;
+    mask: url("/elfcms/admin/images/icons/buttons/visibility_off.svg") no-repeat
+        center / contain;
     cursor: pointer;
 }
 .input-password-wrapper .password-visiblity.off {
-    -webkit-mask: url('/elfcms/admin/images/icons/buttons/visibility.svg') no-repeat center / contain;
-    mask: url('/elfcms/admin/images/icons/buttons/visibility.svg') no-repeat center / contain;
+    -webkit-mask: url("/elfcms/admin/images/icons/buttons/visibility.svg")
+        no-repeat center / contain;
+    mask: url("/elfcms/admin/images/icons/buttons/visibility.svg") no-repeat
+        center / contain;
 }
 
 /* Buttons */
@@ -761,6 +764,18 @@ footer {
 .purple-button {
     --button-color: var(--purple-color);
 }
+
+.simple-button {
+    background-color: var(--background-color-default);
+    color: var(--text-color-default);
+}
+
+.ghost-button {
+    background-color: transparent;
+    color: var(--text-color-default);
+    border: .0625rem solid var(--text-color-second);
+}
+
 
 .round-button {
     height: 2.25em;
@@ -823,15 +838,15 @@ footer {
 
 .icon-button {
     background-color: transparent;
-    border: .0625rem solid transparent;
+    border: 0.0625rem solid transparent;
     color: var(--text-color-default);
     aspect-ratio: 1;
     border-radius: 50%;
-    padding: .25rem;
+    padding: 0.25rem;
     box-shadow: none;
 }
 .icon-button:hover {
-    color: var(--default-color,var(--text-color-second));
+    color: var(--default-color, var(--text-color-second));
     border-color: currentColor;
 }
 .icon-button svg {
@@ -844,6 +859,12 @@ footer {
     color: var(--background-color-default);
     border-color: var(--red-color);
     background-color: var(--red-color);
+}
+
+.button:disabled {
+    opacity: 0.5;
+    pointer-events: none;
+    cursor: not-allowed;
 }
 
 /* Checkbox switch */
@@ -899,10 +920,11 @@ footer {
 }
 .switchbox:has(input:disabled),
 .switchbox.disabled {
-    opacity: .5;
+    opacity: 0.5;
 }
 .switchbox input:disabled,
 .switchbox.disabled input {
+    pointer-events: none;
     cursor: not-allowed;
 }
 
@@ -1126,7 +1148,7 @@ footer {
     position: -webkit-sticky;
     position: sticky;
     top: 0;
-    background: var(--background-color-light);;
+    background: var(--background-color-light);
     text-align: left;
     font-weight: normal;
     font-size: 1rem;
@@ -1134,12 +1156,16 @@ footer {
     display: flex;
     justify-content: space-between;
     border-bottom: 0.125rem solid var(--default-color);
-    box-shadow: -.125rem 0 0 -.0625rem var(--shade-color-10);
+    box-shadow: -0.125rem 0 0 -0.0625rem var(--shade-color-10);
 }
 .grid-table.table-cols {
-    grid-template-columns: var(--first-col, auto) repeat(calc(var(--cols-count,3) - 2), auto) var(--last-col, auto);
+    grid-template-columns: var(--first-col, auto) repeat(
+            calc(var(--cols-count, 3) - 2),
+            auto
+        ) var(--last-col, auto);
 }
-.grid-table th, .grid-table td {
+.grid-table th,
+.grid-table td {
     padding: 1rem;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -1158,7 +1184,8 @@ footer {
     color: var(--text-color-default);
     height: 21px;
 }
-.grid-table th .ordering::before, .grid-table th .ordering::after {
+.grid-table th .ordering::before,
+.grid-table th .ordering::after {
     content: "";
     display: block;
     width: 0;
@@ -1184,7 +1211,7 @@ footer {
 
 .grid-table td {
     font-weight: var(--fw-400);
-    font-size: .875rem;
+    font-size: 0.875rem;
 }
 
 .grid-table td a {
@@ -1206,16 +1233,120 @@ footer {
 .user-permissions-box {
     display: grid;
     grid-template-columns: repeat(3, auto);
-    grid-column-gap: .625rem;
+    grid-column-gap: 0.625rem;
 }
 .user-permissions-col-title {
-    padding: .375rem;
+    padding: 0.375rem;
     font-weight: bold;
 }
 .user-permissions-row {
-    padding: .375rem;
+    padding: 0.375rem;
     display: flex;
     align-items: center;
+}
+
+/* --- */
+.input-params-table {
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+}
+
+.params-table-head-line,
+.params-table-string-line,
+.attributes-table-head-line,
+.attributes-table-string-line,
+.options-table-head-line,
+.options-table-string-line {
+    display: contents;
+}
+
+.input-params-table .params-table-string {
+    text-align: center;
+    padding: var(--main-padding-tiny);
+}
+
+/* Popup */
+
+.popup-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    -webkit-backdrop-filter: blur(2px);
+    backdrop-filter: blur(2px);
+    background-color: rgba(14, 25, 50, 0.3);
+}
+
+.popup-wrapper .popup-box {
+    position: relative;
+    border-radius: 4px;
+    background-color: var(--background-color-default);
+    min-width: 200px;
+    overflow: hidden;
+    box-shadow: 0px 0px 5px 0px rgba(0, 0, 0, 0.2);
+}
+
+.popup-wrapper .popup-close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+}
+
+.popup-wrapper .popup-close::before, .popup-wrapper .popup-close::after {
+    content: "";
+    display: block;
+    position: absolute;
+    background-color: rgba(255, 255, 255, 0.7);
+    width: 1px;
+    height: 100%;
+    left: 7px;
+}
+.popup-wrapper .popup-close::before {
+    transform: rotate(-45deg);
+}
+.popup-wrapper .popup-close::after {
+    transform: rotate(45deg);
+}
+
+.popup-wrapper .popup-header {
+    /* background-color: var(--popup-color,var(--text-color-second)); */
+    background-color: var(--background-color-light);
+    border-bottom: 0.125rem solid var(--popup-color);
+    padding: 10px 15px;
+    box-sizing: border-box;
+    color: var(--text-color-default);
+}
+
+.popup-wrapper .popup-content {
+    padding: 10px 15px;
+    color: var(--text-color-default);
+}
+
+.popup-wrapper .popup-button-box {
+    padding: 10px 15px;
+    background-color: var(--background-color-middle);
+    border-top: 1px solid var(--background-color-shade);
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.popup-wrapper.danger {
+    --popup-color: var(--red-color)
+}
+.popup-wrapper.warning {
+    --popup-color: var(--gold-color)
+}
+.popup-wrapper.alternate {
+    --popup-color: var(--marin-color)
+}
+.popup-wrapper.submit {
+    --popup-color: var(--blue-color)
+}
+.popup-wrapper.success {
+    --popup-color: var(--green-color)
 }
 
 /* System page */
