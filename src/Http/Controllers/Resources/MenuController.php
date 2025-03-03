@@ -63,7 +63,7 @@ class MenuController extends Controller
         }
 
         if ($request->input('submit') == 'save_and_close') {
-            return redirect(route('admin.menus'))->with('success',__('elfcms::default.menu_edited_successfully'));
+            return redirect(route('admin.menus.index'))->with('success',__('elfcms::default.menu_edited_successfully'));
         }
 
         return redirect(route('admin.menus.edit',$menu->id))->with('success',__('elfcms::default.menu_created_successfully'));
@@ -132,7 +132,7 @@ class MenuController extends Controller
         }
 
         if ($request->input('submit') == 'save_and_close') {
-            return redirect(route('admin.menus'))->with('success',__('elfcms::default.menu_edited_successfully'));
+            return redirect(route('admin.menus.index'))->with('success',__('elfcms::default.menu_edited_successfully'));
         }
 
         return redirect(route('admin.menus.edit',$menu))->with('success',__('elfcms::default.menu_edited_successfully'));

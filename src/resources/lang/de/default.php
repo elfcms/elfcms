@@ -40,6 +40,7 @@ return [
     'deleting_of_element' => 'Element löschen. Element #',
     'are_you_sure_to_deleting_item' => 'Möchten Sie das Element wirklich löschen?',
     'are_you_sure_to_deleting_user' => 'Möchten Sie den Benutzer wirklich löschen? Benutzer ',
+    'are_you_sure_to_deleting_menu' => 'Möchten Sie den Menu wirklich löschen? Menu ',
     'user' => 'Benutzer',
     'users' => 'Benutzer',
     'user_activated_successfully' => 'Benutzer erfolgreich aktiviert',

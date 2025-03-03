@@ -8,12 +8,12 @@ items.forEach((item) => {
         item.classList.add("dragging");
         itemBox = item.parentNode;
         draggedItem = itemBox;
-        draggedItem.classList.add('dragging');
+        draggedItem.classList.add("dragging");
         draggedItemParent = itemBox.parentNode;
     });
 
     item.addEventListener("dragend", () => {
-        draggedItem.classList.remove('dragging');
+        draggedItem.classList.remove("dragging");
         draggedItem = null;
         draggedItemParent = null;
         item.classList.remove("dragging");
@@ -37,8 +37,7 @@ itemContainers.forEach((container) => {
         const afterElement = getDragAfterItem(container, e.clientY);
         try {
             if (draggedItem) container.insertBefore(draggedItem, afterElement);
-        }
-        catch(e) {
+        } catch (e) {
             //
         }
     });
@@ -46,7 +45,9 @@ itemContainers.forEach((container) => {
 
 function getDragAfterItem(container, y) {
     const draggableElements = Array.from(
-        container.querySelectorAll(".menu-item-box:not(.dragging), .menu-not-item")
+        container.querySelectorAll(
+            ".menu-item-box:not(.dragging), .menu-not-item"
+        )
     );
 
     return draggableElements.reduce(
@@ -68,12 +69,14 @@ let itemsData = {};
 let preItems = {};
 let isChanged = false;
 
-function checkData (preItems,itemsData,id) {
+function checkData(preItems, itemsData, id) {
     let isProp = preItems.hasOwnProperty(id);
     if (!isProp) {
         return true;
-    }
-    else if (preItems[id].parent != itemsData[id].parent || preItems[id].position != itemsData[id].position) {
+    } else if (
+        preItems[id].parent != itemsData[id].parent ||
+        preItems[id].position != itemsData[id].position
+    ) {
         return true;
     }
     return false;
@@ -83,38 +86,57 @@ function setItemData() {
     const itemBoxes = document.querySelectorAll(".menu-item-box");
     preItems = Object.assign({}, itemsData);
     let position = 1;
-    itemBoxes.forEach(item => {
-        const parentBox = item.closest('.menu-item-subitems');
+    itemBoxes.forEach((item) => {
+        const parentBox = item.closest(".menu-item-subitems");
 
         if (parentBox) {
-            const parentItem = parentBox.closest('.menu-item-box');
+            const parentItem = parentBox.closest(".menu-item-box");
             parentId = parentItem.dataset.id;
             let subposition = 1;
-            const subitems = parentBox.querySelectorAll('.menu-item-box');
+            const subitems = parentBox.querySelectorAll(".menu-item-box");
             if (subitems) {
-                subitems.forEach(element => {
+                subitems.forEach((element) => {
                     itemsData[element.dataset.id] = {
                         parent: parentId,
                         position: subposition,
-                        element
+                        element,
+                    };
+                    const posBox = element.querySelector(".menu-item-position");
+                    //if (posBox) posBox.innerHTML = subposition;
+                    if (posBox) {
+                        const positionValue = posBox.querySelector("span");
+                        if (positionValue) {
+                            positionValue.innerText = subposition;
+                        } else {
+                            posBox.innerHTML = subposition;
+                        }
                     }
-                    const posBox = element.querySelector('.menu-item-position');
-                    if (posBox) posBox.innerHTML = subposition;
-                    isChanged = checkData(preItems,itemsData,element.dataset.id);
+                    isChanged = checkData(
+                        preItems,
+                        itemsData,
+                        element.dataset.id
+                    );
                     itemsData[element.dataset.id].new = isChanged ? 1 : 0;
                     subposition++;
                 });
             }
-        }
-        else {
+        } else {
             itemsData[item.dataset.id] = {
                 parent: null,
                 position: position,
-                element: item
+                element: item,
+            };
+            const posBox = item.querySelector(".menu-item-position");
+            //if (posBox) posBox.innerHTML = position;
+            if (posBox) {
+                const positionValue = posBox.querySelector("span");
+                if (positionValue) {
+                    positionValue.innerText = position;
+                } else {
+                    posBox.innerHTML = position;
+                }
             }
-            const posBox = item.querySelector('.menu-item-position');
-            if (posBox) posBox.innerHTML = position;
-            isChanged = checkData(preItems,itemsData,item.dataset.id);
+            isChanged = checkData(preItems, itemsData, item.dataset.id);
             itemsData[item.dataset.id].new = isChanged ? 1 : 0;
             position++;
         }
@@ -128,24 +150,24 @@ function itemPositionSuccess() {
 
         const data = JSON.stringify({
             menuId,
-            items: itemsData
+            items: itemsData,
         });
 
-        fetch('/elfcms/api/menu/' + menuId + '/itemorder',{
-            method: 'POST',
+        fetch("/elfcms/api/menu/" + menuId + "/itemorder", {
+            method: "POST",
             headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                'X-Requested-With': 'XMLHttpRequest',
-                'X-CSRF-TOKEN': token,
+                Accept: "application/json",
+                "Content-Type": "application/json",
+                "X-Requested-With": "XMLHttpRequest",
+                "X-CSRF-TOKEN": token,
             },
-            credentials: 'same-origin',
-            body: data
-        }).then(
-            (result) => result.json()
-        ).catch(error => {
-            //
-        });
+            credentials: "same-origin",
+            body: data,
+        })
+            .then((result) => result.json())
+            .catch((error) => {
+                //
+            });
     }
 }
 

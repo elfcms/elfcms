@@ -767,7 +767,7 @@ function menuAttrBoxInit(addSelector = "#addattributeline", line = 0) {
                     <input type="text" name="attributes_new[${attributeNextLine}][value]" id="attribute_new_value_${attributeNextLine}" data-attribute-value>
                 </div>
                 <div class="attributes-table-string">
-                    <button type="button" class="button" onclick="menuAttrDelete(${attributeNextLine})">&#215;</button>
+                    <button type="button" class="button icon-button icon-alarm-button string-delete-button" onclick="menuAttrDelete(${attributeNextLine})">&#215;</button>
                 </div>
             </div>
             `;

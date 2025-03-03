@@ -1,22 +1,8 @@
-@extends('elfcms::admin.layouts.menu')
+@extends('elfcms::admin.layouts.main')
 
-@section('menupage-content')
-
-    @if (Session::has('success'))
-        <div class="alert alert-success">{{ Session::get('success') }}</div>
-    @endif
-    @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul class="errors-list">
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-    @endif
-
+@section('pagecontent')
     <div class="item-form">
-        <h3>{{ __('elfcms::default.edit_menu_item') }} #{{ $item->id }}</h3>
+        <h2>{{ __('elfcms::default.edit_menu_item') }} #{{ $item->id }}</h2>
         <form action="{{ route('admin.menus.items.update',['item'=>$item,'menu'=>$menu]) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
@@ -110,21 +96,23 @@
                                         <input type="text" name="attributes_new[0][value]" id="attribute_new_value_0" data-attribute-value>
                                     </div>
                                     <div class="attributes-table-string">
-                                        <button type="button" class="button" onclick="menuAttrDelete(0)">&#215;</button>
+                                        <button type="button" class="button icon-button icon-alarm-button string-delete-button" onclick="menuAttrDelete(0)">&#215;</button>
                                     </div>
                                 </div>
                                 @endif
 
                             </div>
-                            <button type="button" class="button attribute-table-add" id="addattributeline">{{ __('elfcms::default.add_attribute') }}</button>
+                            <button type="button" class="button simple-button" id="addattributeline">{{ __('elfcms::default.add_attribute') }}</button>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="button-box single-box">
-                <button type="submit" class="button submit-button">{{ __('elfcms::default.submit') }}</button>
-                <button type="submit" name="submit" value="save_and_close" class="button alternate-button">{{ __('elfcms::default.save_and_close') }}</button>
-                <a href="{{ route('admin.menus.show',$item->menu) }}" class="button">{{ __('elfcms::default.cancel') }}</a>
+                <button type="submit" name="submit" value="save"
+                    class="button color-button green-button">{{ __('elfcms::default.submit') }}</button>
+                <button type="submit" name="submit" value="save_and_close"
+                    class="button color-button blue-button">{{ __('elfcms::default.save_and_close') }}</button>
+                <a href="{{ route('admin.menus.show',$menu) }}" class="button">{{ __('elfcms::default.cancel') }}</a>
             </div>
         </form>
     </div>

@@ -77,7 +77,7 @@
     <div class="table-search-box" @if(!empty($pageConfig['second_color'])) style="--default-color:{{$pageConfig['second_color']}};" @endif>
         <a href="{{ route('admin.forms.fields.create', $form) }}" class="button round-button theme-button">
             {!! iconHtmlLocal('elfcms/admin/images/icons/plus.svg', svg: true) !!}
-            <span>{{ __('elfcms::default.create_field') }}</span>
+            <span>{{ __('elfcms::default.create_form_field_group') }}</span>
         </a>
     </div>
 
@@ -96,7 +96,7 @@
                         content: '<p>{{ __('elfcms::default.are_you_sure_to_deleting_group') }}</p>',
                         buttons: [{
                                 title: '{{ __('elfcms::default.delete') }}',
-                                class: 'button delete-button',
+                                class: 'button color-button red-button',
                                 callback: function() {
                                     self.submit()
                                 }
