@@ -41,6 +41,7 @@ return [
     'are_you_sure_to_deleting_item' => 'Are you sure to deleting item?',
     'are_you_sure_to_deleting_user' => 'Are you sure to deleting user ',
     'are_you_sure_to_deleting_menu' => 'Are you sure to deleting menu ',
+    'are_you_sure_to_deleting_page' => 'Are you sure to deleting page ',
     'user' => 'User',
     'users' => 'Users',
     'user_activated_successfully' => 'User activated successfully',

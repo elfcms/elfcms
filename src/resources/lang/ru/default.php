@@ -41,6 +41,7 @@ return [
     'are_you_sure_to_deleting_item' => 'Вы действительно хотите удалить элемент?',
     'are_you_sure_to_deleting_user' => 'Вы действительно хотите удалить пользователя ',
     'are_you_sure_to_deleting_menu' => 'Вы действительно хотите удалить меню ',
+    'are_you_sure_to_deleting_page' => 'Вы действительно хотите удалить страницу ',
     'user' => 'Пользователь',
     'users' => 'Пользователи',
     'user_activated_successfully' => 'Пользователь успешно активирован',

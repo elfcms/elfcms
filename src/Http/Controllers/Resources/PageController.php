@@ -98,7 +98,7 @@ class PageController extends Controller
 
         $page = Page::create($validated);
 
-        if ($request->input('submit_close') == 'save_and_close') {
+        if ($request->input('submit') == 'save_and_close') {
             return redirect(route('admin.page.pages'))->with('success',__('elfcms::default.page_created_successfully'));
         }
 
@@ -183,7 +183,7 @@ class PageController extends Controller
 
         $page->save();
 
-        if ($request->input('submit_close') == 'save_and_close') {
+        if ($request->input('submit') == 'save_and_close') {
             return redirect(route('admin.page.pages'))->with('success',__('elfcms::default.page_edited_successfully'));
         }
 

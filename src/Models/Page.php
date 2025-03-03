@@ -19,6 +19,7 @@ class Page extends Model
         'meta_description',
         'is_dynamic',
         'path',
+        'image',
     ];
 
     /**
