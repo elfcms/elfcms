@@ -17,7 +17,7 @@
     </div>
     @endif
 
-    <div class="widetable-wrapper">
+    <div class="grid-table-wrapper">
         <table class="grid-table  table-cols-6" style="--first-col:65px; --last-col:140px; --minw:800px">
             <thead>
                 <tr>
@@ -60,7 +60,7 @@
                     </td>
                     <td>{{ $menu->created_at }}</td>
                     <td>{{ $menu->updated_at }}</td>
-                    <td class="button-column non-text-buttons">
+                    <td class="table-button-column">
                         <a href="{{ route('admin.menus.show',$menu) }}" class="button content-button" title="{{ __('elfcms::default.edit_menu_contents') }}"></a>
                         <a href="{{ route('admin.menus.edit',$menu->id) }}" class="button edit-button" title="{{ __('elfcms::default.edit') }}"></a>
                         <form action="{{ route('admin.menus.destroy',$menu->id) }}" method="POST" data-submit="check">
@@ -68,7 +68,10 @@
                             @method('DELETE')
                             <input type="hidden" name="id" value="{{ $menu->id }}">
                             <input type="hidden" name="name" value="{{ $menu->name }}">
-                            <button type="submit" class="button delete-button" title="{{ __('elfcms::default.delete') }}"></button>
+                            <button type="submit" class="button icon-button icon-alarm-button"
+                                        title="{{ __('elfcms::default.delete') }}">
+                                        {!! iconHtmlLocal('elfcms/admin/images/icons/buttons/delete.svg', svg: true) !!}
+                                    </button>
                         </form>
                     </td>
                 </tr>

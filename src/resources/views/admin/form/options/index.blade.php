@@ -17,7 +17,7 @@
         </ul>
     </div>
     @endif
-    <div class="widetable-wrapper">
+    <div class="grid-table-wrapper">
         <table class="grid-table formtable">
             <thead>
                 <tr>

@@ -16,7 +16,7 @@
     @endif --}}
 
     <div class="item-form">
-        <h3>{{ __('elfcms::default.form_result') }} #{{ $result->id }}</h3>
+        <h2>{{ __('elfcms::default.form_result') }} #{{ $result->id }}</h2>
         {{-- <form action="{{ route('admin.forms.update',$form->id) }}" method="POST" enctype="multipart/form-data"> --}}
         <div>
             <div class="colored-rows-box">

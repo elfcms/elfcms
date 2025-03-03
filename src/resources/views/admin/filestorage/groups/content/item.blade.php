@@ -29,7 +29,7 @@
             <i></i>
         </div>
     </td> --}}
-    <td class="button-column non-text-buttons">
+    <td class="table-button-column">
         <div class="check-delete-wrapper">
             <input type="checkbox" name="group[{{$group->id}}][delete]" id="group_{{$group->id}}_delete" value="1" data-id="{{ $group->id }}" title="{{ __('elfcms::default.delete') }}" onclick="setDynamicUnitRowDelete(this)">
             <i></i>

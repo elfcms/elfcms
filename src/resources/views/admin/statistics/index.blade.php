@@ -78,7 +78,7 @@
             });
         </script>
         <h2>{{ __('elfcms::default.unique_visits') }}</h2>
-        <div class="widetable-wrapper">
+        <div class="grid-table-wrapper">
             <table class="grid-table table-cols-9">
                 <thead>
                     <tr>
@@ -197,7 +197,7 @@
             </nav>
         @endif
         <h2>{{ __('elfcms::default.all_visits') }}</h2>
-        <div class="widetable-wrapper">
+        <div class="grid-table-wrapper">
             <table class="grid-table table-cols-9">
                 <thead>
                     <tr>

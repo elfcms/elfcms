@@ -35,12 +35,13 @@
                 <input type="search" name="search" id="search" value="{{ $search ?? '' }}" placeholder="">
             </div>
         </form>
-        <div class="table-search-result-title">
-            @if (!empty($search))
-                {{ __('elfcms::default.search_result_for') }} "{{ $search }}" <a
-                    href="{{ route('admin.email.addresses') }}" title="{{ __('elfcms::default.reset_search') }}">&#215;</a>
-            @endif
-        </div>
+        @if (!empty($search))
+            <div class="table-search-result-title">
+                    {{ __('elfcms::default.search_result_for') }} "{{ $search }}" <a
+                        href="{{ route('admin.email.addresses') }}"
+                        title="{{ __('elfcms::default.reset_search') }}">&#215;</a>
+            </div>
+        @endif
     </div>
 
     <div class="grid-table-wrapper">
@@ -119,8 +120,8 @@
                                     </button>
                                 </form>
                             @else
-                                <button class="button icon-button icon-alarm-button" title="{{ __('elfcms::default.delete') }}"
-                                    disabled>
+                                <button class="button icon-button icon-alarm-button"
+                                    title="{{ __('elfcms::default.delete') }}" disabled>
                                     {!! iconHtmlLocal('elfcms/admin/images/icons/buttons/delete.svg', svg: true) !!}
                                 </button>
                             @endif

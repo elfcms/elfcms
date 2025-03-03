@@ -90,14 +90,14 @@ Route::group(['middleware' => ['web', 'locales', 'cookie']], function () use ($a
             //Route::resource($adminPath . '/email/templates', Elfcms\Elfcms\Http\Controllers\Resources\EmailTemplateController::class)->names(['index' => 'templates']);
         });
 
-        Route::name('form.')->group(function () use ($adminPath) {
+        /* Route::name('form.')->group(function () use ($adminPath) {
             Route::resource($adminPath . '/form/forms', Elfcms\Elfcms\Http\Controllers\Resources\FormController::class)->names(['index' => 'forms']);
             Route::resource($adminPath . '/form/groups', Elfcms\Elfcms\Http\Controllers\Resources\FormFieldGroupController::class)->names(['index' => 'groups']);
             Route::resource($adminPath . '/form/fields', Elfcms\Elfcms\Http\Controllers\Resources\FormFieldController::class)->names(['index' => 'fields']);
             Route::resource($adminPath . '/form/options', Elfcms\Elfcms\Http\Controllers\Resources\FormFieldOptionController::class)->names(['index' => 'options']);
             Route::resource($adminPath . '/form/field-types', Elfcms\Elfcms\Http\Controllers\Resources\FormController::class)->names(['index' => 'field-types']);
             Route::resource($adminPath . '/form/results', Elfcms\Elfcms\Http\Controllers\Resources\FormResultController::class)->names(['index' => 'results']);
-        });
+        }); */
 
         Route::name('forms.')->group(function () use ($adminPath) {
             Route::resource($adminPath . '/forms', Elfcms\Elfcms\Http\Controllers\Resources\FormController::class)->names([
@@ -112,7 +112,7 @@ Route::group(['middleware' => ['web', 'locales', 'cookie']], function () use ($a
             Route::resource($adminPath . '/forms/{form}/groups', Elfcms\Elfcms\Http\Controllers\Resources\FormFieldGroupController::class)->names(['index' => 'groups']);
             Route::resource($adminPath . '/forms/{form}/fields', Elfcms\Elfcms\Http\Controllers\Resources\FormFieldController::class)
                 ->names(['index' => 'fields']);
-            Route::resource($adminPath . '/forms/{form}/fields/{field}/options', Elfcms\Elfcms\Http\Controllers\Resources\FormFieldOptionController::class)->names(['index' => 'options']);
+            //Route::resource($adminPath . '/forms/{form}/fields/{field}/options', Elfcms\Elfcms\Http\Controllers\Resources\FormFieldOptionController::class)->names(['index' => 'options']);
             //Route::resource($adminPath . '/forms/{form}/results', Elfcms\Elfcms\Http\Controllers\Resources\FormResultController::class)->names(['index' => 'results']);
         });
         Route::name('form-results.')->group(function () use ($adminPath) {

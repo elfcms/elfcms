@@ -34,7 +34,7 @@
     <td>
         <input type="text" name="type[{{$type->id}}][mime_type]" id="type_{{$type->id}}_mime_type" value="{{ $type->mime_type }}" data-name="mime_type">
     </td>
-    <td class="button-column non-text-buttons">
+    <td class="table-button-column">
         <div class="check-delete-wrapper">
             <input type="checkbox" name="type[{{$type->id}}][delete]" id="type_{{$type->id}}_delete" value="1" data-id="{{ $type->id }}" title="{{ __('elfcms::default.delete') }}" onclick="setDynamicUnitRowDelete(this)">
             <i></i>

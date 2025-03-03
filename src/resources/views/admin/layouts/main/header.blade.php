@@ -19,9 +19,8 @@
         <ul>
             @forelse ($menu::accessGet() as $item)
                 <li @class([
-                    'active' => Str::startsWith(
-                        Route::currentRouteName(),
-                        $item['parent_route']),
+                    'active' =>
+                        Str::startsWith($currentRoute, $item['parent_route']),
                 ]) style="--i-color:{{ $item['color'] }}">
                     <a href="{{ route($item['route']) }}">
                         {{--  <img src="{{ $item['icon'] }}" alt=""> --}}
@@ -33,9 +32,9 @@
                     @if (!empty($item['submenu']))
                         <ul class="submenu">
                             @foreach ($item['submenu'] as $subitem)
-                                <li @if (Str::startsWith(Route::currentRouteName(), $subitem['route']) &&
+                                <li @if (Str::startsWith($currentRoute, $subitem['route']) &&
                                         (empty($item['submenu'][$loop->iteration]) ||
-                                            !Str::startsWith(Route::currentRouteName(), $item['submenu'][$loop->iteration]['route']))) class="active" @endif>
+                                            !Str::startsWith($currentRoute, $item['submenu'][$loop->iteration]['route']))) class="active" @endif>
                                     <a href="{{ route($subitem['route']) }}">
                                         @if (empty($subitem['lang_title']))
                                             {{ $subitem['title'] }}

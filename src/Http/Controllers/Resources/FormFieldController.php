@@ -20,8 +20,8 @@ class FormFieldController extends Controller
      */
     public function index()
     {
-        $fields = FormField::where('id','>','0')->orderBy('form_id')->orderBy('group_id')->get();
-        return view('elfcms::admin.form.fields.index',[
+        $fields = FormField::where('id', '>', '0')->orderBy('form_id')->orderBy('group_id')->get();
+        return view('elfcms::admin.form.fields.index', [
             'page' => [
                 'title' => __('elfcms::default.form_fields'),
                 'current' => url()->current(),
@@ -38,28 +38,16 @@ class FormFieldController extends Controller
      */
     public function create(Request $request, Form $form)
     {
-        //$forms = Form::all();
         $types = FormFieldType::all();
-        //$form_id = !empty($request->form_id) ? $request->form_id : null;
-        /* if (empty($form_id) && !empty($forms[0])) {
-            $form_id = $forms[0]->id;
-        } */
-        //dd($request->form_id);
         $group = !empty($request->group) ? $request->group : null;
-        /* if (empty($form_id)) {
-            $groups = FormFieldGroup::all();
-        } */
-        //else {
-            $groups = FormFieldGroup::where('form_id',$form->id)->get();
-        //}
-        return view('elfcms::admin.form.fields.create',[
+        $groups = FormFieldGroup::where('form_id', $form->id)->get();
+        return view('elfcms::admin.form.fields.create', [
             'page' => [
                 'title' => __('elfcms::default.create_field'),
                 'current' => url()->current(),
             ],
             'groups' => $groups,
             'form' => $form,
-            //'form_id' => $form_id,
             'group' => $group,
             'types' => $types
         ]);
@@ -124,10 +112,10 @@ class FormFieldController extends Controller
         }
 
         if ($request->input('submit') == 'save_and_close') {
-            return redirect(route('admin.forms.show',$form))->with('success',__('elfcms::default.field_created_successfully'));
+            return redirect(route('admin.forms.show', $form))->with('success', __('elfcms::default.field_created_successfully'));
         }
 
-        return redirect(route('admin.forms.fields.edit',['form'=>$form, 'field'=>$field]))->with('success',__('elfcms::default.field_created_successfully'));
+        return redirect(route('admin.forms.fields.edit', ['form' => $form, 'field' => $field]))->with('success', __('elfcms::default.field_created_successfully'));
     }
 
     /**
@@ -153,8 +141,8 @@ class FormFieldController extends Controller
     {
         //dd($field->group->id);
         $types = FormFieldType::all();
-        $groups = FormFieldGroup::where('form_id',$field->form->id)->get();
-        return view('elfcms::admin.form.fields.edit',[
+        $groups = FormFieldGroup::where('form_id', $field->form->id)->get();
+        return view('elfcms::admin.form.fields.edit', [
             'page' => [
                 'title' => __('elfcms::default.edit_field') . ' #' . $field->id,
                 'current' => url()->current(),
@@ -249,10 +237,10 @@ class FormFieldController extends Controller
         $field->save();
 
         if ($request->input('submit') == 'save_and_close') {
-            return redirect(route('admin.forms.show',$form))->with('success',__('elfcms::default.field_edited_successfully'));
+            return redirect(route('admin.forms.show', $form))->with('success', __('elfcms::default.field_edited_successfully'));
         }
 
-        return redirect(route('admin.forms.fields.edit',['form'=>$form, 'field'=>$field]))->with('success',__('elfcms::default.field_edited_successfully'));
+        return redirect(route('admin.forms.fields.edit', ['form' => $form, 'field' => $field]))->with('success', __('elfcms::default.field_edited_successfully'));
     }
 
     /**
@@ -266,9 +254,9 @@ class FormFieldController extends Controller
     {
         $form = $field->form;
         if (!$field->delete()) {
-            return redirect(route('admin.forms.show',$form))->withErrors(['fielddelerror'=>__('elfcms::default.field_delete_error')]);
+            return redirect(route('admin.forms.show', $form))->withErrors(['fielddelerror' => __('elfcms::default.field_delete_error')]);
         }
 
-        return redirect(route('admin.forms.show',$form))->with('success',__('elfcms::default.field_deleted_successfully'));
+        return redirect(route('admin.forms.show', $form))->with('success', __('elfcms::default.field_deleted_successfully'));
     }
 }

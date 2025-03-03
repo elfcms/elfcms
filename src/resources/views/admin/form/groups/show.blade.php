@@ -1,25 +1,10 @@
-@extends('elfcms::admin.layouts.form')
+@extends('elfcms::admin.layouts.main')
 
-@section('formpage-content')
+@section('pagecontent')
 
-    @if (Session::has('fielddeleted'))
-    <div class="alert alert-alternate">{{ Session::get('fielddeleted') }}</div>
-    @endif
-    @if (Session::has('fieldedited'))
-    <div class="alert alert-alternate">{{ Session::get('fieldedited') }}</div>
-    @endif
-    @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-    @endif
     <h2>{{ __('elfcms::default.fields_of_group_of_form_name_id',['name'=>$group->name,'id'=>$group->id,'form_name'=>$group->form->name,'form_id'=>$group->form->id]) }}</h2>
-    <div class="widetable-wrapper">
-        <table class="grid-table formfieldtable">
+    <div class="grid-table-wrapper">
+        <table class="grid-table table-cols" style="--first-col:65px; --last-col:180px; --minw:800px; --cols-count:9;">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -38,17 +23,17 @@
                 <tr data-id="{{ $field->id }}" class="level-{{ $field->level }}@empty ($field->active) inactive @endempty">
                     <td class="subline-{{ $field->level }}">{{ $field->id }}</td>
                     <td>
-                        <a href="{{ route('admin.form.fields.edit',$field->id) }}">
+                        <a href="{{ route('admin.forms.fields.edit',$field->id) }}">
                             {{ $field->title }}
                         </a>
                     </td>
                     <td>
-                        <a href="{{ route('admin.form.fields.edit',$field->id) }}">
+                        <a href="{{ route('admin.forms.fields.edit',$field->id) }}">
                             {{ $field->name }}
                         </a>
                     </td>
                     <td>
-                        <a href="{{ route('admin.form.forms.show',$field->form->id) }}">
+                        <a href="{{ route('admin.forms.form.show',$field->form->id) }}">
                             {{ $field->form->name }}
                         </a>
                     </td>

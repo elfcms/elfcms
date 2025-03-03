@@ -271,7 +271,8 @@ return [
             "route" => "admin.forms.index",
             "parent_route" => "admin.forms",
             "icon" => "/elfcms/admin/images/icons/form.svg",
-            "color" => "var(--gold-color)",
+            "color" => "var(--orange-color)",
+            "second_color" => "var(--gold-color)",
             "position" => 40,
         ],
         [
@@ -280,7 +281,7 @@ return [
             "route" => "admin.form-results.index",
             "parent_route" => "admin.form-results",
             "icon" => "/elfcms/admin/images/icons/formresult.svg",
-            "color" => "var(--orange-color)",
+            "color" => "var(--gold-color)",
             "position" => 45,
         ],
         [

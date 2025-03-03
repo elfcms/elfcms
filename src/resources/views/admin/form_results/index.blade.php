@@ -20,8 +20,8 @@
         </ul>
     </div>
     @endif
-    <div class="widetable-wrapper">
-        <table class="grid-table table-cols-4" style="--first-col:65px; --last-col:200px; --minw:600px">
+    <div class="grid-table-wrapper">
+        <table class="grid-table table-cols" style="--first-col:65px; --last-col:200px; --minw:600px; --cols-count:4;">
             <thead>
                 <tr>
                     <th>ID</th>

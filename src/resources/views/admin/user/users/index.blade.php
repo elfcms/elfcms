@@ -1,7 +1,6 @@
 @extends('elfcms::admin.layouts.main')
 
 @section('pagecontent')
-
     <div class="table-search-box">
         <a href="{{ route('admin.user.users.create') }}" class="button round-button theme-button">
             {!! iconHtmlLocal('elfcms/admin/images/icons/plus.svg', svg: true) !!}
@@ -20,12 +19,12 @@
                 <input type="search" name="search" id="search" value="{{ $search ?? '' }}" placeholder="">
             </div>
         </form>
-        <div class="table-search-result-title">
-            @if (!empty($search))
+        @if (!empty($search))
+            <div class="table-search-result-title">
                 {{ __('elfcms::default.search_result_for') }} "{{ $search }}" <a
                     href="{{ route('admin.user.users') }}" title="{{ __('elfcms::default.reset_search') }}">&#215;</a>
-            @endif
-        </div>
+            </div>
+        @endif
     </div>
     {{-- @if (Session::has('success'))
         <x-elf-notify type="success" title="{{ __('elfcms::default.success') }}" text="{{ Session::get('success') }}" />
@@ -134,6 +133,7 @@
 
     <script>
         const checkForms = document.querySelectorAll('form[data-submit="check"]')
+
         function setConfirmDelete(forms) {
             if (forms) {
                 forms.forEach(form => {
@@ -185,5 +185,4 @@
             })
         }
     </script>
-
 @endsection

@@ -1,30 +1,29 @@
 @extends('elfcms::admin.layouts.main')
 
 @section('pagecontent')
-
-<div class="table-search-box">
-    <a href="{{ route('admin.email.addresses.create') }}" class="button round-button theme-button">
-        {!! iconHtmlLocal('elfcms/admin/images/icons/plus.svg', svg: true) !!}
-        <span class="button-collapsed-text">
-            {{ __('elfcms::default.create_email_address') }}
-        </span>
-    </a>
-    <form action="{{ route('admin.email.addresses') }}" method="get">
-        <div class="round-input-wrapper">
-            <button type="submit" class="button round-button theme-button inner-button default-highlight-button">
-                {!! iconHtmlLocal('elfcms/admin/images/icons/search.svg', width: 18, height: 18, svg: true) !!}
-            </button>
-            <input type="search" name="search" id="search" value="{{ $search ?? '' }}" placeholder="">
-        </div>
-    </form>
-    <div class="table-search-result-title">
+    <div class="table-search-box">
+        <a href="{{ route('admin.email.addresses.create') }}" class="button round-button theme-button">
+            {!! iconHtmlLocal('elfcms/admin/images/icons/plus.svg', svg: true) !!}
+            <span class="button-collapsed-text">
+                {{ __('elfcms::default.create_email_address') }}
+            </span>
+        </a>
+        <form action="{{ route('admin.email.addresses') }}" method="get">
+            <div class="round-input-wrapper">
+                <button type="submit" class="button round-button theme-button inner-button default-highlight-button">
+                    {!! iconHtmlLocal('elfcms/admin/images/icons/search.svg', width: 18, height: 18, svg: true) !!}
+                </button>
+                <input type="search" name="search" id="search" value="{{ $search ?? '' }}" placeholder="">
+            </div>
+        </form>
         @if (!empty($search))
-            {{ __('elfcms::default.search_result_for') }} "{{ $search }}" <a
-                href="{{ route('admin.email.addresses') }}" title="{{ __('elfcms::default.reset_search') }}">&#215;</a>
+            <div class="table-search-result-title">
+                {{ __('elfcms::default.search_result_for') }} "{{ $search }}" <a
+                    href="{{ route('admin.email.addresses') }}" title="{{ __('elfcms::default.reset_search') }}">&#215;</a>
+            </div>
         @endif
     </div>
-</div>
-{{-- @if (Session::has('success'))
+    {{-- @if (Session::has('success'))
     <x-elf-notify type="success" title="{{ __('elfcms::default.success') }}" text="{{ Session::get('success') }}" />
 @endif
 @if ($errors->any())
@@ -80,8 +79,8 @@
                         <td>{{ $address->created_at }}</td>
                         <td>{{ $address->updated_at }}</td>
                         <td class="table-button-column">
-                            <a href="{{ route('admin.email.addresses.edit', $address->id) }}"
-                                class="button icon-button" title="{{ __('elfcms::default.edit') }}">
+                            <a href="{{ route('admin.email.addresses.edit', $address->id) }}" class="button icon-button"
+                                title="{{ __('elfcms::default.edit') }}">
                                 {!! iconHtmlLocal('elfcms/admin/images/icons/buttons/edit.svg', svg: true) !!}
                             </a>
                             <form action="{{ route('admin.email.addresses.destroy', $address->id) }}" method="POST"

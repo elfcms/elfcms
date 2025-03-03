@@ -17,7 +17,7 @@
         </ul>
     </div>
     @endif
-    <div class="widetable-wrapper">
+    <div class="grid-table-wrapper">
         @if (!empty($item))
             <div class="alert alert-alternate">
                 {{ __('elfcms::default.showing_results_for_item') }} <strong>#{{ $item->id }} {{ $item->name }}</strong>
@@ -68,14 +68,17 @@
                     </td>
                     <td>{{ $item->created_at }}</td>
                     <td>{{ $item->updated_at }}</td>
-                    <td class="button-column non-text-buttons">
+                    <td class="table-button-column">
                         <a href="{{ route('admin.fragment.items.edit',$item->id) }}" class="button edit-button" title="{{ __('elfcms::default.edit') }}"></a>
                         <form action="{{ route('admin.fragment.items.destroy',$item->id) }}" method="POST" data-submit="check">
                             @csrf
                             @method('DELETE')
                             <input type="hidden" name="id" value="{{ $item->id }}">
                             <input type="hidden" name="name" value="{{ $item->name }}">
-                            <button type="submit" class="button delete-button" title="{{ __('elfcms::default.delete') }}"></button>
+                            <button type="submit" class="button icon-button icon-alarm-button"
+                                        title="{{ __('elfcms::default.delete') }}">
+                                        {!! iconHtmlLocal('elfcms/admin/images/icons/buttons/delete.svg', svg: true) !!}
+                                    </button>
                         </form>
                     </td>
                 </tr>

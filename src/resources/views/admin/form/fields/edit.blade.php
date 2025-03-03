@@ -1,22 +1,9 @@
-@extends('elfcms::admin.layouts.form')
+@extends('elfcms::admin.layouts.main')
 
-@section('formpage-content')
-
-    @if (Session::has('success'))
-        <div class="alert alert-success">{{ Session::get('success') }}</div>
-    @endif
-    @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul class="errors-list">
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-    @endif
+@section('pagecontent')
 
     <div class="item-form">
-        <h3>{{ __('elfcms::default.edit_field') }} #{{ $field->id }}</h3>
+        <h2>{{ __('elfcms::default.edit_field') }} #{{ $field->id }}</h2>
         <form action="{{ route('admin.forms.fields.update',['form'=>$form, 'field'=>$field]) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
@@ -33,17 +20,10 @@
                     </div>
                 </div>
                 <div class="input-box colored">
-                    <div class="checkbox-wrapper">
-                        <div class="checkbox-switch-wrapper">
-                            <div class="checkbox-switch blue">
-                                <input type="checkbox" name="active" id="active" value="1" @if ($field->active == 1) checked @endif>
-                                <i></i>
-                            </div>
-                            <label for="active">
-                                {{ __('elfcms::default.active') }}
-                            </label>
-                        </div>
-                    </div>
+                    <label for="active">
+                        {{ __('elfcms::default.active') }}
+                    </label>
+                    <x-elfcms::ui.checkbox.switch name="active" id="active" checked="{{$field->active == 1}}" />
                 </div>
                 <div class="input-box colored">
                     <label for="title">{{ __('elfcms::default.title') }}</label>
@@ -57,10 +37,7 @@
                         <input type="text" name="name" id="name" autocomplete="off" data-isslug value="{{ $field->name }}">
                     </div>
                     <div class="input-wrapper">
-                        <div class="autoslug-wrapper">
-                            <input type="checkbox" data-text-id="title" data-slug-id="name" class="autoslug" checked>
-                            <div class="autoslug-button"></div>
-                        </div>
+                        <x-elfcms::ui.checkbox.autoslug textid="title" slugid="name" checked="true" />
                     </div>
                 </div>
                 <div class="input-box colored">
@@ -82,48 +59,28 @@
                     </div>
                 </div>
                 <div class="input-box colored">
-                    <div class="checkbox-switch-wrapper">
-                        <div class="checkbox-switch blue">
-                            <input type="checkbox" name="required" id="required" value="1" @if ($field->required == 1) checked @endif>
-                            <i></i>
-                        </div>
-                        <label for="required">
-                            {{ __('elfcms::default.field_is_required') }}
-                        </label>
-                    </div>
+                    <label for="required">
+                        {{ __('elfcms::default.field_is_required') }}
+                    </label>
+                    <x-elfcms::ui.checkbox.switch name="required" id="required" checked="{{$field->required == 1}}" />
                 </div>
                 <div class="input-box colored">
-                    <div class="checkbox-switch-wrapper">
-                        <div class="checkbox-switch blue">
-                            <input type="checkbox" name="disabled" id="disabled" value="1" @if ($field->disabled == 1) checked @endif>
-                            <i></i>
-                        </div>
-                        <label for="disabled">
-                            {{ __('elfcms::default.field_is_disabled') }}
-                        </label>
-                    </div>
+                    <label for="disabled">
+                        {{ __('elfcms::default.field_is_disabled') }}
+                    </label>
+                    <x-elfcms::ui.checkbox.switch name="disabled" id="disabled" checked="{{$field->disabled == 1}}" />
                 </div>
                 <div class="input-box colored">
-                    <div class="checkbox-switch-wrapper">
-                        <div class="checkbox-switch blue">
-                            <input type="checkbox" name="checked" id="checked" value="1" @if ($field->checked == 1) checked @endif>
-                            <i></i>
-                        </div>
-                        <label for="checked">
-                            {{ __('elfcms::default.field_is_checked') }}
-                        </label>
-                    </div>
+                    <label for="checked">
+                        {{ __('elfcms::default.field_is_checked') }}
+                    </label>
+                    <x-elfcms::ui.checkbox.switch name="checked" id="checked" checked="{{$field->checked == 1}}" />
                 </div>
                 <div class="input-box colored">
-                    <div class="checkbox-switch-wrapper">
-                        <div class="checkbox-switch blue">
-                            <input type="checkbox" name="readonly" id="readonly" value="1" @if ($field->readonly == 1) checked @endif>
-                            <i></i>
-                        </div>
-                        <label for="readonly">
-                            {{ __('elfcms::default.readonly_field') }}
-                        </label>
-                    </div>
+                    <label for="readonly">
+                        {{ __('elfcms::default.readonly_field') }}
+                    </label>
+                    <x-elfcms::ui.checkbox.switch name="readonly" id="readonly" checked="{{$field->readonly == 1}}" />
                 </div>
 
                 <div class="input-box colored">
@@ -210,14 +167,14 @@
                                     <div class="options-table-string"></div>
                                 </div>
                             </div>
-                            <button type="button" class="button option-table-add" id="addoptionline">{{ __('elfcms::default.add_option') }}</button>
+                            <button type="button" class="button simple-button" id="addoptionline">{{ __('elfcms::default.add_option') }}</button>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="button-box single-box">
-                <button type="submit" class="button success-button">{{ __('elfcms::default.submit') }}</button>
-                <button type="submit" name="submit" value="save_and_close" class="button alternate-button">{{ __('elfcms::default.save_and_close') }}</button>
+                <button type="submit" class="button color-button green-button">{{ __('elfcms::default.submit') }}</button>
+                <button type="submit" name="submit" value="save_and_close" class="button color-button blue-button">{{ __('elfcms::default.save_and_close') }}</button>
                 <a href="{{ route('admin.forms.show', $form) }}" class="button">{{ __('elfcms::default.cancel') }}</a>
             </div>
         </form>

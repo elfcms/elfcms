@@ -37,6 +37,7 @@ class ViewServiceProvider extends ServiceProvider
                     $configs = config('elfcms');
                     //$menu = Menu::getByRoute($configs);
                     //dd([$menu,Route::currentRouteName()]);
+                    $currentRoute = Route::currentRouteName();
                     $pageConfig = null;
                     if (!empty($configs)) {
                         foreach ($configs as $package => $config) {
@@ -45,7 +46,7 @@ class ViewServiceProvider extends ServiceProvider
                                     if (empty($item['parent_route'])) {
                                         $item['parent_route'] = $item['route'];
                                     }
-                                    if (Str::startsWith(Route::currentRouteName(),$item['parent_route'])) {
+                                    if (Str::startsWith($currentRoute,$item['parent_route'])) {
                                         $pageConfig = $item;
                                     }
                                 }
@@ -77,7 +78,8 @@ class ViewServiceProvider extends ServiceProvider
                     $view->with('admin_styles',$styles)
                         ->with('admin_scripts',$scripts)
                         ->with('adminPath',$adminPath)
-                        ->with('pageConfig',$pageConfig);
+                        ->with('pageConfig',$pageConfig)
+                        ->with('currentRoute',$currentRoute);
                 });
                 View::composer('*layouts*.main', function($view) {
                     $view->with('elfSiteSettings',Setting::values());

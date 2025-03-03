@@ -21,7 +21,7 @@
         </ul>
     </div>
     @endif
-    <div class="widetable-wrapper">
+    <div class="grid-table-wrapper">
         <table class="grid-table table-cols-7" style="--first-col:65px; --last-col:180px; --minw:800px">
             <thead>
                 <tr>
@@ -47,7 +47,7 @@
                     <td>{{ $storage->files->count() }}</td>
                     <td>{{ $storage->created_at }}</td>
                     <td>{{ $storage->updated_at }}</td>
-                    <td class="button-column non-text-buttons">
+                    <td class="table-button-column">
                         <a href="{{ route('admin.filestorage.files.index',$storage) }}" class="button content-button" title="{{ __('elfcms::default.edit_storage_contents') }}"></a>
                         <a href="{{ route('admin.filestorage.edit',$storage) }}" class="button edit-button" title="{{ __('elfcms::default.edit_storage_params') }}"></a>
                         <form action="{{ route('admin.filestorage.destroy',$storage) }}" method="POST" data-submit="check">
@@ -55,7 +55,10 @@
                             @method('DELETE')
                             <input type="hidden" name="id" value="{{ $storage->id }}">
                             <input type="hidden" name="name" value="{{ $storage->name }}">
-                            <button type="submit" class="button delete-button" title="{{ __('elfcms::default.delete') }}"></button>
+                            <button type="submit" class="button icon-button icon-alarm-button"
+                                        title="{{ __('elfcms::default.delete') }}">
+                                        {!! iconHtmlLocal('elfcms/admin/images/icons/buttons/delete.svg', svg: true) !!}
+                                    </button>
                         </form>
                     </td>
                 </tr>

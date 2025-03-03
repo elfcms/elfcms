@@ -17,7 +17,7 @@
     @endif
     <form name="typeform" class="data-table-box" method="post" action="{{ route('admin.ajax.filestorage.type.fullsave') }}">
         @csrf
-        <div class="widetable-wrapper">
+        <div class="grid-table-wrapper">
             <table class="grid-table filestorage-type-table table-cols-9"
                 style="--first-col:60px; --last-col:100px; --minw:800px">
                 <thead>

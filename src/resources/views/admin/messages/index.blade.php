@@ -16,7 +16,7 @@
     </ul>
 </div>
 @endif
-<div class="widetable-wrapper">
+<div class="grid-table-wrapper">
     <table class="grid-table table-cols-6" style="--first-col:65px; --last-col:140px; --minw:800px">
         <thead>
             <tr>
@@ -43,7 +43,7 @@
                     @if($message->date_to) {{ __('elfcms::default.to_date') . ' ' . $message->date_to }} @endif
                 </td>
                 <td>{{ $message->active != 1 ? __('elfcms::default.inactive') : '' }}</td>
-                <td class="button-column non-text-buttons">
+                <td class="table-button-column">
                     <a href="{{ route('admin.messages.edit',$message) }}" class="button edit-button" title="{{ __('elfcms::default.edit_message') }}"></a>
                     <form action="{{ route('admin.messages.update',$message) }}" method="POST">
                         @csrf
@@ -60,7 +60,10 @@
                         @method('DELETE')
                         <input type="hidden" name="id" value="{{ $message->id }}">
                         <input type="hidden" name="name" value="{{ $message->name }}">
-                        <button type="submit" class="button delete-button" title="{{ __('elfcms::default.delete') }}"></button>
+                        <button type="submit" class="button icon-button icon-alarm-button"
+                                        title="{{ __('elfcms::default.delete') }}">
+                                        {!! iconHtmlLocal('elfcms/admin/images/icons/buttons/delete.svg', svg: true) !!}
+                                    </button>
                     </form>
                 </td>
             </tr>
