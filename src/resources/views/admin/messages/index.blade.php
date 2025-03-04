@@ -17,7 +17,7 @@
 </div>
 @endif
 <div class="grid-table-wrapper">
-    <table class="grid-table table-cols-6" style="--first-col:65px; --last-col:140px; --minw:800px">
+    <table class="grid-table table-cols-6" style="--first-col:65px; --last-col:140px; --minw:800px; --cols-count:7;">
         <thead>
             <tr>
                 <th>ID</th>
@@ -88,7 +88,7 @@
                     buttons:[
                         {
                             title:'{{ __('elfcms::default.delete') }}',
-                            class:'button delete-button',
+                            class:'button color-button red-button',
                             callback: function(){
                                 self.submit()
                             }

@@ -990,8 +990,11 @@ footer {
 }
 .inputfile-buttons {
     position: absolute;
-    top: 0.25rem;
-    right: 0.25rem;
+    top: 0.125rem;
+    right: 0.125rem;
+    padding: 0.125rem;
+    background-color: var(--shade-color-30);
+    border-radius: var(--bradius-small);
     display: flex;
     flex-direction: column;
     gap: 0.25rem;
@@ -1287,12 +1290,18 @@ footer {
     grid-template-columns: repeat(6, auto);
 }
 
+.sb-input-options-table .options-table-head,
 .input-options-table .options-table-head {
     padding: var(--main-padding-tiny);
 }
+.sb-input-options-table .options-table-string,
 .input-options-table .options-table-string {
     text-align: center;
     padding: var(--main-padding-tiny);
+}
+.sb-input-options-table {
+    display: grid;
+    grid-template-columns: repeat(4, auto);
 }
 
 /* --- */

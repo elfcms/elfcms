@@ -36,7 +36,7 @@ class FragmentItemController extends Controller
 
         return view('elfcms::admin.fragment.items.index', [
             'page' => [
-                'title' => __('elfcms::default.fragment') . ' ' . __('elfcms::default.items'),
+                'title' => __('elfcms::default.fragments'),
                 'current' => url()->current(),
             ],
             'items' => $items,
@@ -56,7 +56,7 @@ class FragmentItemController extends Controller
         $data_types = DataType::whereIn('code', $filterData)->get();
         return view('elfcms::admin.fragment.items.create', [
             'page' => [
-                'title' => __('elfcms::default.fragment') . ' ' . __('elfcms::default.items'),
+                'title' => __('elfcms::default.fragment'),
                 'current' => url()->current(),
             ],
             'data_types' => $data_types
@@ -110,6 +110,10 @@ class FragmentItemController extends Controller
             }
         }
 
+        if ($request->input('submit') == 'save_and_close') {
+            return redirect(route('admin.fragment.items'))->with('success',__('elfcms::default.page_created_successfully'));
+        }
+
         return redirect(route('admin.fragment.items.edit', $item->id))->with('success', __('elfcms::default.item_created_successfully'));
     }
 
@@ -144,7 +148,7 @@ class FragmentItemController extends Controller
         $typeCodes = ['int', 'float', 'date', 'datetime'];
         return view('elfcms::admin.fragment.items.edit', [
             'page' => [
-                'title' => __('elfcms::default.fragment') . ' ' . __('elfcms::default.item') . '#' . $item->id,
+                'title' => __('elfcms::default.fragment') . '#' . $item->id,
                 'current' => url()->current(),
             ],
             'item' => $item,
@@ -229,6 +233,10 @@ class FragmentItemController extends Controller
         }
 
         $item->save();
+
+        if ($request->input('submit') == 'save_and_close') {
+            return redirect(route('admin.fragment.items'))->with('success',__('elfcms::default.page_created_successfully'));
+        }
 
         return redirect(route('admin.fragment.items.edit', $item->id))->with('success', __('elfcms::default.item_edited_successfully'));
     }

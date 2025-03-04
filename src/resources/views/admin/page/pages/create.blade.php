@@ -49,7 +49,7 @@
                 <div class="input-box colored">
                     <label for="image">{{ __('elfcms::default.image') }}</label>
                     <div class="input-wrapper">
-                        <x-elf-input-file value="" :params="['name' => 'image', 'value_name' => 'image_path']" :download="true" />
+                        <x-elf-input-file value="" :params="['name' => 'image']" :download="true" />
                     </div>
                 </div>
                 <div class="input-box colored">

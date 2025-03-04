@@ -19,7 +19,7 @@
         @csrf
         <div class="grid-table-wrapper">
             <table class="grid-table filestorage-type-table table-cols-9"
-                style="--first-col:60px; --last-col:100px; --minw:800px">
+                style="--first-col:60px; --last-col:100px; --minw:800px; --cols-count:7;">
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -278,7 +278,7 @@
                             buttons:[
                                 {
                                     title:'OK',
-                                    class:'button delete-button',
+                                    class:'button color-button red-button',
                                     callback:'close'
                                 }
                             ],

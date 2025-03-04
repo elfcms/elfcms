@@ -431,6 +431,7 @@ return [
     'error_of_item_deleting' => 'Error of item deleting',
     'item_deleted_successfully' => 'Item deleted successfully',
     'fragment' => 'Fragment',
+    'fragments' => 'Fragments',
     'option' => 'Option',
     'options' => 'Options',
     'type' => 'Type',

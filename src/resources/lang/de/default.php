@@ -431,6 +431,7 @@ return [
     'error_of_item_deleting' => 'Fehler beim Löschen des Elements',
     'item_deleted_successfully' => 'Element wurde erfolgreich gelöscht',
     'fragment' => 'Fragment',
+    'fragments' => 'Fragmente',
     'option' => 'Option',
     'options' => 'Optionen',
     'type' => 'Typ',
