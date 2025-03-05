@@ -101,9 +101,9 @@
                 </div>
             </div>
             <div class="button-box single-box">
-                <button type="submit" class="button color-button green-button">{{ __('elfcms::default.submit') }}</button>
-                <button type="submit" name="submit" value="save_and_close" class="button color-button blue-button">{{ __('elfcms::default.save_and_close') }}</button>
-                <a href="{{ route('admin.page.pages') }}" class="button">{{ __('elfcms::default.cancel') }}</a>
+                <button type="submit" class="button color-text-button green-button">{{ __('elfcms::default.submit') }}</button>
+                <button type="submit" name="submit" value="save_and_close" class="button color-text-button blue-button">{{ __('elfcms::default.save_and_close') }}</button>
+                <a href="{{ route('admin.page.pages') }}" class="button color-text-button">{{ __('elfcms::default.cancel') }}</a>
             </div>
         </form>
     </div>

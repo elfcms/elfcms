@@ -1,23 +1,10 @@
-@extends('elfcms::admin.layouts.default')
+@extends('elfcms::admin.layouts.main')
 @section('head')
     <link rel="stylesheet" href="{{ asset('elfcms/admin//css/filestorage.css') }}">
 @endsection
 @inject('image', 'Elfcms\Elfcms\Aux\Image')
 
-@section('innerpage-content')
-
-@if (Session::has('success'))
-<div class="alert alert-alternate">{{ Session::get('success') }}</div>
-@endif
-@if ($errors->any())
-<div class="alert alert-danger">
-    <ul>
-        @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-        @endforeach
-    </ul>
-</div>
-@endif
+@section('pagecontent')
 
 <div class="filestorage-info-box">
     {{-- <div class="filestorage-preview-box">

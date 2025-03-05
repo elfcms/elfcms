@@ -1,20 +1,6 @@
-@extends('elfcms::admin.layouts.form')
-@section('head')
-    <link rel="stylesheet" href="{{ asset('elfcms/admin/css/popnotifi.css') }}">
-@endsection
-@section('formpage-content')
-    @if (Session::has('success'))
-        <div class="alert alert-alternate">{{ Session::get('success') }}</div>
-    @endif
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+@extends('elfcms::admin.layouts.main')
+
+@section('pagecontent')
 
     <div class="table-search-box">
         <a href="{{ route('admin.forms.groups.create', $form) }}"
@@ -93,14 +79,14 @@
                         content: '<p>{{ __('elfcms::default.are_you_sure_to_deleting_group') }}</p>',
                         buttons: [{
                                 title: '{{ __('elfcms::default.delete') }}',
-                                class: 'button color-button red-button',
+                                class: 'button color-text-button red-button',
                                 callback: function() {
                                     self.submit()
                                 }
                             },
                             {
                                 title: '{{ __('elfcms::default.cancel') }}',
-                                class: 'button cancel-button',
+                                class: 'button color-text-button',
                                 callback: 'close'
                             }
                         ],
@@ -118,7 +104,7 @@
 @endsection --}}
 @once
     @push('footerscript')
-        <script src="{{ asset('elfcms/admin/js/popnotifi.js') }}"></script>
+        {{-- <script src="{{ asset('elfcms/admin/js/popnotifi.js') }}"></script> --}}
         <script src="{{ asset('elfcms/admin/js/grouporder.js') }}"></script>
         <script src="{{ asset('elfcms/admin/js/fieldorder.js') }}"></script>
     @endpush

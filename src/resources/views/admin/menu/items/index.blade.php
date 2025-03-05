@@ -105,14 +105,14 @@
                             itemName + '" (ID ' + itemId + ')?</p>',
                         buttons: [{
                                 title: '{{ __('elfcms::default.delete') }}',
-                                class: 'button color-button red-button',
+                                class: 'button color-text-button red-button',
                                 callback: function() {
                                     self.submit()
                                 }
                             },
                             {
                                 title: '{{ __('elfcms::default.cancel') }}',
-                                class: 'button cancel-button',
+                                class: 'button color-text-button',
                                 callback: 'close'
                             }
                         ],

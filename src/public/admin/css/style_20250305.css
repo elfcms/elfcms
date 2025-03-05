@@ -716,32 +716,6 @@ footer {
         center / contain;
 }
 
-.input-box .wrap-wrapper {
-    display: flex;
-    flex-wrap: wrap;
-    gap: .5em;
-    max-width: calc(100% - 200px);
-}
-.input-column {
-    display: flex;
-    flex-direction: column;
-    gap: 1.2em .5em;
-    min-width: 100px;
-}
-.input-column:not(:last-child) {
-    border-right: .0625rem solid var(--shade-color-20);
-    padding-right: .125rem;
-}
-.input-column.hidden-column {
-    display: none;
-}
-
-.small-checkbox-wrapper {
-    display: flex;
-    align-items: center;
-    gap: .5em;
-}
-
 /* Buttons */
 
 .button {
@@ -750,10 +724,9 @@ footer {
     align-items: center;
     font-size: 1rem;
     font-weight: var(--fw-400-inv);
-    height: 2.5rem;
     padding: 0.625em 1em;
     background-color: var(--text-color-middle);
-    border-radius: 1.25rem;
+    border-radius: var(--bradius-tiny);
     color: var(--background-color-default);
     cursor: pointer;
     border: 0;
@@ -815,7 +788,7 @@ footer {
 .round-button {
     height: 2.5em;
     min-width: 2.5rem;
-    padding: 0.625em 0.625em;
+    padding: 0.5em 0.5em;
     border-radius: 1.25em;
 }
 
@@ -843,26 +816,6 @@ footer {
 }
 .theme-button:hover {
     box-shadow: 0.125rem 0.125rem 0.75rem 0 var(--shade-color-30),
-        inset 0.0625rem 0.0625rem 0.0625rem 0 var(--background-color-light),
-        inset -0.0625rem -0.0625rem 0.0625rem 0 var(--background-color-default);
-}
-
-.color-text-button {
-    background-color: var(--background-color-default);
-    background-image: linear-gradient(
-        to top,
-        var(--background-color-light),
-        var(--background-color-default)
-    );
-    color: var(--button-color, var(--text-color-default));
-    font-weight: var(--fw-400);
-    box-shadow: 0.125rem 0.125rem 0.5rem 0 var(--shade-color-30),
-        inset 0.0625rem 0.0625rem 0.0625rem 0 var(--background-color-light),
-        inset -0.0625rem -0.0625rem 0.0625rem 0 var(--background-color-default);
-}
-
-.color-text-button:hover {
-    box-shadow: 0 0 0.75rem -0.125rem currentColor,
         inset 0.0625rem 0.0625rem 0.0625rem 0 var(--background-color-light),
         inset -0.0625rem -0.0625rem 0.0625rem 0 var(--background-color-default);
 }
@@ -1019,129 +972,10 @@ footer {
 .autoslug-wrapper {
     --autoslug-icon: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjQiIGhlaWdodD0iMjQiIHZpZXdCb3g9IjAgMCAyNCAyNCIgdmVyc2lvbj0iMS4xIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPjxwYXRoIGQ9Ik0gMTEgMS4wNTA3ODEyIEMgOC43MSAxLjI1MDc4MTIgNi42NDA3MDMxIDIuMTcwNTQ2OSA0Ljk3MDcwMzEgMy41NjA1NDY5IEwgNi4zOTA2MjUgNC45ODA0Njg4IEMgNy43MTMzNzI0IDMuOTE0OTg0MiA5LjMxMTk4MjggMy4yNDkwMDM0IDExIDMuMDYwNTQ2OSBMIDExIDEuMDUwNzgxMiB6IE0gMTMgMS4wNTA3ODEyIEwgMTMgMy4wNjA1NDY5IEMgMTQuNzMgMy4yNTA1NDY5IDE2LjMwOTM3NSAzLjk0MDQ2ODggMTcuNjA5Mzc1IDQuOTgwNDY4OCBMIDE5LjAyOTI5NyAzLjU2MDU0NjkgQyAxNy4zNTkyOTcgMi4xNzA1NDY5IDE1LjI5IDEuMjYwNzgxMiAxMyAxLjA1MDc4MTIgeiBNIDMuNTYwNTQ2OSA0Ljk3MDcwMzEgQyAyLjE3MDU0NjkgNi42NDA3MDMxIDEuMjYwNzgxMiA4LjcxIDEuMDUwNzgxMiAxMSBMIDMuMDYwNTQ2OSAxMSBDIDMuMjUwNTQ2OSA5LjI3IDMuOTQwNDY4NyA3LjY5MDYyNSA0Ljk4MDQ2ODggNi4zOTA2MjUgTCAzLjU2MDU0NjkgNC45NzA3MDMxIHogTSAyMC40Mzk0NTMgNC45NzA3MDMxIEwgMTkuMDE5NTMxIDYuMzkwNjI1IEMgMjAuMDg1MDE2IDcuNzEzMzcyNCAyMC43NTA5OTcgOS4zMTE5ODI4IDIwLjkzOTQ1MyAxMSBMIDIyLjk0OTIxOSAxMSBDIDIyLjczOTIxOSA4LjcxIDIxLjgyOTQ1MyA2LjY0MDcwMzEgMjAuNDM5NDUzIDQuOTcwNzAzMSB6IE0gMTEuNTA3ODEyIDggQyA5LjUzMzQzNTcgOCA4IDkuMzUxMzYzMSA4IDExLjQ3NDYwOSBDIDggMTMuNjk5NzYxIDkuNjMyMTIwMiAxNSAxMS40OTQxNDEgMTUgQyAxMi4wMDAwNTkgMTUgMTMuMjY0NjI1IDE0Ljg5MzI2NCAxNC4wNDQ5MjIgMTMuODk4NDM4IEwgMTQuMjU3ODEyIDE0Ljg5MDYyNSBMIDE2LjIxMDkzOCAxNC44OTA2MjUgTCAxNiAxNCBMIDE2IDggTCAxNC4wNDQ5MjIgOC41MTM2NzE5IEwgMTQuMDQ0OTIyIDkuMDc2MTcxOSBDIDEzLjc2MTU1OCA4LjczNjczNzYgMTIuOTc2OTA2IDggMTEuNTA3ODEyIDggeiBNIDEyLjAwNzgxMiA5LjUwNTg1OTQgQyAxMi45MDQ4NzggOS41MDU4NTk0IDE0LjA0NDkyMiAxMC4wNzk2NTMgMTQuMDQ0OTIyIDExLjUgQyAxNC4wNDQ5MjIgMTIuODczNzY4IDEyLjk5MTY0NCAxMy40OTQxNDEgMTIuMDA3ODEyIDEzLjQ5NDE0MSBDIDExLjA2MjIzNiAxMy40OTQxNDEgOS45ODI0MjE5IDEyLjg0NDg0MiA5Ljk4MjQyMTkgMTEuNDc0NjA5IEMgOS45ODI0MjE5IDEwLjE3MTAwMiAxMC45OTc3OTYgOS41MDU4NTk0IDEyLjAwNzgxMiA5LjUwNTg1OTQgeiBNIDIwLjQ4MDQ2OSAxNC45OTAyMzQgQyAxOS4yNTA0NjkgMTguNDgwMjM0IDE1LjkyIDIxIDEyIDIxIEEgOC45NiA4Ljk2IDAgMCAxIDQuNTM5MDYyNSAxNyBMIDcgMTcgTCA3IDE1IEwgMSAxNSBMIDEgMjEgTCAzIDIxIEwgMyAxOC4zMDA3ODEgQyA0Ljk5IDIxLjE0MDc4MSA4LjI3IDIzIDEyIDIzIEMgMTYuODcgMjMgMjAuOTk5NDUzIDE5LjgyOTQ1MyAyMi40Mzk0NTMgMTUuNDM5NDUzIEwgMjAuNDgwNDY5IDE0Ljk5MDIzNCB6ICIgLz48L3N2Zz4K);
 }
-.delete-box-wrapper {
-    --autoslug-icon: url(data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0OCIgaGVpZ2h0PSI0OCIgdmlld0JveD0iMCAtOTYwIDk2MCA5NjAiPjxwYXRoIGQ9Ik0yNTkuMDktMTE0LjAycS0yOC41OSAwLTQ4LjQ4LTE5Ljc3LTE5Ljg5LTE5Ljc4LTE5Ljg5LTQ4LjM2di01NjUuOTRoLTExcS0xNC42OCAwLTI0LjM3LTkuNjktOS43LTkuNy05LjctMjQuMzcgMC0xNC42OCA5LjctMjQuMzcgOS42OS05LjcgMjQuMzctOS43aDE2NC4yMXEwLTE0LjY3IDkuNy0yNC40OSA5LjctOS44MSAyNC4zNy05LjgxaDIwMy43NnExNC42NyAwIDI0LjM3IDkuODEgOS43IDkuODIgOS43IDI0LjQ5aDE2NC40NXExNC42OCAwIDI0LjM3IDkuNyA5LjcgOS42OSA5LjcgMjQuMzcgMCAxNC42Ny05LjcgMjQuMzctOS42OSA5LjY5LTI0LjM3IDkuNjloLTExdjU2NS45NHEwIDI4LjU4LTE5Ljg5IDQ4LjM2LTE5Ljg5IDE5Ljc3LTQ4LjQ4IDE5Ljc3SDI1OS4wOVpNNDgwLTQxNi44OWw5NC4wOSA5NC44NXExMC40OCAxMC43MSAyNS40MyAxMS4wOSAxNC45Ni4zOCAyNS42OC0xMS4wOSAxMC40Ny0xMC43MiAxMC40Ny0yNS4wNiAwLTE0LjMzLTEwLjQ3LTI1LjA1TDUzMS4xMS00NjhsOTQuMDktOTYuMDlxMTAuNDctMTAuNDggMTAuNDctMjQuOTMgMC0xNC40Ni0xMC40Ny0yNS4xOC0xMC43Mi0xMC40Ny0yNS42OC0xMC40Ny0xNC45NSAwLTI1LjQzIDEwLjQ3TDQ4MC01MTkuMTFsLTkzLjA5LTk1LjA5cS0xMC40OC0xMC40Ny0yNS4zMS0xMC40Ny0xNC44NCAwLTI1LjU2IDEwLjQ3LTEwLjQ3IDEwLjcyLTEwLjQ3IDI1LjY4IDAgMTQuOTUgMTAuNDcgMjUuNDNMNDI5Ljg5LTQ2OGwtOTMuODUgOTUuMDlxLTEwLjcxIDEwLjQ4LTEwLjU5IDI1LjMxLjEyIDE0Ljg0IDEwLjU5IDI1LjU2IDEwLjcyIDEwLjQ3IDI1LjU2IDEwLjQ3IDE0LjgzIDAgMjUuNTUtMTAuNDdMNDgwLTQxNi44OVoiLz48L3N2Zz4=);
-}
-.autoslug-wrapper i::after,
-.delete-box-wrapper i::after {
-    content: "";
-    position: absolute;
+.autoslug-wrapper i {
     -webkit-mask: var(--autoslug-icon) no-repeat center / contain;
     mask: var(--autoslug-icon) no-repeat center / contain;
     box-shadow: 0 0 0 0 var(--background-color-shade);
-}
-.autoslug-wrapper i::after {
-    top: 0.125em;
-    left: 0.125em;
-    width: calc(100% - 0.25em);
-    height: calc(100% - 0.25em);
-    background-color: var(--background-color-bright);
-}
-.delete-box-wrapper i::after {
-    top: 0.25em;
-    left: 0.1875em;
-    width: calc(100% - 0.5em);
-    height: calc(100% - 0.5em);
-    background-color: var(--light-color-90);
-}
-
-.switchbox.hidden {
-    display: none;
-}
-
-/* Checbox small */
-
-.small-checkbox {
-    display: block;
-    position: relative;
-    width: 1em;
-    height: 1em;
-}
-
-.small-checkbox input[type="checkbox"] {
-    z-index: 2;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    opacity: 0;
-    cursor: pointer;
-}
-
-.small-checkbox i {
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 1em;
-    height: 1em;
-    border-radius: 30%;
-    border: 0.1em solid var(--text-color-second);
-    color: var(--checkbox-color,var(--text-color-default));
-}
-.small-checkbox input[type="checkbox"]:checked ~ i::after {
-    content: "";
-    display: block;
-    position: absolute;
-    top: -10%;
-    left: 10%;
-    rotate: -45deg;
-    border-left: 0.15em solid currentColor;
-    border-bottom: 0.15em solid currentColor;
-    width: 1em;
-    height: 0.45em;
-}
-
-/* Checkbox icons */
-
-.icon-checkbox-round {
-    display: block;
-    position: relative;
-    font-size: 1.25rem;
-    width: 1em;
-    height: 1em;
-    /* border-radius: 50%;
-    border: .0625em solid currentColor; */
-    color: var(--text-color-second);
-    margin-top: .25em;
-}
-
-.icon-checkbox-round.checked::after {
-    content: "";
-    display: block;
-    position: absolute;
-    top: -10%;
-    left: 10%;
-    rotate: -45deg;
-    border-left: 0.125em solid currentColor;
-    border-bottom: .125em solid currentColor;
-    width: .75em;
-    height: .375em;
-}
-.icon-checkbox-round.checked {
-    color: var(--green-color);
-}
-
-.icon-checkbox-round.failed {
-    color: var(--red-color);
-}
-.icon-checkbox-round.failed::before,
-.icon-checkbox-round.failed::after {
-    content: "";
-    display: block;
-    position: absolute;
-    top: 41%;
-    left: 0;
-    background-color: currentColor;
-    width: 1em;
-    height: 0.125em;
-}
-.icon-checkbox-round.failed::before {
-    rotate: -45deg;
-}
-.icon-checkbox-round.failed::after {
-    rotate: 45deg;
 }
 
 /* Input file image */
@@ -1587,8 +1421,8 @@ footer {
     background-color: var(--second-color, var(--gold-color));
     color: var(--text-color-default);
     border-radius: var(--bradius-medium) 0 0 var(--bradius-medium);
-    padding: 1rem 0.25rem;
-    font-size: 0.8125rem;
+    padding: 1rem .25rem;
+    font-size: .8125rem;
     cursor: grab;
     position: relative;
 }
@@ -1652,8 +1486,8 @@ footer {
     display: flex;
     flex-direction: column;
     gap: var(--main-padding-small);
-    padding: 1rem 0.25rem;
-    font-size: 0.8125rem;
+    padding: 1rem .25rem;
+    font-size: .8125rem;
 }
 
 .menu-item-box {
@@ -1717,10 +1551,10 @@ footer {
 }
 
 .menu-item-subitems {
-    padding: 0.625rem 1rem;
+    padding: .625rem 1rem;
     display: flex;
     flex-direction: column;
-    gap: 0.25rem;
+    gap: .25rem;
     min-height: 2rem;
 }
 

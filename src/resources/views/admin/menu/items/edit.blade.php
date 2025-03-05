@@ -109,10 +109,10 @@
             </div>
             <div class="button-box single-box">
                 <button type="submit" name="submit" value="save"
-                    class="button color-button green-button">{{ __('elfcms::default.submit') }}</button>
+                    class="button color-text-button green-button">{{ __('elfcms::default.submit') }}</button>
                 <button type="submit" name="submit" value="save_and_close"
-                    class="button color-button blue-button">{{ __('elfcms::default.save_and_close') }}</button>
-                <a href="{{ route('admin.menus.show',$menu) }}" class="button">{{ __('elfcms::default.cancel') }}</a>
+                    class="button color-text-button blue-button">{{ __('elfcms::default.save_and_close') }}</button>
+                <a href="{{ route('admin.menus.show',$menu) }}" class="button color-text-button">{{ __('elfcms::default.cancel') }}</a>
             </div>
         </form>
     </div>

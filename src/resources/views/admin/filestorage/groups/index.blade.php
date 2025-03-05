@@ -1,24 +1,10 @@
-@extends('elfcms::admin.layouts.default')
-@section('innerpage-content')
-{{-- <div class="pagenav">
-    <a href="{{ route('admin.filestorage.groups.edit', $infobox) }}">{{ __('infobox::default.infobox') . ' "' . $infobox->title . '"' }}</a>
-</div> --}}
-    @if (Session::has('action_result'))
-    <div class="alert alert-alternate">{{ Session::get('action_result') }}</div>
-    @endif
-    @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-    @endif
+@extends('elfcms::admin.layouts.main')
+
+@section('pagecontent')
 <form name="groupform" class="data-table-box" method="post" action="{{ route('admin.ajax.filestorage.group.fullsave') }}">
     @csrf
     <div class="grid-table-wrapper">
-        <table class="grid-table filestorage-group-table table-cols-7" style="--first-col:60px; --last-col:100px; --minw:800px; --cols-count:7;">
+        <table class="grid-table filestorage-group-table table-cols" style="--first-col:60px; --last-col:100px; --minw:800px; --cols-count:7;">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -28,7 +14,7 @@
                     <th>{{ __('elfcms::default.description') }}</th>
                     <th>{{ __('elfcms::default.mime_prefix') }}</th>
                     {{-- <th>{{ __('infobox::default.is_filter') }}</th> --}}
-                    <th></th>
+                    <th>{{ __('elfcms::default.delete') }}</th>
                 </tr>
             </thead>
             <tbody>
@@ -37,9 +23,12 @@
         </table>
     </div>
     <div class="dynamic-table-buttons">
-        <button class="button alternate-button" title="{{__('elfcms::default.add_group')}}" data-action="additem">{{ __('elfcms::default.add_group') }}</button>
+        <button class="button round-button theme-button" title="{{__('elfcms::default.add_group')}}" data-action="additem">
+            {!! iconHtmlLocal('elfcms/admin/images/icons/plus.svg', svg: true) !!}
+            <span class="button-collapsed-text">{{ __('elfcms::default.add_group') }}</span>
+        </button>
         {{-- <button class="button" title="{{__('elfcms::default.reset_button')}}" data-action="reset">{{ __('elfcms::default.reset_button') }}</button> --}}
-        <button type="submit" class="button submit-button" disabled="" data-action="save">{{ __('elfcms::default.save') }}</button>
+        <button type="submit" class="button color-text-button green-button" disabled="" data-action="save">{{ __('elfcms::default.save') }}</button>
     </div>
 </form>
     <script>
@@ -67,69 +56,6 @@
             unitListData = await response.json();
             return unitListData;
         }
-
-        /* function showOptions(element) {
-            if (typeof element === 'string') {
-                element = document.querySelector(element);
-            }
-            if (!element || !(element instanceof HTMLSelectElement)) {
-                return false;
-            }
-            const row = element.closest('tr[data-id="' + element.dataset.id + '"]');
-            if (row) {
-                const subrow = row.querySelector('.table-subrow');
-                if (subrow) {
-                    if (element.options[element.selectedIndex].dataset.code == 'list') {
-                        subrow.classList.add('showed');
-                    }
-                    else {
-                        subrow.classList.remove('showed');
-                    }
-                }
-            }
-        }
-
-        function addOption(button,isnew=true) {
-            if (typeof button === 'string') {
-                button = document.querySelector(button);
-            }
-            if (!button || !(button instanceof HTMLElement)) {
-                return false;
-            }
-            let newprop = 'new';
-            if (!isnew) {
-                newprop = '';
-            }
-            const table = button.closest('.infobox-option-table');
-            //const parent = button.closest('tr[data-id]');
-            if (table) {
-                const box = table.querySelector('.infobox-option-table-body');
-                if (box) {
-                    let i = 0;
-                    const rows = box.querySelectorAll('.infobox-option-table-row');
-                    if (rows && rows.length && rows.length > 0) {
-                        i = rows.length;
-                    }
-                    const rowString = `
-                    <div class="infobox-option-table-row">
-                        <div class="infobox-option-table-column">
-                            <input type="text" name="${newprop}property[${button.dataset.id}][options][${i}][key]" value="" oninput="checkOptionChange(this)" data-loop="${i}" data-name="key">
-                        </div>
-                        <div class="infobox-option-table-column">
-                            <input type="text" name="${newprop}property[${button.dataset.id}][options][${i}][value]" value="" oninput="checkOptionChange(this)" data-loop="${i}" data-name="value">
-                        </div>
-                        <div class="infobox-option-table-column">
-                            <div class="checkbox-switch red">
-                                <input type="checkbox" name="${newprop}property[${button.dataset.id}][options][${i}][delete]" value="1" oninput="checkOptionChange(this)" data-loop="${i}" data-name="delete">
-                                <i></i>
-                            </div>
-                        </div>
-                    </div>
-                    `;
-                    box.insertAdjacentHTML('beforeend',rowString);
-                }
-            }
-        } */
 
         let startPreload = preloadSet('form[name="groupform"]');
 
@@ -179,7 +105,7 @@
                     buttons:[
                         {
                             title:'OK',
-                            class:'button alternate-button',
+                            class:'button color-text-button blue-button',
                             callback: [
                                 saveForm,
                                 'close'
@@ -187,7 +113,7 @@
                         },
                         {
                             title:'{{__("elfcms::default.cancel")}}',
-                            class:'button cancel-button',
+                            class:'button color-text-button',
                             callback:'close'
                         }
                     ],
@@ -230,7 +156,7 @@
                                     buttons:[
                                         {
                                             title:'OK',
-                                            class:'button alternate-button',
+                                            class:'button color-text-button blue-button',
                                             callback:'close'
                                         }
                                     ],
@@ -248,7 +174,7 @@
                                         buttons:[
                                             {
                                                 title:'OK',
-                                                class:'button color-button red-button',
+                                                class:'button color-text-button red-button',
                                                 callback:'close'
                                             }
                                         ],

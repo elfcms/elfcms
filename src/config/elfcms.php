@@ -130,7 +130,8 @@ return [
         ],
         'filestorage' => [
             'driver' => 'local',
-            'root' => storage_path('app/elfcms/packages/filestorage'),
+            'root' => storage_path('app/elfcms/filestorage'),
+            'url' => env('APP_URL').'/storage',
         ],
     ],
 

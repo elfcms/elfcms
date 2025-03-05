@@ -26,7 +26,7 @@ class Filestorage
         return pathinfo($file, PATHINFO_EXTENSION);
     }
 
-    public static function file_path(string $file = null, bool $full = false, $disk = null)
+    public static function file_path(string|null $file = null, bool $full = false, $disk = null)
     {
         if (!$disk) $disk = env('FILESYSTEM_DISK');
         $path = config('filesystems.disks.' . $disk . '.root');

@@ -17,6 +17,10 @@ class FilestorageController extends Controller
      */
     public function index()
     {
+        $groups = new FilestorageFilegroup();
+        $groups->start();
+        $types = new FilestorageFiletype();
+        $types->start();
         $storages = Filestorage::all();
         return view('elfcms::admin.filestorage.index',[
             'page' => [

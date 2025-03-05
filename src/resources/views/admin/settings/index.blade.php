@@ -242,7 +242,7 @@
                 @endforeach
             </div>
             <div class="button-box single-box">
-                <button type="submit" class="button color-button green-button">{{ __('elfcms::default.submit') }}</button>
+                <button type="submit" class="button color-text-button green-button">{{ __('elfcms::default.submit') }}</button>
             </div>
         </form>
     </div>
@@ -257,12 +257,12 @@
                         content: '<p>{!! __('elfcms::default.user_data_warning_html') !!}</p>',
                         buttons: [{
                                 title: '{{ __('elfcms::default.confirm') }}',
-                                class: 'button color-button red-button',
+                                class: 'button color-text-button red-button',
                                 callback: 'close'
                             },
                             {
                                 title: '{{ __('elfcms::default.cancel') }}',
-                                class: 'button cancel-button',
+                                class: 'button color-text-button',
                                 callback: [
                                     function() {
                                         self.checked = false;
@@ -286,12 +286,12 @@
                         content: '<p>{!! __('elfcms::default.are_you_sure_to_enable_maintenance_mode') !!}</p>',
                         buttons: [{
                                 title: '{{ __('elfcms::default.confirm') }}',
-                                class: 'button color-button red-button',
+                                class: 'button color-text-button red-button',
                                 callback: 'close'
                             },
                             {
                                 title: '{{ __('elfcms::default.cancel') }}',
-                                class: 'button cancel-button',
+                                class: 'button color-text-button',
                                 callback: [
                                     function() {
                                         self.checked = false;
@@ -309,12 +309,12 @@
                         content: '<p>{!! __('elfcms::default.are_you_sure_to_disable_maintenance_mode') !!}</p>',
                         buttons: [{
                                 title: '{{ __('elfcms::default.confirm') }}',
-                                class: 'button color-button red-button',
+                                class: 'button color-text-button red-button',
                                 callback: 'close'
                             },
                             {
                                 title: '{{ __('elfcms::default.cancel') }}',
-                                class: 'button cancel-button',
+                                class: 'button color-text-button',
                                 callback: [
                                     function() {
                                         self.checked = false;

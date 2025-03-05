@@ -104,7 +104,7 @@ if (!function_exists('imgResizeCache')) {
 
 if (!function_exists('data_path')) {
 
-    function data_path(string $path = null)
+    function data_path(string|null $path = null)
     {
         return Files::data_path($path);
     }
@@ -112,7 +112,7 @@ if (!function_exists('data_path')) {
 
 if (!function_exists('file_path')) {
 
-    function file_path(string $file = null, bool $full = false, $disk = null)
+    function file_path(string|null $file = null, bool $full = false, $disk = null)
     {
         return Files::file_path($file, $full, $disk);
     }
@@ -120,7 +120,7 @@ if (!function_exists('file_path')) {
 
 if (!function_exists('iconHtml')) {
 
-    function iconHtml(string $file = null, int $width = null, int $height = null, bool $svg = false)
+    function iconHtml(string|null $file = null, int|null $width = null, int|null $height = null, bool $svg = false)
     {
         return Files::iconHtml($file, $width, $height, $svg);
     }
@@ -128,7 +128,7 @@ if (!function_exists('iconHtml')) {
 
 if (!function_exists('iconHtmlLocal')) {
 
-    function iconHtmlLocal(string $file = null, int $width = null, int $height = null, bool $svg = false)
+    function iconHtmlLocal(string|null $file = null, int|null $width = null, int|null $height = null, bool $svg = false)
     {
         return Files::iconHtmlLocal($file, $width, $height, $svg);
     }
@@ -197,9 +197,9 @@ if (!function_exists('fsMime')) {
 
 if (!function_exists('fsFile')) {
 
-    function fsFile($file)
+    function fsFile($file,$asString)
     {
-        return Filestorage::file($file);
+        return Filestorage::file($file,$asString);
     }
 
 }

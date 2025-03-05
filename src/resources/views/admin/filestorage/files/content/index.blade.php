@@ -45,7 +45,7 @@ if (submitItems) {
                 buttons:[
                     {
                         title:'{{__("elfcms::default.delete")}}',
-                        class:'button color-button red-button',
+                        class:'button color-text-button red-button',
                         callback: [
                             function(){
                                 fileListSave (form);
@@ -55,7 +55,7 @@ if (submitItems) {
                     },
                     {
                         title:'{{__("elfcms::default.cancel")}}',
-                        class:'button cancel-button',
+                        class:'button color-text-button',
                         callback:'close'
                     }
                 ],
@@ -181,7 +181,7 @@ function filesUpload (files) {
                 },
                 {
                     title:'OK',
-                    class:'button alternate-button',
+                    class:'button color-text-button blue-button',
                     callback: [
                         function(){
                             for(key in files) {
@@ -275,7 +275,7 @@ function fileUpload (file, key = null) {
                 buttons:[
                     {
                         title:'OK',
-                        class:'button cancel-button',
+                        class:'button color-text-button',
                         callback:[
                             function(){
                                 fileItem.remove();
