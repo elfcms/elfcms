@@ -13,7 +13,7 @@
         <link rel="stylesheet" href="{{ asset('elfcms/admin/fonts/afacad/afacad.css') }}">
         {{-- <link rel="stylesheet" href="{{ asset('elfcms/admin/fonts/teachers/teachers.css') }}"> --}}
         <link rel="stylesheet" href="{{ asset('elfcms/admin/fonts/inter/inter.css') }}">
-        <link rel="stylesheet" href="{{ asset('elfcms/admin/css/gnommy.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('elfcms/admin/css/gnommy.css') }}">
         <link rel="stylesheet" href="{{ asset('elfcms/admin/notify/notify.css') }}">
         @foreach ($admin_styles as $style)
             <link rel="stylesheet" href="{{ asset($style) }}">

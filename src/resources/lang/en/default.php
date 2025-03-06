@@ -565,6 +565,19 @@ return [
     'marked_items_will_be_removed' => 'Marked items will be removed',
     'are_you_sure' => 'Are you sure?',
 
+    'deleting_files' => 'Deleting fils',
+    'marked_files_will_be_removed' => 'Marked files will be removed.',
+    'edit_filestorage' => 'Edit file storage',
+    'filestorage_edited_successfully' => 'File storage edited successfully',
+    'filestorage_deleted_successfully' => 'File storage deleted successfully',
+    'filestorage_save_error' => 'File storage save error',
+    'filestorage_delete_error' => 'Error of file storage deleting',
+    'create_filestorage' => 'Create file storage',
+    'edit_filestorage_params' => 'Edit file storage parameters',
+
+    'following_files_will_be_uploaded' => 'Following files will be uploaded.',
+    'file_upload' => 'File upload',
+
     'mime_prefix' => 'MIME-prefix',
     'mime_type' => 'MIME-type',
     'mime_types' => 'MIME-types',

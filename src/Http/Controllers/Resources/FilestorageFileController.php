@@ -90,6 +90,7 @@ class FilestorageFileController extends Controller
                 'mimes' => $mimes,
                 'groups' => $groups,
                 'types' => $types,
+                'isAjax' => true,
             ]);
         }
         return view('elfcms::admin.filestorage.files.create', [
@@ -116,7 +117,8 @@ class FilestorageFileController extends Controller
 
         if ($request->ajax()) {
             $data = $file->toArray();
-            if ($data['path']) $data['path'] = file_path($data['path']);
+            //if ($data['path']) $data['path'] = file_path($data['path']);
+            $data['public_path'] = $file->public_path;
             return response()->json([
                 'result' => 'success',
                 'message' => __('elfcms::default.file_created_successfully'),
@@ -229,7 +231,8 @@ class FilestorageFileController extends Controller
 
             if ($request->ajax()) {
                 $data = $file->toArray();
-                if ($data['path']) $data['path'] = file_path($data['path']);
+                //if ($data['path']) $data['path'] = file_path($data['path']);
+                $data['public_path'] = $file->public_path;
                 return response()->json([
                     'result' => 'success',
                     'message' => __('elfcms::default.file_edited_successfully'),

@@ -565,6 +565,19 @@ return [
     'marked_items_will_be_removed' => 'Markierte Elemente werden entfernt',
     'are_you_sure' => 'Sind Sie sicher?',
 
+    'deleting_files' => 'Dateien werden gelöscht',
+    'marked_files_will_be_removed' => 'Markierte Dateien werden entfernt.',
+    'edit_filestorage' => 'Dateispeicher bearbeiten',
+    'filestorage_edited_successfully' => 'Dateispeicher erfolgreich bearbeitet',
+    'filestorage_deleted_successfully' => 'Dateispeicher erfolgreich gelöscht',
+    'filestorage_save_error' => 'Dateispeicherfehler beim Speichern',
+    'filestorage_delete_error' => 'Fehler beim Löschen des Dateispeichers',
+    'create_filestorage' => 'Dateispeicher erstellen',
+    'edit_filestorage_params' => 'Dateispeicherparameter bearbeiten',
+
+    'following_files_will_be_uploaded' => 'Folgende Dateien werden hochgeladen.',
+    'file_upload' => 'Dateiupload',
+
     'mime_prefix' => 'MIME-Präfix',
     'mime_type' => 'MIME-Typ',
     'mime_types' => 'MIME-Typen',

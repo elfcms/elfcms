@@ -26,7 +26,7 @@
             <div class="input-box colored">
                 <label for="file">{{ __('elfcms::default.file') }}</label>
                 <div class="input-wrapper">
-                    <x-elf-input-file value="" :params="['name' => 'file','code'=>'file']" accept="{{implode(',',$mimes)}}" />
+                    <x-elf-input-file value="" :params="['name' => 'file','code'=>'file']" accept="{{implode(',',$mimes)}}" template="fs" />
                 </div>
             </div>
             <div class="input-box colored">
@@ -56,6 +56,12 @@
         </div>
         <div class="button-box single-box">
             <button type="submit" class="button color-text-button green-button">{{ __('elfcms::default.submit') }}</button>
+            @if (empty($isAjax))
+                <button type="submit" name="submit" value="save_and_close"
+                    class="button color-text-button blue-button">{{ __('elfcms::default.save_and_close') }}</button>
+                <a href="{{ route('admin.filestorage.index') }}"
+                    class="button color-text-button">{{ __('elfcms::default.cancel') }}</a>
+            @endif
         </div>
     </form>
 </div>
@@ -64,20 +70,8 @@ const previewInput = document.querySelector('#file')
 if (previewInput) {
     inputFileExtComponent(previewInput)
 }
-/* const imageInput = document.querySelector('#image')
-if (imageInput) {
-    inputFileImg(imageInput)
-}
-const thumbnailInput = document.querySelector('#thumbnail')
-if (thumbnailInput) {
-    inputFileImg(thumbnailInput)
-} */
-autoSlug('.autoslug')
-
-
-//filestorageTagFormInit()
 
 //add editor
 runEditor('#description')
-runEditor('#additional_text')
 </script>
+

@@ -19,13 +19,13 @@ class Files
         return $name;
     }
 
-    public static function data_path(string $path = null)
+    public static function data_path(string|null $path = null)
     {
         if (!empty($path)) $path = '/' . trim($path);
         return public_path('data' . $path);
     }
 
-    public static function file_path(string $file = null, bool $full = false, $disk = null)
+    public static function file_path(string|null $file = null, bool $full = false, $disk = null)
     {
         if (!$disk) $disk = env('FILESYSTEM_DISK');
         $path = config('filesystems.disks.' . $disk . '.root');
@@ -38,7 +38,7 @@ class Files
         return $file;
     }
 
-    public static function iconHtml(string $file = null, int $width = null, int $height = null, bool $svg = false)
+    public static function iconHtml(string|null $file = null, int|null $width = null, int|null $height = null, bool $svg = false)
     {
         $fullPath = self::file_path($file, true);
         $file = self::file_path($file);
@@ -64,7 +64,7 @@ class Files
         return $html;
     }
 
-    public static function iconHtmlLocal(string $file = null, int $width = null, int $height = null, bool $svg = false)
+    public static function iconHtmlLocal(string|null $file = null, int|null $width = null, int|null $height = null, bool $svg = false)
     {
         $fullPath = public_path($file);
         if (!file_exists($fullPath)) return '';

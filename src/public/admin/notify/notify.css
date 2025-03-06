@@ -23,7 +23,7 @@
 }
 
 .notify {
-    --notify-color: #6cd3ff;
+    --notify-color: #6baafd;
     --notify-color-light: hsl(from var(--notify-color) h s calc(l + 7));
     --notify-color-dark: hsl(from var(--notify-color) h s calc(l - 45));
     --notify-color-middle: hsl(from var(--notify-color) h s calc(l - 5));
@@ -33,8 +33,8 @@
     width: clamp(30em, 30vw, 80em);
     background-color: var(--notify-color);
     color: var(--notify-color-dark);
-    border-radius: .4em;
-    box-shadow: -0.1em -0.1em 0 0 var(--notify-color-light), 0.1em 0.1em 0 0 var(--notify-color-middle), 0 0 3em rgb(0 0 0 / 30%);
+    border-radius: .5rem;
+    box-shadow: inset 0.1em 0.1em 0 0 var(--notify-color-light), inset -0.1em -0.1em 0 0 var(--notify-color-middle), 0 0 3em rgb(0 0 0 / 30%);
     overflow: hidden;
     max-height: 100em;
     opacity: 1;
@@ -124,7 +124,7 @@
     }
 }
 .notify.notify-warning {
-    --notify-color: #ffde72;
+    --notify-color: #ffcc5e;
 
     .notify-icon {
         -webkit-mask: url("icons/warning.svg") no-repeat center / contain;
@@ -132,7 +132,7 @@
     }
 }
 .notify.notify-success {
-    --notify-color: #56ffae;
+    --notify-color: #6aff84;
 
     .notify-icon {
         -webkit-mask: url("icons/check_circle.svg") no-repeat center / contain;
@@ -140,7 +140,7 @@
     }
 }
 .notify.notify-info {
-    --notify-color: #6cd3ff;
+    --notify-color: #6baafd;
 
     .notify-icon {
         -webkit-mask: url("icons/info.svg") no-repeat center / contain;

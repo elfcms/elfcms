@@ -1,5 +1,5 @@
 <div class="item-form">
-    <h3>{{ $page['title'] }}</h3>
+    <h2>{{ $page['title'] }}</h2>
     <form action="{{ route('admin.filestorage.files.update', ['filestorage' => $filestorage, 'file' => $file]) }}"
         method="POST" enctype="multipart/form-data">
         @csrf
@@ -27,8 +27,7 @@
             </div>
             <div class="input-box colored">
                 <label for="file">{{ __('elfcms::default.file') }}</label>
-                @dd(file_path($file->path,false,'filestorage'))
-                <x-elf-input-file value="{{$file}}" :params="['name' => 'file','code'=>'file']" accept="{{implode(',',$mimes)}}" :download="true" />
+                <x-elf-input-file value="{{$file->public_path}}" :params="['name' => 'file','code'=>'file']" accept="{{implode(',',$mimes)}}" :download="true" template="fs" />
             </div>
             <div class="input-box colored">
                 <label for="alt_text">{{ __('elfcms::default.alt_text') }}</label>
@@ -56,7 +55,7 @@
             </div>
         </div>
         <div class="button-box single-box">
-            <button type="submit" class="button submit-button">{{ __('elfcms::default.submit') }}</button>
+            <button type="submit" class="button color-text-button green-button">{{ __('elfcms::default.submit') }}</button>
             @if (empty($isAjax))
                 <button type="submit" name="submit" value="save_and_close"
                     class="button color-text-button blue-button">{{ __('elfcms::default.save_and_close') }}</button>
@@ -67,10 +66,10 @@
     </form>
 </div>
 <script>
-    /* const previewInput = document.querySelector('#file')
+    const previewInput = document.querySelector('#file')
     if (previewInput) {
         inputFileExtComponent(previewInput)
-    } */
+    }
     /* const imageInput = document.querySelector('#image')
     if (imageInput) {
         inputFileImg(imageInput)
@@ -85,6 +84,5 @@
     //filestorageTagFormInit()
 
     //add editor
-    /* runEditor('#description')
-    runEditor('#additional_text') */
+    runEditor('#description')
 </script>

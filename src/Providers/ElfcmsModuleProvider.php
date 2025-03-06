@@ -72,6 +72,7 @@ class ElfcmsModuleProvider extends ServiceProvider
     {
         $moduleDir = dirname(__DIR__);
 
+        $config = config('elfcms.elfcms');
         $locales = config('elfcms.elfcms.locales');
 
         if ($this->app->runningInConsole()) {
@@ -146,14 +147,20 @@ class ElfcmsModuleProvider extends ServiceProvider
 
 
         config(['auth.providers.users.model' => \Elfcms\Elfcms\Models\User::class]);
-        $disks = config('elfcms.elfcms.disks');
+        $disks = $config['disks']; //config('elfcms.elfcms.disks');
         if (!empty($disks)) {
             foreach ($disks as $name => $disk) {
-                config(["filesystems.disks.$name" => config("elfcms.elfcms.disks.$name")]);
+                config(["filesystems.disks.$name" => $config['disks'][$name]]); //config("elfcms.elfcms.disks.$name")]);
             }
         }
-        if (!config('elfcms.elfcms.disks.elfcmsviews')) {
+        if (!config($config['disks']['elfcmsviews'])) {
             config(['filesystems.disks.elfcmsviews' => ['driver' => 'local','root' => base_path('vendor/elfcms/elfcms/src/resources/views')]]);
+        }
+
+        if (!empty($config['links'])) {
+            foreach ($config['links'] as $name => $link) {
+                config(["filesystems.links.$name" => $link]);
+            }
         }
 
         try {

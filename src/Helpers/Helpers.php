@@ -3,6 +3,7 @@
 use Elfcms\Elfcms\Aux\Files;
 use Elfcms\Elfcms\Aux\Filestorage;
 use Elfcms\Elfcms\Aux\Fragment;
+use Elfcms\Elfcms\Aux\FS;
 use Elfcms\Elfcms\Aux\Image;
 use Elfcms\Elfcms\Models\ElfcmsContact;
 use Elfcms\Elfcms\Models\Setting;
@@ -170,7 +171,7 @@ if (!function_exists('cookieGet')) {
 
 /* Filestorage */
 
-if (!function_exists('fsExtension')) {
+if (!function_exists('fsExtension')) { //! To remove
 
     function fsExtension($file)
     {
@@ -179,14 +180,14 @@ if (!function_exists('fsExtension')) {
 
 }
 
-if (!function_exists('fsIcon')) {
+if (!function_exists('fsIcon')) { //! To remove
 
     function fsIcon($extension) {
         return Filestorage::icon($extension);
     }
 }
 
-if (!function_exists('fsMime')) {
+if (!function_exists('fsMime')) { //! To remove
 
     function fsMime($file)
     {
@@ -195,7 +196,7 @@ if (!function_exists('fsMime')) {
 
 }
 
-if (!function_exists('fsFile')) {
+if (!function_exists('fsFile')) { //! To remove
 
     function fsFile($file,$asString)
     {
@@ -208,7 +209,25 @@ if (!function_exists('fsPreview')) {
 
     function fsPreview($file)
     {
-        return Filestorage::preview($file);
+        return FS::preview($file);
+    }
+
+}
+
+if (!function_exists('fsPublic')) {
+
+    function fsPublic($file)
+    {
+        return FS::public($file);
+    }
+
+}
+
+if (!function_exists('fsPath')) {
+
+    function fsPath($file)
+    {
+        return FS::path($file);
     }
 
 }

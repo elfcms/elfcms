@@ -565,6 +565,19 @@ return [
     'marked_items_will_be_removed' => 'Отмеченные элементы будут удалены',
     'are_you_sure' => 'Вы уверены?',
 
+    'deleting_files' => 'Удаление файлов',
+    'marked_files_will_be_removed' => 'Отмеченные файлы будут удалены.',
+    'edit_filestorage' => 'Изменить хранилище файлов',
+    'filestorage_edited_successfully' => 'Хранилище файлов успешно отредактировано',
+    'filestorage_deleted_successfully' => 'Хранилище файлов успешно удалено',
+    'filestorage_save_error' => 'Ошибка сохранения хранилища файлов',
+    'filestorage_delete_error' => 'Ошибка удаления хранилища файлов',
+    'create_filestorage' => 'Создать хранилище файлов',
+    'edit_filestorage_params' => 'Изменить параметры хранилища файлов',
+
+    'following_files_will_be_uploaded' => 'Следующие файлы будут загружены.',
+    'file_upload' => 'Загрузка файлов',
+
     'mime_prefix' => 'MIME-префикс',
     'mime_type' => 'MIME-тип',
     'mime_types' => 'MIME-типы',

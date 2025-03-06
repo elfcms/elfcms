@@ -103,6 +103,14 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | File storage public path
+    |--------------------------------------------------------------------------
+    */
+
+    'file_path' => env('FILESTORAGE_PUBLIC','files'),
+
+    /*
+    |--------------------------------------------------------------------------
     | View disk
     |--------------------------------------------------------------------------
     |
@@ -130,9 +138,13 @@ return [
         ],
         'filestorage' => [
             'driver' => 'local',
-            'root' => storage_path('app/elfcms/filestorage'),
-            'url' => env('APP_URL').'/storage',
+            'root' => storage_path('app/'.env('FILESTORAGE_ROOT','elfcms/filestorage')),
+            'url' => env('APP_URL').'/files',
         ],
+    ],
+
+    'links' => [
+        public_path(env('FILESTORAGE_PUBLIC','files')) => storage_path('app/'.env('FILESTORAGE_ROOT','elfcms/filestorage')),
     ],
 
     /*
