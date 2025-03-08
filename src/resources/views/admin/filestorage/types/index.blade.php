@@ -5,7 +5,7 @@
         @csrf
         <div class="grid-table-wrapper">
             <table class="grid-table filestorage-type-table table-cols"
-                style="--first-col:60px; --last-col:100px; --minw:800px; --cols-count:9;">
+                style="--first-col:60px; --last-col:7.5rem; --minw:50rem; --cols-count:9;">
                 <thead>
                     <tr>
                         <th>ID</th>

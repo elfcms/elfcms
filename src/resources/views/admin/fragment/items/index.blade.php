@@ -15,7 +15,7 @@
                 {{ __('elfcms::default.showing_results_for_item') }} <strong>#{{ $item->id }} {{ $item->name }}</strong>
             </div>
         @endif
-        <table class="grid-table table-cols" style="--first-col:65px; --last-col:140px; --minw:800px; --cols-count:6;">
+        <table class="grid-table table-cols" style="--first-col:4rem; --last-col:7.5rem; --minw:50rem; --cols-count:6;">
             <thead>
                 <tr>
                     <th>

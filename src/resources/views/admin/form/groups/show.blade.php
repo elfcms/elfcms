@@ -4,7 +4,7 @@
 
     <h2>{{ __('elfcms::default.fields_of_group_of_form_name_id',['name'=>$group->name,'id'=>$group->id,'form_name'=>$group->form->name,'form_id'=>$group->form->id]) }}</h2>
     <div class="grid-table-wrapper">
-        <table class="grid-table table-cols" style="--first-col:65px; --last-col:180px; --minw:800px; --cols-count:9;">
+        <table class="grid-table table-cols" style="--first-col:4rem; --last-col: 13.5rem; --minw:50rem; --cols-count:9;">
             <thead>
                 <tr>
                     <th>ID</th>

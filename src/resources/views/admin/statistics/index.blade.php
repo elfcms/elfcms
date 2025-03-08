@@ -2,22 +2,6 @@
 
 @section('pagecontent')
 
-    <div class="big-container">
-        @if (Session::has('settingedited'))
-            <div class="alert alert-success">{{ Session::get('settingedited') }}</div>
-        @endif
-        @if (Session::has('settingcreated  '))
-            <div class="alert alert-success">{{ Session::get('settingcreated') }}</div>
-        @endif
-        @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul class="errors-list">
-                    @foreach ($errors->all() as $error)
-                        <li>{{ $error }}</li>
-                    @endforeach
-                </ul>
-            </div>
-        @endif
         <div class="table-search-box">
             <form action="{{ route('admin.statistics.index') }}" method="get">
                 <div class="input-box">
@@ -32,7 +16,9 @@
                             placeholder="{{ __('elfcms::default.date_placeholder') }}">
                     </div>
                     <div class="non-text-buttons">
-                        <button type="submit" class="button search-button"></button>
+                        <button type="submit" class="button round-button theme-button">
+                            {!! iconHtmlLocal('elfcms/admin/images/icons/search.svg', svg: true) !!}
+                        </button>
                     </div>
                 </div>
             </form>
@@ -53,16 +39,16 @@
                         {
                         label: '{{ __('elfcms::default.unique_visits') }}',
                         data: {!! json_encode($chart['unique_visits']) !!},
-                        borderColor: '#1e90ff',
-                        backgroundColor: '#1e90ff',
+                        borderColor: '#2583fd',
+                        backgroundColor: '#2583fd',
                         borderWidth: 2,
                         cubicInterpolationMode: 'monotone'
                         },
                         {
                         label: '{{ __('elfcms::default.all_visits') }}',
                         data: {!! json_encode($chart['all_visits']) !!},
-                        borderColor: '#ff3814',
-                        backgroundColor: '#ff3814',
+                        borderColor: '#f96d00',
+                        backgroundColor: '#f96d00',
                         borderWidth: 2,
                         cubicInterpolationMode: 'monotone'
                         }
@@ -79,7 +65,7 @@
         </script>
         <h2>{{ __('elfcms::default.unique_visits') }}</h2>
         <div class="grid-table-wrapper">
-            <table class="grid-table table-cols-9">
+            <table class="grid-table table-cols" style="--minw:50rem;  --cols-count:9;">
                 <thead>
                     <tr>
                         <th>
@@ -198,7 +184,7 @@
         @endif
         <h2>{{ __('elfcms::default.all_visits') }}</h2>
         <div class="grid-table-wrapper">
-            <table class="grid-table table-cols-9">
+            <table class="grid-table table-cols" style="--minw:50rem;  --cols-count:9;">
                 <thead>
                     <tr>
                         <th>
@@ -287,7 +273,5 @@
             </table>
         </div>
         {{ $statistics->links('elfcms::admin.layouts.pagination') }}
-
-    </div>
 
 @endsection

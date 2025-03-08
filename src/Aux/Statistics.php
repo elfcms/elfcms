@@ -225,7 +225,9 @@ class Statistics
         if (!$method || !method_exists(self::class, $method)) {
             $cTo = Carbon::parse($to)->endOfDay();
             $cFrom = Carbon::parse($from)->startOfDay();
-            $diff = $cTo->diffInDays($cFrom);
+            $diff = abs($cFrom->diffInDays($cTo));
+
+            //dd($diff);
 
             if ($diff > 60) {
                 $method = 'monthly';

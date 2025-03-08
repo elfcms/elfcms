@@ -3,9 +3,9 @@
         try {
             new Notify({
                 close: {
-                    auto: true,
-                    time: 300,
-                    delay: 5000
+                    auto: {{ $close }},
+                    time: {{ $time ?? 300 }},
+                    delay: {{ $delay ?? 5000 }}
                 },
                 position: 'center',
             }).new({

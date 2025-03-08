@@ -21,7 +21,7 @@
     </div>
     @endif
     <div class="grid-table-wrapper">
-        <table class="grid-table table-cols" style="--first-col:65px; --last-col:200px; --minw:800px; --cols-count:{{ count($fields) + 2 }};">
+        <table class="grid-table table-cols" style="--first-col:4rem; --last-col:200px; --minw:50rem; --cols-count:{{ count($fields) + 2 }};">
             <thead>
                 <tr>
                     <th>ID</th>

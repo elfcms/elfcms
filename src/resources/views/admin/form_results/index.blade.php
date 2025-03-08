@@ -21,7 +21,7 @@
     </div>
     @endif
     <div class="grid-table-wrapper">
-        <table class="grid-table table-cols" style="--first-col:65px; --last-col:200px; --minw:600px; --cols-count:4;">
+        <table class="grid-table table-cols" style="--first-col:4rem; --last-col:200px; --minw:600px; --cols-count:4;">
             <thead>
                 <tr>
                     <th>ID</th>

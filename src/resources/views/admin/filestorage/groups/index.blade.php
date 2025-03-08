@@ -4,7 +4,7 @@
 <form name="groupform" class="data-table-box" method="post" action="{{ route('admin.ajax.filestorage.group.fullsave') }}">
     @csrf
     <div class="grid-table-wrapper">
-        <table class="grid-table filestorage-group-table table-cols" style="--first-col:60px; --last-col:100px; --minw:800px; --cols-count:7;">
+        <table class="grid-table filestorage-group-table table-cols" style="--first-col:60px; --last-col:7.5rem; --minw:50rem; --cols-count:7;">
             <thead>
                 <tr>
                     <th>ID</th>

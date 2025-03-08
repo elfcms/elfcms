@@ -56,7 +56,7 @@
     </div>
     @endif --}}
     <div class="grid-table-wrapper">
-        <table class="grid-table table-cols" style="--first-col:65px; --last-col:100px; --minw:800px;  --cols-count:7;">
+        <table class="grid-table table-cols" style="--first-col:4rem; --last-col:7.5rem; --minw:50rem;  --cols-count:7;">
             <thead>
                 <tr>
                     <th>

@@ -2,7 +2,7 @@
 
 @section('pagecontent')
     <div class="grid-table-wrapper">
-        <table class="grid-table table-cols" style="--first-col:65px; --last-col:140px; --minw:800px;  --cols-count:7;">
+        <table class="grid-table table-cols" style="--first-col:4rem; --last-col:11rem; --minw:50rem;  --cols-count:7;">
             <thead>
                 <tr>
                     <th>

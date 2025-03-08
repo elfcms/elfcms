@@ -60,6 +60,9 @@ class VisitStatisticController extends Controller
 
         $chart = Statistics::get($from,$to);
 
+        //dd([$from,$to]);
+        //dd($chart);
+
         $from_time = $from . ' 00:00:00';
         $to_time = $to . ' 23:59:59';
 

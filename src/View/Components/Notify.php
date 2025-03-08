@@ -14,18 +14,25 @@ class Notify extends Component
      *
      * @return void
      */
-    public function __construct($type = 'info', $title = '', $text = '', $template='default', $close = null, $delay = 5000, $time = 500, $params=[])
+    public function __construct($type = 'info', $title = '', $text = '', $template='default', $close = true, $delay = 5000, $time = 500, $params=[])
     {
         $this->type = $type ?? $params['type'] ?? 'info';
         if (!in_array($this->type,['info', 'success', 'warning', 'error'])) $this->type = 'info';
         $this->title = $title ?? $params['title'] ?? '';
         $this->text = $text ?? $params['text'] ?? '';
         $this->close = true;
-        if ($close !== null) {
-            $this->close = $close;
-        }
-        elseif (isset($params['close'])) {
+        $this->close = $close;
+        if (isset($params['close'])) {
             $this->close = $params['close'];
+        }
+        if (gettype($this->close) == 'string' && in_array($this->close,['true','false'])) {
+            //
+        }
+        elseif($this->close) {
+            $this->close = 'true';
+        }
+        else {
+            $this->close = 'false';
         }
         $this->delay = $delay ?? $params['delay'] ?? 5000;
         $this->time = $time ?? $params['time'] ?? 500;
