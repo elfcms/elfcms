@@ -471,6 +471,12 @@ return [
             "actions" => ["read", "write"],
         ],
         [
+            "title" => "Cookies",
+            "lang_title" => "elfcms::default.cookies",
+            "route" => "admin.cookie-settings",
+            "actions" => ["read", "write"],
+        ],
+        [
             "title" => "Statistics",
             "lang_title" => "elfcms::default.statistics",
             "route" => "admin.statistics",

@@ -27,7 +27,7 @@
                     <tr data-id="{{ $storage->id }}">
                         <td>{{ $storage->id }}</td>
                         <td>
-                            <a href="{{ route('admin.filestorage.show', $storage->id) }}">
+                            <a href="{{ route('admin.filestorage.files.index', ['filestorage'=>$storage->id]) }}">
                                 {{ $storage->name }}
                             </a>
                         </td>

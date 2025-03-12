@@ -49,12 +49,12 @@
                 <tr data-id="{{ $item->id }}" class="">
                     <td>{{ $item->id }}</td>
                     <td>
-                        <a href="{{ route('admin.fragment.items',['item'=>$item->id]) }}">
+                        <a href="{{ route('admin.fragment.items.edit',$item) }}">
                             {{ $item->code }}
                         </a>
                     </td>
                     <td>
-                        <a href="{{ route('admin.fragment.items',['item'=>$item->id]) }}">
+                        <a href="{{ route('admin.fragment.items.edit',$item) }}">
                             {{ $item->title }}
                         </a>
                     </td>

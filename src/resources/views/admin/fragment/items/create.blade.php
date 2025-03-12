@@ -67,7 +67,13 @@
                                         <input type="text" name="options_new[0][value]" id="option_new_value_0" data-option-value>
                                     </div>
                                     <div class="options-table-string">
-                                        <input type="checkbox" name="options_new[0][deleted]" id="option_new_disabled_0" data-option-deleted>
+                                        <div class="small-checkbox-wrapper" style="--switch-color:var(--red-color)">
+                                            <div class="small-checkbox">
+                                                <input type="checkbox" name="options_new[0][deleted]"
+                                                    id="option_new_disabled_0" data-option-deleted>
+                                                <i></i>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

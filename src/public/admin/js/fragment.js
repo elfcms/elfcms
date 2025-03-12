@@ -39,7 +39,12 @@ function fragmentOptionInit(addSelector = "#addoptionline", line = 0) {
                                 <input type="text" name="options_new[${optionNextLine}][value]" id="option_new_value_${optionNextLine}" data-option-value>
                             </div>
                             <div class="options-table-string">
-                                <input type="checkbox" name="options_new[${optionNextLine}][deleted]" id="option_new_disabled_${optionNextLine}" data-option-deleted>
+                                <div class="small-checkbox-wrapper" style="--switch-color:var(--red-color)">
+                                    <div class="small-checkbox">
+                                        <input type="checkbox" name="options_new[${optionNextLine}][deleted]" id="option_new_disabled_${optionNextLine}" data-option-deleted>
+                                        <i></i>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         `;
