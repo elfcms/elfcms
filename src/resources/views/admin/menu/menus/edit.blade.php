@@ -29,11 +29,11 @@
             </div>
             <div class="button-box single-box">
                 <button type="submit" name="submit" value="save"
-                    class="button color-text-button green-button">{{ __('elfcms::default.submit') }}</button>
+                    class="button color-text-button success-button">{{ __('elfcms::default.submit') }}</button>
                 <button type="submit" name="submit" value="save_and_open"
-                    class="button color-text-button blue-button">{{ __('elfcms::default.save_and_open') }}</button>
+                    class="button color-text-button info-button">{{ __('elfcms::default.save_and_open') }}</button>
                 <button type="submit" name="submit" value="save_and_close"
-                    class="button color-text-button blue-button">{{ __('elfcms::default.save_and_close') }}</button>
+                    class="button color-text-button info-button">{{ __('elfcms::default.save_and_close') }}</button>
                 <a href="{{ route('admin.menus.index') }}" class="button color-text-button">{{ __('elfcms::default.cancel') }}</a>
             </div>
         </form>

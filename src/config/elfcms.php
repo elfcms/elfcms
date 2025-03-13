@@ -227,7 +227,7 @@ return [
             "route" => "admin.index",
             "parent_route" => "admin.index",
             "icon" => "/elfcms/admin/images/icons/home.svg",
-            "color" => "var(--purple-color)",
+            "color" => "var(--color-120)",
             "position" => 1
         ],
         [
@@ -236,7 +236,7 @@ return [
             "route" => "admin.settings.index",
             "parent_route" => "admin.settings.index",
             "icon" => "/elfcms/admin/images/icons/settings.svg",
-            "color" => "var(--lilac-color)",
+            "color" => "var(--color-110)",
             "position" => 10
         ],
         [
@@ -245,7 +245,7 @@ return [
             "route" => "admin.user.users",
             "parent_route" => "admin.user",
             "icon" => "/elfcms/admin/images/icons/users.svg",
-            "color" => "var(--green-color)",
+            "color" => "var(--color-030)",
             "position" => 20,
             "submenu" => [
                 [
@@ -266,7 +266,7 @@ return [
             "route" => "admin.email.addresses",
             "parent_route" => "admin.email.addresses",
             "icon" => "/elfcms/admin/images/icons/email_addresses.svg",
-            "color" => "var(--cyan-color)",
+            "color" => "var(--color-050)",
             "position" => 30,
         ],
         [
@@ -275,7 +275,7 @@ return [
             "route" => "admin.email.events",
             "parent_route" => "admin.email.events",
             "icon" => "/elfcms/admin/images/icons/email_events.svg",
-            "color" => "var(--blue-color)",
+            "color" => "var(--color-020)",
             "position" => 35,
         ],
         [
@@ -284,8 +284,8 @@ return [
             "route" => "admin.forms.index",
             "parent_route" => "admin.forms",
             "icon" => "/elfcms/admin/images/icons/form.svg",
-            "color" => "var(--orange-color)",
-            "second_color" => "var(--gold-color)",
+            "color" => "var(--color-080)",
+            "second_color" => "var(--color-070)",
             "position" => 40,
         ],
         [
@@ -294,7 +294,7 @@ return [
             "route" => "admin.form-results.index",
             "parent_route" => "admin.form-results",
             "icon" => "/elfcms/admin/images/icons/formresult.svg",
-            "color" => "var(--gold-color)",
+            "color" => "var(--color-070)",
             "position" => 45,
         ],
         [
@@ -303,7 +303,7 @@ return [
             "route" => "admin.menus.index",
             "parent_route" => "admin.menus",
             "icon" => "/elfcms/admin/images/icons/menu.svg",
-            "color" => "var(--purple-color)",
+            "color" => "var(--color-120)",
             "position" => 50,
         ],
         [
@@ -312,7 +312,7 @@ return [
             "route" => "admin.page.pages",
             "parent_route" => "admin.page",
             "icon" => "/elfcms/admin/images/icons/pages.svg",
-            "color" => "var(--pink-color)",
+            "color" => "var(--color-100)",
             "position" => 60,
         ],
         /* [
@@ -330,7 +330,7 @@ return [
             "route" => "admin.fragment.items",
             "parent_route" => "admin.fragment.items",
             "icon" => "/elfcms/admin/images/icons/fragment.svg",
-            "color" => "var(--marin-color)",
+            "color" => "var(--color-010)",
             "position" => 80,
         ],
         [
@@ -339,7 +339,7 @@ return [
             "route" => "admin.filestorage.index",
             "parent_route" => "admin.filestorage",
             "icon" => "/elfcms/admin/images/icons/filestorage.svg",
-            "color" => "var(--lime-color)",
+            "color" => "var(--color-040)",
             "position" => 85,
             "submenu" => [
                 [
@@ -365,7 +365,7 @@ return [
             "route" => "admin.cookie-settings.index",
             "parent_route" => "admin.cookie-settings.index",
             "icon" => "/elfcms/admin/images/icons/cookie.svg",
-            "color" => "var(--yellow-color)",
+            "color" => "var(--color-050)",
             "position" => 90,
         ],
         [
@@ -374,7 +374,7 @@ return [
             "route" => "admin.statistics.index",
             "parent_route" => "admin.statistics.index",
             "icon" => "/elfcms/admin/images/icons/stats.svg",
-            "color" => "var(--red-color)",
+            "color" => "var(--color-090)",
             "position" => 100,
         ],
         [

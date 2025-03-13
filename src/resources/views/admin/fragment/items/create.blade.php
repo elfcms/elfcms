@@ -67,7 +67,7 @@
                                         <input type="text" name="options_new[0][value]" id="option_new_value_0" data-option-value>
                                     </div>
                                     <div class="options-table-string">
-                                        <div class="small-checkbox-wrapper" style="--switch-color:var(--red-color)">
+                                        <div class="small-checkbox-wrapper" style="--switch-color:var(--danger-color)">
                                             <div class="small-checkbox">
                                                 <input type="checkbox" name="options_new[0][deleted]"
                                                     id="option_new_disabled_0" data-option-deleted>
@@ -83,9 +83,9 @@
                 </div>
             </div>
             <div class="button-box single-box">
-                <button type="submit" class="button color-text-button green-button">{{ __('elfcms::default.submit') }}</button>
+                <button type="submit" class="button color-text-button success-button">{{ __('elfcms::default.submit') }}</button>
                 <button type="submit" name="submit" value="save_and_close"
-                    class="button color-text-button blue-button">{{ __('elfcms::default.save_and_close') }}</button>
+                    class="button color-text-button info-button">{{ __('elfcms::default.save_and_close') }}</button>
                 <a href="{{ route('admin.fragment.items') }}" class="button color-text-button">{{ __('elfcms::default.cancel') }}</a>
             </div>
             </div>

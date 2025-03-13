@@ -748,12 +748,12 @@ footer {
     text-shadow: 0.0625rem 0.0625rem 0.0625rem var(--shade-color-20);
 }
 .marin-button {
-    --button-color: var(--marin-color);
+    --button-color: var(--deepblue-color);
 }
-.blue-button {
+.info-button {
     --button-color: var(--blue-color);
 }
-.green-button {
+.success-button {
     --button-color: var(--green-color);
 }
 .orange-button {
@@ -1638,7 +1638,7 @@ footer {
     --popup-color: var(--gold-color);
 }
 .popup-wrapper.alternate {
-    --popup-color: var(--marin-color);
+    --popup-color: var(--deepblue-color);
 }
 .popup-wrapper.submit {
     --popup-color: var(--blue-color);

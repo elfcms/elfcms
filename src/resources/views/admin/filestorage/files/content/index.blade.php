@@ -12,7 +12,7 @@
         @endforeach
     </div>
     <div class="filestorage-files-buttons">
-        <button id="submitbutton" class="button color-text-button" style="--button-color:var(--default-color,var(--green-color))"
+        <button id="submitbutton" class="button color-text-button" style="--button-color:var(--default-color,var(--success-color))"
             disabled>{{ __('elfcms::default.save') }}</button>
     </div>
 </form>
@@ -211,7 +211,7 @@
                     },
                     {
                         title: 'OK',
-                        class: 'button color-text-button blue-button',
+                        class: 'button color-text-button info-button',
                         callback: [
                             function() {
                                 for (key in files) {

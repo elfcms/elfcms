@@ -65,7 +65,7 @@
             {!! iconHtmlLocal('elfcms/admin/images/icons/buttons/dark_mode.svg', width: 24, height: 24, svg: true) !!}
         </div>
         <div class="switchbox double-color"
-            style="--switch-color:var(--gold-color);--switch-color-alt:var(--blue-color)">
+            style="--switch-color:var(--color-070);--switch-color-alt:var(--color-020)">
             <input type="checkbox" name="color-mode" id="color-mode" value="1" {{-- @if ($setting['value'] && $setting['value'] == 1) checked @endif --}}>
             <i></i>
         </div>

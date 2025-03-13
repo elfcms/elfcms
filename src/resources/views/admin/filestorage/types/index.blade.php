@@ -32,7 +32,7 @@
                 <span class="button-collapsed-text">{{ __('elfcms::default.add_type') }}</span>
             </button>
             {{-- <button class="button" title="{{__('elfcms::default.reset_button')}}" data-action="reset">{{ __('elfcms::default.reset_button') }}</button> --}}
-            <button type="submit" class="button color-text-button green-button" disabled=""
+            <button type="submit" class="button color-text-button success-button" disabled=""
                 data-action="save">{{ __('elfcms::default.save') }}</button>
         </div>
     </form>
@@ -117,7 +117,7 @@
                     content: '{{ __('elfcms::default.do_you_want_to_save_your_changes') }}',
                     buttons: [{
                             title: 'OK',
-                            class: 'button color-text-button blue-button',
+                            class: 'button color-text-button info-button',
                             callback: [
                                 saveForm,
                                 'close'
@@ -172,7 +172,7 @@
                                     content: data.message,
                                     buttons: [{
                                         title: 'OK',
-                                        class: 'button color-text-button blue-button',
+                                        class: 'button color-text-button info-button',
                                         callback: 'close'
                                     }],
                                     class: 'alternate'

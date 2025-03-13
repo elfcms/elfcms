@@ -242,7 +242,7 @@
                 @endforeach
             </div>
             <div class="button-box single-box">
-                <button type="submit" class="button color-text-button green-button">{{ __('elfcms::default.submit') }}</button>
+                <button type="submit" class="button color-text-button success-button">{{ __('elfcms::default.submit') }}</button>
             </div>
         </form>
     </div>

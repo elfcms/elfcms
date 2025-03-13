@@ -69,7 +69,7 @@
                                         id="category_new_required_0" />
                                     <label for="category_new_required_0">{{ __('elfcms::default.delete') }}</label>
                                     <x-elfcms::ui.checkbox.switch name="category_new_remove[0]" id="category_new_remove_0"
-                                        color="var(--red-color)" />
+                                        color="var(--danger-color)" />
                                 </div>
                             @endforelse
                         </div>
@@ -86,7 +86,7 @@
             </div>
             <div class="button-box single-box">
                 <button type="submit"
-                    class="button color-text-button green-button">{{ __('elfcms::default.submit') }}</button>
+                    class="button color-text-button success-button">{{ __('elfcms::default.submit') }}</button>
             </div>
         </form>
     </div>
@@ -114,7 +114,7 @@
             <label for="category_remove_${cookieCategoryNum}">
                 {{ __('elfcms::default.delete') }}
             </label>
-            <div class="switchbox" style="color:var(--red-color)">
+            <div class="switchbox" style="color:var(--danger-color)">
                 <input type="checkbox" name="category_new_remove[${cookieCategoryNum}]" id="category_new_remove_${cookieCategoryNum}" value="1" title="">
                 <i></i>
             </div>

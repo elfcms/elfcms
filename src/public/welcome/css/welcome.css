@@ -8,18 +8,18 @@
     --text-color-middle: #e5edf5;
     --text-color-second: #ccddee;
 
-    --marin-color: #3d4aff;
-    --blue-color: #2583fd;
-    --cyan-color: #00ddec;
-    --green-color: #04ca26;
-    --lime-color: #75db15;
-    --yellow-color: #ffe817;
-    --gold-color: #ffb108;
-    --orange-color: #f96d00;
-    --red-color: #ff2f21;
-    --pink-color: #ff009d;
-    --lilac-color: #cc00e4;
-    --purple-color: #8c56ff;
+    --color-010: #3d4aff;
+    --color-020: #2583fd;
+    --color-030: #00ddec;
+    --color-040: #04ca26;
+    --color-050: #75db15;
+    --color-060: #ffe817;
+    --color-070: #ffb108;
+    --color-080: #f96d00;
+    --color-090: #ff2f21;
+    --color-100: #ff009d;
+    --color-110: #cc00e4;
+    --color-120: #8c56ff;
 
     --shade-color-05: rgba(0, 0, 0, 0.05);
     --shade-color-10: rgba(0, 0, 0, 0.1);
@@ -113,7 +113,7 @@ h1 {
 }
 
 .start-button {
-    background-color: var(--blue-color);
+    background-color: var(--color-020);
     color: var(--text-color-default);
     padding: 0.5rem 1.5rem;
     border: none;
@@ -127,7 +127,7 @@ h1 {
     box-shadow: .0625rem .0625rem .375rem 0 var(--shade-color-30);
 }
 .start-button:hover {
-    background-color: hsl(from var(--blue-color) h s calc(l + 5));
+    background-color: hsl(from var(--color-020) h s calc(l + 5));
     box-shadow: .125rem .125rem .5rem 0 var(--shade-color-30);
 }
 

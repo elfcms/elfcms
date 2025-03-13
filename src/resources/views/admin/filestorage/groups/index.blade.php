@@ -28,7 +28,7 @@
             <span class="button-collapsed-text">{{ __('elfcms::default.add_group') }}</span>
         </button>
         {{-- <button class="button" title="{{__('elfcms::default.reset_button')}}" data-action="reset">{{ __('elfcms::default.reset_button') }}</button> --}}
-        <button type="submit" class="button color-text-button green-button" disabled="" data-action="save">{{ __('elfcms::default.save') }}</button>
+        <button type="submit" class="button color-text-button success-button" disabled="" data-action="save">{{ __('elfcms::default.save') }}</button>
     </div>
 </form>
     <script>
@@ -105,7 +105,7 @@
                     buttons:[
                         {
                             title:'OK',
-                            class:'button color-text-button blue-button',
+                            class:'button color-text-button info-button',
                             callback: [
                                 saveForm,
                                 'close'
@@ -156,7 +156,7 @@
                                     buttons:[
                                         {
                                             title:'OK',
-                                            class:'button color-text-button blue-button',
+                                            class:'button color-text-button info-button',
                                             callback:'close'
                                         }
                                     ],
