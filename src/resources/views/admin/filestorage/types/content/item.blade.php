@@ -8,10 +8,7 @@
     </td>
     <td>
         <div class="input-wrapper">
-            <div class="autoslug-wrapper">
-                <input type="checkbox" data-text-id="type_{{$type->id}}_name" data-slug-id="type_{{$type->id}}_code" class="autoslug" checked>
-                <div class="autoslug-button"></div>
-            </div>
+            <x-elfcms::ui.checkbox.autoslug textid="type_{{$type->id}}_name" slugid="type_{{$type->id}}_code" checked="true" />
         </div>
     </td>
     <td>
@@ -34,10 +31,7 @@
     <td>
         <input type="text" name="type[{{$type->id}}][mime_type]" id="type_{{$type->id}}_mime_type" value="{{ $type->mime_type }}" data-name="mime_type">
     </td>
-    <td class="button-column non-text-buttons">
-        <div class="check-delete-wrapper">
-            <input type="checkbox" name="type[{{$type->id}}][delete]" id="type_{{$type->id}}_delete" value="1" data-id="{{ $type->id }}" title="{{ __('elfcms::default.delete') }}" onclick="setDynamicUnitRowDelete(this)">
-            <i></i>
-        </div>
+    <td class="table-button-column">
+        <x-elfcms::ui.checkbox.delete name="type[{{$type->id}}][delete]" id="type_{{$type->id}}_delete" dataid="{{ $type->id }}" title="{{ __('elfcms::default.delete') }}" click="setDynamicUnitRowDelete(this)" />
     </td>
 </tr>

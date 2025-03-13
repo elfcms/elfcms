@@ -33,7 +33,8 @@ class FormFieldGroupController extends Controller
                 'title' => __('elfcms::default.form_field_groups'),
                 'current' => url()->current(),
             ],
-            'groups' => $groups
+            'groups' => $groups,
+            'form' => $form,
         ]);
     }
 
@@ -105,10 +106,10 @@ class FormFieldGroupController extends Controller
         $group = FormFieldGroup::create($validated);
 
         if ($request->input('submit') == 'save_and_close') {
-            return redirect(route('admin.form.forms.show',$form))->with('success',__('elfcms::default.field_group_created_successfully'));
+            return redirect(route('admin.forms.show',$form))->with('success',__('elfcms::default.field_group_created_successfully'));
         }
 
-        return redirect(route('admin.forms.show',$form))->with('success',__('elfcms::default.field_group_created_successfully'));
+        return redirect(route('admin.forms.groups.edit',['form'=>$form,'group'=>$group]))->with('success',__('elfcms::default.field_group_created_successfully'));
     }
 
     /**
@@ -117,7 +118,7 @@ class FormFieldGroupController extends Controller
      * @param  Elfcms\Elfcms\Models\FormFieldGroup  $group
      * @return \Illuminate\Http\Response
      */
-    public function show(FormFieldGroup $group)
+    public function show(Form $form, FormFieldGroup $group)
     {
         $fields = FormField::where('group_id',$group->id)->get();
         return view('elfcms::admin.form.groups.show',[

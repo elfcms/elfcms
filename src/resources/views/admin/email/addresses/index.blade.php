@@ -1,28 +1,37 @@
-@extends('elfcms::admin.layouts.email')
+@extends('elfcms::admin.layouts.main')
 
-@section('emailpage-content')
+@section('pagecontent')
     <div class="table-search-box">
-        <a href="{{ route('admin.email.addresses.create') }}"
-            class="default-btn success-button icon-text-button light-icon plus-button">{{ __('elfcms::default.create_email_address') }}</a>
+        <a href="{{ route('admin.email.addresses.create') }}" class="button round-button theme-button">
+            {!! iconHtmlLocal('elfcms/admin/images/icons/plus.svg', svg: true) !!}
+            <span class="button-collapsed-text">
+                {{ __('elfcms::default.create_email_address') }}
+            </span>
+        </a>
+        <form action="{{ route('admin.email.addresses') }}" method="get">
+            <div class="round-input-wrapper">
+                <button type="submit" class="button round-button theme-button inner-button default-highlight-button">
+                    {!! iconHtmlLocal('elfcms/admin/images/icons/search.svg', width: 18, height: 18, svg: true) !!}
+                </button>
+                <input type="search" name="search" id="search" value="{{ $search ?? '' }}" placeholder="">
+            </div>
+        </form>
+        @if (!empty($search))
+            <div class="table-search-result-title">
+                {{ __('elfcms::default.search_result_for') }} "{{ $search }}" <a
+                    href="{{ route('admin.email.addresses') }}" title="{{ __('elfcms::default.reset_search') }}">&#215;</a>
+            </div>
+        @endif
     </div>
-    @if (Session::has('fielddeleted'))
-        <div class="alert alert-alternate">{{ Session::get('fielddeleted') }}</div>
-    @endif
-    @if (Session::has('fieldedited'))
-        <div class="alert alert-alternate">{{ Session::get('fieldedited') }}</div>
-    @endif
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+    {{-- @if (Session::has('success'))
+    <x-elf-notify type="success" title="{{ __('elfcms::default.success') }}" text="{{ Session::get('success') }}" />
+@endif
+@if ($errors->any())
+    <x-elf-notify type="error" title="{{ __('elfcms::default.error') }}" text="{!! '<ul><li>' . implode('</li><li>', $errors->all()) . '</li></ul>' !!}" />
+@endif --}}
 
-    <div class="widetable-wrapper">
-        <table class="grid-table table-cols-6" style="--first-col:65px; --last-col:100px; --minw:800px">
+    <div class="grid-table-wrapper">
+        <table class="grid-table table-cols" style="--first-col:4rem; --last-col:7.5rem; --minw:50rem; --cols-count:6;">
             <thead>
                 <tr>
                     <th>
@@ -69,17 +78,21 @@
                         </td>
                         <td>{{ $address->created_at }}</td>
                         <td>{{ $address->updated_at }}</td>
-                        <td class="button-column non-text-buttons">
-                            <a href="{{ route('admin.email.addresses.edit', $address->id) }}"
-                                class="default-btn edit-button" title="{{ __('elfcms::default.edit') }}"></a>
+                        <td class="table-button-column">
+                            <a href="{{ route('admin.email.addresses.edit', $address->id) }}" class="button icon-button"
+                                title="{{ __('elfcms::default.edit') }}">
+                                {!! iconHtmlLocal('elfcms/admin/images/icons/buttons/edit.svg', svg: true) !!}
+                            </a>
                             <form action="{{ route('admin.email.addresses.destroy', $address->id) }}" method="POST"
                                 data-submit="check">
                                 @csrf
                                 @method('DELETE')
                                 <input type="hidden" name="id" value="{{ $address->id }}">
                                 <input type="hidden" name="name" value="{{ $address->name }}">
-                                <button type="submit" class="default-btn delete-button"
-                                    title="{{ __('elfcms::default.delete') }}"></button>
+                                <button type="submit" class="button icon-button icon-alarm-button"
+                                    title="{{ __('elfcms::default.delete') }}">
+                                    {!! iconHtmlLocal('elfcms/admin/images/icons/buttons/delete.svg', svg: true) !!}
+                                </button>
                             </form>
                         </td>
                     </tr>
@@ -103,14 +116,14 @@
                             addressName + '" (ID ' + addressId + ')?</p>',
                         buttons: [{
                                 title: '{{ __('elfcms::default.delete') }}',
-                                class: 'default-btn delete-button',
+                                class: 'button color-text-button red-button',
                                 callback: function() {
                                     self.submit()
                                 }
                             },
                             {
                                 title: '{{ __('elfcms::default.cancel') }}',
-                                class: 'default-btn cancel-button',
+                                class: 'button color-text-button',
                                 callback: 'close'
                             }
                         ],

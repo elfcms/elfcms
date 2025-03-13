@@ -69,7 +69,7 @@ class RoleUserController extends Controller
         $role = Role::create($validated);
 
         if ($role) {
-            return redirect(route('admin.user.roles.edit',['role'=>$role->id]))->with('rolecreated','Role created successfully');
+            return redirect(route('admin.user.roles.edit',['role'=>$role->id]))->with('success','Role created successfully');
         }
         return redirect(route('admin.user.roles.create'))->withErrors([
             'code' => 'Role already exists'

@@ -1,3 +1,6 @@
+if (typeof adminPath === 'undefined') {
+    var adminPath = '/admin';
+}
 function inputFileExtComponent(input) {
     if (!input || !(input instanceof HTMLElement)) {
         console.warn("Input not found");
@@ -62,7 +65,7 @@ function inputFileExtComponent(input) {
                                 img.classList.add("button-icon");
                                 img.src =
                                     "/elfcms/admin/images/icons/filestorage/any.svg";
-                                fetch('/admin/helper/file-icon/' + (type ?? 'any'),{headers: {'X-Requested-With': 'XMLHttpRequest'}})
+                                fetch(adminPath + '/helper/file-icon/' + (type ?? 'any'),{headers: {'X-Requested-With': 'XMLHttpRequest'}})
                                     .then((response) => {
                                         return response.text();
                                     })

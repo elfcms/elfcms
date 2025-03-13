@@ -1,22 +1,9 @@
-@extends('elfcms::admin.layouts.form')
+@extends('elfcms::admin.layouts.main')
 
-@section('formpage-content')
-
-    @if (Session::has('groupedited'))
-        <div class="alert alert-success">{{ Session::get('groupedited') }}</div>
-    @endif
-    @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul class="errors-list">
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-    @endif
+@section('pagecontent')
 
     <div class="item-form">
-        <h3>{{ __('elfcms::default.create_form_field_group') }}</h3>
+        <h2>{{ __('elfcms::default.create_form_field_group') }}</h2>
         <form action="{{ route('admin.forms.groups.store', $form) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('POST')
@@ -28,17 +15,10 @@
                     </div>
                 </div>
                 <div class="input-box colored">
-                    <div class="checkbox-wrapper">
-                        <div class="checkbox-switch-wrapper">
-                            <div class="checkbox-switch blue">
-                                <input type="checkbox" name="active" id="active" value="1" checked>
-                                <i></i>
-                            </div>
-                            <label for="active">
-                                {{ __('elfcms::default.active') }}
-                            </label>
-                        </div>
-                    </div>
+                    <label for="active">
+                        {{ __('elfcms::default.active') }}
+                    </label>
+                    <x-elfcms::ui.checkbox.switch name="active" id="active" checked="true" />
                 </div>
                 <div class="input-box colored">
                     <label for="title">{{ __('elfcms::default.title') }}</label>
@@ -52,10 +32,7 @@
                         <input type="text" name="code" id="code" autocomplete="off" data-isslug @class(['failed' => !empty($errorFields['code'])]) value="{{ $fields['code'] ?? '' }}">
                     </div>
                     <div class="input-wrapper">
-                        <div class="autoslug-wrapper">
-                            <input type="checkbox" data-text-id="title" data-slug-id="code" data-slug-space="_" class="autoslug" checked>
-                            <div class="autoslug-button"></div>
-                        </div>
+                        <x-elfcms::ui.checkbox.autoslug textid="title" slugid="code" slugspace="_" />
                     </div>
                 </div>
                 <div class="input-box colored">
@@ -64,10 +41,7 @@
                         <input type="text" name="name" id="name" autocomplete="off" data-isslug @class(['failed' => !empty($errorFields['name'])]) value="{{ $fields['name'] ?? '' }}">
                     </div>
                     <div class="input-wrapper">
-                        <div class="autoslug-wrapper">
-                            <input type="checkbox" data-text-id="title" data-slug-id="name" class="autoslug" checked>
-                            <div class="autoslug-button"></div>
-                        </div>
+                        <x-elfcms::ui.checkbox.autoslug textid="title" slugid="name" checked="true" />
                     </div>
                 </div>
                 <div class="input-box colored">
@@ -84,14 +58,13 @@
                 </div>
             </div>
             <div class="button-box single-box">
-                <button type="submit" class="default-btn success-button">{{ __('elfcms::default.submit') }}</button>
-                <button type="submit" name="submit" value="save_and_close" class="default-btn alternate-button">{{ __('elfcms::default.save_and_close') }}</button>
-                <a href="{{ route('admin.forms.show', $form) }}" class="default-btn">{{ __('elfcms::default.cancel') }}</a>
+                <button type="submit" class="button color-text-button success-button">{{ __('elfcms::default.submit') }}</button>
+                <button type="submit" name="submit" value="save_and_close" class="button color-text-button info-button">{{ __('elfcms::default.save_and_close') }}</button>
+                <a href="{{ route('admin.forms.show', $form) }}" class="button color-text-button">{{ __('elfcms::default.cancel') }}</a>
             </div>
         </form>
     </div>
     <script>
-    autoSlug('.autoslug')
     inputSlugInit()
     const errorFields = document.querySelectorAll('.failed');
     if (errorFields) {

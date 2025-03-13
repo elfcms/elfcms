@@ -57,7 +57,13 @@ function elementPositionSuccess() {
             const groupId = groupBox.dataset.id;
             const positionBox = groupBox.querySelector('.form-group-position');
             if (positionBox) {
-                positionBox.innerHTML = position;
+                const positionValue = positionBox.querySelector('span');
+                if (positionValue) {
+                    positionValue.innerText = position;
+                }
+                else {
+                    positionBox.innerHTML = position;
+                }
                 if (groupId && formId) {
                     groups[groupId] = position;
                 }

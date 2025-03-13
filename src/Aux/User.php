@@ -54,9 +54,13 @@ class User
     {
         $avatar = null;
         if (($isThumbnail && !empty($this->user->data->thumbnail)) || (!$isThumbnail && empty($this->user->data->photo))) {
-            $avatar = $this->user->data->thumbnail;
+            if (!empty($this->user->data->thumbnail)) {
+                $avatar = $this->user->data->thumbnail;
+            }
         } elseif (($isThumbnail && empty($this->user->data->thumbnail)) || (!$isThumbnail && !empty($this->user->data->photo))) {
-            $avatar = $this->user->data->photo;
+            if (!empty($this->user->data->photo)) {
+                $avatar = $this->user->data->photo;
+            }
         }
         return $avatar;
     }

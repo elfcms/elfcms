@@ -16,7 +16,7 @@
     @endif --}}
 
     <div class="item-form">
-        <h3>{{ __('elfcms::default.form_result') }} #{{ $result->id }}</h3>
+        <h2>{{ __('elfcms::default.form_result') }} #{{ $result->id }}</h2>
         {{-- <form action="{{ route('admin.forms.update',$form->id) }}" method="POST" enctype="multipart/form-data"> --}}
         <div>
             <div class="colored-rows-box">
@@ -33,10 +33,10 @@
 
             </div>
             {{-- <div class="button-box single-box">
-                <button type="submit" class="default-btn success-button">{{ __('elfcms::default.submit') }}</button>
-                <button type="submit" name="submit" value="save_and_open" class="default-btn alternate-button">{{ __('elfcms::default.save_and_open') }}</button>
-                <button type="submit" name="submit" value="save_and_close" class="default-btn alternate-button">{{ __('elfcms::default.save_and_close') }}</button>
-                <a href="{{ route('admin.forms.index') }}" class="default-btn">{{ __('elfcms::default.cancel') }}</a>
+                <button type="submit" class="button color-text-button success-button">{{ __('elfcms::default.submit') }}</button>
+                <button type="submit" name="submit" value="save_and_open" class="button color-text-button info-button">{{ __('elfcms::default.save_and_open') }}</button>
+                <button type="submit" name="submit" value="save_and_close" class="button color-text-button info-button">{{ __('elfcms::default.save_and_close') }}</button>
+                <a href="{{ route('admin.forms.index') }}" class="button color-text-button">{{ __('elfcms::default.cancel') }}</a>
             </div> --}}
         </div>
         {{-- </form> --}}

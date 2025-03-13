@@ -29,10 +29,7 @@ Route::group(['middleware' => ['web', 'locales', 'cookie']], function () use ($a
         Route::get($adminPath . '/login', [Elfcms\Elfcms\Http\Controllers\LoginController::class, 'index'])
             ->name('login');
         Route::post($adminPath . '/login', [Elfcms\Elfcms\Http\Controllers\LoginController::class, 'login']);
-        Route::get($adminPath . '/logout', function () use ($adminPath) {
-            Auth::logout();
-            return redirect($adminPath . '/login');
-        })->name('logout');
+        Route::get($adminPath . '/logout', [Elfcms\Elfcms\Http\Controllers\LoginController::class, 'logout'])->name('logout');
 
         Route::get($adminPath . '/forgot-password', [Elfcms\Elfcms\Http\Controllers\LoginController::class, 'getRestoreForm'])->name('getrestore');
         Route::post($adminPath . '/forgot-password', [Elfcms\Elfcms\Http\Controllers\LoginController::class, 'getRestore']);
@@ -90,14 +87,14 @@ Route::group(['middleware' => ['web', 'locales', 'cookie']], function () use ($a
             //Route::resource($adminPath . '/email/templates', Elfcms\Elfcms\Http\Controllers\Resources\EmailTemplateController::class)->names(['index' => 'templates']);
         });
 
-        Route::name('form.')->group(function () use ($adminPath) {
+        /* Route::name('form.')->group(function () use ($adminPath) {
             Route::resource($adminPath . '/form/forms', Elfcms\Elfcms\Http\Controllers\Resources\FormController::class)->names(['index' => 'forms']);
             Route::resource($adminPath . '/form/groups', Elfcms\Elfcms\Http\Controllers\Resources\FormFieldGroupController::class)->names(['index' => 'groups']);
             Route::resource($adminPath . '/form/fields', Elfcms\Elfcms\Http\Controllers\Resources\FormFieldController::class)->names(['index' => 'fields']);
             Route::resource($adminPath . '/form/options', Elfcms\Elfcms\Http\Controllers\Resources\FormFieldOptionController::class)->names(['index' => 'options']);
             Route::resource($adminPath . '/form/field-types', Elfcms\Elfcms\Http\Controllers\Resources\FormController::class)->names(['index' => 'field-types']);
             Route::resource($adminPath . '/form/results', Elfcms\Elfcms\Http\Controllers\Resources\FormResultController::class)->names(['index' => 'results']);
-        });
+        }); */
 
         Route::name('forms.')->group(function () use ($adminPath) {
             Route::resource($adminPath . '/forms', Elfcms\Elfcms\Http\Controllers\Resources\FormController::class)->names([
@@ -112,7 +109,7 @@ Route::group(['middleware' => ['web', 'locales', 'cookie']], function () use ($a
             Route::resource($adminPath . '/forms/{form}/groups', Elfcms\Elfcms\Http\Controllers\Resources\FormFieldGroupController::class)->names(['index' => 'groups']);
             Route::resource($adminPath . '/forms/{form}/fields', Elfcms\Elfcms\Http\Controllers\Resources\FormFieldController::class)
                 ->names(['index' => 'fields']);
-            Route::resource($adminPath . '/forms/{form}/fields/{field}/options', Elfcms\Elfcms\Http\Controllers\Resources\FormFieldOptionController::class)->names(['index' => 'options']);
+            //Route::resource($adminPath . '/forms/{form}/fields/{field}/options', Elfcms\Elfcms\Http\Controllers\Resources\FormFieldOptionController::class)->names(['index' => 'options']);
             //Route::resource($adminPath . '/forms/{form}/results', Elfcms\Elfcms\Http\Controllers\Resources\FormResultController::class)->names(['index' => 'results']);
         });
         Route::name('form-results.')->group(function () use ($adminPath) {
@@ -196,6 +193,7 @@ Route::group(['middleware' => ['web', 'locales', 'cookie']], function () use ($a
 
         // File icons
         Route::get($adminPath . '/helper/file-icon/{extension}', [\Elfcms\Elfcms\Http\Controllers\AdminController::class, 'fileIcon'])->name('file-icon');
+        Route::get($adminPath . '/helper/file-icon-data/{extension}', [\Elfcms\Elfcms\Http\Controllers\AdminController::class, 'fileIconData'])->name('file-icon-data');
 
         Route::name('page.')->group(function () use ($adminPath) {
             Route::resource($adminPath . '/page/pages', Elfcms\Elfcms\Http\Controllers\Resources\PageController::class)->names(['index' => 'pages']);
@@ -218,6 +216,11 @@ Route::group(['middleware' => ['web', 'locales', 'cookie']], function () use ($a
 
         Route::name('statistics.')->group(function () use ($adminPath) {
             Route::get($adminPath . '/statistics', [Elfcms\Elfcms\Http\Controllers\VisitStatisticController::class, 'index'])->name('index');
+        });
+
+        Route::name('system.')->group(function () use ($adminPath) {
+            Route::get($adminPath . '/system', [Elfcms\Elfcms\Http\Controllers\SystemController::class, 'index'])->name('index');
+            Route::get($adminPath . '/system/license', [Elfcms\Elfcms\Http\Controllers\AdminController::class, 'license'])->name('license');
         });
 
 
@@ -254,6 +257,13 @@ Route::group(['middleware' => ['web', 'locales', 'cookie']], function () use ($a
                 Route::post('/elfcms/api/filestorage/{filestorage}/files/group', [\Elfcms\Elfcms\Http\Controllers\Ajax\FilestorageFileController::class, 'filestorageFileGroupSave'])->name('filestorage.files.groupSave');
             });
         });
+        /* JS admin const */
+        Route::get('/js/system.js', function () use ($adminPath) {
+            $content = "var adminPath = '$adminPath';";
+            header('Content-Type: text/javascript');
+            return $content;
+        });
+        /* /JS admin const */
     });
     /* /Admin panel */
 

@@ -1,22 +1,15 @@
-@extends('elfcms::admin.layouts.email')
+@extends('elfcms::admin.layouts.main')
 
-@section('emailpage-content')
-
-    @if (Session::has('eaddredited'))
-        <div class="alert alert-success">{{ Session::get('eaddredited') }}</div>
+@section('pagecontent')
+    {{-- @if (Session::has('success'))
+        <x-elf-notify type="success" title="{{ __('elfcms::default.success') }}" text="{{ Session::get('success') }}" />
     @endif
     @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul class="errors-list">
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-    @endif
+        <x-elf-notify type="error" title="{{ __('elfcms::default.error') }}" text="{!! '<ul><li>' . implode('</li><li>', $errors->all()) . '</li></ul>' !!}" />
+    @endif --}}
 
     <div class="item-form">
-        <h3>{{ __('elfcms::default.edit_email_address') }} #{{ $address->id }}</h3>
+        <h2>{{ __('elfcms::default.edit_email_address') }} #{{ $address->id }}</h2>
         <form action="{{ route('admin.email.addresses.update',$address->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
@@ -41,8 +34,8 @@
                 </div>
             </div>
             <div class="button-box single-box">
-                <button type="submit" class="default-btn success-button">{{ __('elfcms::default.submit') }}</button>
-                <a href="{{ route('admin.email.addresses') }}" class="default-btn">{{ __('elfcms::default.cancel') }}</a>
+                <button type="submit" class="button color-text-button success-button">{{ __('elfcms::default.submit') }}</button>
+                <a href="{{ route('admin.email.addresses') }}" class="button color-text-button">{{ __('elfcms::default.cancel') }}</a>
             </div>
         </form>
     </div>

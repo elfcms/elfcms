@@ -80,7 +80,7 @@ class EmailAddressController extends Controller
             return json_encode(['result'=>$result,'message'=>$message,'data'=>$data]);
         }
 
-        return redirect(route('admin.email.addresses.edit',$address->id))->with('eaddredited',__('elfcms::default.email_address_created_successfully'));
+        return redirect(route('admin.email.addresses.edit',$address->id))->with('success',__('elfcms::default.email_address_created_successfully'));
     }
 
     /**
@@ -132,7 +132,7 @@ class EmailAddressController extends Controller
 
         $address->save();
 
-        return redirect(route('admin.email.addresses.edit',$address->id))->with('eaddredited',__('elfcms::default.email_address_edited_successfully'));
+        return redirect(route('admin.email.addresses.edit',$address->id))->with('success',__('elfcms::default.email_address_edited_successfully'));
     }
 
     /**
@@ -147,6 +147,6 @@ class EmailAddressController extends Controller
             return redirect(route('admin.email.addresses'))->withErrors(['eaddrdelerror'=>'Error of address deleting']);
         }
 
-        return redirect(route('admin.email.addresses'))->with('eaddrdeleted','Address deleted successfully');
+        return redirect(route('admin.email.addresses'))->with('success','Address deleted successfully');
     }
 }

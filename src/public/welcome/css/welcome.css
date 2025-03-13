@@ -1,56 +1,180 @@
+:root {
+    --background-color-default: #2c3442;
+    --background-color-light: #485368;
+    --background-color-middle: #394253;
+    --background-color-shade: #343d4d;
+    --background-color-dark: #15181d;
+    --text-color-default: #f7fbff;
+    --text-color-middle: #e5edf5;
+    --text-color-second: #ccddee;
+
+    --color-010: #3d4aff;
+    --color-020: #2583fd;
+    --color-030: #00ddec;
+    --color-040: #04ca26;
+    --color-050: #75db15;
+    --color-060: #ffe817;
+    --color-070: #ffb108;
+    --color-080: #f96d00;
+    --color-090: #ff2f21;
+    --color-100: #ff009d;
+    --color-110: #cc00e4;
+    --color-120: #8c56ff;
+
+    --shade-color-05: rgba(0, 0, 0, 0.05);
+    --shade-color-10: rgba(0, 0, 0, 0.1);
+    --shade-color-20: rgba(0, 0, 0, 0.2);
+    --shade-color-30: rgba(0, 0, 0, 0.3);
+    --shade-color-40: rgba(0, 0, 0, 0.4);
+    --shade-color-50: rgba(0, 0, 0, 0.5);
+    --shade-color-60: rgba(0, 0, 0, 0.6);
+    --shade-color-70: rgba(0, 0, 0, 0.7);
+    --shade-color-80: rgba(0, 0, 0, 0.8);
+    --shade-color-90: rgba(0, 0, 0, 0.9);
+
+    --light-color-05: rgba(255, 255, 255, 0.025);
+    --light-color-10: rgba(255, 255, 255, 0.05);
+    --light-color-20: rgba(255, 255, 255, 0.1);
+    --light-color-30: rgba(255, 255, 255, 0.15);
+    --light-color-40: rgba(255, 255, 255, 0.2);
+    --light-color-50: rgba(255, 255, 255, 0.25);
+    --light-color-60: rgba(255, 255, 255, 0.3);
+    --light-color-70: rgba(255, 255, 255, 0.35);
+    --light-color-80: rgba(255, 255, 255, 0.4);
+    --light-color-90: rgba(255, 255, 255, 0.45);
+
+    --fw-100: 100;
+    --fw-200: 100;
+    --fw-300: 200;
+    --fw-400: 300;
+    --fw-500: 400;
+    --fw-600: 500;
+    --fw-700: 600;
+    --fw-800: 700;
+    --fw-900: 800;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    margin: 0;
+    padding: 0;
+    font-family: "Inter", sans-serif;
+}
+
 body {
     margin: 0;
     padding: 0;
+    background-color: var(--background-color-default);
+    background-image: radial-gradient(
+        circle at 30% 0,
+        var(--background-color-light),
+        var(--background-color-dark)
+    );
+    background-attachment: fixed;
+    color: var(--text-color-default);
+    min-height: 100vh;
+    width: max(100%, 320px);
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    min-height: 100vh;
-    background-image: url('/elfcms/welcome/images/nebula_02_cub_04-min.jpg');
-    background-size: cover;
-    background-position: center;
-    color: #ffffff;
-    font-family: Arial, Helvetica, sans-serif;
-}
-h1 {
-    font-size: 2rem;
-    margin: 1em auto;
-    text-shadow: .1em .1em .1em rgba(0, 0, 0, 0.3);
-}
-.cms_logo {
-    font-size: 2.0rem;
-    display: flex;
-    flex-wrap: nowrap;
-    flex-direction: row;
-    gap: 1em;
-}
-.cms_logo_part {
-    display: flex;
-    flex-wrap: nowrap;
-    flex-direction: column;
-    gap: 1em;
-}
-.cms_logo_big,
-.cms_logo_small {
-    box-shadow: 0.3em 0.3em 0.3em 0 rgba(0, 0, 0, 0.3);
-}
-.cms_logo_big {
-    width: 2em;
-    height: 8em;
-}
-.cms_logo_small {
-    width: 2em;
-    height: 2em;
-}
-.cms_logo_white {
-    background-color: #ffffff;
-}
-.cms_logo_green {
-    background-color: #13d9a1;
+    gap: 1rem;
 }
 
-@media (max-width: 512px) {
-    html {
-        font-size: 3.125vw;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: "Afacad", sans-serif;
+    font-weight: var(--fw-600, 600);
+}
+
+h1 {
+    font-size: 2.5rem;
+    margin: 0;
+    text-align: center;
+    text-shadow: 0.0625rem 0.0625rem 0.25rem var(--shade-color-40);
+}
+
+.cms_logo {
+    display: flex;
+    justify-content: center;
+}
+.cms_logo svg {
+    width: 20rem;
+    height: auto;
+    max-width: 90%;
+    filter: drop-shadow(0.25rem 0.25rem 0.5rem var(--shade-color-40));
+}
+
+.start-button {
+    background-color: var(--color-020);
+    color: var(--text-color-default);
+    padding: 0.5rem 1.5rem;
+    border: none;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    font-size: 1.25rem;
+    font-family: 'Inter', sans-serif;
+    font-weight: var(--fw-600, 600);
+    transition: 0.3s;
+    text-shadow: .0625rem .0625rem .125rem var(--shade-color-20);
+    box-shadow: .0625rem .0625rem .375rem 0 var(--shade-color-30);
+}
+.start-button:hover {
+    background-color: hsl(from var(--color-020) h s calc(l + 5));
+    box-shadow: .125rem .125rem .5rem 0 var(--shade-color-30);
+}
+
+.welcome-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: radial-gradient(
+            ellipse 80% 40% at 40% 32%,
+            transparent,
+            var(--background-color-light) 0%,
+            transparent 50%
+        ),
+        radial-gradient(
+            ellipse 40% 90% at 20% 50%,
+            transparent,
+            var(--background-color-light) 0%,
+            transparent 50%
+        );
+    background-size: 300% 300%;
+    background-repeat: no-repeat;
+    background-position: -35% -35%;
+    mask: url("../images/bg/bg-mask-black.png") repeat center;
+    animation: bglight 6s ease infinite;
+    opacity: .25;
+    z-index: -1;
+}
+
+@keyframes bglight {
+    0% {
+        background-position: -35% -35%;
+    }
+    35% {
+        background-position: -35% -35%;
+    }
+    65% {
+        background-position: 80% 80%;
+    }
+    70% {
+        background-position: 180% -35%;
+    }
+    80% {
+        background-position: 180% -135%;
+    }
+    100% {
+        background-position: -35% -35%;
     }
 }

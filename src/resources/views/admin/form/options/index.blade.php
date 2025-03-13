@@ -17,7 +17,7 @@
         </ul>
     </div>
     @endif
-    <div class="widetable-wrapper">
+    <div class="grid-table-wrapper">
         <table class="grid-table formtable">
             <thead>
                 <tr>
@@ -50,19 +50,19 @@
                     <td class="button-column">
                         <form action="{{ route('admin.form.groups.create') }}" method="GET">
                             <input type="hidden" name="form_id" value="{{ $form->id }}">
-                            <button type="submit" class="default-btn submit-button">{{ __('elfcms::default.add_group') }}</button>
+                            <button type="submit" class="button submit-button">{{ __('elfcms::default.add_group') }}</button>
                         </form>
                         <form action="{{ route('admin.form.fields.create') }}" method="GET">
                             <input type="hidden" name="form_id" value="{{ $form->id }}">
-                            <button type="submit" class="default-btn submit-button">{{ __('elfcms::default.add_field') }}</button>
+                            <button type="submit" class="button submit-button">{{ __('elfcms::default.add_field') }}</button>
                         </form>
-                        <a href="{{ route('admin.form.forms.edit',$form->id) }}" class="default-btn edit-button">{{ __('elfcms::default.edit') }}</a>
+                        <a href="{{ route('admin.form.forms.edit',$form->id) }}" class="button edit-button">{{ __('elfcms::default.edit') }}</a>
                         <form action="{{ route('admin.form.forms.destroy',$form->id) }}" method="POST" data-submit="check">
                             @csrf
                             @method('DELETE')
                             <input type="hidden" name="id" value="{{ $form->id }}">
                             <input type="hidden" name="name" value="{{ $form->name }}">
-                            <button type="submit" class="default-btn delete-button">{{ __('elfcms::default.delete') }}</button>
+                            <button type="submit" class="button delete-button">{{ __('elfcms::default.delete') }}</button>
                         </form>
                     </td>
                 </tr>
@@ -87,14 +87,14 @@
                         buttons:[
                             {
                                 title:'{{ __('elfcms::default.delete') }}',
-                                class:'default-btn delete-button',
+                                class:'button color-text-button red-button',
                                 callback: function(){
                                     self.submit()
                                 }
                             },
                             {
                                 title:'{{ __('elfcms::default.cancel') }}',
-                                class:'default-btn cancel-button',
+                                class:'button color-text-button',
                                 callback:'close'
                             }
                         ],

@@ -1,3 +1,7 @@
+if (typeof adminPath === 'undefined') {
+    var adminPath = '/admin';
+}
+
 function popup(params = {}) {
     if (params.reload == undefined) {
         params.reload = true;
@@ -286,7 +290,7 @@ function inputFileExt(input) {
                                 img.classList.add("button-icon");
                                 img.src =
                                     "/elfcms/admin/images/icons/filestorage/any.svg";
-                                fetch('/admin/helper/file-icon/' + (files[0].type.split('/')[1] ?? 'any'),{headers: {'X-Requested-With': 'XMLHttpRequest'}})
+                                fetch(adminPath + '/helper/file-icon/' + (files[0].type.split('/')[1] ?? 'any'),{headers: {'X-Requested-With': 'XMLHttpRequest'}})
                                     .then((response) => {
                                         return response.text();
                                     })
@@ -483,7 +487,7 @@ function tagFormInit() {
         if (tagList !== null && typeof tagList == "object") {
             return tagList;
         }
-        let response = await fetch("/admin/blog/tags", {
+        let response = await fetch(adminPath + "/blog/tags", {
             headers: { "X-Requested-With": "XMLHttpRequest" },
         });
         tagList = await response.json();
@@ -536,7 +540,7 @@ function tagFormInit() {
                 const token = document.querySelector(
                     "input[name='_token']"
                 ).value;
-                fetch("/admin/blog/tags/addnotexist", {
+                fetch(adminPath + "/blog/tags/addnotexist", {
                     method: "POST",
                     headers: {
                         Accept: "application/json",
@@ -574,7 +578,7 @@ function fieldGroupInit() {
         formSelect.addEventListener("change", function () {
             let val = this.value;
             const token = document.querySelector("input[name='_token']").value;
-            fetch("/admin/form/groups?form_id=" + val, {
+            fetch(adminPath + "/form/groups?form_id=" + val, {
                 method: "GET",
                 headers: {
                     Accept: "application/json",
@@ -608,7 +612,7 @@ async function getElfLang() {
     if (elfLang !== null && typeof elfLang == "object") {
         return elfLang;
     }
-    let elfLangResponse = await fetch("/admin/ajax/json/lang/elf", {
+    let elfLangResponse = await fetch(adminPath + "/ajax/json/lang/elf", {
         headers: { "X-Requested-With": "XMLHttpRequest" },
     });
     elfLang = await elfLangResponse.json();
@@ -721,7 +725,7 @@ function eventParamBoxInit(addSelector = "#addparamline", line = 0) {
                     <input type="text" name="params_new[${paramNextLine}][value]" id="param_new_value_${paramNextLine}" data-param-value>
                 </div>
                 <div class="params-table-string">
-                    <button type="button" class="default-btn" onclick="eventParamDelete(${paramNextLine})">&#215;</button>
+                    <button type="button" class="button" onclick="eventParamDelete(${paramNextLine})">&#215;</button>
                 </div>
             </div>
             `;
@@ -763,7 +767,7 @@ function menuAttrBoxInit(addSelector = "#addattributeline", line = 0) {
                     <input type="text" name="attributes_new[${attributeNextLine}][value]" id="attribute_new_value_${attributeNextLine}" data-attribute-value>
                 </div>
                 <div class="attributes-table-string">
-                    <button type="button" class="default-btn" onclick="menuAttrDelete(${attributeNextLine})">&#215;</button>
+                    <button type="button" class="button icon-button icon-alarm-button string-delete-button" onclick="menuAttrDelete(${attributeNextLine})">&#215;</button>
                 </div>
             </div>
             `;
@@ -916,14 +920,14 @@ function deleteConfirm(e) {
         buttons: [
             {
                 title: elfLang.delete,
-                class: "default-btn delete-button",
+                class: "button delete-button",
                 callback: function () {
                     self.submit();
                 },
             },
             {
                 title: elfLang.cancel,
-                class: "default-btn cancel-button",
+                class: "button cancel-button",
                 callback: "close",
             },
         ],

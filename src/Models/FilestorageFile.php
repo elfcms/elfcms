@@ -2,6 +2,7 @@
 
 namespace Elfcms\Elfcms\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Concerns\HasUlids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -59,5 +60,21 @@ class FilestorageFile extends Model
     public function group()
     {
         return $this->belongsTo(FilestorageFilegroup::class, 'group_id');
+    }
+
+    protected function fullPath(): Attribute
+    {
+        $path = '/' . trim(config('filesystems.disks.filestorage.root'),'/') . '/' . $this->path;
+        return Attribute::make(
+            get: fn() => $path,
+        );
+    }
+
+    protected function publicPath(): Attribute
+    {
+        $path = '/' . trim(config('elfcms.elfcms.file_path'),'/') . '/' . $this->path;
+        return Attribute::make(
+            get: fn() => $path,
+        );
     }
 }

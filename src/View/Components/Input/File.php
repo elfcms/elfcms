@@ -8,29 +8,40 @@ use Illuminate\Support\Str;
 
 class File extends Component
 {
-    public $inputData, $value, $code, $accept, $template, $boxId, $jsName, $download;
+    //public $params, $boxId, $template;
 
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($inputData = [], $value = null, $code = null, $accept = null, $template='default', $download = false)
+    public function __construct(
+        public array $params, public string|null $template, public string|null $boxId, $value = null, $name = null, $accept = null, $download = false, $height = null, $width = null)
     {
-        if (empty($inputData)) {
-            $inputData = [
-                'code' => null,
-                'value' => null
-            ];
+        $params['name'] = $params['name'] ?? $name;
+        $params['value'] = $params['value'] ?? $value;
+        $params['id'] = $params['id'] ?? $params['name'];
+        $params['value_name'] = $params['value_name'] ?? $params['name'] . '_path';
+        $params['accept'] = $params['accept'] ?? $accept;
+        $params['template'] = $params['template'] ?? $template;
+        $params['download'] = isset($params['download']) ? (bool)$params['download'] : (bool)$download;
+        $params['code'] = $params['code'] ?? $params['name'];
+        $params['width'] = $params['width'] ?? $width;
+        $params['height'] = $params['height'] ?? $height;
+        $params['extension'] = empty($params['value']) ? null : fsExtension($params['value']);
+        $params['icon'] = empty($params['extension']) ? null : fsIcon($params['extension']);
+        $params['isImage'] = in_array(strtolower($params['extension']),['jpg','jpeg','gif','png','bmp','webp','svg']);
+        if (empty($params['file_name'])) {
+            if (!empty($params['value'])) {
+                $params['file_name'] = basename($params['value']);
+            }
+            else {
+                $params['file_name'] = __('elfcms::default.choose_file');
+            }
         }
-        $this->inputData = $inputData;
-        $this->value = $value ?? $inputData['value'];
-        $this->code = $code ?? $inputData['code'];
-        $this->accept = $accept;
-        $this->template = $template;
-        $this->download = $download;
+        $this->params = $params;
         $this->boxId = uniqid();
-        $this->jsName = Str::camel(str_replace(']','',str_replace('[','_',$this->code)));
+        $this->template = $template ?? 'default';
     }
 
     /**
@@ -43,11 +54,11 @@ class File extends Component
         if (View::exists('components.input.file.' . $this->template)) {
             return view('components.input.file.' . $this->template);
         }
-        if (View::exists('elfcms.components.input.file.'.$this->template)) {
-            return view('elfcms.components.input.file.'.$this->template);
+        if (View::exists('elfcms.components.input.file.' . $this->template)) {
+            return view('elfcms.components.input.file.' . $this->template);
         }
-        if (View::exists('elfcms::components.input.file.'.$this->template)) {
-            return view('elfcms::components.input.file.'.$this->template);
+        if (View::exists('elfcms::components.input.file.' . $this->template)) {
+            return view('elfcms::components.input.file.' . $this->template);
         }
         if (View::exists($this->template)) {
             return view($this->template);

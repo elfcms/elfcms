@@ -1,125 +1,92 @@
-@extends('elfcms::admin.layouts.users')
+@extends('elfcms::admin.layouts.main')
 
-@section('userpage-content')
-
-@if ($errors->any())
-<div class="alert alert-danger">
-    <h4>{{ __('elfcms::default.errors') }}</h4>
-    <ul>
-        @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-        @endforeach
-    </ul>
-</div>
-@endif
-<div class="user-form item-form">
-    <h3>{{ __('elfcms::default.create_new_role') }}</h3>
-    <form action="{{ route('admin.user.roles.store') }}" method="POST">
-        @csrf
-        <div class="colored-rows-box">
-            <div class="input-box colored">
-                <label for="name">{{ __('elfcms::default.name') }}</label>
-                <div class="input-wrapper">
-                    <input type="text" name="name" id="name" autocomplete="off">
-                </div>
-            </div>
-            <div class="input-box colored">
-                <label for="code">{{ __('elfcms::default.code') }}</label>
-                <div class="input-wrapper">
-                    <input type="text" name="code" id="code" autocomplete="off">
-                </div>
-                <div class="input-wrapper">
-                    <div class="autoslug-wrapper">
-                        <input type="checkbox" data-text-id="name" data-slug-id="code" class="autoslug" checked>
-                        <div class="autoslug-button"></div>
+@section('pagecontent')
+    {{-- @if (Session::has('success'))
+        <x-elf-notify type="success" title="{{ __('elfcms::default.success') }}" text="{{ Session::get('success') }}" />
+    @endif
+    @if ($errors->any())
+        <x-elf-notify type="error" title="{{ __('elfcms::default.error') }}" text="{!! '<ul><li>' . implode('</li><li>', $errors->all()) . '</li></ul>' !!}" />
+    @endif --}}
+    <div class="user-form item-form">
+        <h2>{{ __('elfcms::default.create_new_role') }}</h2>
+        <form action="{{ route('admin.user.roles.store') }}" method="POST">
+            @csrf
+            <div class="colored-rows-box">
+                <div class="input-box colored">
+                    <label for="name">{{ __('elfcms::default.name') }}</label>
+                    <div class="input-wrapper">
+                        <input type="text" name="name" id="name" autocomplete="off">
                     </div>
                 </div>
-            </div>
-            <div class="input-box colored">
-                <label for="description">{{ __('elfcms::default.description') }}</label>
-                <div class="input-wrapper">
-                    <input type="text" name="description" id="description" autocomplete="off">
+                <div class="input-box colored">
+                    <label for="code">{{ __('elfcms::default.code') }}</label>
+                    <div class="input-wrapper">
+                        <input type="text" name="code" id="code" autocomplete="off">
+                    </div>
+                    <div class="input-wrapper">
+                        <x-elfcms::ui.checkbox.autoslug checked="true" textid="name" slugid="code" />
+                    </div>
                 </div>
-            </div>
+                <div class="input-box colored">
+                    <label for="description">{{ __('elfcms::default.description') }}</label>
+                    <div class="input-wrapper">
+                        <input type="text" name="description" id="description" autocomplete="off">
+                    </div>
+                </div>
 
-            @if (!empty($accessRoutes))
-            <div class="input-box colored">
-                <label>{{ __('elfcms::default.permissions') }}</label>
-                <div class="input-wrapper">
-                    <div class="user-permissions-box">
-                        <div class="user-permissions-col-title">
-                            {{ __('elfcms::default.sys_section') }}
-                        </div>
-                        <div class="user-permissions-col-title">
-                            {{ __('elfcms::default.perm_read') }}
-                        </div>
-                        <div class="user-permissions-col-title">
-                            {{ __('elfcms::default.perm_write') }}
-                        </div>
-                        @foreach ($accessRoutes as $module => $routes)
-                            @if (!empty($routes))
-                                @foreach ($routes as $routeData)
-                                    <div class="user-permissions-row">
-                                        {{ $routeData['title'] }}
-                                    </div>
-                                    @empty($routeData['actions'])
-                                    <div class="user-permissions-row"></div>
-                                    <div class="user-permissions-row"></div>
-                                    @else
-                                        @if (in_array('read',$routeData['actions']))
-                                        <div class="checkbox-switch-wrapper user-permissions-row">
-                                            <div class="checkbox-switch blue">
-                                                <input
-                                                    type="checkbox"
-                                                    name="permissions[{{ $routeData['name'] }}][read]"
-                                                    id="{{ $routeData['title'] }}_read"
-                                                    value="1"
-                                                    @if (!empty($routeData['permissions']['read']))
-                                                        checked
+                @if (!empty($accessRoutes))
+                    <div class="input-box colored">
+                        <label>{{ __('elfcms::default.permissions') }}</label>
+                        <div class="input-wrapper">
+                            <div class="user-permissions-box">
+                                <div class="user-permissions-col-title">
+                                    {{ __('elfcms::default.sys_section') }}
+                                </div>
+                                <div class="user-permissions-col-title">
+                                    {{ __('elfcms::default.perm_read') }}
+                                </div>
+                                <div class="user-permissions-col-title">
+                                    {{ __('elfcms::default.perm_write') }}
+                                </div>
+                                @foreach ($accessRoutes as $module => $routes)
+                                    @if (!empty($routes))
+                                        @foreach ($routes as $routeData)
+                                            @empty($routeData['actions'])
+                                            @else
+                                                <div class="user-permissions-row">
+                                                    {{ $routeData['title'] }}
+                                                </div>
+                                                <div class="user-permissions-row">
+                                                    @if (in_array('read', $routeData['actions']))
+                                                        <x-elfcms::ui.checkbox.switch
+                                                            name="permissions[{{ $routeData['name'] }}][read]"
+                                                            id="{{ $routeData['title'] }}_read"
+                                                            checked="{{ !empty($routeData['permissions']['read']) }}" />
                                                     @endif
-                                                />
-                                                <i></i>
-                                            </div>
-                                        </div>
-                                        @else
-                                        <div class="user-permissions-row"></div>
-                                        @endif
-                                        @if (in_array('write',$routeData['actions']))
-                                        <div class="checkbox-switch-wrapper user-permissions-row">
-                                            <div class="checkbox-switch blue">
-                                                <input
-                                                    type="checkbox"
-                                                    name="permissions[{{ $routeData['name'] }}][write]"
-                                                    id="{{ $routeData['title'] }}_write"
-                                                    value="1"
-                                                    @if (!empty($routeData['permissions']['write']))
-                                                        checked
+                                                </div>
+                                                <div class="user-permissions-row">
+                                                    @if (in_array('write', $routeData['actions']))
+                                                        <x-elfcms::ui.checkbox.switch
+                                                            name="permissions[{{ $routeData['name'] }}][write]"
+                                                            id="{{ $routeData['title'] }}_write"
+                                                            checked="{{ !empty($routeData['permissions']['write']) }}" />
                                                     @endif
-                                                />
-                                                <i></i>
-                                            </div>
-                                        </div>
-                                        @else
-                                        <div class="user-permissions-row"></div>
-                                        @endif
-                                    @endempty
+                                                </div>
+                                            @endempty
+                                        @endforeach
+                                    @endif
                                 @endforeach
-                            @endif
-                        @endforeach
+                            </div>
+                        </div>
                     </div>
-                </div>
+                @endif
+
             </div>
-            @endif
 
-        </div>
-
-        <div class="button-box single-box">
-            <button type="submit" class="default-btn success-button">{{ __('elfcms::default.submit') }}</button>
-            <a href="{{ route('admin.user.roles') }}" class="default-btn">{{ __('elfcms::default.cancel') }}</a>
-        </div>
-    </form>
-</div>
-<script>
-autoSlug('.autoslug');
-</script>
+            <div class="button-box single-box">
+                <button type="submit" class="button color-text-button success-button">{{ __('elfcms::default.submit') }}</button>
+                <a href="{{ route('admin.user.roles') }}" class="button color-text-button">{{ __('elfcms::default.cancel') }}</a>
+            </div>
+        </form>
+    </div>
 @endsection

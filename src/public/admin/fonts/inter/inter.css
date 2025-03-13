@@ -1,0 +1,12 @@
+@font-face {
+    font-family: "Inter";
+    src: url("Inter-VariableFont_opsz,wght.ttf") format("truetype supports variations");
+    font-weight: 100 1000;
+    font-style: normal;
+}
+@font-face {
+    font-family: "Inter";
+    src: url("Inter-Italic-VariableFont_opsz,wght.ttf") format("truetype supports variations");
+    font-weight: 100 1000;
+    font-style: italic;
+}

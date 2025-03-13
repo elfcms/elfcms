@@ -3,11 +3,13 @@
 namespace Elfcms\Elfcms\Http\Controllers;
 
 use Elfcms\Elfcms\Events\SomeMailEvent;
+use Elfcms\Elfcms\Models\AuthLog;
 use Elfcms\Elfcms\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Log;
 
 class LoginController extends \App\Http\Controllers\Controller
 {
@@ -39,13 +41,38 @@ class LoginController extends \App\Http\Controllers\Controller
             $fields['is_confirmed'] = 1;
         }
 
-        if (Auth::check() || Auth::attempt($fields,$remember)) {
+        if (Auth::check() || Auth::attempt($fields,$remember)) { // success
+            $user = Auth::user();
             $default = '/';
-            if (Auth::user()->roles->contains('code','admin')) {
+
+            if ($user->roles->contains('code','admin')) {
                 $default = $adminPath ?? '/admin';
             }
+
+            AuthLog::create([
+                'user_id' => $user->id,
+                'email' => $user->email,
+                'action' => 'login',
+                'context' => 'admin',
+                'ip' => $request->ip(),
+            ]);
+    
+            Log::channel('elfauth')->info("Admin logged in: {$user->email}, IP: {$request->ip()}");
+
             return redirect()->intended($default);
         }
+
+        // fail
+
+        AuthLog::create([
+            'user_id' => null,
+            'email' => $request->email,
+            'action' => 'login_failed',
+            'context' => 'admin',
+            'ip' => $request->ip(),
+        ]);
+
+        Log::warning("Failed admin login attempt: {$request->email}, IP: {$request->ip()}");
 
         return redirect()->back()->withErrors([
             'email' => __('elfcms::validation.failed')
@@ -76,7 +103,7 @@ class LoginController extends \App\Http\Controllers\Controller
             if (!$message) {
                 $message = 'A password reset link has been sent to your email account';
             }
-            return redirect(route('admin.getrestore'))->with('requestissended',$message);
+            return redirect(route('admin.getrestore'))->with('success',$message);
         }
 
         return back()->withErrors(['email' => __('elfcms::default.email_not_found')]);
@@ -86,7 +113,6 @@ class LoginController extends \App\Http\Controllers\Controller
     public function setRestoreForm(Request $request)
     {
         $linkError = false;
-        //dd($request->token);
         $user = User::where('confirm_token',$request->token)->active()->first();
         if (!$user) {
             $linkError = true;
@@ -101,8 +127,6 @@ class LoginController extends \App\Http\Controllers\Controller
             }
         }
 
-        //dd(Config::get('elfcms.elfcms.confirmation_period'));
-        //dd(Carbon::parse($user->confirm_token_at)->diffInSeconds(now()));
         return view('elfcms::admin.account.setrestore',[
             'page' => [
                 'title' => __('elfcms::default.set_a_new_password'),
@@ -133,19 +157,31 @@ class LoginController extends \App\Http\Controllers\Controller
         $user->password = $request->password;
         if ($user->save()) {
             $user->setConfirmationToken();
-            return back()->with('passwordchangesuccess',__('elfcms::default.password_changed_successfully'));
+            return back()->with('success',__('elfcms::default.password_changed_successfully'));
         }
         return back()->withErrors([__('elfcms::default.password_change_error')]);
     }
 
     public function logout(Request $request)
     {
+        $user = Auth::user();
+
+        AuthLog::create([
+            'user_id' => $user->id,
+            'email' => $user->email,
+            'action' => 'logout',
+            'context' => 'admin',
+            'ip' => $request->ip(),
+        ]);
+    
+        Log::channel('elfauth')->info("User logged out (site): {$user->email}, IP: {$request->ip()}");
+    
         Auth::logout();
 
         $request->session()->invalidate();
 
         $request->session()->regenerateToken();
 
-        return redirect(route('index'));
+        return redirect(route('admin.index'));
     }
 }

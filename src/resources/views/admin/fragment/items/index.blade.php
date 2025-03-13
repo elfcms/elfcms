@@ -1,29 +1,21 @@
-@extends('elfcms::admin.layouts.fragment')
+@extends('elfcms::admin.layouts.main')
 
-@section('fragmentpage-content')
+@section('pagecontent')
 <div class="table-search-box">
-    <a href="{{ route('admin.fragment.items.create') }}" class="default-btn success-button icon-text-button light-icon plus-button">{{__('elfcms::default.create_item')}}</a>
-
+    <a href="{{ route('admin.fragment.items.create') }}" class="button round-button theme-button">
+        {!! iconHtmlLocal('elfcms/admin/images/icons/plus.svg', svg: true) !!}
+        <span class="button-collapsed-text">
+            {{ __('elfcms::default.create_item') }}
+        </span>
+    </a>
 </div>
-    @if (Session::has('success'))
-    <div class="alert alert-alternate">{{ Session::get('success') }}</div>
-    @endif
-    @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-    @endif
-    <div class="widetable-wrapper">
+    <div class="grid-table-wrapper">
         @if (!empty($item))
             <div class="alert alert-alternate">
                 {{ __('elfcms::default.showing_results_for_item') }} <strong>#{{ $item->id }} {{ $item->name }}</strong>
             </div>
         @endif
-        <table class="grid-table table-cols-6" style="--first-col:65px; --last-col:140px; --minw:800px">
+        <table class="grid-table table-cols" style="--first-col:4rem; --last-col:7.5rem; --minw:50rem; --cols-count:6;">
             <thead>
                 <tr>
                     <th>
@@ -57,25 +49,30 @@
                 <tr data-id="{{ $item->id }}" class="">
                     <td>{{ $item->id }}</td>
                     <td>
-                        <a href="{{ route('admin.fragment.items',['item'=>$item->id]) }}">
+                        <a href="{{ route('admin.fragment.items.edit',$item) }}">
                             {{ $item->code }}
                         </a>
                     </td>
                     <td>
-                        <a href="{{ route('admin.fragment.items',['item'=>$item->id]) }}">
+                        <a href="{{ route('admin.fragment.items.edit',$item) }}">
                             {{ $item->title }}
                         </a>
                     </td>
                     <td>{{ $item->created_at }}</td>
                     <td>{{ $item->updated_at }}</td>
-                    <td class="button-column non-text-buttons">
-                        <a href="{{ route('admin.fragment.items.edit',$item->id) }}" class="default-btn edit-button" title="{{ __('elfcms::default.edit') }}"></a>
+                    <td class="table-button-column">
+                        <a href="{{ route('admin.fragment.items.edit',$item->id) }}" class="button icon-button" title="{{ __('elfcms::default.edit') }}">
+                            {!! iconHtmlLocal('elfcms/admin/images/icons/buttons/edit.svg', svg: true) !!}
+                        </a>
                         <form action="{{ route('admin.fragment.items.destroy',$item->id) }}" method="POST" data-submit="check">
                             @csrf
                             @method('DELETE')
                             <input type="hidden" name="id" value="{{ $item->id }}">
                             <input type="hidden" name="name" value="{{ $item->name }}">
-                            <button type="submit" class="default-btn delete-button" title="{{ __('elfcms::default.delete') }}"></button>
+                            <button type="submit" class="button icon-button icon-alarm-button"
+                                        title="{{ __('elfcms::default.delete') }}">
+                                        {!! iconHtmlLocal('elfcms/admin/images/icons/buttons/delete.svg', svg: true) !!}
+                                    </button>
                         </form>
                     </td>
                 </tr>
@@ -101,14 +98,14 @@
                         buttons:[
                             {
                                 title:'{{ __('elfcms::default.delete') }}',
-                                class:'default-btn delete-button',
+                                class:'button color-text-button red-button',
                                 callback: function(){
                                     self.submit()
                                 }
                             },
                             {
                                 title:'{{ __('elfcms::default.cancel') }}',
-                                class:'default-btn cancel-button',
+                                class:'button color-text-button',
                                 callback:'close'
                             }
                         ],

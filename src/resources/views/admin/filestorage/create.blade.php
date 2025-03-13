@@ -1,22 +1,9 @@
-@extends('elfcms::admin.layouts.default')
+@extends('elfcms::admin.layouts.main')
 
-@section('innerpage-content')
-
-    @if (Session::has('success'))
-        <div class="alert alert-success">{{ Session::get('success') }}</div>
-    @endif
-    @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul class="errors-list">
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+@section('pagecontent')
 
     <div class="item-form">
-        <h3>{{ __('elfcms::default.create_storage') }}</h3>
+        <h2>{{ __('elfcms::default.create_storage') }}</h2>
         <form action="{{ route('admin.filestorage.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('POST')
@@ -43,11 +30,7 @@
                         <div class="icon-checkbox-round input-checker none" data-inpcheck="code" data-listen="name"></div>
                     </div>
                     <div class="input-wrapper">
-                        <div class="autoslug-wrapper">
-                            <input type="checkbox" data-text-id="name" data-slug-id="code" data-slug-space="_"
-                                class="autoslug" checked>
-                            <div class="autoslug-button"></div>
-                        </div>
+                        <x-elfcms::ui.checkbox.autoslug textid="name" slugid="code" checked="true" />
                     </div>
                 </div>
                 <div class="input-box colored">
@@ -60,11 +43,7 @@
                         <div class="icon-checkbox-round input-checker none" data-inpcheck="path" data-listen="name"></div>
                     </div>
                     <div class="input-wrapper">
-                        <div class="autoslug-wrapper autoslug-invisible">
-                            <input type="checkbox" data-text-id="name" data-slug-id="path"
-                                class="autoslug" checked>
-                            <div class="autoslug-button"></div>
-                        </div>
+                        <x-elfcms::ui.checkbox.autoslug textid="name" slugid="path" checked="true" hidden />
                     </div>
                 </div>
                 <div class="input-box colored">
@@ -109,13 +88,13 @@
                 </div>
             </div>
             <div class="button-box single-box">
-                <button type="submit" class="default-btn success-button">{{ __('elfcms::default.submit') }}</button>
+                <button type="submit" class="button color-text-button success-button">{{ __('elfcms::default.submit') }}</button>
                 <button type="submit" name="submit" value="save_and_open"
-                    class="default-btn alternate-button">{{ __('elfcms::default.save_and_open') }}</button>
+                    class="button color-text-button info-button">{{ __('elfcms::default.save_and_open') }}</button>
                 <button type="submit" name="submit" value="save_and_close"
-                    class="default-btn alternate-button">{{ __('elfcms::default.save_and_close') }}</button>
+                    class="button color-text-button info-button">{{ __('elfcms::default.save_and_close') }}</button>
                 <a href="{{ route('admin.filestorage.index') }}"
-                    class="default-btn">{{ __('elfcms::default.cancel') }}</a>
+                    class="button color-text-button">{{ __('elfcms::default.cancel') }}</a>
             </div>
         </form>
     </div>

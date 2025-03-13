@@ -5,6 +5,7 @@ namespace Elfcms\Elfcms\Models;
 use App\Models\User as ModelsUser;
 use Elfcms\Elfcms\Events\SomeMailEvent;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -65,21 +66,6 @@ class User extends ModelsUser
         return $this;
     }
 
-    /* public function getConfirmationToken($send = true)
-    {
-        $token = Str::random(32);
-
-        $this->confirm_token = $token;
-        $this->save();
-
-        if ($send) {
-            event(new SomeMailEvent($this));
-            //Mail::to($this->email)->send(new EmailConfirmation($this));
-        }
-
-        return $token;
-    } */
-
     public function setPasswordAttribute($password)
     {
         $this->attributes['password'] = Hash::make($password);
@@ -127,9 +113,6 @@ class User extends ModelsUser
     {
         $name = $this->fullname();
 
-        /* if (empty(trim($name ?? ' '))) {
-            $name = $this->name;
-        } */
         if (empty(trim($name ?? ' '))) {
             $name = $this->email;
             if ($emailname) {
@@ -138,6 +121,14 @@ class User extends ModelsUser
         }
 
         return $name;
+    }
+
+    protected function avatar(): Attribute
+    {
+        $avatar = $this->data->photo ?? $this->data->thumbnail ?? null;
+        return Attribute::make(
+            get: fn () => $avatar,
+        );
     }
 
     public function isAdmin()

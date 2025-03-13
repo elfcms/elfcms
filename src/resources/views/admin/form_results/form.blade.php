@@ -20,8 +20,8 @@
         </ul>
     </div>
     @endif
-    <div class="widetable-wrapper">
-        <table class="grid-table table-cols-{{ count($fields) + 2 }}" style="--first-col:65px; --last-col:200px; --minw:800px">
+    <div class="grid-table-wrapper">
+        <table class="grid-table table-cols" style="--first-col:4rem; --last-col:200px; --minw:50rem; --cols-count:{{ count($fields) + 2 }};">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -37,7 +37,9 @@
                     <td>{{ $result->id }}</td>
                     @foreach (array_keys($fields) as $name)
                     <td>
+                        @if (!empty($result->data[$name]))
                         <a href="{{ route('admin.form-results.show',['form'=>$result->form->id,'result'=>$result->id]) }}">{{ mb_strimwidth($result->data[$name],0,20,'...') }}</a>
+                        @endif
                     </td>
                     @endforeach
                     <td>{{ $result->created_at }}</td>
@@ -63,14 +65,14 @@
                         buttons:[
                             {
                                 title:'{{ __('elfcms::default.delete') }}',
-                                class:'default-btn delete-button',
+                                class:'button color-text-button red-button',
                                 callback: function(){
                                     self.submit()
                                 }
                             },
                             {
                                 title:'{{ __('elfcms::default.cancel') }}',
-                                class:'default-btn cancel-button',
+                                class:'button color-text-button',
                                 callback:'close'
                             }
                         ],

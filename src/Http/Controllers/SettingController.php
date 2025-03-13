@@ -20,7 +20,10 @@ class SettingController extends \App\Http\Controllers\Controller
         ['code' => 'site_keywords', 'name' => 'Site keywords', 'params' => '{"type": "text"}'],
         ['code' => 'site_description', 'name' => 'Site description', 'params' => '{"type": "text"}'],
         ['code' => 'site_locale', 'name' => 'Site locale', 'params' => '{"type": "list"}'],
+        ['code' => 'admin_locale', 'name' => 'Interface Language', 'params' => '{"type": "list"}'],
         ['code' => 'site_statistics_use', 'name' => 'Use statistics', 'params' => '{"type": "checkbox"}', 'value' => 0],
+        ['code' => 'site_maintenance', 'name' => 'Maintenance mode', 'params' => '{"type": "checkbox"}', 'value' => 0],
+        ['code' => 'site_maintenance_text', 'name' => 'Message text for maintenance mode', 'params' => '{"type": "text"}'],
     ];
 
     public function index()
@@ -29,14 +32,16 @@ class SettingController extends \App\Http\Controllers\Controller
         foreach ($settings as $item => $setting) {
             $settings[$item]['params'] = json_decode($setting['params'], true);
             if (Lang::has('elfcms::default.' . $setting['code'])) {
-                $settings[$item]['name'] = __('elfcms::default.' . $setting['code']);
+                $settings[$item]['title'] = __('elfcms::default.' . $setting['code']);
+                $settings[$item]['name'] = $setting['code'];
             }
         }
         $contacts = ElfcmsContact::all()->toArray();
         foreach ($contacts as $item => $contact) {
             $contact[$item]['params'] = json_decode($contact['params'], true);
             if (Lang::has('elfcms::default.' . $contact['code'])) {
-                $contact[$item]['name'] = __('elfcms::contact.' . $setting['code']);
+                $contact[$item]['title'] = __('elfcms::contact.' . $setting['code']);
+                $contact[$item]['name'] = $setting['code'];
             }
         }
         $locales = Locales::all();
@@ -100,7 +105,7 @@ class SettingController extends \App\Http\Controllers\Controller
             $contact->save();
         }
         //dd($request);
-        return redirect(route('admin.settings.index'))->with('settingedited', __('elfcms::default.settings_edited_successfully'));
+        return redirect(route('admin.settings.index'))->with('success', __('elfcms::default.settings_edited_successfully'));
     }
 
     public function start()

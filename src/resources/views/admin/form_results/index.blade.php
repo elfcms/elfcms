@@ -20,8 +20,8 @@
         </ul>
     </div>
     @endif
-    <div class="widetable-wrapper">
-        <table class="grid-table table-cols-4" style="--first-col:65px; --last-col:200px; --minw:600px">
+    <div class="grid-table-wrapper">
+        <table class="grid-table table-cols" style="--first-col:4rem; --last-col:200px; --minw:600px; --cols-count:4;">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -67,14 +67,14 @@
                         buttons:[
                             {
                                 title:'{{ __('elfcms::default.delete') }}',
-                                class:'default-btn delete-button',
+                                class:'button color-text-button red-button',
                                 callback: function(){
                                     self.submit()
                                 }
                             },
                             {
                                 title:'{{ __('elfcms::default.cancel') }}',
-                                class:'default-btn cancel-button',
+                                class:'button color-text-button',
                                 callback:'close'
                             }
                         ],

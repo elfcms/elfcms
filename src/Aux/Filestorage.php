@@ -5,7 +5,7 @@ namespace Elfcms\Elfcms\Aux;
 use Elfcms\Elfcms\Models\FileCatalog;
 use Elfcms\Elfcms\Models\FilestorageFile;
 
-class Filestorage
+class Filestorage //! To remove
 {
 
     public static function extension(null|string|FilestorageFile $file)
@@ -26,7 +26,7 @@ class Filestorage
         return pathinfo($file, PATHINFO_EXTENSION);
     }
 
-    public static function file_path(string $file = null, bool $full = false, $disk = null)
+    public static function file_path(string|null $file = null, bool $full = false, $disk = null)
     {
         if (!$disk) $disk = env('FILESYSTEM_DISK');
         $path = config('filesystems.disks.' . $disk . '.root');
@@ -39,7 +39,7 @@ class Filestorage
         return $file;
     }
 
-
+ 
     public static function file(null|string|FilestorageFile $file, $asString = false)
     {
         if (is_string($file)) {
@@ -59,6 +59,16 @@ class Filestorage
             return $result;
         }
         return response()->file($result,['Content-Type' => $file->mimetype]);
+    }
+
+    public static function publicFile(null|string|FilestorageFile $file, bool $full = false) {
+        if ($file instanceof FilestorageFile) {
+            $file = $file->path;
+        }
+        if ($full) {
+            return public_path('files/' . $file);
+        }
+        return 'files/' . $file;
     }
 
     public static function icon($extension) {

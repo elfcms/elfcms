@@ -3,6 +3,7 @@
 use Elfcms\Elfcms\Aux\Files;
 use Elfcms\Elfcms\Aux\Filestorage;
 use Elfcms\Elfcms\Aux\Fragment;
+use Elfcms\Elfcms\Aux\FS;
 use Elfcms\Elfcms\Aux\Image;
 use Elfcms\Elfcms\Models\ElfcmsContact;
 use Elfcms\Elfcms\Models\Setting;
@@ -104,7 +105,7 @@ if (!function_exists('imgResizeCache')) {
 
 if (!function_exists('data_path')) {
 
-    function data_path(string $path = null)
+    function data_path(string|null $path = null)
     {
         return Files::data_path($path);
     }
@@ -112,9 +113,25 @@ if (!function_exists('data_path')) {
 
 if (!function_exists('file_path')) {
 
-    function file_path(string $file = null, bool $full = false, $disk = null)
+    function file_path(string|null $file = null, bool $full = false, $disk = null)
     {
         return Files::file_path($file, $full, $disk);
+    }
+}
+
+if (!function_exists('iconHtml')) {
+
+    function iconHtml(string|null $file = null, int|null $width = null, int|null $height = null, bool $svg = false)
+    {
+        return Files::iconHtml($file, $width, $height, $svg);
+    }
+}
+
+if (!function_exists('iconHtmlLocal')) {
+
+    function iconHtmlLocal(string|null $file = null, int|null $width = null, int|null $height = null, bool $svg = false)
+    {
+        return Files::iconHtmlLocal($file, $width, $height, $svg);
     }
 }
 
@@ -154,7 +171,7 @@ if (!function_exists('cookieGet')) {
 
 /* Filestorage */
 
-if (!function_exists('fsExtension')) {
+if (!function_exists('fsExtension')) { //! To remove
 
     function fsExtension($file)
     {
@@ -163,14 +180,14 @@ if (!function_exists('fsExtension')) {
 
 }
 
-if (!function_exists('fsIcon')) {
+if (!function_exists('fsIcon')) { //! To remove
 
     function fsIcon($extension) {
         return Filestorage::icon($extension);
     }
 }
 
-if (!function_exists('fsMime')) {
+if (!function_exists('fsMime')) { //! To remove
 
     function fsMime($file)
     {
@@ -179,11 +196,11 @@ if (!function_exists('fsMime')) {
 
 }
 
-if (!function_exists('fsFile')) {
+if (!function_exists('fsFile')) { //! To remove
 
-    function fsFile($file)
+    function fsFile($file,$asString)
     {
-        return Filestorage::file($file);
+        return Filestorage::file($file,$asString);
     }
 
 }
@@ -192,7 +209,25 @@ if (!function_exists('fsPreview')) {
 
     function fsPreview($file)
     {
-        return Filestorage::preview($file);
+        return FS::preview($file);
+    }
+
+}
+
+if (!function_exists('fsPublic')) {
+
+    function fsPublic($file)
+    {
+        return FS::public($file);
+    }
+
+}
+
+if (!function_exists('fsPath')) {
+
+    function fsPath($file)
+    {
+        return FS::path($file);
     }
 
 }

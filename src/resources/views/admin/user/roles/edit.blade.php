@@ -2,7 +2,7 @@
 
 @section('userpage-content')
 
-@if (Session::has('roleedited'))
+{{-- @if (Session::has('roleedited'))
     <div class="alert alert-success">{{ Session::get('roleedited') }}</div>
 @endif
 @if (Session::has('rolecreated'))
@@ -17,7 +17,7 @@
         @endforeach
     </ul>
 </div>
-@endif
+@endif --}}
 <div class="user-form item-form">
     <h3>{{ __('elfcms::default.edit_role') }} #{{ $role->id }}</h3>
     <form action="{{ route('admin.user.roles.update',$role->id) }}" method="POST">
@@ -36,10 +36,7 @@
                     <input type="text" name="code" id="code" autocomplete="off" value="{{ $role->code }}">
                 </div>
                 <div class="input-wrapper">
-                    <div class="autoslug-wrapper">
-                        <input type="checkbox" data-text-id="name" data-slug-id="code" class="autoslug" checked>
-                        <div class="autoslug-button"></div>
-                    </div>
+                    <x-elfcms::ui.checkbox.autoslug checked="true" textid="name" slugid="code" />
                 </div>
             </div>
             <div class="input-box colored">
@@ -65,50 +62,28 @@
                         @foreach ($accessRoutes as $module => $routes)
                             @if (!empty($routes))
                                 @foreach ($routes as $routeData)
+                                @empty($routeData['actions'])
+                                @else
                                     <div class="user-permissions-row">
                                         {{ $routeData['title'] }}
                                     </div>
-                                    @empty($routeData['actions'])
-                                    <div class="user-permissions-row"></div>
-                                    <div class="user-permissions-row"></div>
-                                    @else
-                                        @if (in_array('read',$routeData['actions']))
-                                        <div class="checkbox-switch-wrapper user-permissions-row">
-                                            <div class="checkbox-switch blue">
-                                                <input
-                                                    type="checkbox"
-                                                    name="permissions[{{ $routeData['name'] }}][read]"
-                                                    id="{{ $routeData['title'] }}_read"
-                                                    value="1"
-                                                    @if (!empty($routeData['permissions']['read']))
-                                                        checked
-                                                    @endif
-                                                />
-                                                <i></i>
-                                            </div>
-                                        </div>
-                                        @else
-                                        <div class="user-permissions-row"></div>
+                                    <div class="user-permissions-row">
+                                        @if (in_array('read', $routeData['actions']))
+                                            <x-elfcms::ui.checkbox.switch
+                                                name="permissions[{{ $routeData['name'] }}][read]"
+                                                id="{{ $routeData['title'] }}_read"
+                                                checked="{{ !empty($routeData['permissions']['read']) }}" />
                                         @endif
-                                        @if (in_array('write',$routeData['actions']))
-                                        <div class="checkbox-switch-wrapper user-permissions-row">
-                                            <div class="checkbox-switch blue">
-                                                <input
-                                                    type="checkbox"
-                                                    name="permissions[{{ $routeData['name'] }}][write]"
-                                                    id="{{ $routeData['title'] }}_write"
-                                                    value="1"
-                                                    @if (!empty($routeData['permissions']['write']))
-                                                        checked
-                                                    @endif
-                                                />
-                                                <i></i>
-                                            </div>
-                                        </div>
-                                        @else
-                                        <div class="user-permissions-row"></div>
+                                    </div>
+                                    <div class="user-permissions-row">
+                                        @if (in_array('write', $routeData['actions']))
+                                            <x-elfcms::ui.checkbox.switch
+                                                name="permissions[{{ $routeData['name'] }}][write]"
+                                                id="{{ $routeData['title'] }}_write"
+                                                checked="{{ !empty($routeData['permissions']['write']) }}" />
                                         @endif
-                                    @endempty
+                                    </div>
+                                @endempty
                                 @endforeach
                             @endif
                         @endforeach
@@ -120,8 +95,8 @@
         </div>
 
         <div class="button-box single-box">
-            <button type="submit" class="default-btn success-button">{{ __('elfcms::default.submit') }}</button>
-            <a href="{{ route('admin.user.roles') }}" class="default-btn">{{ __('elfcms::default.cancel') }}</a>
+            <button type="submit" class="button color-text-button success-button">{{ __('elfcms::default.submit') }}</button>
+            <a href="{{ route('admin.user.roles') }}" class="button color-text-button">{{ __('elfcms::default.cancel') }}</a>
         </div>
     </form>
 </div>

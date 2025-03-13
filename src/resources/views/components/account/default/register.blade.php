@@ -40,6 +40,6 @@
         </div>
     </div>
     <div class="button-box single-box">
-        <button type="submit" class="default-btn submit-button">{{ __('elfcms::default.sign_up') }}</button>
+        <button type="submit" class="button submit-button">{{ __('elfcms::default.sign_up') }}</button>
     </div>
 </form>

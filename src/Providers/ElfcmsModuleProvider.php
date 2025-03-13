@@ -23,6 +23,7 @@ use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
 use Elfcms\Elfcms\Providers\EventServiceProvider;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Config;
 use Livewire\Livewire;
 
 class ElfcmsModuleProvider extends ServiceProvider
@@ -47,20 +48,19 @@ class ElfcmsModuleProvider extends ServiceProvider
         require_once __DIR__ . '/../Aux/Admin/Menu.php';
 
         $loader = \Illuminate\Foundation\AliasLoader::getInstance();
-        $loader->alias('UrlParams','Elfcms\Elfcms\Aux\UrlParams');
-        $loader->alias('FormSaver','Elfcms\Elfcms\Aux\FormSaver');
-        $loader->alias('Helpers','Elfcms\Elfcms\Aux\Helpers');
-        $loader->alias('Views','Elfcms\Elfcms\Aux\Views');
-        $loader->alias('Locales','Elfcms\Elfcms\Aux\Locales');
-        $loader->alias('TextPrepare','Elfcms\Elfcms\Aux\TextPrepare');
-        $loader->alias('AdminMenu','Elfcms\Elfcms\Aux\Admin\Menu');
+        $loader->alias('UrlParams', 'Elfcms\Elfcms\Aux\UrlParams');
+        $loader->alias('FormSaver', 'Elfcms\Elfcms\Aux\FormSaver');
+        $loader->alias('Helpers', 'Elfcms\Elfcms\Aux\Helpers');
+        $loader->alias('Views', 'Elfcms\Elfcms\Aux\Views');
+        $loader->alias('Locales', 'Elfcms\Elfcms\Aux\Locales');
+        $loader->alias('TextPrepare', 'Elfcms\Elfcms\Aux\TextPrepare');
+        $loader->alias('AdminMenu', 'Elfcms\Elfcms\Aux\Admin\Menu');
 
-        $helpers = glob(base_path() . '/*/elfcms/*/src/Helpers/*{.php}',GLOB_BRACE | GLOB_MARK);
+        $helpers = glob(base_path() . '/*/elfcms/*/src/Helpers/*{.php}', GLOB_BRACE | GLOB_MARK);
 
         foreach ($helpers as $helper) {
             require_once $helper;
         }
-
     }
 
     /**
@@ -72,6 +72,7 @@ class ElfcmsModuleProvider extends ServiceProvider
     {
         $moduleDir = dirname(__DIR__);
 
+        $config = config('elfcms.elfcms');
         $locales = config('elfcms.elfcms.locales');
 
         if ($this->app->runningInConsole()) {
@@ -86,80 +87,98 @@ class ElfcmsModuleProvider extends ServiceProvider
                 ElfcmsSite::class,
             ]);
         }
-        $this->loadRoutesFrom($moduleDir.'/routes/web.php');
-        $this->loadViewsFrom($moduleDir.'/resources/views', 'elfcms');
-        $this->loadMigrationsFrom($moduleDir.'/database/migrations');
+        $this->loadRoutesFrom($moduleDir . '/routes/web.php');
+        $this->loadViewsFrom($moduleDir . '/resources/views', 'elfcms');
+        $this->loadMigrationsFrom($moduleDir . '/database/migrations');
 
-        $this->loadTranslationsFrom($moduleDir.'/resources/lang', 'elfcms');
+        $this->loadTranslationsFrom($moduleDir . '/resources/lang', 'elfcms');
 
         if (!empty($locales) && is_array($locales)) {
             foreach ($locales as $locale) {
                 if (!empty($locale['code'])) {
                     $this->publishes([
-                        $moduleDir.'/resources/lang/'.$locale['code'].'/validation.php' => resource_path('lang/'.$locale['code'].'/validation.php'),
-                    ],'lang');
+                        $moduleDir . '/resources/lang/' . $locale['code'] . '/validation.php' => resource_path('lang/' . $locale['code'] . '/validation.php'),
+                    ], 'lang');
                 }
             }
         }
 
         $this->publishes([
-            $moduleDir.'/resources/lang' => resource_path('lang/elfcms/elfcms'),
-        ],'lang');
+            $moduleDir . '/resources/lang' => resource_path('lang/elfcms/elfcms'),
+        ], 'lang');
 
         $this->publishes([
-            $moduleDir.'/config/elfcms.php' => config_path('elfcms/elfcms.php'),
-        ],'config');
+            $moduleDir . '/config/elfcms.php' => config_path('elfcms/elfcms.php'),
+        ], 'config');
 
         $this->publishes([
-            $moduleDir.'/resources/views/admin' => resource_path('views/elfcms/admin'),
-        ],'admin');
-        $this->publishes([
-            $moduleDir.'/public/admin' => public_path('elfcms/admin/'),
+            $moduleDir . '/resources/views/admin' => resource_path('views/elfcms/admin'),
         ], 'admin');
         $this->publishes([
-            $moduleDir.'/resources/views/public' => resource_path('views/elfcms/public'),
-        ],'public');
+            $moduleDir . '/public/admin' => public_path('elfcms/admin/'),
+        ], 'admin');
+        $this->publishes([
+            $moduleDir . '/resources/views/public' => resource_path('views/elfcms/public'),
+        ], 'public');
 
         $this->publishes([
-            $moduleDir.'/resources/views/components' => resource_path('views/elfcms/components'),
-        ],'components');
+            $moduleDir . '/resources/views/components' => resource_path('views/elfcms/components'),
+        ], 'components');
 
         $this->publishes([
-            $moduleDir.'/resources/views/emails' => resource_path('views/elfcms/emails'),
-        ],'emails');
+            $moduleDir . '/resources/views/emails' => resource_path('views/elfcms/emails'),
+        ], 'emails');
 
         $this->publishes([
-            $moduleDir.'/resources/views/welcome.blade.php' => resource_path('views').'/welcome.blade.php',
-        ],'welcome');
-
-        $this->publishes([
-            $moduleDir.'/public/welcome' => public_path('elfcms/welcome/'),
+            $moduleDir . '/resources/views/welcome.blade.php' => resource_path('views') . '/welcome.blade.php',
         ], 'welcome');
 
         $this->publishes([
-            $moduleDir.'/resources/views/maintenance.blade.php' => resource_path('views').'/maintenance.blade.php',
-        ],'maintenance');
+            $moduleDir . '/public/welcome' => public_path('elfcms/welcome/'),
+        ], 'welcome');
 
         $this->publishes([
-            $moduleDir.'/public/maintenance' => public_path('elfcms/maintenance/'),
+            $moduleDir . '/resources/views/maintenance.blade.php' => resource_path('views') . '/maintenance.blade.php',
+        ], 'maintenance');
+
+        $this->publishes([
+            $moduleDir . '/public/maintenance' => public_path('elfcms/maintenance/'),
         ], 'maintenance');
 
 
         config(['auth.providers.users.model' => \Elfcms\Elfcms\Models\User::class]);
-        $disks = config('elfcms.elfcms.disks');
+        $disks = $config['disks']; //config('elfcms.elfcms.disks');
         if (!empty($disks)) {
             foreach ($disks as $name => $disk) {
-                config(["filesystems.disks.$name" => config("elfcms.elfcms.disks.$name")]);
+                config(["filesystems.disks.$name" => $config['disks'][$name]]); //config("elfcms.elfcms.disks.$name")]);
             }
         }
-        if (!config('elfcms.elfcms.disks.elfcmsviews')) {
-            config(['filesystems.disks.elfcmsviews' => ['driver' => 'local','root' => base_path('vendor/elfcms/elfcms/src/resources/views')]]);
+        if (!config($config['disks']['elfcmsviews'])) {
+            config(['filesystems.disks.elfcmsviews' => ['driver' => 'local', 'root' => base_path('vendor/elfcms/elfcms/src/resources/views')]]);
+        }
+
+        if ($config['logging']['channels']) {
+            foreach ($config['logging']['channels'] as $channel => $data) {
+                config(["logging.channels.$channel" => $data]);
+            }
+        }
+        if (!config('logging.channels.elfauth')) {
+            config(['logging.channels.elfauth' => [
+                'driver' => 'single',
+                'path' => storage_path('logs/elfauth.log'),
+                'level' => 'info',
+            ]]);
+        }
+
+        if (!empty($config['links'])) {
+            foreach ($config['links'] as $name => $link) {
+                config(["filesystems.links.$name" => $link]);
+            }
         }
 
         try {
             ElfLocales::set();
-        }
-        catch (\Exception $e) {
+        } catch (\Exception $e) {
             //
         }
 
@@ -200,7 +219,7 @@ class ElfcmsModuleProvider extends ServiceProvider
         Blade::component('elfcms-fragment', \Elfcms\Elfcms\View\Components\Fragment::class);
         Blade::component('elfcms-message', \Elfcms\Elfcms\View\Components\Message::class);
         Blade::component('elfcms-input-checkbox', \Elfcms\Elfcms\View\Components\Input\Checkbox::class);
-        Blade::component('elfcms-input-file', \Elfcms\Elfcms\View\Components\Input\File::class);
+        Blade::component('elfcms-input-file', \Elfcms\Elfcms\View\Components\Legacy\Input\File::class);
         Blade::component('elfcms-input-fsfile', \Elfcms\Elfcms\View\Components\Input\FSFile::class);
         Blade::component('elfcms-input-fileext', \Elfcms\Elfcms\View\Components\Input\FileExt::class);
         Blade::component('elfcms-input-image', \Elfcms\Elfcms\View\Components\Input\Image::class);
@@ -210,6 +229,9 @@ class ElfcmsModuleProvider extends ServiceProvider
         Blade::component('elfcms-account-edit', \Elfcms\Elfcms\View\Components\Account\Edit::class);
         Blade::component('elfcms-account-getrestore', \Elfcms\Elfcms\View\Components\Account\GetRestore::class);
         Blade::component('elfcms-account-setrestore', \Elfcms\Elfcms\View\Components\Account\SetRestore::class);
+
+        Blade::component('elf-input-file', \Elfcms\Elfcms\View\Components\Input\File::class);
+        Blade::component('elf-notify', \Elfcms\Elfcms\View\Components\Notify::class);
 
         //Livewire::component('admin-image-upload', AdminImageUpload::class);
     }

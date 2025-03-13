@@ -7,6 +7,7 @@ use Elfcms\Elfcms\Models\DataType;
 use Elfcms\Elfcms\Models\FilestorageFilegroup;
 use Elfcms\Elfcms\Models\FilestorageFiletype;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Validator;
 
 class FilestorageFiletypeController extends Controller
@@ -159,7 +160,7 @@ class FilestorageFiletypeController extends Controller
                     }
                     $typeItem->code = $type['code'];
                     $typeItem->name = $type['name'];
-                    $typeItem->group_id = $type['group_id'] == 0 ? null : $type['group_id'];
+                    $typeItem->group_id = empty($type['group_id']) ? null : $type['group_id'];
                     $typeItem->description = $type['description'];
                     $typeItem->mime_prefix = $type['mime_prefix'];
                     $typeItem->mime_type = $type['mime_type'];
@@ -175,16 +176,7 @@ class FilestorageFiletypeController extends Controller
 
         if (!empty($data['newtype'])) {
             foreach ($data['newtype'] as $newtype) {
-                /* $options = [];
-                if (!empty($newtype['options']) && is_array($newtype['options'])) {
-                    foreach ($newtype['options'] as $option) {
-                        if (!empty($option['delete']) || (empty($option['key']) && empty($option['value']))) {
-                            continue;
-                        }
-                        $options[$option['key']] = $option['value'];
-                    }
-                    $newtype['options'] = json_encode($options);
-                } */
+                $newtype['group_id'] = !empty($newtype['group_id']) ? $newtype['group_id'] : null;
                 $created = FilestorageFiletype::create($newtype);
                 if (!$created) {
                     $result['message'] = __('elfcms::default.error_of_creating_element_with_name',['name'=>$newtype['name']]);

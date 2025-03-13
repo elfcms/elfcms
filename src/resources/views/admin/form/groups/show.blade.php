@@ -1,25 +1,10 @@
-@extends('elfcms::admin.layouts.form')
+@extends('elfcms::admin.layouts.main')
 
-@section('formpage-content')
+@section('pagecontent')
 
-    @if (Session::has('fielddeleted'))
-    <div class="alert alert-alternate">{{ Session::get('fielddeleted') }}</div>
-    @endif
-    @if (Session::has('fieldedited'))
-    <div class="alert alert-alternate">{{ Session::get('fieldedited') }}</div>
-    @endif
-    @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-    @endif
     <h2>{{ __('elfcms::default.fields_of_group_of_form_name_id',['name'=>$group->name,'id'=>$group->id,'form_name'=>$group->form->name,'form_id'=>$group->form->id]) }}</h2>
-    <div class="widetable-wrapper">
-        <table class="grid-table formfieldtable">
+    <div class="grid-table-wrapper">
+        <table class="grid-table table-cols" style="--first-col:4rem; --last-col: 13.5rem; --minw:50rem; --cols-count:9;">
             <thead>
                 <tr>
                     <th>ID</th>
@@ -38,17 +23,17 @@
                 <tr data-id="{{ $field->id }}" class="level-{{ $field->level }}@empty ($field->active) inactive @endempty">
                     <td class="subline-{{ $field->level }}">{{ $field->id }}</td>
                     <td>
-                        <a href="{{ route('admin.form.fields.edit',$field->id) }}">
+                        <a href="{{ route('admin.forms.fields.edit',$field->id) }}">
                             {{ $field->title }}
                         </a>
                     </td>
                     <td>
-                        <a href="{{ route('admin.form.fields.edit',$field->id) }}">
+                        <a href="{{ route('admin.forms.fields.edit',$field->id) }}">
                             {{ $field->name }}
                         </a>
                     </td>
                     <td>
-                        <a href="{{ route('admin.form.forms.show',$field->form->id) }}">
+                        <a href="{{ route('admin.forms.form.show',$field->form->id) }}">
                             {{ $field->form->name }}
                         </a>
                     </td>
@@ -63,13 +48,13 @@
                     <td>{{ $field->created_at }}</td>
                     <td>{{ $field->updated_at }}</td>
                     <td class="button-column">
-                        <a href="{{ route('admin.form.fields.edit',$field->id) }}" class="default-btn edit-button">{{ __('elfcms::default.edit') }}</a>
+                        <a href="{{ route('admin.form.fields.edit',$field->id) }}" class="button edit-button">{{ __('elfcms::default.edit') }}</a>
                         <form action="{{ route('admin.form.fields.destroy',$field->id) }}" method="POST" data-submit="check">
                             @csrf
                             @method('DELETE')
                             <input type="hidden" name="id" value="{{ $field->id }}">
                             <input type="hidden" name="name" value="{{ $field->name }}">
-                            <button type="submit" class="default-btn delete-button">{{ __('elfcms::default.delete') }}</button>
+                            <button type="submit" class="button delete-button">{{ __('elfcms::default.delete') }}</button>
                         </form>
                     </td>
                 </tr>
@@ -94,14 +79,14 @@
                         buttons:[
                             {
                                 title:'{{ __('elfcms::default.delete') }}',
-                                class:'default-btn delete-button',
+                                class:'button color-text-button red-button',
                                 callback: function(){
                                     self.submit()
                                 }
                             },
                             {
                                 title:'{{ __('elfcms::default.cancel') }}',
-                                class:'default-btn cancel-button',
+                                class:'button color-text-button',
                                 callback:'close'
                             }
                         ],

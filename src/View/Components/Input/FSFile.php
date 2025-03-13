@@ -19,7 +19,7 @@ class FSFile extends Component
      * @return void
      */
     //public function __construct($inputData = [], $value = null, $code = null, $accept = null, $template='default', $download = false, filestorageFile $file = null)
-    public function __construct(filestorageFile $file = null, $name = null, $id = null, $download = false, $accept = null, $template = 'default', $width = null, $height = null, $value = null)
+    public function __construct(filestorageFile|null $file = null, $name = null, $id = null, $download = false, $accept = null, $template = 'default', $width = null, $height = null, $value = null)
     {
         $width = intval($width);
         $height = intval($height);

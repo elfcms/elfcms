@@ -18,7 +18,7 @@ class RoleController extends Controller
      */
     public function index(Request $request)
     {
-        $trend = 'asc';
+        /* $trend = 'asc';
         $order = 'id';
         if (!empty($request->trend) && $request->trend == 'desc') {
             $trend = 'desc';
@@ -26,7 +26,32 @@ class RoleController extends Controller
         if (!empty($request->order)) {
             $order = $request->order;
         }
-        $roles = Role::orderBy($order, $trend)->paginate(30);
+        $roles = Role::orderBy($order, $trend)->paginate(30); */
+        $trend = 'asc';
+        $order = 'id';
+        $search = $request->search ?? '';
+        if (!empty($request->trend) && $request->trend == 'desc') {
+            $trend = 'desc';
+        }
+        if (!empty($request->order)) {
+            $order = $request->order;
+        }
+        if (!empty($request->count)) {
+            $count = intval($request->count);
+        }
+        if (empty($count)) {
+            $count = 30;
+        }
+
+        if (!empty($request->role)) {
+            $roleId = intval($request->role);
+        }
+        if (!empty ($search)) {
+            $roles = Role::where('name','like',"%{$search}%")->orderBy($order, $trend)->paginate($count);
+        }
+        else {
+            $roles = Role::orderBy($order, $trend)->paginate($count);
+        }
         $notEdit = ['admin', 'users'];
         return view('elfcms::admin.user.roles.index', [
             'page' => [
@@ -34,7 +59,8 @@ class RoleController extends Controller
                 'current' => url()->current(),
             ],
             'notedit' => $notEdit,
-            'roles' => $roles
+            'roles' => $roles,
+            'search' => $search
         ]);
     }
 
@@ -114,7 +140,7 @@ class RoleController extends Controller
                 );
             }
 
-            return redirect(route('admin.user.roles.edit', ['role' => $role]))->with('rolecreated', 'Role created successfully');
+            return redirect(route('admin.user.roles.edit', ['role' => $role]))->with('success', 'Role created successfully');
         }
         return redirect(route('admin.user.roles.create'))->withErrors([
             'rolecreateerror' => 'Role creating error'
@@ -201,7 +227,7 @@ class RoleController extends Controller
             }
         }
 
-        return redirect(route('admin.user.roles.edit', ['role' => $role]))->with('roleedited', 'Role edited successfully');
+        return redirect(route('admin.user.roles.edit', ['role' => $role]))->with('success', 'Role edited successfully');
     }
 
     /**
@@ -216,6 +242,6 @@ class RoleController extends Controller
             return redirect(route('admin.user.roles'))->withErrors(['roledelerror' => 'Error of role deleting']);
         }
 
-        return redirect(route('admin.user.roles'))->with('roledeleted', 'Role deleted successfully');
+        return redirect(route('admin.user.roles'))->with('success', 'Role deleted successfully');
     }
 }

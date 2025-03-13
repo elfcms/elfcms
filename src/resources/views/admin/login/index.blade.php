@@ -1,91 +1,47 @@
+<!DOCTYPE html>
+<html lang="{{ config('app.locale') ?? 'en' }}">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ELF CMS: Login</title>
+    <link rel="stylesheet" href="{{ asset('elfcms/admin/fonts/afacad/afacad.css') }}">
+    <link rel="stylesheet" href="{{ asset('elfcms/admin/fonts/inter/inter.css') }}">
+    <link rel="stylesheet" href="{{ asset('elfcms/admin/css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('elfcms/admin/css/login.css') }}">
+    <link rel="stylesheet" href="{{ asset('elfcms/admin/notify/notify.css') }}">
+    <script src="{{ asset('elfcms/admin/notify/notify.js') }}"></script>
+</head>
 
-@extends('elfcms::admin.layouts.guest')
-
-@section('head')
-    @parent
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-@endsection
-
-@section('main')
-    <div class="login-form">
-    <h1>{{ $page['title'] ?? $elfSiteSettings['title'] }}</h1>
-
-    <form action="{{ route('admin.login') }}" method="post" class="">
-        @if ($errors->any())
-        <div class="alert alert-danger">
-            <ul class="errors-list">
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
+<body class="dark-mode">
+    <div class="welcome-bg"></div>
+    <div class="cms_logo">
+        @if ($elfSiteSettings['logo'])
+            <img src="{{ asset(file_path($elfSiteSettings['logo'])) }}" alt="{{ $elfSiteSettings['title'] }}">
+        @else
+            {!! iconHtmlLocal('elfcms/admin/images/logo/logo.svg', svg: true) !!}
         @endif
+    </div>
+    <form action="{{ route('admin.login') }}" method="post">
         @csrf
-        @method('POST')
-        <div class="input-box text-box">
-            <div class="input-wrapper">
-                <input type="email" name="email" id="email" class="form-control" placeholder="{{ __('elfcms::default.email') }}" required>
-                <label for="email">{{ __('elfcms::default.email') }}</label>
-            </div>
+        <div class="input-wrapper">
+            <input type="email" name="email" id="email" placeholder="{{ __('elfcms::default.email') }}" autocomplete="nope">
         </div>
-        <div class="input-box text-box">
-            <div class="input-wrapper">
-                <input type="password" name="password" id="password" class="form-control" placeholder="{{ __('elfcms::default.password') }}" required autocomplete="off">
-                <label for="password">{{ __('elfcms::default.password') }}</label>
-            </div>
-        </div>
-        <div class="input-box">
-            <div class="checkbox-switch-wrapper">
-                <div class="checkbox-switch darkblue">
-                    <input type="checkbox" name="remember" id="remember" value="1">
-                    <i></i>
-                </div>
-                <label for="remember">
-                    {{ __('elfcms::default.remember_me') }}
-                </label>
-            </div>
+        <div class="input-wrapper">
+            <x-elfcms::ui.input.password name="password" id="password" autocomplete="nope"
+                placeholder="{{ __('elfcms::default.password') }}" />
         </div>
         <div class="button-box single-box">
-            <button type="submit" class="default-btn submit-button">{{ __('elfcms::default.login') }}</button>
-            <a href="{{ route('admin.getrestore') }}" class="forgot-pass-link">{{ __('elfcms::default.restore_password') }}</a>
+            <button type="submit" name="submit" value="save" class="button color-text-button info-button wide-button">{{ __('elfcms::default.login') }}</button>
         </div>
     </form>
-</div>
-<script>
-const form = document.querySelector('form');
-if (form) {
-    form.addEventListener('submit',function(){
-        let startPreload = preloadSet(document.body);
-        setTimeout(() => {
-            preloadUnset(startPreload);
-        }, 20000);
-    });
-}
+    @if (Session::has('success'))
+        <x-elf-notify type="success" title="{{ __('elfcms::default.success') }}" text="{{ Session::get('success') }}" />
+    @endif
+    @if ($errors->any())
+        <x-elf-notify type="error" close="false" title="{{ __('elfcms::default.error') }}" text="{!! '<ul><li>' . implode('</li><li>', $errors->all()) . '</li></ul>' !!}" />
+    @endif
+    @stack('footerscript')
+</body>
 
-function preloadSet(element) {
-    if (typeof element === 'string') {
-        element = document.querySelector(element);
-    }
-    if (!(element instanceof HTMLElement) && element !== document) {
-        return false;
-    }
-    const preloader = document.createElement('div')
-    preloader.classList.add('preload-wrapper');
-    preloader.insertAdjacentHTML('beforeend','<div class="preload-box"><div></div><div></div><div></div></div>');
-    element.append(preloader);
-
-    return preloader;
-}
-
-function preloadUnset(preloader) {
-    if (typeof preloader === 'string') {
-        preloader = document.querySelector(preloader);
-    }
-    if (!(preloader instanceof HTMLElement)) {
-        return false;
-    }
-    preloader.remove();
-}
-</script>
-@endsection
+</html>

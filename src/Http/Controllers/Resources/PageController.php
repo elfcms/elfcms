@@ -98,11 +98,11 @@ class PageController extends Controller
 
         $page = Page::create($validated);
 
-        if ($request->input('submit_close') == 'save_and_close') {
-            return redirect(route('admin.page.pages'))->with('pageedited',__('elfcms::default.page_created_successfully'));
+        if ($request->input('submit') == 'save_and_close') {
+            return redirect(route('admin.page.pages'))->with('success',__('elfcms::default.page_created_successfully'));
         }
 
-        return redirect(route('admin.page.pages.edit',$page->id))->with('pageedited',__('elfcms::default.page_created_successfully'));
+        return redirect(route('admin.page.pages.edit',$page->id))->with('success',__('elfcms::default.page_created_successfully'));
     }
 
     /**
@@ -183,11 +183,11 @@ class PageController extends Controller
 
         $page->save();
 
-        if ($request->input('submit_close') == 'save_and_close') {
-            return redirect(route('admin.page.pages'))->with('pageedited',__('elfcms::default.page_edited_successfully'));
+        if ($request->input('submit') == 'save_and_close') {
+            return redirect(route('admin.page.pages'))->with('success',__('elfcms::default.page_edited_successfully'));
         }
 
-        return redirect(route('admin.page.pages.edit',$page->id))->with('pageedited',__('elfcms::default.page_edited_successfully'));
+        return redirect(route('admin.page.pages.edit',$page->id))->with('success',__('elfcms::default.page_edited_successfully'));
     }
 
     /**
@@ -202,6 +202,6 @@ class PageController extends Controller
             return redirect(route('admin.page.pages'))->withErrors(['pagedelerror'=>'Error of page deleting']);
         }
 
-        return redirect(route('admin.page.pages'))->with('pagedeleted','Page deleted successfully');
+        return redirect(route('admin.page.pages'))->with('success','Page deleted successfully');
     }
 }

@@ -29,7 +29,7 @@ class FormResultController extends Controller
             'textarea',
             'email'
         ];
-        $fields = $form->allfields()->whereIn('type_id', FormFieldType::whereIn('name',$types)->pluck('id')->toArray())->limit(5)->orderBy('required','DESC')->pluck('title','name')->toArray();
+        $fields = $form->allfields()->active()->whereIn('type_id', FormFieldType::whereIn('name',$types)->pluck('id')->toArray())->limit(5)->orderBy('required','DESC')->pluck('title','name')->toArray();
         return view('elfcms::admin.form_results.form',[
             'page' => [
                 'title' => __('elfcms::default.form_results') . ': ' . ($form->title ? '"' . $form->title .'"' : '#' . $form->id),

@@ -3,6 +3,7 @@
 namespace Elfcms\Elfcms\Http\Controllers\Publics;
 
 use Elfcms\Elfcms\Events\SomeMailEvent;
+use Elfcms\Elfcms\Models\AuthLog;
 use Elfcms\Elfcms\Models\Role;
 use Elfcms\Elfcms\Models\User;
 use Elfcms\Elfcms\Models\UserData;
@@ -12,6 +13,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Lang;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -32,7 +34,7 @@ class AccountController extends \App\Http\Controllers\Controller
             return redirect()->intended('/account/login');
         }
 
-        return view('elfcms::public.account.index',[
+        return view('elfcms::public.account.index', [
             'page' => [
                 'title' => __('elfcms::default.account'),
                 'current' => url()->current(),
@@ -43,7 +45,7 @@ class AccountController extends \App\Http\Controllers\Controller
 
     public function loginForm()
     {
-        return view('elfcms::public.account.login',[
+        return view('elfcms::public.account.login', [
             'page' => [
                 'title' => __('elfcms::default.login'),
                 'current' => url()->current(),
@@ -54,7 +56,7 @@ class AccountController extends \App\Http\Controllers\Controller
     public function login(Request $request)
     {
         if (!Auth::check()) {
-            $fields = $request->only(['email','password']);
+            $fields = $request->only(['email', 'password']);
 
             $remember = false;
             if (!empty($request->remember)) {
@@ -63,13 +65,25 @@ class AccountController extends \App\Http\Controllers\Controller
             $fields['is_confirmed'] = 1;
         }
 
-        if (Auth::check() || Auth::attempt($fields,$remember)) {
+        if (Auth::check() || Auth::attempt($fields, $remember)) { //success login
+            $user = Auth::user();
+            AuthLog::create([
+                'user_id' => $user->id,
+                'email' => $user->email,
+                'action' => 'login',
+                'context' => 'site',
+                'ip' => $request->ip(),
+            ]);
+
+            Log::channel('elfauth')->info("User logged in (site): {$user->email}, IP: {$request->ip()}");
+
             $default = '/';
-            /* if (Auth::user()->roles->contains('code','admin')) {
-                $default = '/admin';
-            } */
             return redirect()->intended($default);
         }
+
+        // failed login
+
+        Log::warning("Failed login attempt (site): {$request->email}, IP: {$request->ip()}");
 
         return redirect()->intended('/account/login')->withErrors([
             'email' => Lang::get('elfcms::default.error_of_authentication')
@@ -78,7 +92,7 @@ class AccountController extends \App\Http\Controllers\Controller
 
     public function getRestoreForm()
     {
-        return view('elfcms::public.account.getrestore',[
+        return view('elfcms::public.account.getrestore', [
             'page' => [
                 'title' => __('elfcms::default.forgot_your_password'),
                 'current' => url()->current(),
@@ -90,31 +104,28 @@ class AccountController extends \App\Http\Controllers\Controller
     {
         $request->validate(['email' => 'required|email']);
 
-        $user = User::where('email',$request->email)->first();
+        $user = User::where('email', $request->email)->first();
 
         if ($user) {
             $user->setConfirmationToken();
-            event(new SomeMailEvent('passwordrecoveryrequest',['view'=>'elfcms::emails.events.password-recovery-request','to'=>$user->email,'params'=>['confirm_token'=>$user->confirm_token,'email'=>$user->email]],$user));
+            event(new SomeMailEvent('passwordrecoveryrequest', ['view' => 'elfcms::emails.events.password-recovery-request', 'to' => $user->email, 'params' => ['confirm_token' => $user->confirm_token, 'email' => $user->email]], $user));
             $message = Lang::get('elfcms::default.a_password_reset_link_has_been_sent_to_your_email_account');
             if (!$message) {
                 $message = 'A password reset link has been sent to your email account';
             }
-            return redirect(route('account.getrestore'))->with('requestissended',$message);
+            return redirect(route('account.getrestore'))->with('requestissended', $message);
         }
 
         return back()->withErrors(['email' => __('elfcms::default.email_not_found')]);
-
     }
 
     public function setRestoreForm(Request $request)
     {
         $linkError = false;
-        //dd($request->token);
-        $user = User::where('confirm_token',$request->token)->active()->first();
+        $user = User::where('confirm_token', $request->token)->active()->first();
         if (!$user) {
             $linkError = true;
-        }
-        else {
+        } else {
             $period = Config::get('elfcms.elfcms.confirmation_period');
             if (!$period) {
                 $period = 86400;
@@ -123,10 +134,7 @@ class AccountController extends \App\Http\Controllers\Controller
                 $linkError = true;
             }
         }
-
-        //dd(Config::get('elfcms.elfcms.confirmation_period'));
-        //dd(Carbon::parse($user->confirm_token_at)->diffInSeconds(now()));
-        return view('elfcms::public.account.setrestore',[
+        return view('elfcms::public.account.setrestore', [
             'page' => [
                 'title' => __('elfcms::default.set_a_new_password'),
                 'current' => url()->current(),
@@ -145,7 +153,7 @@ class AccountController extends \App\Http\Controllers\Controller
             'password' => 'required|min:' . $this->passwordLength . '|confirmed',
         ]);
 
-        $user = User::where('confirm_token',$request->token)->where('email',$request->email)->active()->first();
+        $user = User::where('confirm_token', $request->token)->where('email', $request->email)->active()->first();
 
         if (!$user) {
             return back()->withErrors([__('elfcms::default.user_not_found')]);
@@ -154,14 +162,14 @@ class AccountController extends \App\Http\Controllers\Controller
         $user->password = $request->password;
         if ($user->save()) {
             $user->setConfirmationToken();
-            return back()->with('passwordchangesuccess',__('elfcms::default.password_changed_successfully'));
+            return back()->with('passwordchangesuccess', __('elfcms::default.password_changed_successfully'));
         }
         return back()->withErrors([__('elfcms::default.password_change_error')]);
     }
 
     public function registerForm()
     {
-        return view('elfcms::public.account.register',[
+        return view('elfcms::public.account.register', [
             'page' => [
                 'title' => __('elfcms::default.registration'),
                 'current' => url()->current(),
@@ -181,7 +189,7 @@ class AccountController extends \App\Http\Controllers\Controller
             'password' => 'required|min:' . $this->passwordLength . '|confirmed'
         ]);
 
-        if (User::where('email',$validated['email'])->exists()) {
+        if (User::where('email', $validated['email'])->exists()) {
             return redirect(route('account.register'))->withErrors([
                 'email' => Lang::get('elfcms::default.user_already_exists')
             ]);
@@ -193,25 +201,35 @@ class AccountController extends \App\Http\Controllers\Controller
             $roleCode = 'users';
         }
 
-        $role = Role::where('code',$roleCode)->first();
+        $role = Role::where('code', $roleCode)->first();
 
         $user = User::create($validated);
+
+        AuthLog::create([
+            'user_id' => $user->id ?? null,
+            'email' => $user->email ?? null,
+            'action' => 'register',
+            'context' => 'site',
+            'ip' => $request->ip(),
+        ]);
+
+        Log::channel('elfauth')->info("User registered: {$user->email} from IP: {$request->ip()}");
+
         if ($user) {
 
             $user->assignRole($role);
 
             if (Config::get('elfcms.elfcms.email_confirmation')) {
                 $user->setConfirmationToken();
-                event(new SomeMailEvent('userregisterconfirm',['view'=>'elfcms::emails.events.register-confirm','to'=>$validated['email'],'params'=>['confirm_token'=>$user->confirm_token,'email'=>$user->email]],$user));
+                event(new SomeMailEvent('userregisterconfirm', ['view' => 'elfcms::emails.events.register-confirm', 'to' => $validated['email'], 'params' => ['confirm_token' => $user->confirm_token, 'email' => $user->email]], $user));
                 $message = Lang::get('elfcms::default.email_confirmation');
                 if (!$message) {
                     $message = 'A verification link has been sent to your email account';
                 }
-                return redirect(route('account.login'))->with('toemailconfirm',$message);
+                return redirect(route('account.login'))->with('toemailconfirm', $message);
             }
 
             Auth::login($user);
-            //return redirect(route('user.private'))->withErrors([
             return redirect()->intended('/')->withErrors([
                 'err' => $user
             ]);
@@ -224,7 +242,7 @@ class AccountController extends \App\Http\Controllers\Controller
 
     public function confirm(Request $request)
     {
-        $user = User::where(['email'=>$request->email,'confirm_token'=>$request->token])->first();
+        $user = User::where(['email' => $request->email, 'confirm_token' => $request->token])->first();
         if ($user && $user->id > 0) {
 
             $user->is_confirmed = 1;
@@ -232,17 +250,16 @@ class AccountController extends \App\Http\Controllers\Controller
             $user->save();
 
             //return view('elfcms::public.account.confirm-email')->with('success',Lang::get('elfcms::default.email_confirmation_success'));
-            return redirect(route('account.confirmation'))->with('success',Lang::get('elfcms::default.email_confirmation_success'));
-
+            return redirect(route('account.confirmation'))->with('success', Lang::get('elfcms::default.email_confirmation_success'));
         }
         //return redirect(route('user.confirm-email'))->withErrors(['error'=>'Error of email confirmation']);
         //return view('elfcms::public.account.confirm-email')->with('error',Lang::get('elfcms::default.error_of_email_confirmation'));
-        return redirect(route('account.confirmation'))->with('error',Lang::get('elfcms::default.error_of_email_confirmation'));
+        return redirect(route('account.confirmation'))->with('error', Lang::get('elfcms::default.error_of_email_confirmation'));
     }
 
     public function confirmation()
     {
-        return view('elfcms::public.account.confirm-email',[
+        return view('elfcms::public.account.confirm-email', [
             'page' => [
                 'title' => Lang::get('elfcms::default.registration_confirmation')
             ],
@@ -279,7 +296,7 @@ class AccountController extends \App\Http\Controllers\Controller
                 'thumbnail' => null
             ];
         }
-        return view('elfcms::public.account.edit',[
+        return view('elfcms::public.account.edit', [
             'page' => [
                 'title' => Lang::get('elfcms::default.edit_account')
             ],
@@ -306,21 +323,17 @@ class AccountController extends \App\Http\Controllers\Controller
                 'current_password' => 'required',
                 'password' => 'required|min:' . $this->passwordLength . '|confirmed'
             ]);
-            if (Hash::check($validated['current_password'],$user->password)) {
+            if (Hash::check($validated['current_password'], $user->password)) {
                 $user->password = Hash::make($request->password);
                 if ($user->save()) {
-                    return redirect(route('account.index'))->with('passwordsaved',__('elfcms::default.password_changed_successfully'));
+                    return redirect(route('account.index'))->with('passwordsaved', __('elfcms::default.password_changed_successfully'));
+                } else {
+                    return redirect(route('account.index'))->with('passchangeerror', __('elfcms::default.password_change_error'));
                 }
-                else {
-                    return redirect(route('account.index'))->with('passchangeerror',__('elfcms::default.password_change_error'));
-                }
+            } else {
+                return redirect(route('account.index'))->with('incorrectpassword', __('elfcms::default.current_password_is_incorrect'));
             }
-            else {
-                return redirect(route('account.index'))->with('incorrectpassword',__('elfcms::default.current_password_is_incorrect'));
-            }
-
-        }
-        else {
+        } else {
             /* $validated = $request->validate([
                 'email' => 'required|email'
             ]); */
@@ -335,7 +348,7 @@ class AccountController extends \App\Http\Controllers\Controller
 
             $user->save(); */
 
-            $dataValidated = Validator::make($request->data,[
+            $dataValidated = Validator::make($request->data, [
                 'first_name' => 'nullable',
                 //'second_name' => 'nullable',
                 'last_name' => 'nullable',
@@ -365,19 +378,40 @@ class AccountController extends \App\Http\Controllers\Controller
             } */
             if (!empty($photo)) {
                 $dataValidated['photo'] = $photo;
-            }
-            else {
+            } else {
                 $dataValidated['photo'] = $request->data['photo_path'];
             }
             if ($user->data) {
-                UserData::where('id',$user->data->id)->update($dataValidated);
-            }
-            else {
+                UserData::where('id', $user->data->id)->update($dataValidated);
+            } else {
                 $user->data()->create($dataValidated);
             }
 
-            return redirect(route('account.index'))->with('useredited',__('elfcms::default.account_edited_successfully'));
+            return redirect(route('account.index'))->with('useredited', __('elfcms::default.account_edited_successfully'));
         }
+    }
 
+
+    public function logout(Request $request)
+    {
+        $user = Auth::user();
+
+        AuthLog::create([
+            'user_id' => $user->id,
+            'email' => $user->email,
+            'action' => 'logout',
+            'context' => 'site',
+            'ip' => $request->ip(),
+        ]);
+
+        Log::channel('elfauth')->info("User logged out (site): {$user->email}, IP: {$request->ip()}");
+
+        Auth::logout();
+
+        $request->session()->invalidate();
+
+        $request->session()->regenerateToken();
+
+        return redirect(route('index'));
     }
 }
