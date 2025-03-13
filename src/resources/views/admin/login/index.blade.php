@@ -9,6 +9,8 @@
     <link rel="stylesheet" href="{{ asset('elfcms/admin/fonts/inter/inter.css') }}">
     <link rel="stylesheet" href="{{ asset('elfcms/admin/css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('elfcms/admin/css/login.css') }}">
+    <link rel="stylesheet" href="{{ asset('elfcms/admin/notify/notify.css') }}">
+    <script src="{{ asset('elfcms/admin/notify/notify.js') }}"></script>
 </head>
 
 <body class="dark-mode">
@@ -37,7 +39,7 @@
         <x-elf-notify type="success" title="{{ __('elfcms::default.success') }}" text="{{ Session::get('success') }}" />
     @endif
     @if ($errors->any())
-        <x-elf-notify type="error" title="{{ __('elfcms::default.error') }}" text="{!! '<ul><li>' . implode('</li><li>', $errors->all()) . '</li></ul>' !!}" />
+        <x-elf-notify type="error" close="false" title="{{ __('elfcms::default.error') }}" text="{!! '<ul><li>' . implode('</li><li>', $errors->all()) . '</li></ul>' !!}" />
     @endif
     @stack('footerscript')
 </body>
