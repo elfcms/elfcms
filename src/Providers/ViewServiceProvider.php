@@ -84,6 +84,9 @@ class ViewServiceProvider extends ServiceProvider
                 View::composer('*layouts*.main', function($view) {
                     $view->with('elfSiteSettings',Setting::values());
                 });
+                View::composer('*admin.login*', function($view) {
+                    $view->with('elfSiteSettings',Setting::values());
+                });
                 View::composer('*emails.events.*', EmailEventComposer::class);
             }
         }

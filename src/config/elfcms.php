@@ -107,7 +107,7 @@ return [
     |--------------------------------------------------------------------------
     */
 
-    'file_path' => env('FILESTORAGE_PUBLIC','files'),
+    'file_path' => env('FILESTORAGE_PUBLIC', 'files'),
 
     /*
     |--------------------------------------------------------------------------
@@ -138,13 +138,13 @@ return [
         ],
         'filestorage' => [
             'driver' => 'local',
-            'root' => storage_path('app/'.env('FILESTORAGE_ROOT','elfcms/filestorage')),
-            'url' => env('APP_URL').'/files',
+            'root' => storage_path('app/' . env('FILESTORAGE_ROOT', 'elfcms/filestorage')),
+            'url' => env('APP_URL') . '/files',
         ],
     ],
 
     'links' => [
-        public_path(env('FILESTORAGE_PUBLIC','files')) => storage_path('app/'.env('FILESTORAGE_ROOT','elfcms/filestorage')),
+        public_path(env('FILESTORAGE_PUBLIC', 'files')) => storage_path('app/' . env('FILESTORAGE_ROOT', 'elfcms/filestorage')),
     ],
 
     /*
@@ -207,6 +207,25 @@ return [
             'video' => [
                 'extensions' => ['mp4', 'avi', 'mov', 'mkv'],
                 'max_size' => 1024 * 1024 * 50,
+            ],
+        ],
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Logging
+    |--------------------------------------------------------------------------
+    |
+    | Logs channels
+    |
+    */
+
+    "logging" => [
+        'channels' => [
+            'elfauth' => [
+                'driver' => 'single',
+                'path' => storage_path('logs/elfauth.log'),
+                'level' => 'info',
             ],
         ],
     ],

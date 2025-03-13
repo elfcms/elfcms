@@ -66,21 +66,6 @@ class User extends ModelsUser
         return $this;
     }
 
-    /* public function getConfirmationToken($send = true)
-    {
-        $token = Str::random(32);
-
-        $this->confirm_token = $token;
-        $this->save();
-
-        if ($send) {
-            event(new SomeMailEvent($this));
-            //Mail::to($this->email)->send(new EmailConfirmation($this));
-        }
-
-        return $token;
-    } */
-
     public function setPasswordAttribute($password)
     {
         $this->attributes['password'] = Hash::make($password);
@@ -128,9 +113,6 @@ class User extends ModelsUser
     {
         $name = $this->fullname();
 
-        /* if (empty(trim($name ?? ' '))) {
-            $name = $this->name;
-        } */
         if (empty(trim($name ?? ' '))) {
             $name = $this->email;
             if ($emailname) {
@@ -148,21 +130,6 @@ class User extends ModelsUser
             get: fn () => $avatar,
         );
     }
-
-    /* public function avatar($isThumbnail = false)
-    {
-        $avatar = null;
-        if (($isThumbnail && !empty($this->data->thumbnail)) || (!$isThumbnail && empty($this->data->photo))) {
-            if (!empty($this->data->thumbnail)) {
-                $avatar = $this->data->thumbnail;
-            }
-        } elseif (($isThumbnail && empty($this->data->thumbnail)) || (!$isThumbnail && !empty($this->data->photo))) {
-            if (!empty($this->data->photo)) {
-                $avatar = $this->data->photo;
-            }
-        }
-        return $avatar;
-    } */
 
     public function isAdmin()
     {

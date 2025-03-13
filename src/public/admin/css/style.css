@@ -215,6 +215,38 @@ textarea:focus-within {
     outline: none;
 }
 
+input[type="text"]:is(:-webkit-autofill, :autofill),
+input[type="email"]:is(:-webkit-autofill, :autofill),
+input[type="password"]:is(:-webkit-autofill, :autofill),
+input[type="tel"]:is(:-webkit-autofill, :autofill),
+input[type="number"]:is(:-webkit-autofill, :autofill),
+input[type="search"]:is(:-webkit-autofill, :autofill),
+input[type="datetime"]:is(:-webkit-autofill, :autofill),
+input[type="date"]:is(:-webkit-autofill, :autofill),
+input[type="month"]:is(:-webkit-autofill, :autofill),
+input[type="week"]:is(:-webkit-autofill, :autofill),
+input[type="time"]:is(:-webkit-autofill, :autofill),
+input[type="color"]:is(:-webkit-autofill, :autofill) {
+    background-color: var(--background-color-default) !important;
+    color: var(--text-color-default) !important;
+}
+
+input[type="text"]:-internal-autofill-selected,
+input[type="email"]:-internal-autofill-selected,
+input[type="password"]:-internal-autofill-selected,
+input[type="tel"]:-internal-autofill-selected,
+input[type="number"]:-internal-autofill-selected,
+input[type="search"]:-internal-autofill-selected,
+input[type="datetime"]:-internal-autofill-selected,
+input[type="date"]:-internal-autofill-selected,
+input[type="month"]:-internal-autofill-selected,
+input[type="week"]:-internal-autofill-selected,
+input[type="time"]:-internal-autofill-selected,
+input[type="color"]:-internal-autofill-selected {
+    background-color: var(--background-color-default) !important;
+    color: var(--text-color-default) !important;
+}
+
 select {
     -moz-appearance: none;
     -webkit-appearance: none;

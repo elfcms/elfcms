@@ -29,10 +29,7 @@ Route::group(['middleware' => ['web', 'locales', 'cookie']], function () use ($a
         Route::get($adminPath . '/login', [Elfcms\Elfcms\Http\Controllers\LoginController::class, 'index'])
             ->name('login');
         Route::post($adminPath . '/login', [Elfcms\Elfcms\Http\Controllers\LoginController::class, 'login']);
-        Route::get($adminPath . '/logout', function () use ($adminPath) {
-            Auth::logout();
-            return redirect($adminPath . '/login');
-        })->name('logout');
+        Route::get($adminPath . '/logout', [Elfcms\Elfcms\Http\Controllers\LoginController::class, 'logout'])->name('logout');
 
         Route::get($adminPath . '/forgot-password', [Elfcms\Elfcms\Http\Controllers\LoginController::class, 'getRestoreForm'])->name('getrestore');
         Route::post($adminPath . '/forgot-password', [Elfcms\Elfcms\Http\Controllers\LoginController::class, 'getRestore']);
