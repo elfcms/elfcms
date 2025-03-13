@@ -25,7 +25,7 @@ return [
     'module_name' => 'elfcms',
     'module_title' => 'Basic',
     'version' => '3.0',
-    'release_status' => 'alpha',
+    'release_status' => 'beta',
     'release_date' => date('Y-m-d'),
 
     /*

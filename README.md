@@ -2,15 +2,15 @@
 
 Package for Laravel Framework
 
-Version of package 1.1.0
+Version of package 3.0
 
 You can install the package from scratch or into an existing project
 
 ## Requirements
 
-php >= 8.1
+php >= 8.2
 
-laravel >= 10.0
+laravel >= 11.0
 
 mysql >= 8.0
 
