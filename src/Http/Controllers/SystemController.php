@@ -10,6 +10,11 @@ class SystemController extends Controller
     public function index(Request $request)
     {
         $configs = config('elfcms');
+        $modules = [];
+        if (is_array($configs) && count($configs) > 1) {
+            $modules = $configs;
+            if (!empty($modules['elfcms'])) unset($modules['elfcms']);
+        }
         $data = $configs['elfcms'];
         return view('elfcms::admin.system.index',[
             'page' => [
@@ -19,6 +24,7 @@ class SystemController extends Controller
                 'description' => ''
             ],
             'data' => $data,
+            'modules' => $modules,
         ]);
     }
 }

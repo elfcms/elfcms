@@ -11,58 +11,53 @@ use Illuminate\Support\Facades\Route;
 
 class AdminController extends Controller
 {
-    /* public function index()
-    {
-
-        return view('elfcms::admin.index',[
-            'page' => [
-                'title' => 'ELF CMS',
-                'current' => url()->current(),
-            ],
-            //'menuData' => $menuData,
-        ]);
-    } */
     public function index()
     {
-        $menuData = config('elfcms.elfcms.menu');
-        foreach ($menuData as $key => $data) {
-            if ($data['route'] == Route::currentRouteName() || $data['route'] == 'admin.system.index') { //'admin.index') {
-                unset($menuData[$key]);
-                continue;
-            }
-            $subdata = [];
-            $text = '';
-            if ($data['route'] == 'admin.user.users' && !empty($data['submenu'])) {
-                foreach ($data['submenu'] as $submenu) {
-                    if ($submenu['route'] == 'admin.user.users') {
-                        $usersCount = User::count();
-                        $inactiveUserCount = User::where('is_confirmed', '<>', 1)->count();
-                        $subdata['users'] = [
-                            'title' => __('elfcms::default.users'),
-                            'value' => $usersCount . ' (' . $inactiveUserCount . ' ' . __('elfcms::default.inactive') . ')'
-                        ];
+        $configs = config('elfcms');
+        //$menuData = $configs['elfcms']['menu'];
+        $menuData = [];
+        foreach ($configs as $modName => $module) {
+            if (!empty($module['menu'])) {
+                foreach ($module['menu'] as $key => $data) {
+                    if ($data['route'] == Route::currentRouteName() || $data['route'] == 'admin.system.index') { //'admin.index') {
+                        //unset($menuData[$key]);
+                        continue;
                     }
-                    if ($submenu['route'] == 'admin.user.roles') {
-                        $rolesCount = Role::count();
-                        $subdata['roles'] = [
-                            'title' => __('elfcms::default.roles'),
-                            'value' => $rolesCount
-                        ];
+                    $subdata = [];
+                    $text = '';
+                    if ($data['route'] == 'admin.user.users' && !empty($data['submenu'])) {
+                        foreach ($data['submenu'] as $submenu) {
+                            if ($submenu['route'] == 'admin.user.users') {
+                                $usersCount = User::count();
+                                $inactiveUserCount = User::where('is_confirmed', '<>', 1)->count();
+                                $subdata['users'] = [
+                                    'title' => __('elfcms::default.users'),
+                                    'value' => $usersCount . ' (' . $inactiveUserCount . ' ' . __('elfcms::default.inactive') . ')'
+                                ];
+                            }
+                            if ($submenu['route'] == 'admin.user.roles') {
+                                $rolesCount = Role::count();
+                                $subdata['roles'] = [
+                                    'title' => __('elfcms::default.roles'),
+                                    'value' => $rolesCount
+                                ];
+                            }
+                        }
                     }
+
+                    if ($data['route'] == 'admin.settings.index') {
+                        $text = __('elfcms::default.basic_settings_for_your_site');
+                    }
+                    if ($data['route'] == 'admin.page.pages') {
+                        $text = __('elfcms::default.static_pages_of_your_site');
+                    }
+                    $menuData[$modName.$key] = $data;
+                    $menuData[$modName.$key]['subdata'] = $subdata;
+                    $menuData[$modName.$key]['text'] = $text;
+                    $langTitle = __($data['lang_title']);
+                    $menuData[$modName.$key]['title'] = $langTitle == $data['lang_title'] ? $data['title'] : $langTitle;
                 }
             }
-
-            if ($data['route'] == 'admin.settings.index') {
-                $text = __('elfcms::default.basic_settings_for_your_site');
-            }
-            if ($data['route'] == 'admin.page.pages') {
-                $text = __('elfcms::default.static_pages_of_your_site');
-            }
-
-            $menuData[$key]['subdata'] = $subdata;
-            $menuData[$key]['text'] = $text;
-            $langTitle = __($data['lang_title']);
-            $menuData[$key]['title'] = $langTitle == $data['lang_title'] ? $data['title'] : $langTitle;
         }
 
         return view('elfcms::admin.index', [
@@ -152,7 +147,7 @@ class AdminController extends Controller
         if (file_exists($file)) {
             $text = file_get_contents($file);
         }
-        
+
         return view('elfcms::admin.license.index', [
             'page' => [
                 'title' => __('elfcms::default.license'),

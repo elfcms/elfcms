@@ -591,4 +591,7 @@ return [
     'license' => 'License',
     'license_link' => 'License <a href=":link">:text</a>',
     'license_MIT' => 'License MIT',
+
+    'module' => 'Module',
+    'modules' => 'Modules',
 ];
