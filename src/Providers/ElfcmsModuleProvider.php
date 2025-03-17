@@ -153,7 +153,7 @@ class ElfcmsModuleProvider extends ServiceProvider
                 config(["filesystems.disks.$name" => $config['disks'][$name]]); //config("elfcms.elfcms.disks.$name")]);
             }
         }
-        if (!config($config['disks']['elfcmsviews'])) {
+        if (!config('elfcms.elfcms.disks.elfcmsviews')) {
             config(['filesystems.disks.elfcmsviews' => ['driver' => 'local', 'root' => base_path('vendor/elfcms/elfcms/src/resources/views')]]);
         }
 
