@@ -157,7 +157,7 @@ class ElfcmsModuleProvider extends ServiceProvider
             config(['filesystems.disks.elfcmsviews' => ['driver' => 'local', 'root' => base_path('vendor/elfcms/elfcms/src/resources/views')]]);
         }
 
-        if ($config['logging']['channels']) {
+        if (config('logging.channels')) {
             foreach ($config['logging']['channels'] as $channel => $data) {
                 config(["logging.channels.$channel" => $data]);
             }
