@@ -158,7 +158,7 @@ class ElfcmsModuleProvider extends ServiceProvider
         }
 
         if (config('logging.channels')) {
-            foreach ($config['logging']['channels'] as $channel => $data) {
+            foreach (config('logging.channels') as $channel => $data) {
                 config(["logging.channels.$channel" => $data]);
             }
         }
