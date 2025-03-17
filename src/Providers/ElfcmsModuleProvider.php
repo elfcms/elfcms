@@ -147,7 +147,7 @@ class ElfcmsModuleProvider extends ServiceProvider
 
 
         config(['auth.providers.users.model' => \Elfcms\Elfcms\Models\User::class]);
-        $disks = $config['disks']; //config('elfcms.elfcms.disks');
+        $disks = config('elfcms.elfcms.disks');
         if (!empty($disks)) {
             foreach ($disks as $name => $disk) {
                 config(["filesystems.disks.$name" => $config['disks'][$name]]); //config("elfcms.elfcms.disks.$name")]);
