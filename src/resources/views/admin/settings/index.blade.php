@@ -257,7 +257,7 @@
                         content: '<p>{!! __('elfcms::default.user_data_warning_html') !!}</p>',
                         buttons: [{
                                 title: '{{ __('elfcms::default.confirm') }}',
-                                class: 'button color-text-button red-button',
+                                class: 'button color-text-button danger-button',
                                 callback: 'close'
                             },
                             {
@@ -286,7 +286,7 @@
                         content: '<p>{!! __('elfcms::default.are_you_sure_to_enable_maintenance_mode') !!}</p>',
                         buttons: [{
                                 title: '{{ __('elfcms::default.confirm') }}',
-                                class: 'button color-text-button red-button',
+                                class: 'button color-text-button danger-button',
                                 callback: 'close'
                             },
                             {
@@ -309,7 +309,7 @@
                         content: '<p>{!! __('elfcms::default.are_you_sure_to_disable_maintenance_mode') !!}</p>',
                         buttons: [{
                                 title: '{{ __('elfcms::default.confirm') }}',
-                                class: 'button color-text-button red-button',
+                                class: 'button color-text-button danger-button',
                                 callback: 'close'
                             },
                             {

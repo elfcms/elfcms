@@ -403,7 +403,7 @@ return [
             "parent_route" => "admin.system.index",
             "icon" => "/elfcms/admin/images/logo/logo-outline-color-let.svg",
             "color" => "var(--text-color-default)",
-            "position" => 110,
+            "position" => 11000,
         ]
     ],
 

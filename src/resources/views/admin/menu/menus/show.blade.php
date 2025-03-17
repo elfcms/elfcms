@@ -29,7 +29,7 @@
                             itemId + ')?</p>',
                         buttons: [{
                                 title: '{{ __('elfcms::default.delete') }}',
-                                class: 'button color-text-button red-button',
+                                class: 'button color-text-button danger-button',
                                 callback: function() {
                                     self.submit()
                                 }

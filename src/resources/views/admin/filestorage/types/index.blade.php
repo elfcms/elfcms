@@ -187,7 +187,7 @@
                                         content: data.message,
                                         buttons: [{
                                             title: 'OK',
-                                            class: 'button color-text-button red-button',
+                                            class: 'button color-text-button danger-button',
                                             callback: 'close'
                                         }],
                                         class: 'danger'
@@ -204,7 +204,7 @@
                             buttons:[
                                 {
                                     title:'OK',
-                                    class:'button color-text-button red-button',
+                                    class:'button color-text-button danger-button',
                                     callback:'close'
                                 }
                             ],

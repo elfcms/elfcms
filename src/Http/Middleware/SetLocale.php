@@ -16,7 +16,7 @@ class SetLocale
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if ($request->is('admin/*')) {
+        if ($request->is('admin/*') || $request->is('elfcms/*')) {
             $adminLocale = Setting::where('code', 'admin_locale')->value('value') ?? config('app.locale');
             app()->setLocale($adminLocale);
         } else {

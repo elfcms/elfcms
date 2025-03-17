@@ -174,7 +174,7 @@
                                         buttons:[
                                             {
                                                 title:'OK',
-                                                class:'button color-text-button red-button',
+                                                class:'button color-text-button danger-button',
                                                 callback:'close'
                                             }
                                         ],

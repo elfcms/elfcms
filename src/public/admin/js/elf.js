@@ -1255,7 +1255,7 @@ const csrfInterval = setInterval(function () {
 }, 3600000);
 
 /* Dynamic table */
-/*
+
 function checkParamChange(th,props=false) {
     const row = th.closest('tr[data-id]');
     if (row) {
@@ -1296,7 +1296,7 @@ function checkParamChange(th,props=false) {
         }
         setSaveEnabled();
     }
-} */
+}
 
 function setDynamicSaveEnabled() {
     const saveButton = document.querySelector('.dynamic-table-buttons button[data-action="save"]');
@@ -1416,6 +1416,100 @@ function inputCheckValue(values, invert=false) {
     }
 }
 
+
+function checkOptionChange(th) {
+    const row = th.closest('tr[data-id]');
+    if (row) {
+        const id = row.dataset.id;
+        const editInput = row.querySelector('input[name="unit['+id+'][edited]"]');
+        const inputs = row.querySelectorAll('.shop-option-table-column input');
+        if (!id || ! inputs) {
+            return false;
+        }
+        let isDelete = false;
+        let rows = [];
+        let options = {};
+        inputs.forEach((input, i) => {
+            if (input.dataset.name == 'delete') {
+                if (input.checked) {
+                    isDelete = true;
+                }
+            }
+            else {
+                if (!rows[input.dataset.loop]) {
+                    rows[input.dataset.loop] = [];
+                }
+                rows[input.dataset.loop][input.dataset.name] = input.value;
+            }
+        });
+
+        rows.forEach(element => {
+            options[element.key] = element.value;
+        });
+
+        if (controlData[id]) {
+            controlData[id]['options'] = options;
+
+            if (!isDelete && objectCompare(controlData[id]['options'],unitListData.data[id]['options']) && objectCompare(controlData[id],unitListData.data[id])) {
+                row.classList.remove('edited');
+                if (editInput) {
+                    editInput.value="0";
+                }
+            }
+            else {
+                row.classList.add('edited');
+                if (editInput) {
+                    editInput.value="1";
+                }
+            }
+        }
+        setSaveEnabled();
+    }
+}
+
+
+function isEditedUnits() {
+    const editedRows = document.querySelectorAll('tr[data-id].edited');
+    if (editedRows && editedRows.length) {
+        return true;
+    }
+    return false;
+}
+
+function isDeletableUnits() {
+    const editedRows = document.querySelectorAll('tr[data-id].deletable');
+    if (editedRows && editedRows.length) {
+        return true;
+    }
+    return false;
+}
+
+function setSaveEnabled() {
+    const saveButton = document.querySelector('button[data-action="save"]');
+    if (saveButton) {
+        if (isDeletableUnits() || isEditedUnits()) {
+            saveButton.disabled = false;
+        }
+        else {
+            saveButton.disabled = true;
+        }
+    }
+}
+
+function objectCompare(obj1, obj2) {
+    if (typeof obj1 != 'object' || typeof obj2 != 'object') {
+        return null
+    }
+    for (let key in obj1) {
+        if (typeof obj2[key] !== 'object' || typeof obj1[key] !== 'object') {
+            //return objectCompare(obj1[key],obj2[key]);
+            if ((!obj2[key] && obj1[key]) || (obj2[key] && !obj1[key]) || obj1[key] != obj2[key]) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
 /*
 function checkFilestorageGroupChange(th) {
     const row = th.closest('tr[data-id]');
