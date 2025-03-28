@@ -156,7 +156,7 @@
         eventParamBoxInit('#addparamline', {{count($params)-1}})
 
         //add editor
-        //runEditor('#content')
+        runEditor('#content')
     </script>
 
 @endsection

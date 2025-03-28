@@ -91,7 +91,7 @@
         </form>
     </div>
     <script>
-        //runEditor('#text');
+        runEditor('#text');
         let cookieCategoryNum = 0;
 
         function addCookieCategory(e) {

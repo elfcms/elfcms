@@ -84,5 +84,5 @@
     //filestorageTagFormInit()
 
     //add editor
-    //runEditor('#description')
+    runEditor('#description')
 </script>

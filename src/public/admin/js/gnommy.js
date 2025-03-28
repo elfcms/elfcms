@@ -29,7 +29,7 @@ class Gnommy {
     }
 
     checkTextarea (textfield) {
-        if (typeof textfield == 'string') {
+        if (typeof textfield === 'string') {
             textfield = document.querySelector(textfield)
         }
         if (textfield && textfield instanceof HTMLElement) {
@@ -59,7 +59,7 @@ class Gnommy {
             if ((selection.anchorNode.parentNode.closest('.gnommy-editor-field') || selection.anchorNode.parentNode.classList.contains('gnommy-editor-field')) && selection.anchorNode.parentNode.closest('.gnommy-editor-box') === this.editorbox) {
 
                 if(selection.focusOffset != selection.anchorOffset) {
-
+                    
                     let start, end
                     if (selection.anchorOffset < selection.focusOffset) {
                         start = selection.anchorOffset
@@ -111,7 +111,7 @@ class Gnommy {
             naturalWidth = null,
             naturalHeight = null,
             naturalRatio = 1
-
+             
         imgWidth = img.width;
         imgHeight = img.height;
         if (imgWidth && imgHeight) {
@@ -143,7 +143,7 @@ class Gnommy {
         this.imgeditField.id = 'imagesrc'
         let imgSrc = img.getAttribute('src')
         this.imgeditField.value = imgSrc
-
+        
         this.imgeditTextLabel = document.createElement('label')
         this.imgeditTextLabel = document.createElement('label')
         this.imgeditTextLabel.setAttribute('for','imagesrc')
@@ -183,7 +183,7 @@ class Gnommy {
         /* Size */
         this.imgeditSizeBox = document.createElement('div')
         this.imgeditSizeBox.classList.add('gnommy-editor-imagepopup-size')
-
+        
         this.imgeditSizeWidthLabel = document.createElement('label')
         this.imgeditSizeWidthLabel.setAttribute('for','imagewidth')
         this.imgeditSizeWidthLabel.innerHTML = 'Width'
@@ -304,7 +304,7 @@ class Gnommy {
         img.onerror = function() {
             isImg = false
         }
-        img.onload = function() {
+        img.onload = function() {      
             imgWidth = this.width;
             imgHeight = this.height;
             if (imgWidth && imgHeight) {
@@ -325,7 +325,7 @@ class Gnommy {
         this.imgeditField.name = 'imagesrc'
         this.imgeditField.id = 'imagesrc'
         this.imgeditField.value = src
-
+        
         this.imgeditTextLabel = document.createElement('label')
         this.imgeditTextLabel = document.createElement('label')
         this.imgeditTextLabel.setAttribute('for','imagesrc')
@@ -363,7 +363,7 @@ class Gnommy {
         /* Size */
         this.imgeditSizeBox = document.createElement('div')
         this.imgeditSizeBox.classList.add('gnommy-editor-imagepopup-size')
-
+        
         this.imgeditSizeWidthLabel = document.createElement('label')
         this.imgeditSizeWidthLabel.setAttribute('for','imagewidth')
         this.imgeditSizeWidthLabel.innerHTML = 'Width'
@@ -455,7 +455,7 @@ class Gnommy {
 
         if (selection && selection.rangeCount > 0) {
             let selectionRange = selection.getRangeAt(0)
-
+            
             if (this.lastRange.container && this.lastRange.container.nodeName == 'IMG') {
                 this.lastRange.container.src = this.imgeditField.value
                 this.lastRange.container.setAttribute('alt',this.imgeditText.value)
@@ -485,9 +485,9 @@ class Gnommy {
                 selectionRange.setEndAfter(img)
                 selectionRange.setEndAfter(img)
             }
-
+            
             this.setImageContext(img)
-
+            
             selectionRange.collapse()
         }
         this.closePopup()
@@ -505,42 +505,42 @@ class Gnommy {
         this.heditButtonOne.addEventListener('click',function(){
             self.fragmentWrap('h1',null,true)
             self.closePopup()
-        })
+        }) 
         this.heditButtonTwo = document.createElement('button')
         this.heditButtonTwo.classList.add('gnommy-editor-hedit-button')
         this.heditButtonTwo.innerHTML = 'Header 2'
         this.heditButtonTwo.addEventListener('click',function(){
             self.fragmentWrap('h2',null,true)
             self.closePopup()
-        })
+        }) 
         this.heditButtonThree = document.createElement('button')
         this.heditButtonThree.classList.add('gnommy-editor-hedit-button')
         this.heditButtonThree.innerHTML = 'Header 3'
         this.heditButtonThree.addEventListener('click',function(){
             self.fragmentWrap('h3',null,true)
             self.closePopup()
-        })
+        }) 
         this.heditButtonFour = document.createElement('button')
         this.heditButtonFour.classList.add('gnommy-editor-hedit-button')
         this.heditButtonFour.innerHTML = 'Header 4'
         this.heditButtonFour.addEventListener('click',function(){
             self.fragmentWrap('h4',null,true)
             self.closePopup()
-        })
+        }) 
         this.heditButtonFive = document.createElement('button')
         this.heditButtonFive.classList.add('gnommy-editor-hedit-button')
         this.heditButtonFive.innerHTML = 'Header 5'
         this.heditButtonFive.addEventListener('click',function(){
             self.fragmentWrap('h5',null,true)
             self.closePopup()
-        })
+        }) 
         this.heditButtonSix = document.createElement('button')
         this.heditButtonSix.classList.add('gnommy-editor-hedit-button')
         this.heditButtonSix.innerHTML = 'Header 6'
         this.heditButtonSix.addEventListener('click',function(){
             self.fragmentWrap('h6',null,true)
             self.closePopup()
-        })
+        }) 
 
         this.linkeditButtonBox = document.createElement('div')
         this.linkeditButtonBox.classList.add('gnommy-editor-linkpopup-buttons')
@@ -614,7 +614,7 @@ class Gnommy {
 
             if (selection && selection.rangeCount > 0) {
                 let selectionRange = selection.getRangeAt(0)
-
+                
                 let parent = selectionRange.commonAncestorContainer,
                     firstElement = selectionRange.startContainer,
                     lastElement = selectionRange.endContainer,
@@ -667,7 +667,7 @@ class Gnommy {
 
         if (selection && selection.rangeCount > 0) {
             let selectionRange = selection.getRangeAt(0)
-
+            
             if (this.lastRange.container && this.lastRange.container.nodeName == 'A') {
                 this.lastRange.container.innerHTML = text
                 this.lastRange.container.setAttribute('href',link)
@@ -743,11 +743,6 @@ class Gnommy {
         }
     }
 
-
-
-
-
-
     init () {
         let self = this
 
@@ -761,7 +756,7 @@ class Gnommy {
         this.popuplayer.classList.add('gnommy-editor-popup-layer')
         this.popupwindow = document.createElement('div')
         this.popupwindow.classList.add('gnommy-editor-popup-window')
-
+        
         this.popuplayer.append(this.popupwindow)
         this.editorbox.append(this.popuplayer)
 
@@ -815,7 +810,7 @@ class Gnommy {
         /* this.backgroundButton = this.createButton()
         this.backgroundButton.title = 'Text background color'
         this.backgroundButton.insertAdjacentHTML('afterbegin',this.buttonPictures.background)
-        this.backgroundButton.addEventListener('click',function(){
+        this.backgroundButton.addEventListener('click',function(e){
             self.createColorPopup(true)
         }) */
 
@@ -857,7 +852,7 @@ class Gnommy {
             self.getPopupImage()
         })
         this.imageButton.insertAdjacentHTML('afterbegin',this.buttonPictures.image)
-
+        
 
         this.buttonbox.append(
             this.headerButton,
@@ -884,7 +879,7 @@ class Gnommy {
         this.editorfield = document.createElement('div')
         this.editorfield.classList.add('gnommy-editor-field')
         this.editorfield.setAttribute('contenteditable',true)
-
+        
         this.editorresizebox = document.createElement('div')
         this.editorresizebox.classList.add('gnommy-editor-resize-box')
 
@@ -939,7 +934,7 @@ class Gnommy {
         this.textfieldbox.append(this.textfield)
 
         this.editorfield.addEventListener('keydown',function(e){
-            if (e.code == 'Enter' || e.code == 'NumpadEnter') {
+            if (e.code === 'Enter' || e.code === 'NumpadEnter') {
                 let setParagraph = e.ctrlKey
                 if (self.pEnter) {
                     setParagraph = !e.ctrlKey
@@ -951,39 +946,37 @@ class Gnommy {
         this.editorfield.addEventListener('input',function(){
             self.contentClone(this,self.textfield)
         })
-        this.editorfield.addEventListener('DOMNodeInserted',function(){
-            self.contentClone(this,self.textfield)
-        })
-        this.editorfield.addEventListener('DOMNodeRemoved',function(){
-            self.contentClone(this,self.textfield)
-        })
-        this.editorfield.addEventListener('DOMCharacterDataModified',function(){
-            self.contentClone(this,self.textfield)
-        })
-        this.editorfield.addEventListener('DOMAttributeNameChanged',function(){
-            self.contentClone(this,self.textfield)
-        })
-        this.editorfield.addEventListener('DOMAttrModified',function(){
-            self.contentClone(this,self.textfield)
-        })
-        this.editorfield.addEventListener('DOMElementNameChanged',function(){
-            self.contentClone(this,self.textfield)
-        })
-        this.editorfield.addEventListener('DOMSubtreeModified',function(){
-            self.contentClone(this,self.textfield)
-        })
+
+        const observer = new MutationObserver((mutationsList) => {
+            for (let mutation of mutationsList) {
+                if (
+                    mutation.type === 'childList' ||
+                    mutation.type === 'characterData' ||
+                    mutation.type === 'attributes'
+                ) {
+                    self.contentClone(self.editorfield, self.textfield);
+                    break;
+                }
+            }
+        });
+        observer.observe(this.editorfield, {
+            childList: true,
+            subtree: true,
+            characterData: true,
+            attributes: true
+        });
         this.textfield.addEventListener('input',function(){
             self.contentClone(this,self.editorfield,false)
         })
         self.contentClone(this.textfield,self.editorfield,false)
-
+        
         this.setImagesContext()
     }
 
     setImagesContext() {
         const images = this.editorfield.querySelectorAll('img')
         let self = this
-
+        
         if (images) {
             images.forEach(image => {
                 image.addEventListener('mouseover',function(e){
@@ -1023,7 +1016,7 @@ class Gnommy {
 
             let container = selectionRange.commonAncestorContainer,
                 popupClass = 'textcolor'
-
+            
             if (bg) {
                 popupClass = 'selectcolor'
             }
@@ -1100,7 +1093,7 @@ class Gnommy {
 
         this.linkeditOkButton.addEventListener('click',function(){
             let color = self.colorInput.value
-
+            
             if (color) {
                 if (bg) {
                     if (self.colorRemoveInput.checked) {
@@ -1132,7 +1125,7 @@ class Gnommy {
         deleteButton.innerHTML = 'Delete'
         this.imageMenuBox.append(editButton, deleteButton)
         let imageCoords = this.getCoordsInBox(image)
-
+        
         this.imageMenuBox.style.top = (imageCoords.top + 5) + 'px'
         this.imageMenuBox.style.right = (imageCoords.right - 10) + 'px'
         this.editorfieldbox.append(this.imageMenuBox)
@@ -1183,7 +1176,7 @@ class Gnommy {
 
 
     contextMenu (self,e) {
-
+        
     }
 
     getCoordsInField(element) {
@@ -1254,13 +1247,13 @@ class Gnommy {
                     fragment
 
             if (listNode.nodeName == 'OL' || listNode.nodeName == 'UL') {
-
+                
                 if (startLi === listNode.firstChild) {
                     isStart = true
                 }
                 if (endLi === listNode.lastChild) {
                     isEnd = true
-                }
+                } 
                 selectionRange.setStartBefore(startLi)
                 selectionRange.setEndAfter(endLi)
 
@@ -1310,8 +1303,8 @@ class Gnommy {
                 }
                 fragment = selectionRange.extractContents()
             }
-
-            let items = [], i = 0
+            
+            let items = [], i = 0 
             let self = this
             Array.from(fragment.childNodes).forEach(function(node) {
                 if (items[i] == undefined) {
@@ -1335,7 +1328,7 @@ class Gnommy {
                     }
                 }
             })
-
+            
             let listType = number ? 'ol' : 'ul'
             const list = document.createElement(listType)
             if (items.length > 0) {
@@ -1369,7 +1362,7 @@ class Gnommy {
             if (!li && selectionRange.commonAncestorContainer.nodeName == 'LI') {
                 li = selectionRange.commonAncestorContainer
             }
-
+            
             if (li) {
                 selectionRange.setStart(li,0)
                 let startFragment = selectionRange.extractContents()
@@ -1384,7 +1377,7 @@ class Gnommy {
                 if (endFragment.textContent.length > 0) {
                     selectionRange.insertNode(endFragment)
                 }
-
+                
                 selectionRange.collapse(true)
                 return true
             }
@@ -1407,14 +1400,14 @@ class Gnommy {
                         selectionRange.setStartAfter(startParagraph)
                         selectionRange.collapse(true)
                     }
-
+                    
                     selectionRange.insertNode(newParagraph)
                     selectionRange.setStartAfter(newParagraph)
                     selectionRange.collapse(true)
                     if (endFragment.textContent.length > 0) {
                         selectionRange.insertNode(endFragment)
                     }
-
+                    
                     selectionRange.setStartAfter(newBreak)
                     selectionRange.collapse(true)
                 }
@@ -1575,14 +1568,14 @@ class Gnommy {
         }
         return false
     }
-
+    
     isEmpty (value) {
-        if (value === null || value === false || value === undefined || value === NaN || value == '' || /* value === {} || value === [] || */ value == 'undefined') {
+        if (value === null || value === false || value === undefined || value === NaN || value == '' || value == 'undefined') {
             return true
         }
         return false
     }
-
+    
     objectToSyleStr (obj = {}) {
         let str = ''
         if (!this.isEmpty(obj)) {
@@ -1605,7 +1598,7 @@ class Gnommy {
         }
         return string
     }
-
+    
     wrap (element, wrapper=null, style='') {
         if (element && (element instanceof DocumentFragment || element instanceof HTMLElement) && !this.isEmpty(wrapper)) {
             wrapper = document.createElement(wrapper);

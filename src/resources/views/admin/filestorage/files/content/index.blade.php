@@ -633,8 +633,8 @@
                         //autoSlug('.autoslug')
 
                         //add editor
-                        //runEditor('#description')
-                        ////runEditor('#additional_text')
+                        runEditor('#description')
+                        //runEditor('#additional_text')
 
                         const submitButton = createForm.querySelector('[type="submit"]');
                         const newSubmitButton = submitButton.cloneNode(true);

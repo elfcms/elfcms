@@ -133,7 +133,7 @@
             inputFileImg(imageInput)
         }
         //add editor
-        //runEditor('#text')
+        runEditor('#text')
 
 
         fragmentOptionInit();
