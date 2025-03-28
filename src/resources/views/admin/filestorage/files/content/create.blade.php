@@ -72,6 +72,6 @@ if (previewInput) {
 }
 
 //add editor
-runEditor('#description')
+//runEditor('#description')
 </script>
 

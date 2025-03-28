@@ -27,7 +27,7 @@
                             data-isslug value="{{ $fields['code'] ?? '' }}">
                     </div>
                     <div class="input-wrapper">
-                        <x-elfcms::ui.checkbox.autoslug textid="title" slugid="code" slugspace="_" />
+                        <x-elfcms::ui.checkbox.autoslug textid="title" slugid="code" slugspace="_" checked="true" />
                     </div>
                 </div>
                 <div class="input-box colored">

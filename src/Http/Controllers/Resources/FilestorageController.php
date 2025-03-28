@@ -91,7 +91,7 @@ class FilestorageController extends Controller
         $filestorage->types()->sync($types);
 
         if ($request->input('submit') == 'save_and_open') {
-            return redirect(route('admin.filestorage.show',$filestorage))->with('success',__('elfcms::default.storage_created_successfully'));
+            return redirect(route('admin.filestorage.files.index',$filestorage))->with('success',__('elfcms::default.storage_created_successfully'));
         }
 
         if ($request->input('submit') == 'save_and_close') {

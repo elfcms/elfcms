@@ -616,7 +616,6 @@
                     if (createForm) {
                         const fileInputs = createForm.querySelectorAll('.inputfile');
                         fileInputs.forEach((fileInput) => {
-                            console.log(fileInput)
                             ajaxInputfileInit(fileInput);
                         });
                         /* const previewInput = document.querySelector('#file')
@@ -634,8 +633,8 @@
                         //autoSlug('.autoslug')
 
                         //add editor
-                        runEditor('#description')
-                        //runEditor('#additional_text')
+                        //runEditor('#description')
+                        ////runEditor('#additional_text')
 
                         const submitButton = createForm.querySelector('[type="submit"]');
                         const newSubmitButton = submitButton.cloneNode(true);

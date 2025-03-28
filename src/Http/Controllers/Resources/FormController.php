@@ -116,15 +116,15 @@ class FormController extends Controller
 
         if ($form) {
             if ($request->input('submit') == 'save_and_open') {
-                return redirect(route('admin.form.forms.show',$form->id))->with('success',__('elfcms::default.form_created_successfully'));
+                return redirect(route('admin.forms.show',$form))->with('success',__('elfcms::default.form_created_successfully'));
             }
             if ($request->input('submit') == 'save_and_close') {
-                return redirect(route('admin.form.forms'))->with('success',__('elfcms::default.form_created_successfully'));
+                return redirect(route('admin.forms.index'))->with('success',__('elfcms::default.form_created_successfully'));
             }
-            return redirect(route('admin.form.forms.edit',$form->id))->with('success',__('elfcms::default.form_created_successfully'));
+            return redirect(route('admin.forms.edit',$form))->with('success',__('elfcms::default.form_created_successfully'));
         }
 
-        return redirect(route('admin.form.forms'))->withInput()->withErrors(['store_error'=>__('elfcms::default.form_save_error')]);
+        return redirect(route('admin.forms.create'))->withInput()->withErrors(['store_error'=>__('elfcms::default.form_save_error')]);
     }
 
     /**

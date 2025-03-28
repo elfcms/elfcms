@@ -100,6 +100,6 @@
     <script>
         checkInactive()
         //add editor
-        runEditor('#content')
+        //runEditor('#content')
     </script>
 @endsection

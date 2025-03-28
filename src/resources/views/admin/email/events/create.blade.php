@@ -133,7 +133,7 @@
         eventParamBoxInit('#addparamline')
         //add editor
         //new Gnommy('#content')
-        runEditor('#content')
+        //runEditor('#content')
     </script>
 
 @endsection

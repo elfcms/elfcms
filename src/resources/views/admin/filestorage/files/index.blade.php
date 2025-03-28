@@ -15,7 +15,7 @@
         <div class="filestorage-description">{{ $filestorage->description }}</div>
         {{-- <div class="filestorage-addtitional-text">{{ $filestorage->addtitional_text }}</div> --}}
     </div>
-    <div class="dallery-edit-button-box">
+    <div class="filestorage-edit-button-box">
         <a href="{{ route('admin.filestorage.edit',$filestorage) }}" class="button round-button theme-button">
             <span class="button-collapsed-text">{{__('elfcms::default.edit')}}</span>
             {!! iconHtmlLocal('elfcms/admin/images/icons/buttons/edit.svg', svg: true) !!}
