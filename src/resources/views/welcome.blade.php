@@ -14,6 +14,6 @@
         {!! iconHtmlLocal('elfcms/admin/images/logo/logo.svg', svg:true) !!}
     </div>
     <h1>Welcome to ELF CMS</h1>
-    <button class="start-button">Start</button>
+    {{-- <button class="start-button">Start</button> --}}
 </body>
 </html>
