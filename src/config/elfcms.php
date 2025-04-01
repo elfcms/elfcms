@@ -589,7 +589,7 @@ return [
         'enabled' => env('BACKUP_ENABLED', true),
         'database' => [
             'enabled' => true,
-            'exclude_tables' => [],
+            'exclude_tables' => ['cache'],
         ],
         'paths' => [
             'database' => true,

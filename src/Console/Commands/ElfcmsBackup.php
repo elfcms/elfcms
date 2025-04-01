@@ -91,7 +91,7 @@ class ElfcmsBackup extends Command
             $fullPath = base_path($path);
             if (file_exists($fullPath)) {
                 $cmd = "cd " . base_path() . " && zip -r -q $zipPath $path $excludeArg";
-                $this->info("Adding $path to zip archive");
+                $this->line("Adding $path to zip archive");
                 exec($cmd, $out, $res);
                 Log::channel('backup')->info("Added $path to archive", ['cmd' => $cmd, 'result' => $res]);
             }
@@ -99,7 +99,7 @@ class ElfcmsBackup extends Command
 
         // public
         if (backup_settings('paths.public')) {
-            $this->info("Adding public folder to zip archive");
+            $this->line("Adding public folder to zip archive");
             $publicPath = public_path();
             $excludeArgument = $excludeArg;
             if (!backup_settings('paths.public_storage')) {
@@ -119,7 +119,7 @@ class ElfcmsBackup extends Command
 
         // ELF CMS
         if (backup_settings('paths.modules')) {
-            $this->info("Adding ELF CMS modules to zip archive");
+            $this->line("Adding ELF CMS modules to zip archive");
             $packagesPath = base_path('vendor/elfcms');
             if (is_dir($packagesPath)) {
                 $cmd = "cd " . base_path() . " && zip -r -q $zipPath packages/elfcms $excludeArg";
@@ -135,7 +135,7 @@ class ElfcmsBackup extends Command
             }
         }
 
-        $this->info("Adding custom path");
+        $this->line("Adding custom path");
 
         foreach ($include as $addPath) {
             $cmd = "zip -r -q $zipPath $addPath $excludeArg";
