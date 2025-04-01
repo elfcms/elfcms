@@ -223,6 +223,9 @@ Route::group(['middleware' => ['web', 'locales', 'cookie']], function () use ($a
             Route::get($adminPath . '/system/license', [Elfcms\Elfcms\Http\Controllers\AdminController::class, 'license'])->name('license');
         });
 
+        Route::name('backup.')->group(function () use ($adminPath) {
+            Route::get($adminPath . '/backup', [Elfcms\Elfcms\Http\Controllers\BackupController::class, 'index'])->name('index');
+        });
 
         Route::name('ajax.')->group(function () {
 

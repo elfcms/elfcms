@@ -6,6 +6,7 @@ use Elfcms\Elfcms\Aux\Locales as ElfLocales;
 use Elfcms\Elfcms\Console\Commands\ElfcmsInstall;
 use Elfcms\Elfcms\Console\Commands\ElfcmsPublish;
 use Elfcms\Elfcms\Aux\Locales;
+use Elfcms\Elfcms\Console\Commands\ElfcmsBackup;
 use Elfcms\Elfcms\Console\Commands\ElfcmsDataTypes;
 use Elfcms\Elfcms\Console\Commands\ElfcmsEmailEvents;
 use Elfcms\Elfcms\Console\Commands\ElfcmsFieldTypes;
@@ -22,6 +23,7 @@ use Elfcms\Elfcms\Http\Middleware\VisitStatistics;
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
 use Elfcms\Elfcms\Providers\EventServiceProvider;
+use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Config;
 use Livewire\Livewire;
@@ -85,8 +87,17 @@ class ElfcmsModuleProvider extends ServiceProvider
                 ElfcmsEmailEvents::class,
                 ElfcmsFieldTypes::class,
                 ElfcmsSite::class,
+                ElfcmsBackup::class,
             ]);
         }
+
+        $this->app->booted(function () {
+            if (backup_settings('enabled')) {
+                $schedule = $this->app->make(Schedule::class);
+                $schedule->command('elfcms:backup')->cron(backup_settings('schedule'));
+            }
+        });
+
         $this->loadRoutesFrom($moduleDir . '/routes/web.php');
         $this->loadViewsFrom($moduleDir . '/resources/views', 'elfcms');
         $this->loadMigrationsFrom($moduleDir . '/database/migrations');
@@ -166,6 +177,13 @@ class ElfcmsModuleProvider extends ServiceProvider
             config(['logging.channels.elfauth' => [
                 'driver' => 'single',
                 'path' => storage_path('logs/elfauth.log'),
+                'level' => 'info',
+            ]]);
+        }
+        if (!config('logging.channels.backup')) {
+            config(['logging.channels.backup' => [
+                'driver' => 'single',
+                'path' => storage_path('logs/backup.log'),
                 'level' => 'info',
             ]]);
         }

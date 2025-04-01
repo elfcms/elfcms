@@ -5,6 +5,7 @@ use Elfcms\Elfcms\Aux\Filestorage;
 use Elfcms\Elfcms\Aux\Fragment;
 use Elfcms\Elfcms\Aux\FS;
 use Elfcms\Elfcms\Aux\Image;
+use Elfcms\Elfcms\Models\BackupSetting;
 use Elfcms\Elfcms\Models\ElfcmsContact;
 use Elfcms\Elfcms\Models\Setting;
 use Illuminate\Support\Facades\Cookie;
@@ -233,3 +234,14 @@ if (!function_exists('fsPath')) {
 }
 
 /* /Filestorage */
+
+/* Backup */
+
+function backup_settings($key, $default = null) {
+    $record = BackupSetting::where('key', $key)->first();
+    if (!$record) return config("elfcms.elfcms.backup.$key", $default);
+    $value = $record->value;
+    return str_starts_with($value, '[') || str_starts_with($value, '{') ? json_decode($value, true) : $value;
+}
+
+/* /Backup */

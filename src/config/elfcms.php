@@ -227,6 +227,10 @@ return [
                 'path' => storage_path('logs/elfauth.log'),
                 'level' => 'info',
             ],
+            'backup' => [
+                'driver' => 'single',
+                'path' => storage_path('logs/backup.log')
+            ],
         ],
     ],
 
@@ -397,6 +401,15 @@ return [
             "position" => 100,
         ],
         [
+            "title" => "Backup",
+            "lang_title" => "elfcms::default.backup",
+            "route" => "admin.backup.index",
+            "parent_route" => "admin.backup.index",
+            "icon" => "/elfcms/admin/images/icons/backup.svg",
+            "color" => "var(--color-020)",
+            "position" => 10900,
+        ],
+        [
             "title" => "System",
             "lang_title" => "elfcms::default.system",
             "route" => "admin.system.index",
@@ -502,6 +515,12 @@ return [
             "actions" => ["read"],
         ],
         [
+            "title" => "Backup",
+            "lang_title" => "elfcms::default.backup",
+            "route" => "admin.backup",
+            "actions" => ["read", "write"],
+        ],
+        [
             "title" => "System",
             "lang_title" => "elfcms::default.system",
             "route" => "admin.system",
@@ -562,6 +581,33 @@ return [
                 'message' => false,
                 'theme' => 'default',
             ],
+        ],
+    ],
+
+    'backup' => [
+        'schedule' => env('BACKUP_SCHEDULE', '0 3 * * *'),
+        'enabled' => env('BACKUP_ENABLED', true),
+        'database' => [
+            'enabled' => true,
+            'exclude_tables' => [],
+        ],
+        'paths' => [
+            'database' => true,
+            'public' => true,
+            'public_storage' => true,
+            'public_files' => true,
+            'resources' => true,
+            'app' => true,
+            'config' => true,
+            'routes' => true,
+            'modules' => true,
+            'include' => [],
+            'exclude' => [],
+        ],
+        'exclude_patterns' => [
+            '**/.git',
+            '**/.git/*',
+            '**/.gitignore',
         ],
     ],
 ];
