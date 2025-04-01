@@ -14,7 +14,7 @@ class ElfcmsRestore extends Command
      *
      * @var string
      */
-    protected $signature = 'elfcms:restore {marker}';
+    protected $signature = 'elfcms:restore {marker} {--force}';
 
     /**
      * The console command description.
@@ -31,6 +31,7 @@ class ElfcmsRestore extends Command
     public function handle()
     {
         $mark = $this->argument('marker');
+        $force = $this->option('force');
         $file = 'backup_' . $mark . '.zip';
         $path = storage_path('app/elfcms/backups/' . $file);
         $sqlFile = storage_path('app/elfcms/backups/db_' . $mark . '.sql');
@@ -41,6 +42,11 @@ class ElfcmsRestore extends Command
         }
 
         $this->info("Restoring from backup: $file");
+
+        if (!$force && !$this->confirm('This will overwrite existing files and database. Continue?')) {
+            $this->warn('Restore cancelled.');
+            return 0;
+        }
 
         $tempDir = storage_path('app/tmp_restore');
         if (!is_dir($tempDir)) {
@@ -80,7 +86,6 @@ class ElfcmsRestore extends Command
             }
         }
 
-        //$sqlFiles = glob($tempDir . '/db_*.sql');
         if ($sqlFile && file_exists($sqlFile)) {
             $this->info("Importing database dump: " . basename($sqlFile));
             $cmd = sprintf(
