@@ -1,16 +1,17 @@
 <?php
 
-namespace Elfcms\Elfcms\Http\Controllers;
+namespace Elfcms\Elfcms\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use Elfcms\Elfcms\Models\Backup;
 use Illuminate\Http\Request;
 
 class BackupController extends Controller
 {
     public function index(Request $request)
     {
-        //dd(backup_settings('database'));
-        //backup_settings('database');
-        dd(public_path());
+        $backups = Backup::orderBy('created_at','desc')->get();
+
+        dd($backups[0]);
     }
 }

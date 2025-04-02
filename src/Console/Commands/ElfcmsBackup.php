@@ -2,6 +2,8 @@
 
 namespace Elfcms\Elfcms\Console\Commands;
 
+use Elfcms\Elfcms\Models\Backup;
+use Elfcms\Elfcms\Models\BackupStatus;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
@@ -33,7 +35,8 @@ class ElfcmsBackup extends Command
         $this->info('Starting backup creation...');
         Log::channel('backup')->info('Backup started using elfcms:backup');
 
-        $backupDir = storage_path('app/elfcms/backups');
+        $relativeDir = 'app/elfcms/backups';
+        $backupDir = storage_path($relativeDir);
         if (!file_exists($backupDir)) {
             mkdir($backupDir, 0755, true);
         }
@@ -41,6 +44,14 @@ class ElfcmsBackup extends Command
         $date = date('Ymd_His');
 
         if (backup_settings('database.enabled')) {
+
+            $dbBackup = Backup::create([
+                'name' => $date,
+                'type' => 'database',
+                'status_id' => BackupStatus::where('name','progress')->first()->id ?? null,
+                'file_path' => $relativeDir . '/db_' . $date . '.sql'
+            ]);
+
             $this->info('Database backup creating');
             $excluded = backup_settings('database.exclude_tables', []);
             $excludeOptions = collect($excluded)->map(fn($t) => "--ignore-table=" . env('DB_DATABASE') . ".$t")->implode(' ');
@@ -57,14 +68,28 @@ class ElfcmsBackup extends Command
             $result = null;
             exec($cmd, $output, $result);
             if ($result !== 0) {
+                $dbBackup->setStatus('failed');
                 Log::channel('backup')->error("Failed to create SQL dump", ['command' => $cmd, 'output' => $output]);
                 $this->error("Failed to create database dump");
             } else {
+                $dbBackup->setStatus('success');
+                $this->info('Database backup created');
                 Log::channel('backup')->info("Database dump created: $filename");
+            }
+            if (file_exists($filename)) {
+                $dbBackup->file_size = filesize($filename);
+                $dbBackup->save();
             }
         }
 
         $this->info('Files backup creating');
+
+        $filesBackup = Backup::create([
+            'name' => $date,
+            'type' => 'files',
+            'status_id' => BackupStatus::where('name','progress')->first()->id ?? null,
+            'file_path' => $relativeDir . '/backup_' . $date . '.zip'
+        ]);
 
         $backupName = 'backup_' . $date . '.zip';
         $zipPath = $backupDir . '/' . $backupName;
@@ -144,9 +169,13 @@ class ElfcmsBackup extends Command
         }
 
         if (!file_exists($zipPath)) {
+            $filesBackup->setStatus('failed');
             $this->error('Backup creation failed.');
             Log::channel('backup')->error("Backup failed");
         } else {
+            $filesBackup->setStatus('success');
+            $filesBackup->file_size = filesize($zipPath);
+            $filesBackup->save();
             $this->info("Backup created: $backupName");
             Log::channel('backup')->info("Backup completed", ['path' => $zipPath]);
         }

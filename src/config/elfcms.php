@@ -404,9 +404,9 @@ return [
             "title" => "Backup",
             "lang_title" => "elfcms::default.backup",
             "route" => "admin.backup.index",
-            "parent_route" => "admin.backup.index",
+            "parent_route" => "admin.backup",
             "icon" => "/elfcms/admin/images/icons/backup.svg",
-            "color" => "var(--color-020)",
+            "color" => "var(--color-120)",
             "position" => 10900,
         ],
         [
