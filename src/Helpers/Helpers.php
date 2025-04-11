@@ -9,6 +9,9 @@ use Elfcms\Elfcms\Models\BackupSetting;
 use Elfcms\Elfcms\Models\ElfcmsContact;
 use Elfcms\Elfcms\Models\Setting;
 use Illuminate\Support\Facades\Cookie;
+use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Log;
 
 /* Settings */
 
@@ -49,8 +52,8 @@ if (!function_exists('phone')) {
     function phone($phone, $code = 49)
     {
         $nums = preg_replace('/[^0-9]/', '', $phone);
-        if (str_starts_with($nums,0)) {
-            $nums = substr($nums,1);
+        if (str_starts_with($nums, 0)) {
+            $nums = substr($nums, 1);
         }
         return '+' . $code . $nums;
     }
@@ -178,12 +181,12 @@ if (!function_exists('fsExtension')) { //! To remove
     {
         return pathinfo($file, PATHINFO_EXTENSION);
     }
-
 }
 
 if (!function_exists('fsIcon')) { //! To remove
 
-    function fsIcon($extension) {
+    function fsIcon($extension)
+    {
         return Filestorage::icon($extension);
     }
 }
@@ -194,16 +197,14 @@ if (!function_exists('fsMime')) { //! To remove
     {
         return mime_content_type($file);
     }
-
 }
 
 if (!function_exists('fsFile')) { //! To remove
 
-    function fsFile($file,$asString)
+    function fsFile($file, $asString)
     {
-        return Filestorage::file($file,$asString);
+        return Filestorage::file($file, $asString);
     }
-
 }
 
 if (!function_exists('fsPreview')) {
@@ -212,7 +213,6 @@ if (!function_exists('fsPreview')) {
     {
         return FS::preview($file);
     }
-
 }
 
 if (!function_exists('fsPublic')) {
@@ -221,7 +221,6 @@ if (!function_exists('fsPublic')) {
     {
         return FS::public($file);
     }
-
 }
 
 if (!function_exists('fsPath')) {
@@ -230,18 +229,154 @@ if (!function_exists('fsPath')) {
     {
         return FS::path($file);
     }
-
 }
 
 /* /Filestorage */
 
 /* Backup */
 
-function backup_settings($key, $default = null) {
+function backupSettings()
+{
+    $records = BackupSetting::all()->toArray();
+    $result = [];
+    if (empty($records)) {
+        $configs = config("elfcms.elfcms.backup");
+        foreach ($configs as $key => $data) {
+            if ($key == 'exclude_patterns') continue;
+            if (is_array($data) && $key == 'database' || $key == 'paths') {
+                foreach ($data as $dataKey => $value) {
+                    if (is_array($value)) {
+                        $value = implode(',', $value);
+                    }
+                    $result[$key . '__' . $dataKey] = $value;
+                }
+            } else {
+                $result[$key] = $data;
+            }
+        }
+    }
+    else {
+        foreach($records as $record) {
+            $result[$record['key']] = $record['value'];
+        }
+    }
+    return $result;
+}
+
+function backupSetConfig(array $settings)
+{
+    $result = [];
+    $prefix = 'elfcms.elfcms.backup';
+
+    foreach ($settings as $key => $value) {
+        if (str_starts_with($key, 'database__')) {
+            $subKey = str_replace('database__', '', $key);
+            if ($subKey === 'exclude_tables') {
+                $value = empty($value) ? [] : array_map('trim', explode(',', $value));
+            }
+            $result['database'][$subKey] = $value;
+            config(["$prefix.database.$subKey" => $value]);
+        } elseif (str_starts_with($key, 'paths__')) {
+            $subKey = str_replace('paths__', '', $key);
+            if (in_array($subKey, ['exclude', 'include'])) {
+                $value = empty($value) ? [] : array_map('trim', explode(',', $value));
+            }
+            $result['paths'][$subKey] = $value;
+            config(["$prefix.paths.$subKey" => $value]);
+        } else {
+            $result[$key] = $value;
+            config(["$prefix.$key" => $value]);
+        }
+    }
+
+    return $result;
+}
+
+function backupSetting($key, $default = null)
+{
     $record = BackupSetting::where('key', $key)->first();
     if (!$record) return config("elfcms.elfcms.backup.$key", $default);
     $value = $record->value;
     return str_starts_with($value, '[') || str_starts_with($value, '{') ? json_decode($value, true) : $value;
 }
+
+function generateCron(array $input)
+{
+    $cron = [];
+    $limits = [
+        'minute' => [0, 59],
+        'hour' => [0, 23],
+        'day' => [1, 31],
+        'month' => [1, 12],
+        'weekday' => [0, 6],
+    ];
+
+    foreach (['minute', 'hour', 'day', 'month', 'weekday'] as $field) {
+        $mode = $input[$field . '_mode'] ?? 'exact';
+        if ($mode === 'every') {
+            $step = max(1, intval($input[$field . '_every'] ?? 1));
+            $cron[] = "*/$step";
+        } else {
+            $value = $input[$field] ?? '*';
+            if (is_numeric($value)) {
+                $min = $limits[$field][0];
+                $max = $limits[$field][1];
+                $value = max($min, min($max, intval($value)));
+            }
+            $cron[] = $value;
+        }
+    }
+
+    return implode(' ', $cron);
+}
+
+function parseCron(string $cron)
+{
+    $parts = preg_split('/\s+/', trim($cron));
+    if (count($parts) !== 5) {
+        throw new InvalidArgumentException("Invalid cron string: must contain exactly 5 segments.");
+    }
+
+    [$min, $hour, $day, $month, $weekday] = $parts;
+
+    return [
+        'minute_mode' => str_starts_with($min, '*/') ? 'every' : 'exact',
+        'minute' => $min,
+        'minute_every' => str_replace('*/', '', $min),
+
+        'hour_mode' => str_starts_with($hour, '*/') ? 'every' : 'exact',
+        'hour' => $hour,
+        'hour_every' => str_replace('*/', '', $hour),
+
+        'day_mode' => str_starts_with($day, '*/') ? 'every' : 'exact',
+        'day' => $day,
+        'day_every' => str_replace('*/', '', $day),
+
+        'month_mode' => str_starts_with($month, '*/') ? 'every' : 'exact',
+        'month' => $month,
+        'month_every' => str_replace('*/', '', $month),
+
+        'weekday_mode' => str_starts_with($weekday, '*/') ? 'every' : 'exact',
+        'weekday' => $weekday,
+        'weekday_every' => str_replace('*/', '', $weekday),
+    ];
+}
+
+// Force dispatch fallback (synchronous alternative if queue not working)
+if (!function_exists('dispatch_backup_now')) {
+    function dispatch_backup_now() {
+        try {
+            Cache::put('backup_progress', ['step' => 'Dumping database...', 'percent' => 15], now()->addMinutes(10));
+            Artisan::call('elfcms:backup');
+            Cache::put('backup_progress', ['step' => 'Finalizing...', 'percent' => 90], now()->addMinutes(5));
+            sleep(1);
+            Cache::put('backup_progress', ['step' => 'Completed', 'percent' => 100], now()->addMinutes(5));
+        } catch (\Throwable $e) {
+            Log::error('Sync backup failed', ['error' => $e->getMessage()]);
+            Cache::put('backup_progress', ['step' => 'Error: ' . $e->getMessage(), 'percent' => 0]);
+        }
+    }
+}
+
 
 /* /Backup */

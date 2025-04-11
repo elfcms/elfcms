@@ -610,4 +610,8 @@ return [
             '**/.gitignore',
         ],
     ],
+    
+    'system' => [
+        'worker' => 'scheduler', // 'sheduler' | 'supervisor'
+    ]
 ];

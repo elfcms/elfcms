@@ -1,28 +1,6 @@
 @extends('elfcms::admin.layouts.main')
 
 @section('pagecontent')
-
-    {{-- <div class="table-search-box">
-        <a href="{{ route('admin.forms.create') }}" class="button success-button icon-text-button light-icon plus-button">{{__('elfcms::default.create_form')}}</a>
-        <div class="table-search-result-title">
-            @if (!empty($search))
-                {{ __('elfcms::default.search_result_for') }} "{{ $search }}" <a href="{{ route('admin.user.users') }}" title="{{ __('elfcms::default.reset_search') }}">&#215;</a>
-            @endif
-        </div>
-    </div>
-    @if (Session::has('success'))
-    <div class="alert alert-alternate">{{ Session::get('success') }}</div>
-    @endif
-    @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-    @endif --}}
-
     <div class="table-search-box">
         <a href="{{ route('admin.forms.create') }}" class="button round-button theme-button">
             {!! iconHtmlLocal('elfcms/admin/images/icons/plus.svg', svg: true) !!}

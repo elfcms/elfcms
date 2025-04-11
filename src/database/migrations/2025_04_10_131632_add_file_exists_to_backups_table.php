@@ -11,11 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('backupSetting', function (Blueprint $table) {
-            $table->id();
-            $table->string('key')->unique();
-            $table->text('value')->nullable();
-            $table->timestamps();
+        Schema::table('backups', function (Blueprint $table) {
+            $table->boolean('file_exists')->default(true)->after('file_path');
         });
     }
 
@@ -24,6 +21,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('backupSetting');
+        Schema::table('backups', function (Blueprint $table) {
+            $table->dropColumn('file_exists');
+        });
     }
 };

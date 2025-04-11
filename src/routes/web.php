@@ -225,6 +225,16 @@ Route::group(['middleware' => ['web', 'locales', 'cookie']], function () use ($a
 
         Route::name('backup.')->group(function () use ($adminPath) {
             Route::get($adminPath . '/backup', [Elfcms\Elfcms\Http\Controllers\Admin\BackupController::class, 'index'])->name('index');
+            Route::get($adminPath . '/backup/settings', [Elfcms\Elfcms\Http\Controllers\Admin\BackupController::class, 'settings'])->name('settings');
+            Route::post($adminPath . '/backup/settings', [Elfcms\Elfcms\Http\Controllers\Admin\BackupController::class, 'settingsSave'])->name('settingsSave');
+            Route::get($adminPath . '/backup/download/{backup}', [Elfcms\Elfcms\Http\Controllers\Admin\BackupController::class, 'download'])->name('download');
+            Route::post($adminPath . '/backup/delete/{backup}', [Elfcms\Elfcms\Http\Controllers\Admin\BackupController::class, 'delete'])->name('delete');
+            Route::get($adminPath . '/backup/restore/{backup}', [Elfcms\Elfcms\Http\Controllers\Admin\BackupController::class, 'restorePage'])->name('restore_page');
+            Route::post($adminPath . '/backup/restore/{backup}', [Elfcms\Elfcms\Http\Controllers\Admin\BackupController::class, 'restore'])->name('restore');
+
+            Route::post($adminPath . '/backup/start', [Elfcms\Elfcms\Http\Controllers\Admin\BackupAjaxController::class, 'start'])->name('start');
+            Route::get($adminPath . '/backup/progress', [Elfcms\Elfcms\Http\Controllers\Admin\BackupAjaxController::class, 'progress'])->name('progress');
+            Route::get($adminPath . '/backup/result', [Elfcms\Elfcms\Http\Controllers\Admin\BackupAjaxController::class, 'result'])->name('result');
         });
 
         Route::name('ajax.')->group(function () {

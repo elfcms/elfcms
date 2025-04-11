@@ -16,7 +16,7 @@ class ElfcmsBackup extends Command
      *
      * @var string
      */
-    protected $signature = 'elfcms:backup';
+    protected $signature = 'elfcms:backup {--name=}';
 
     /**
      * The console command description.
@@ -32,6 +32,7 @@ class ElfcmsBackup extends Command
      */
     public function handle()
     {
+        $name = $this->option('name') ?? date('Ymd_His');
         $this->info('Starting backup creation...');
         Log::channel('backup')->info('Backup started using elfcms:backup');
 
@@ -41,21 +42,19 @@ class ElfcmsBackup extends Command
             mkdir($backupDir, 0755, true);
         }
 
-        $date = date('Ymd_His');
-
-        if (backup_settings('database.enabled')) {
+        if (backupSetting('database.enabled')) {
 
             $dbBackup = Backup::create([
-                'name' => $date,
+                'name' => $name,
                 'type' => 'database',
                 'status_id' => BackupStatus::where('name','progress')->first()->id ?? null,
-                'file_path' => $relativeDir . '/db_' . $date . '.sql'
+                'file_path' => $relativeDir . '/db_' . $name . '.sql'
             ]);
 
             $this->info('Database backup creating');
-            $excluded = backup_settings('database.exclude_tables', []);
+            $excluded = backupSetting('database.exclude_tables', []);
             $excludeOptions = collect($excluded)->map(fn($t) => "--ignore-table=" . env('DB_DATABASE') . ".$t")->implode(' ');
-            $filename = $backupDir . '/db_' . $date . '.sql';
+            $filename = $backupDir . '/db_' . $name . '.sql';
             $cmd = sprintf(
                 'mysqldump -u%s -p%s %s %s > %s 2>/dev/null',
                 env('DB_USERNAME'),
@@ -85,13 +84,13 @@ class ElfcmsBackup extends Command
         $this->info('Files backup creating');
 
         $filesBackup = Backup::create([
-            'name' => $date,
+            'name' => $name,
             'type' => 'files',
             'status_id' => BackupStatus::where('name','progress')->first()->id ?? null,
-            'file_path' => $relativeDir . '/backup_' . $date . '.zip'
+            'file_path' => $relativeDir . '/backup_' . $name . '.zip'
         ]);
 
-        $backupName = 'backup_' . $date . '.zip';
+        $backupName = 'backup_' . $name . '.zip';
         $zipPath = $backupDir . '/' . $backupName;
 
         $paths = collect([
@@ -100,12 +99,12 @@ class ElfcmsBackup extends Command
             'app' => 'app',
             'config' => 'config',
             'routes' => 'routes',
-        ])->filter(fn($_, $k) => backup_settings("paths.$k"))->values()->all();
+        ])->filter(fn($_, $k) => backupSetting("paths.$k"))->values()->all();
 
-        $include = backup_settings('paths.include', []);
+        $include = backupSetting('paths.include', []);
         $exclude = array_merge(
-            backup_settings('paths.exclude', []),
-            backup_settings('exclude_patterns', [])
+            backupSetting('paths.exclude', []),
+            backupSetting('exclude_patterns', [])
         );
 
         $excludeArg = implode(' ', array_map(fn($e) => "-x '$e'", $exclude));
@@ -123,15 +122,15 @@ class ElfcmsBackup extends Command
         }
 
         // public
-        if (backup_settings('paths.public')) {
+        if (backupSetting('paths.public')) {
             $this->line("Adding public folder to zip archive");
             $publicPath = public_path();
             $excludeArgument = $excludeArg;
-            if (!backup_settings('paths.public_storage')) {
+            if (!backupSetting('paths.public_storage')) {
                 if ($excludeArgument == '') $excludeArgument = '-x';
                 $excludeArgument .= " 'public/storage/*'";
             }
-            if (!backup_settings('paths.public_files')) {
+            if (!backupSetting('paths.public_files')) {
                 if ($excludeArgument == '') $excludeArgument = '-x';
                 $excludeArgument .= " 'public/" . config('elfcms.elfcms.file_path') . "/*'";
             }
@@ -143,7 +142,7 @@ class ElfcmsBackup extends Command
         }
 
         // ELF CMS
-        if (backup_settings('paths.modules')) {
+        if (backupSetting('paths.modules')) {
             $this->line("Adding ELF CMS modules to zip archive");
             $packagesPath = base_path('vendor/elfcms');
             if (is_dir($packagesPath)) {
