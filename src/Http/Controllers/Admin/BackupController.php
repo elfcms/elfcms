@@ -117,7 +117,11 @@ class BackupController extends Controller
 
     public function delete(Backup $backup)
     {
-        //$backup->delete();
+        if (!$backup->delete()) {
+            return redirect()->back()->withErrors(['backupdelerror'=>__('elfcms::default.delete_backup_failed')]);
+        }
+
+        return redirect()->back()->with('success',__('elfcms::default.backup_deleted'));
     }
 
     public function restorePage(Backup $backup)

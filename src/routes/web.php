@@ -228,7 +228,7 @@ Route::group(['middleware' => ['web', 'locales', 'cookie']], function () use ($a
             Route::get($adminPath . '/backup/settings', [Elfcms\Elfcms\Http\Controllers\Admin\BackupController::class, 'settings'])->name('settings');
             Route::post($adminPath . '/backup/settings', [Elfcms\Elfcms\Http\Controllers\Admin\BackupController::class, 'settingsSave'])->name('settingsSave');
             Route::get($adminPath . '/backup/download/{backup}', [Elfcms\Elfcms\Http\Controllers\Admin\BackupController::class, 'download'])->name('download');
-            Route::post($adminPath . '/backup/delete/{backup}', [Elfcms\Elfcms\Http\Controllers\Admin\BackupController::class, 'delete'])->name('delete');
+            Route::delete($adminPath . '/backup/delete/{backup}', [Elfcms\Elfcms\Http\Controllers\Admin\BackupController::class, 'delete'])->name('delete');
             Route::get($adminPath . '/backup/restore/{backup}', [Elfcms\Elfcms\Http\Controllers\Admin\BackupController::class, 'restorePage'])->name('restore_page');
             Route::post($adminPath . '/backup/restore/{backup}', [Elfcms\Elfcms\Http\Controllers\Admin\BackupController::class, 'restore'])->name('restore');
             Route::get($adminPath . '/backup/restore/{backup}/result', [Elfcms\Elfcms\Http\Controllers\Admin\BackupController::class, 'restoreResult'])->name('restore_result');

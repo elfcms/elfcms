@@ -63,4 +63,13 @@ class Backup extends Model
         }
         $this->save();
     }
+
+    protected static function booted()
+    {
+        static::deleting(function (Backup $backup) {
+            if ($backup->file_path && file_exists(storage_path('app/elfcms/backups/' . $backup->file_path))) {
+                unlink(storage_path('app/elfcms/backups/' . $backup->file_path));
+            }
+        });
+    }
 }
