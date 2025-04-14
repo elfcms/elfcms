@@ -11,6 +11,7 @@ use Elfcms\Elfcms\Console\Commands\ElfcmsBackupFileExists;
 use Elfcms\Elfcms\Console\Commands\ElfcmsDataTypes;
 use Elfcms\Elfcms\Console\Commands\ElfcmsEmailEvents;
 use Elfcms\Elfcms\Console\Commands\ElfcmsFieldTypes;
+use Elfcms\Elfcms\Console\Commands\ElfcmsRestore;
 use Elfcms\Elfcms\Console\Commands\ElfcmsRoles;
 use Elfcms\Elfcms\Console\Commands\ElfcmsSettings;
 use Elfcms\Elfcms\Console\Commands\ElfcmsSite;
@@ -78,6 +79,8 @@ class ElfcmsModuleProvider extends ServiceProvider
         $config = config('elfcms.elfcms');
         $locales = config('elfcms.elfcms.locales');
 
+        backupSetConfig(backupSettings());
+
         if ($this->app->runningInConsole()) {
             $this->commands([
                 ElfcmsPublish::class,
@@ -89,14 +92,19 @@ class ElfcmsModuleProvider extends ServiceProvider
                 ElfcmsFieldTypes::class,
                 ElfcmsSite::class,
                 ElfcmsBackup::class,
+                ElfcmsRestore::class,
                 ElfcmsBackupFileExists::class,
             ]);
         }
+        $this->commands([
+            ElfcmsBackup::class,
+            ElfcmsRestore::class,
+        ]);
 
         $this->app->booted(function () {
-            /* if (backupSetting('enabled')) {
+            /* if (config('elfcms.elfcms.backup.enabled')) {
                 $schedule = $this->app->make(Schedule::class);
-                $schedule->command('elfcms:backup')->cron(backupSetting('schedule'));
+                $schedule->command('elfcms:backup')->cron(config('elfcms.elfcms.backup.schedule'));
             } */
             $this->scheduleCommands();
         });
@@ -258,12 +266,12 @@ class ElfcmsModuleProvider extends ServiceProvider
     protected function scheduleCommands()
     {
         $schedule = $this->app->make(Schedule::class);
-        if (backupSetting('enabled')) {
+        if (config('elfcms.elfcms.backup.enabled')) {
             $schedule->command('elfcms:backup-file-exists')
                 ->dailyAt('01:00')
                 ->withoutOverlapping()
                 ->appendOutputTo(storage_path('logs/backup_check.log'));
-            $schedule->command('elfcms:backup')->cron(backupSetting('schedule'))->withoutOverlapping();
+            $schedule->command('elfcms:backup')->cron(config('elfcms.elfcms.backup.schedule'))->withoutOverlapping();
         }
         $workerLauncher = config('elfcms.elfcms.system.worker', 'supervisor');
         if ($workerLauncher == 'sheduler') {

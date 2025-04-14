@@ -19,9 +19,17 @@ class CreateBackupJob implements ShouldQueue
     public function handle()
     {
         $backupName = date('Ymd_His');
+        backupSetConfig(backupSettings());
+        Log::info(config('elfcms.elfcms.backup'));
 
         try {
-            Cache::put('backup_progress', ['step' => 'Dumping database...', 'percent' => 15], now()->addMinutes(10));
+
+            if (config('elfcms.elfcms.backup.database.enabled')) {
+                Cache::put('backup_progress', ['step' => __('elfcms::default.dumping_database'), 'percent' => 15], now()->addMinutes(10));
+            }
+            else {
+                Cache::put('backup_progress', ['step' => __('elfcms::default.zipping_files'), 'percent' => 15], now()->addMinutes(10));
+            }
 
             Artisan::call('elfcms:backup', ['--name' => $backupName]);
 

@@ -42,7 +42,7 @@ class ElfcmsBackup extends Command
             mkdir($backupDir, 0755, true);
         }
 
-        if (backupSetting('database.enabled')) {
+        if (config('elfcms.elfcms.backup.database.enabled')) {
 
             $dbBackup = Backup::create([
                 'name' => $name,
@@ -52,7 +52,7 @@ class ElfcmsBackup extends Command
             ]);
 
             $this->info('Database backup creating');
-            $excluded = backupSetting('database.exclude_tables', []);
+            $excluded = config('elfcms.elfcms.backup.database.exclude_tables', []);
             $excludeOptions = collect($excluded)->map(fn($t) => "--ignore-table=" . env('DB_DATABASE') . ".$t")->implode(' ');
             $filename = $backupDir . '/db_' . $name . '.sql';
             $cmd = sprintf(
@@ -99,12 +99,13 @@ class ElfcmsBackup extends Command
             'app' => 'app',
             'config' => 'config',
             'routes' => 'routes',
-        ])->filter(fn($_, $k) => backupSetting("paths.$k"))->values()->all();
+            'modules' => 'modules',
+        ])->filter(fn($_, $k) => config("elfcms.elfcms.backup.paths.$k"))->values()->all();
 
-        $include = backupSetting('paths.include', []);
+        $include = config('elfcms.elfcms.backup.paths.include', []);
         $exclude = array_merge(
-            backupSetting('paths.exclude', []),
-            backupSetting('exclude_patterns', [])
+            config('elfcms.elfcms.backup.paths.exclude', []),
+            config('elfcms.elfcms.backup.exclude_patterns', [])
         );
 
         $excludeArg = implode(' ', array_map(fn($e) => "-x '$e'", $exclude));
@@ -122,15 +123,15 @@ class ElfcmsBackup extends Command
         }
 
         // public
-        if (backupSetting('paths.public')) {
+        if (config('elfcms.elfcms.backup.paths.public')) {
             $this->line("Adding public folder to zip archive");
             $publicPath = public_path();
             $excludeArgument = $excludeArg;
-            if (!backupSetting('paths.public_storage')) {
+            if (!config('elfcms.elfcms.backup.paths.public_storage')) {
                 if ($excludeArgument == '') $excludeArgument = '-x';
                 $excludeArgument .= " 'public/storage/*'";
             }
-            if (!backupSetting('paths.public_files')) {
+            if (!config('elfcms.elfcms.backup.paths.public_files')) {
                 if ($excludeArgument == '') $excludeArgument = '-x';
                 $excludeArgument .= " 'public/" . config('elfcms.elfcms.file_path') . "/*'";
             }
@@ -142,7 +143,7 @@ class ElfcmsBackup extends Command
         }
 
         // ELF CMS
-        if (backupSetting('paths.modules')) {
+        if (config('elfcms.elfcms.backup.paths.modules')) {
             $this->line("Adding ELF CMS modules to zip archive");
             $packagesPath = base_path('vendor/elfcms');
             if (is_dir($packagesPath)) {

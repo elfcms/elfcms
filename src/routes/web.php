@@ -231,6 +231,7 @@ Route::group(['middleware' => ['web', 'locales', 'cookie']], function () use ($a
             Route::post($adminPath . '/backup/delete/{backup}', [Elfcms\Elfcms\Http\Controllers\Admin\BackupController::class, 'delete'])->name('delete');
             Route::get($adminPath . '/backup/restore/{backup}', [Elfcms\Elfcms\Http\Controllers\Admin\BackupController::class, 'restorePage'])->name('restore_page');
             Route::post($adminPath . '/backup/restore/{backup}', [Elfcms\Elfcms\Http\Controllers\Admin\BackupController::class, 'restore'])->name('restore');
+            Route::get($adminPath . '/backup/restore/{backup}/result', [Elfcms\Elfcms\Http\Controllers\Admin\BackupController::class, 'restoreResult'])->name('restore_result');
 
             Route::post($adminPath . '/backup/start', [Elfcms\Elfcms\Http\Controllers\Admin\BackupAjaxController::class, 'start'])->name('start');
             Route::get($adminPath . '/backup/progress', [Elfcms\Elfcms\Http\Controllers\Admin\BackupAjaxController::class, 'progress'])->name('progress');

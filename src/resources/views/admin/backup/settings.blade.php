@@ -114,7 +114,7 @@
         <div id="progress-container" class="progress-container hidden">
             <div id="progress-status" class="progress-status">{{ __('elfcms::default.preparing') }}</div>
             <div class="progress-line">
-                <div id="progress-bar" style="background:var(--default-color); height:100%; width:0%"></div>
+                <div class="progress-bar" id="progress-bar" style="width:0%"></div>
             </div>
         </div>
         <div id="backup-result" class="backup-result hidden"></div>

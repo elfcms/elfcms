@@ -294,7 +294,8 @@ function backupSetConfig(array $settings)
 
 function backupSetting($key, $default = null)
 {
-    $record = BackupSetting::where('key', $key)->first();
+    $dbKey = str_replace('paths.','paths__',str_replace('database.','database__',$key));
+    $record = BackupSetting::where('key', $dbKey)->first();
     if (!$record) return config("elfcms.elfcms.backup.$key", $default);
     $value = $record->value;
     return str_starts_with($value, '[') || str_starts_with($value, '{') ? json_decode($value, true) : $value;

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Elfcms\Elfcms\Models\Backup;
 use Elfcms\Elfcms\Models\BackupSetting;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 
 class BackupController extends Controller
 {
@@ -19,9 +20,9 @@ class BackupController extends Controller
         if ($request->show && strtolower($request->show) == 'all') {
             $backups = Backup::orderBy('id', $order)->paginate($count);
         } else {
-                $backups = Backup::whereHas('status', function ($query) {
-                    $query->where('name', 'success');
-                })->where('file_exists',1)->orderBy('id',$order)->paginate($count);
+            $backups = Backup::whereHas('status', function ($query) {
+                $query->where('name', 'success');
+            })->where('file_exists', 1)->orderBy('id', $order)->paginate($count);
         }
 
         return view('elfcms::admin.backup.index', [
@@ -38,6 +39,8 @@ class BackupController extends Controller
     public function settings(Request $request)
     {
         //dd(1);
+        //dd(backupSetting('paths'));
+        //dd(backupSettings());
         $settings = backupSettings();
         //dd($settings);
         //$setConf = backupSetConfig($settings);
@@ -119,15 +122,75 @@ class BackupController extends Controller
 
     public function restorePage(Backup $backup)
     {
-        return view('elfcms::admin.backup.restore',[
-            'title' => __('elfcms::default.backups'),
-            'current' => url()->current(),
+        if (!empty($backup) && !empty($backup->id)) {
+            $altBackup = Backup::where('name', $backup->name)->whereNotIn('id', [$backup->id])->first();
+        }
+        return view('elfcms::admin.backup.restore', [
+            'page' => [
+                'title' => __('elfcms::default.backup_restoring'),
+                'current' => url()->current(),
+            ],
             'backup' => $backup,
+            'altBackup' => $altBackup,
         ]);
     }
 
-    public function restore(Backup $backup)
+    public function restore(Request $request, Backup $backup)
     {
-        //
+        $types = $request->types ?? [];
+        $command = 'elfcms:restore ' . $backup->name;
+        if (!empty($request->type)) {
+            $command .= ' --type=' . $request->type;
+        }
+        $command .= ' --force';
+        if ((in_array('database', $types) || in_array('sql', $types)) && (in_array('files', $types) || in_array('zip', $types))) {
+            $restoreType = 'all';
+        } elseif (in_array('database', $types) || in_array('sql', $types)) {
+            $restoreType = 'database';
+        } elseif (in_array('files', $types) || in_array('zip', $types)) {
+            $restoreType = 'files';
+        }
+        if ($request->ajax()) {
+            $commandResult = Artisan::call($command);
+            $result = $commandResult > 0 ? 'error' : 'success';
+            if ($commandResult > 0) {
+                $result = 'error';
+                $message =  __('elfcms::default.restore_completed_with_error');
+            }
+            else {
+                $result = 'success';
+                $message =  __('elfcms::default.restore_completed');
+            }
+            return response()->json(['result' => $result, 'message' => $message]);
+        }
+        if (!empty($request->confirm) && $request->confirm == 1) {
+            $result = Artisan::call($command);
+            if ($result > 0) {
+                return redirect()->route('admin.backup.restore_result', $backup)->with('errorrestore', __('elfcms::default.restore_completed_with_error'));
+            } else {
+                return redirect()->route('admin.backup.restore_result', $backup)->with('successrestore', __('elfcms::default.restore_completed'));
+            }
+        } else {
+            return view('elfcms::admin.backup.restore-confirm', [
+                'page' => [
+                    'title' => __('elfcms::default.backup_restoring'),
+                    'current' => url()->current(),
+                ],
+                'backup' => $backup,
+                'restoreType' => $restoreType ?? null,
+                'types' => $types,
+            ]);
+        }
+    }
+
+    public function restoreResult(Backup $backup)
+    {
+        return view('elfcms::admin.backup.restore-result', [
+            'page' => [
+                'title' => __('elfcms::default.backup_restoring'),
+                'current' => url()->current(),
+            ],
+            'backup' => $backup,
+        ]);
     }
 }

@@ -15,22 +15,21 @@ class BackupAjaxController extends Controller
     public function start(Request $request)
     {
         if (Cache::has('backup_lock')) {
-            //return response()->json(['status' => 'locked', 'message' => 'Backup already running.']);
             $started = Cache::get('backup_lock_time');
             if ($started && now()->diffInMinutes($started) > 30) {
                 Cache::forget('backup_lock');
                 Cache::forget('backup_lock_time');
-                Cache::put('backup_progress', ['step' => 'Error: stale process reset', 'percent' => 0]);
+                Cache::put('backup_progress', ['step' => __('elfcms::default.error_stale_process_reset'), 'percent' => 0]);
             } else {
                 return response()->json([
                     'status' => 'locked',
-                    'message' => 'Backup already running.'
+                    'message' => __('elfcms::default.backup_already_running')
                 ]);
             }
         }
         Cache::put('backup_lock', true, now()->addHours(1));
         Cache::put('backup_lock_time', now(), now()->addHours(1));
-        Cache::put('backup_progress', ['step' => 'Starting backup...', 'percent' => 0], now()->addMinutes(10));
+        Cache::put('backup_progress', ['step' => __('elfcms::default.starting_backup'), 'percent' => 0], now()->addMinutes(10));
 
         CreateBackupJob::dispatch();
 
@@ -39,20 +38,16 @@ class BackupAjaxController extends Controller
 
     public function progress()
     {
-        /* return response()->json(Cache::get('backup_progress', [
-            'step' => __('elfcms::default.idle'),
-            'percent' => 0,
-        ])); */
-        $progress = Cache::get('backup_progress', ['step' => 'Idle', 'percent' => 0]);
+        $progress = Cache::get('backup_progress', ['step' => __('elfcms::default.idle'), 'percent' => 0]);
 
         if (Cache::has('backup_lock')) {
             $lockTime = Cache::get('backup_lock_time');
             if ($lockTime && now()->diffInMinutes($lockTime) > 30) {
                 Cache::forget('backup_lock');
                 Cache::forget('backup_lock_time');
-                Cache::put('backup_progress', ['step' => 'Error: interrupted or timeout', 'percent' => 0]);
+                Cache::put('backup_progress', ['step' => __('elfcms::default.error_interrupted_or_timeout'), 'percent' => 0]);
                 $progress = Cache::get('backup_progress');
-                Log::warning('Backup lock reset due to timeout');
+                Log::warning(__('elfcms::default.backup_lock_reset_due_to_timeout'));
             }
         }
         return response()->json($progress);
@@ -83,9 +78,9 @@ class BackupAjaxController extends Controller
                 $zipId = $zipData->id;
             }
             $result['sql'] = $sql;
-            $result['sql_file'] = route('admin.backup.download',$sqlId);
+            $result['sql_file'] = $sqlId ? route('admin.backup.download',$sqlId) : null;
             $result['zip'] = $zip;
-            $result['zip_file'] = route('admin.backup.download',$zipId);
+            $result['zip_file'] = $zipId ? route('admin.backup.download',$zipId) : null;
         }
         return response()->json($result);
     }

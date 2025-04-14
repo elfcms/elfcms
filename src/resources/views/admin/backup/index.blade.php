@@ -34,7 +34,7 @@
                         <td>{{ $backup->name }}</td>
                         <td class="backup-type-icon backup-type-{{ $backup->type }}" title="{{ __('elfcms::default.'.$backup->type) }}">
                             @if ($backup->type == 'files')
-                            {!! iconHtmlLocal('elfcms/admin/images/icons/archive_file.svg', svg: true) !!}
+                            {!! iconHtmlLocal('elfcms/admin/images/icons/archive_file.svg', svg: true, width:28, height:28) !!}
                             @elseif ($backup->type == 'database')
                             {!! iconHtmlLocal('elfcms/admin/images/icons/database.svg', svg: true) !!}
                             @else
@@ -46,10 +46,12 @@
                         <td @class(['font-bold' => true, 'failed-string' => !$backup->isFile])>{{ $backup->file_path }}</td>
                         <td class="right_text number_text">{{ $backup->size }}</td>
                         <td class="table-button-column">
+                            @if ($backup->isFile)
                             <a href="{{ route('admin.backup.restore_page', $backup) }}" class="button icon-button"
                                 title="{{ __('elfcms::default.restore') }}">
                                 {!! iconHtmlLocal('elfcms/admin/images/icons/backup_restore.svg', svg: true) !!}
                             </a>
+                            @endif
                         </td>
                         <td class="table-button-column">
                             @if ($backup->isFile)
