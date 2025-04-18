@@ -6,6 +6,7 @@ use Elfcms\Elfcms\Aux\Locales as ElfLocales;
 use Elfcms\Elfcms\Console\Commands\ElfcmsInstall;
 use Elfcms\Elfcms\Console\Commands\ElfcmsPublish;
 use Elfcms\Elfcms\Aux\Locales;
+use Elfcms\Elfcms\Console\Commands\CheckModuleUpdates;
 use Elfcms\Elfcms\Console\Commands\ElfcmsBackup;
 use Elfcms\Elfcms\Console\Commands\ElfcmsBackupFileExists;
 use Elfcms\Elfcms\Console\Commands\ElfcmsDataTypes;
@@ -94,6 +95,7 @@ class ElfcmsModuleProvider extends ServiceProvider
                 ElfcmsBackup::class,
                 ElfcmsRestore::class,
                 ElfcmsBackupFileExists::class,
+                CheckModuleUpdates::class,
             ]);
         }
         $this->commands([

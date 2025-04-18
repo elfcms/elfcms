@@ -1,14 +1,16 @@
 @extends('elfcms::admin.layouts.main')
 
 @section('pagecontent')
-    <div class="big-container">
-        @if (Session::has('success'))
-            <x-elf-notify type="success" title="{{ __('elfcms::default.success') }}" text="{{ Session::get('success') }}" />
-        @endif
-        @if ($errors->any())
-            <x-elf-notify type="error" title="{{ __('elfcms::default.error') }}" text="{!! '<ul><li>' . implode('</li><li>', $errors->all()) . '</li></ul>' !!}" />
-        @endif
+    <div class="table-search-box">
+        <a href="{{ route('admin.system.updates') }}" class="button round-button theme-button">
+            {!! iconHtmlLocal('elfcms/admin/images/icons/buttons/update.svg', svg: true) !!}
+            <span class="button-collapsed-text">
+                {{ __('elfcms::default.update') }}
+            </span>
+        </a>
+    </div>
 
+    <div class="medium-container">
         <div class="item-form">
             <h2>{{ __('elfcms::default.system_data') }}</h2>
 

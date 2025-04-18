@@ -22,6 +22,9 @@
             "providers": [
                 "Elfcms\\Elfcms\\Providers\\ElfcmsModuleProvider"
             ]
+        },
+        "elfcms": {
+            "title": "ELF CMS"
         }
     }
 }

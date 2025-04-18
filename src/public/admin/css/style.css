@@ -631,6 +631,21 @@ main {
     );
 }
 
+.medium-container {
+    background-color: var(--background-color-light);
+    background-image: radial-gradient(
+        circle at 15% 0,
+        var(--background-color-light),
+        var(--background-color-dark) 150%
+    );
+    border-radius: var(--bradius-large);
+    box-shadow: 0 0 1rem 0 var(--shade-color-10);
+    min-height: calc(
+        100vh - var(--top-height) - var(--footer-height) -
+            var(--main-padding-small) - var(--main-padding) - 2.5rem
+    );
+}
+
 footer {
     position: fixed;
     bottom: 0;
@@ -1238,6 +1253,18 @@ footer {
     width: 1em;
     height: 0.45em;
 }
+.small-checkbox input[type="checkbox"][data-check="part"]:not(:checked) ~ i::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0.2em;
+    left: 0.2em;
+    width: calc(100% - .4em);
+    height: calc(100% - .4em);
+    border-radius: 25%;
+    background-color: currentColor;
+}
+
 .small-checkbox input[type="checkbox"]:disabled ~ i {
     opacity: 0.5;
 }
@@ -1593,6 +1620,63 @@ footer {
     align-items: center;
     gap: var(--main-padding-tiny);
     padding: 0.5rem 1rem;
+}
+
+.grid-table td[colspan="2"],
+.grid-table th[colspan="2"] {
+    grid-column: span 2;
+}
+.grid-table td[colspan="3"],
+.grid-table th[colspan="3"] {
+    grid-column: span 3;
+}
+.grid-table td[colspan="4"],
+.grid-table th[colspan="4"] {
+    grid-column: span 4;
+}
+.grid-table td[colspan="5"],
+.grid-table th[colspan="5"] {
+    grid-column: span 5;
+}
+.grid-table td[colspan="6"],
+.grid-table th[colspan="6"] {
+    grid-column: span 6;
+}
+.grid-table td[colspan="7"],
+.grid-table th[colspan="7"] {
+    grid-column: span 7;
+}
+.grid-table td[colspan="8"],
+.grid-table th[colspan="8"] {
+    grid-column: span 8;
+}
+.grid-table td[colspan="9"],
+.grid-table th[colspan="9"] {
+    grid-column: span 9;
+}
+.grid-table td[colspan="10"],
+.grid-table th[colspan="10"] {
+    grid-column: span 10;
+}
+.grid-table td[colspan="11"],
+.grid-table th[colspan="11"] {
+    grid-column: span 11;
+}
+.grid-table td[colspan="12"],
+.grid-table th[colspan="12"] {
+    grid-column: span 12;
+}
+.grid-table td[colspan="13"],
+.grid-table th[colspan="13"] {
+    grid-column: span 13;
+}
+.grid-table td[colspan="14"],
+.grid-table th[colspan="14"] {
+    grid-column: span 14;
+}
+.grid-table td[colspan="15"],
+.grid-table th[colspan="15"] {
+    grid-column: span 15;
 }
 
 /* --- */

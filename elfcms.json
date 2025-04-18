@@ -1,0 +1,8 @@
+{
+    "name": "elfcms",
+    "title": "ELF CMS",
+    "version": "3.0.2",
+    "github": "https://github.com/elfcms/elfcms",
+    "zip": "https://github.com/elfcms/elfcms/archive/refs/tags/1.4.1",
+    "release_status": "stable"
+}

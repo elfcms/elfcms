@@ -221,6 +221,14 @@ Route::group(['middleware' => ['web', 'locales', 'cookie']], function () use ($a
         Route::name('system.')->group(function () use ($adminPath) {
             Route::get($adminPath . '/system', [Elfcms\Elfcms\Http\Controllers\SystemController::class, 'index'])->name('index');
             Route::get($adminPath . '/system/license', [Elfcms\Elfcms\Http\Controllers\AdminController::class, 'license'])->name('license');
+            Route::get($adminPath . '/system/updates', [Elfcms\Elfcms\Http\Controllers\SystemController::class, 'updates'])
+            ->name('updates');
+            Route::post($adminPath . '/system/check-updates', [Elfcms\Elfcms\Http\Controllers\SystemController::class, 'checkUpdates'])
+            ->name('checkUpdates');
+            Route::post($adminPath . '/system/update/{module}', [Elfcms\Elfcms\Http\Controllers\SystemController::class, 'update'])
+            ->name('update');
+            Route::post($adminPath . '/system/update/all', [Elfcms\Elfcms\Http\Controllers\SystemController::class, 'updateAll'])
+            ->name('update-all');
         });
 
         Route::name('backup.')->group(function () use ($adminPath) {

@@ -413,7 +413,7 @@ return [
             "title" => "System",
             "lang_title" => "elfcms::default.system",
             "route" => "admin.system.index",
-            "parent_route" => "admin.system.index",
+            "parent_route" => "admin.system",
             "icon" => "/elfcms/admin/images/logo/logo-outline-color-let.svg",
             "color" => "var(--text-color-default)",
             "position" => 11000,
