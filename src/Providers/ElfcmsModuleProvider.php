@@ -29,6 +29,7 @@ use Elfcms\Elfcms\Providers\EventServiceProvider;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Facades\Schema;
 use Livewire\Livewire;
 
 class ElfcmsModuleProvider extends ServiceProvider
@@ -80,8 +81,10 @@ class ElfcmsModuleProvider extends ServiceProvider
         $config = config('elfcms.elfcms');
         $locales = config('elfcms.elfcms.locales');
 
-        backupSetConfig(backupSettings());
-
+        if (Schema::hasTable('backup_settings')) {
+            backupSetConfig(backupSettings());
+        }
+        
         if ($this->app->runningInConsole()) {
             $this->commands([
                 ElfcmsPublish::class,
