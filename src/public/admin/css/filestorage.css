@@ -434,7 +434,7 @@ main:has(.filestorage-files-box) {
 }
 
 /* preloader */
-
+/* 
 .preload-wrapper {
     padding: 1.25rem;
     background-color: rgba(255, 255, 255, 0.5);
@@ -566,7 +566,7 @@ main:has(.filestorage-files-box) {
     100% {
         left: 0;
     }
-}
+} */
 
 /* Components */
 
