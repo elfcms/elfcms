@@ -1,0 +1,33 @@
+Copyright (c) Maxim Klassen
+
+This software is distributed under the MIT License. You are free to use, copy, modify, and distribute this code, provided that this notice and the original license are retained.
+
+Please include a reference to the original repository when using this project: https://github.com/elfcms/elfcms
+
+Note: Modules marked as `Pro` are commercial and are not covered by the MIT license. Their use is permitted only under a separate commercial license agreement.
+
+In case of license violation, the author reserves the right to revoke permission to use the software.
+
+---
+
+Urheberrecht (c) Maxim Klassen
+
+Diese Software wird unter der MIT-Lizenz veröffentlicht. Sie dürfen den Code frei verwenden, kopieren, ändern und weitergeben, sofern dieser Hinweis und die ursprüngliche Lizenz erhalten bleiben.
+
+Bitte verweisen Sie bei Verwendung dieses Projekts auf das Original-Repository: https://github.com/elfcms/elfcms
+
+Hinweis: Module mit dem Zusatz `Pro` sind kommerziell und unterliegen nicht der MIT-Lizenz. Ihre Nutzung ist nur im Rahmen einer separaten Lizenzvereinbarung erlaubt.
+
+Bei Verstoß gegen die Lizenzbedingungen behält sich der Autor das Recht vor, die Nutzungsgenehmigung zu widerrufen.
+
+---
+
+Авторские права (c) Maxim Klassen
+
+Данный программный продукт распространяется по лицензии MIT. Вы можете использовать, копировать, модифицировать и распространять данный код, при условии сохранения данного уведомления и исходной лицензии.
+
+Пожалуйста, при использовании данного проекта указывайте ссылку на оригинальный репозиторий: https://github.com/elfcms/elfcms
+
+Обратите внимание: модули, помеченные как `Pro`, являются коммерческими и не распространяются по лицензии MIT. Их использование возможно только на основании отдельного лицензионного соглашения.
+
+В случае нарушения условий лицензии автор оставляет за собой право отозвать разрешение на использование программного обеспечения.
