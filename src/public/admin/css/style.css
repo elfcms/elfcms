@@ -9,6 +9,7 @@
     --text-color-default: #15181d;
     --text-color-middle: #242f3f;
     --text-color-second: #3f5274;
+    --text-color-third: #6d809f;
 
     --light-text-color: #f7fbff;
     --dark-text-color: #15181d;
@@ -1026,6 +1027,36 @@ footer {
     margin-left: 0.5em;
     margin-right: 0.5em;
     max-width: 50rem;
+}
+
+.load-button {
+    position: relative;
+}
+.load-button::after {
+    content: '';
+    display: inline-block;
+    margin-left: .5em;
+    width: 1em;
+    height: 1em;
+    border: .1875em solid var(--text-color-third);
+    border-top-color: var(--text-color-default);
+    border-radius: 50%;
+    animation: loadButton 2s linear infinite;
+}
+
+@keyframes loadButton {
+    0% {
+        transform: rotate(0deg);
+    }
+    33.3333333% {
+        transform: rotate(120deg);
+    }
+    66.6666667% {
+        transform: rotate(240deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 .inner-button {
@@ -2646,6 +2677,7 @@ td.backup-type-icon {
     --text-color-default: #f7fbff;
     --text-color-middle: #e5edf5;
     --text-color-second: #ccddee;
+    --text-color-third: #90a3b5;
 
     --marin-color: #3d4aff;
     --blue-color: #2583fd;

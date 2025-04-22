@@ -74,5 +74,15 @@
                 })
             });
         }
+        const submitButton = document.querySelector('form button[type="submit"]');
+        if (submitButton) {
+            submitButton.addEventListener('click', function() {
+                submitButton.innerText = "{{ __('elfcms::default.will_be_updated') }}";
+                submitButton.classList.add('load-button');
+                setTimeout(() => {
+                    submitButton.disabled = true;
+                }, 200);
+            });
+        }
     </script>
 @endsection

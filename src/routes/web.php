@@ -225,10 +225,10 @@ Route::group(['middleware' => ['web', 'locales', 'cookie']], function () use ($a
             ->name('updates');
             Route::post($adminPath . '/system/check-updates', [Elfcms\Elfcms\Http\Controllers\SystemController::class, 'checkUpdates'])
             ->name('checkUpdates');
-            Route::post($adminPath . '/system/update/{module}', [Elfcms\Elfcms\Http\Controllers\SystemController::class, 'update'])
-            ->name('update');
             Route::post($adminPath . '/system/update/all', [Elfcms\Elfcms\Http\Controllers\SystemController::class, 'updateAll'])
             ->name('update-all');
+            Route::post($adminPath . '/system/update/{module}', [Elfcms\Elfcms\Http\Controllers\SystemController::class, 'update'])
+            ->name('update');
         });
 
         Route::name('backup.')->group(function () use ($adminPath) {

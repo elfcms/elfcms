@@ -727,4 +727,6 @@ return [
     'zip_file_does_not_contain_module_folder' => 'ZIP-файл не содержит папку модуля',
     'current_version' => 'Текущая версия',
     'latest_version' => 'Последняя версия',
+    'will_be_updated' => 'Обновляется...',
+    'updating' => 'Обновление',
 ];

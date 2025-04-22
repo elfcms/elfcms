@@ -10,6 +10,7 @@ use Elfcms\Elfcms\Models\ModuleUpdate;
 use Elfcms\Elfcms\Services\ModuleUpdater;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class SystemController extends Controller
@@ -77,8 +78,7 @@ class SystemController extends Controller
                 if (isset($moduleResult['success'])) {
                     if (isset($moduleResult['success']) && $moduleResult['success'] === false) {
                         $errors[] = $moduleResult['message'] ?? null;
-                    }
-                    else {
+                    } else {
                         $success[] = $moduleResult['message'] ?? null;
                     }
                 }
@@ -148,20 +148,22 @@ class SystemController extends Controller
 
     protected function updateViaComposer(Module $module): void
     {
-        // Например: elfcms/blog → composer update elfcms/blog
         $package = 'elfcms/' . $module->name;
+        if (!is_dir(base_path('.composer'))) {
+            Storage::makeDirectory(base_path('.composer'));
+        }
+        $env = ['COMPOSER_HOME' => base_path('.composer')];
 
-        $process = new Process(['composer', 'update', $package]);
-        $process->setTimeout(300); // 5 минут
+        $process = new Process(['composer', 'update', $package], base_path(), $env);
+        $process->setTimeout(300); // 5 minute
         $process->run();
 
         if (!$process->isSuccessful()) {
             throw new \Exception($process->getErrorOutput());
         }
 
-        // Очистка кэшей (на всякий случай)
-        Process::fromShellCommandline('php artisan optimize:clear')->run();
-        Process::fromShellCommandline('php artisan migrate --force')->run();
+        Process::fromShellCommandline('php artisan optimize:clear', base_path(), $env)->run();
+        Process::fromShellCommandline('php artisan migrate --force', base_path(), $env)->run();
     }
 
     protected function updateViaZip(Module $module): void

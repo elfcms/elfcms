@@ -23,8 +23,8 @@ return [
     */
 
     'module_name' => 'elfcms',
-    'module_title' => 'Basic',
-    'version' => '3.0.3',
+    'module_title' => 'ELF CMS (Core)',
+    'version' => '3.0.4',
     'release_status' => 'beta',
     'release_date' => date('Y-m-d'),
 
@@ -524,7 +524,7 @@ return [
             "title" => "System",
             "lang_title" => "elfcms::default.system",
             "route" => "admin.system",
-            "actions" => ["read"],
+            "actions" => ["read", "write"],
         ]
     ],
 
