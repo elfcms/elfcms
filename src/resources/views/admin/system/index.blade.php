@@ -61,7 +61,7 @@
                         @endif
                         @if (!empty($module['github']))
                             <p>
-                                <a href="{{ $module['github'] }}" target="_blank">GitHube</a>
+                                <a href="{{ $module['github'] }}" target="_blank">GitHub</a>
                             </p>
                         @endif
                         @if (!empty($module['license']))
@@ -70,6 +70,42 @@
                         @if (!empty($module['release_date']))
                             <p>&copy; {{ $module['release_date'] }}</p>
                         @endif
+                    </div>
+                @endforeach
+            @endif
+            @if (!empty($modulesToInstall))
+                <h3>{{ __('elfcms::default.available_to_install') }}</h3>
+                @foreach ($modulesToInstall as $module)
+                    <div class="module-box colored">
+                        <h4 @class([
+                            'module-name',
+                            'unstable' =>
+                                !empty($module['release_status']) &&
+                                in_array($module['release_status'], ['dev', 'alpha', 'beta']),
+                        ]) data-status="{{ $data['release_status'] ?? 'stable' }}">
+                            {{ $module['title'] ?? ucfirst($name) }} {{ $module['version'] ?? '' }}
+                        </h4>
+                        @if (!empty($module['description']))
+                            <p class="system-module-description">
+                                {!! $module['description'] !!}
+                            </p>
+                        @endif
+                        @if (!empty($module['author']))
+                            <p>{{ __('elfcms::default.developed_by') . ' ' . $module['author'] }}</p>
+                        @endif
+                        @if (!empty($module['repo']))
+                            <p>
+                                <a href="{{ $module['repo'] }}" target="_blank">GitHub</a>
+                            </p>
+                        @endif
+                        @if (!empty($module['license']))
+                            <p>{{ __('elfcms::default.license') }}: {{ $module['license'] }}</p>
+                        @endif
+                        <form action="{{ route('admin.system.install.module',['moduleName'=>$module['name']]) }}" method="POST">
+                            @method('POST')
+                            @csrf
+                            <button class="button color-text-button">{{ __('elfcms::default.install') }}</button>
+                        </form>
                     </div>
                 @endforeach
             @endif

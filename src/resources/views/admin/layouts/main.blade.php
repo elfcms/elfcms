@@ -21,7 +21,7 @@
     @endpush
     @stack('styles')
     @push('scripts')
-        <script src="/js/system.js"></script>
+        <script src="/admin/js/system.js"></script>
         <script src="{{ asset('elfcms/admin/js/gnommy.js') }}"></script>
         <script src="{{ asset('elfcms/admin/notify/notify.js') }}"></script>
         @foreach ($admin_scripts as $script)

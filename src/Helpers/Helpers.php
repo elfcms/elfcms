@@ -241,17 +241,19 @@ function backupSettings()
     $result = [];
     if (empty($records)) {
         $configs = config("elfcms.elfcms.backup");
-        foreach ($configs as $key => $data) {
-            if ($key == 'exclude_patterns') continue;
-            if (is_array($data) && $key == 'database' || $key == 'paths') {
-                foreach ($data as $dataKey => $value) {
-                    if (is_array($value)) {
-                        $value = implode(',', $value);
+        if (!empty($configs) && is_array($configs)) {
+            foreach ($configs as $key => $data) {
+                if ($key == 'exclude_patterns') continue;
+                if (is_array($data) && $key == 'database' || $key == 'paths') {
+                    foreach ($data as $dataKey => $value) {
+                        if (is_array($value)) {
+                            $value = implode(',', $value);
+                        }
+                        $result[$key . '__' . $dataKey] = $value;
                     }
-                    $result[$key . '__' . $dataKey] = $value;
+                } else {
+                    $result[$key] = $data;
                 }
-            } else {
-                $result[$key] = $data;
             }
         }
     }

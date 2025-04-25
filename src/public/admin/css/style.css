@@ -639,12 +639,13 @@ main {
         var(--background-color-light),
         var(--background-color-dark) 150%
     );
-    border-radius: var(--bradius-large);
+    border-radius: var(--bradius-medium);
     box-shadow: 0 0 1rem 0 var(--shade-color-10);
     min-height: calc(
         100vh - var(--top-height) - var(--footer-height) -
             var(--main-padding-small) - var(--main-padding) - 2.5rem
     );
+    margin-bottom: calc(var(--footer-height) + var(--main-padding-small));
 }
 
 footer {
@@ -752,7 +753,7 @@ footer {
     box-shadow: 0 -0.0625rem 0 0 var(--background-color-shade);
 }
 
-.item-form form {
+.item-form > form {
     background-color: var(--background-color-middle);
     margin-bottom: calc(var(--footer-height) + var(--main-padding-small));
     border-radius: 0 0 var(--bradius-medium) var(--bradius-medium);
@@ -1514,6 +1515,10 @@ footer {
     font-size: 1.5em;
 }
 
+/* .table-search-box:not(:has(form)) > .button {
+    margin-top: -3rem;
+} */
+
 .table-search-box .input-box {
     align-items: center;
 }
@@ -2258,6 +2263,9 @@ footer {
 }
 .module-box.colored:nth-child(even) {
     background-color: var(--background-color-shade);
+}
+.module-box:last-child {
+    border-radius: 0 0 var(--bradius-medium) var(--bradius-medium);
 }
 .module-name {
     font-family: "Inter", sans-serif;
