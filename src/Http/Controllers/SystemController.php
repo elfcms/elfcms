@@ -283,7 +283,8 @@ class SystemController extends Controller
     // Installing
     public function installViaComposer(string $package): void
     {
-        $process = new Process(['composer', 'require', $package]);
+        $env = ['COMPOSER_HOME' => base_path('.composer')];
+        $process = new Process(['composer', 'require', $package], base_path(), $env);
         $process->setTimeout(300);
         $process->run();
 
@@ -292,8 +293,14 @@ class SystemController extends Controller
         }
 
         // Можно оптимизировать Laravel
-        Process::fromShellCommandline('php artisan optimize:clear')->run();
-        Process::fromShellCommandline('php artisan migrate --force')->run();
+        Process::fromShellCommandline('php artisan optimize:clear', base_path(), $env)->run();
+        Process::fromShellCommandline('php artisan migrate --force', base_path(), $env)->run();
+        try {
+            Process::fromShellCommandline('php artisan elfcms:publish ' . $package, base_path(), $env)->run();
+        }
+        catch (\Throwable $e) {
+            //
+        }
     }
 
     public function installFromZip(string $url, array $module): void
@@ -328,13 +335,61 @@ class SystemController extends Controller
         }
         File::copyDirectory($moduleSourcePath, $targetPath);
 
+        $meta = $this->extractModuleMeta($targetPath);
+        if (!empty($meta['namespace']) && !empty($meta['psr4_path'])) {
+            $this->registerPsr4Autoload($meta['namespace'], $meta['psr4_path']);
+        }
+
         // Run Laravel optimizations
         Process::fromShellCommandline('php artisan optimize:clear')->run();
         Process::fromShellCommandline('php artisan migrate --force')->run();
+        try {
+            Process::fromShellCommandline('php artisan elfcms:publish ' . $module['name'])->run();
+        }
+        catch (\Throwable $e) {
+            //
+        }
 
         // Clean up
         File::delete($tempZip);
         File::deleteDirectory($tempDir);
+    }
+
+    protected function extractModuleMeta(string $modulePath): array
+    {
+        $composerPath = $modulePath . '/composer.json';
+        if (!File::exists($composerPath)) {
+            throw new \Exception("Module composer.json not found");
+        }
+
+        $composer = json_decode(file_get_contents($composerPath), true);
+        $psr4 = $composer['autoload']['psr-4'] ?? null;
+
+        if (!$psr4 || count($psr4) === 0) {
+            throw new \Exception("No PSR-4 autoload section found in module");
+        }
+
+        $namespace = array_key_first($psr4);
+        $path = rtrim('modules/' . basename($modulePath) . '/' . trim($psr4[$namespace], '/'), '/') . '/';
+
+        return [
+            'namespace' => $namespace,
+            'psr4_path' => $path
+        ];
+    }
+
+    protected function registerPsr4Autoload(string $namespace, string $path): void
+    {
+        $composerJsonPath = base_path('composer.json');
+        $composer = json_decode(file_get_contents($composerJsonPath), true);
+
+        $autoload = $composer['autoload']['psr-4'] ?? [];
+
+        if (!isset($autoload[$namespace])) {
+            $composer['autoload']['psr-4'][$namespace] = $path;
+            file_put_contents($composerJsonPath, json_encode($composer, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+            Process::fromShellCommandline('composer dump-autoload')->run();
+        }
     }
 
     public function installModule(array $module, Request $request)
