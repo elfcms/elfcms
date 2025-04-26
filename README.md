@@ -39,6 +39,10 @@ MIT License. See the notice section below.
 This project is licensed under the MIT License.  
 You are free to use, copy, modify, and distribute the code, provided that this notice and the original license are retained.
 
+## ⚖️ Disclaimer
+
+This module is provided "as is" without any warranties or guarantees of any kind, either express or implied. Use it at your own risk. The developers are not responsible for any damage, data loss, or other issues that may arise from the use of this module.
+
 **Please include a link to the original repository when using this software:**  
 [https://github.com/elfcms/elfcms](https://github.com/elfcms/elfcms)
 
