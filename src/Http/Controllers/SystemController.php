@@ -10,6 +10,7 @@ use Elfcms\Elfcms\Models\ModuleUpdate;
 use Elfcms\Elfcms\Services\ComposerService;
 use Elfcms\Elfcms\Services\ModuleUpdater;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
@@ -137,6 +138,8 @@ class SystemController extends Controller
             'update_available' => 0,
             'last_checked_at' => now(),
         ]);
+        Artisan::call('migrate');
+        Artisan::call('elfcms:publish ' . $module['name']);
         return back()->with('success',__('elfcms::default.module_name_has_been_installed_successfully',['module'=>$moduleName]));
     }
 
@@ -154,7 +157,7 @@ class SystemController extends Controller
                     continue;
                 }
                 $oldVersion = $module->current_version;
-                $result = $composer->require($module['package']);
+                $result = $composer->require($module->package);
                 if (!$result->success()) {
                     ModuleUpdate::create([
                         'module_id' => $module->id,
@@ -176,13 +179,15 @@ class SystemController extends Controller
                     'success' => true,
                     'message' => __('elfcms::default.updated_successfully'),
                 ]);
-                $success[] = __('elfcms::default.updated_successfully') . ': ' . $module['name'];
+                $success[] = __('elfcms::default.updated_successfully') . ': ' . $module->name;
+                Artisan::call('elfcms:publish ' . $module->name);
             }
         }
 
         $result = back();
         if (!empty($success)) {
             $result->with('success', implode('<br>', $success));
+            Artisan::call('migrate');
         }
         if (!empty($errors)) {
             $result->withErrors($errors);
@@ -217,6 +222,8 @@ class SystemController extends Controller
             'success' => true,
             'message' => __('elfcms::default.updated_successfully'),
         ]);
+        Artisan::call('migrate');
+        Artisan::call('elfcms:publish ' . $module['name']);
         return back()->with('success',__('elfcms::default.updated_successfully'));
     }
 

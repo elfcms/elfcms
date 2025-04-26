@@ -102,6 +102,7 @@ class ElfcmsModuleProvider extends ServiceProvider
             ]);
         }
         $this->commands([
+            ElfcmsPublish::class,
             ElfcmsBackup::class,
             ElfcmsRestore::class,
         ]);
