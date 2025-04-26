@@ -11,6 +11,7 @@ use Elfcms\Elfcms\Models\ElfcmsContact;
 use Elfcms\Elfcms\Models\EmailAddress;
 use Elfcms\Elfcms\Models\EmailEvent;
 use Elfcms\Elfcms\Models\FormFieldType;
+use Elfcms\Elfcms\Models\Module;
 use Elfcms\Elfcms\Models\Role;
 use Elfcms\Elfcms\Models\User;
 use Illuminate\Console\Command;
@@ -143,6 +144,18 @@ class ElfcmsInstall extends Command
         } else {
             $this->error('Error');
         }
+        
+        $this->line('Creating core module info');
+        Module::create([
+            'name' => 'elfcms',
+            'title' => 'ELF CMS',
+            'current_version' => config('elfcms.elfcms.version') ?? __('elfcms::default.unknown'),
+            'latest_version' => null,
+            'source' => 'https://github.com/elfcms/elfcms',
+            'update_method' => 'composer',
+            'update_available' => 0,
+            'last_checked_at' => now(),
+        ]);
 
         $lang = $this->choice(
             'Choose the language | Wählen Sie die Sprache | Выберите язык',

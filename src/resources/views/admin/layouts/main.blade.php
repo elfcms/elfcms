@@ -7,11 +7,8 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>{{ $page['title'] }}</title>
     @push('styles')
-        @isset($elfSiteSettings['icon'])
-            <link rel="shortcut icon" href="{{ asset(file_path($elfSiteSettings['icon'])) }}" type="image/x-icon">
-        @endisset
+        <link rel="shortcut icon" href="{{ asset('elfcms/admin/favicon.ico') }}" type="image/x-icon">
         <link rel="stylesheet" href="{{ asset('elfcms/admin/fonts/afacad/afacad.css') }}">
-        {{-- <link rel="stylesheet" href="{{ asset('elfcms/admin/fonts/teachers/teachers.css') }}"> --}}
         <link rel="stylesheet" href="{{ asset('elfcms/admin/fonts/inter/inter.css') }}">
         <link rel="stylesheet" href="{{ asset('elfcms/admin/css/gnommy.css') }}">
         <link rel="stylesheet" href="{{ asset('elfcms/admin/notify/notify.css') }}">

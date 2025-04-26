@@ -14,6 +14,7 @@ use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
@@ -21,6 +22,19 @@ class SystemController extends Controller
 {
     public function index(Request $request)
     {
+        if (Session::has('pending_module_installation')) {
+            $moduleName = Session::pull('pending_module_installation');
+            if (!empty($moduleName)) {
+                Artisan::call('migrate', ['--force' => true]);
+                Artisan::call('elfcms:publish', ['module' => $moduleName]);
+                $success = __('elfcms::default.module_name_has_been_installed_successfully', ['module' => $moduleName]);
+                if (Session::has('success')) {
+                    $success = Session::get('success');
+                }
+                return redirect(route('admin.system.index'))->with('success',$success);
+            }
+        }
+
         $configs = config('elfcms');
         $modules = [];
         if (is_array($configs) && count($configs) > 1) {
@@ -76,6 +90,35 @@ class SystemController extends Controller
 
     public function updates()
     {
+        if (Session::has('pending_module_update')) {
+            $moduleName = Session::pull('pending_module_update');
+            if (!empty($moduleName)) {
+                Artisan::call('migrate', ['--force' => true]);
+                Artisan::call('elfcms:publish', ['module' => $moduleName]);
+                $success = __('elfcms::default.updated_successfully');
+                if (Session::has('success')) {
+                    $success = Session::get('success');
+                }
+                return redirect(route('admin.system.updates'))->with('success',$success);
+            }
+        }
+        if (Session::has('pending_modules_update')) {
+            $moduleNames = Session::pull('pending_modules_update');
+            if (!empty($moduleNames)) $moduleNames = explode(',',$moduleNames);
+            if (!empty($moduleNames)) {
+                Artisan::call('migrate', ['--force' => true]);
+                foreach($moduleNames as $moduleName) {
+                    if (!empty($moduleName)) {
+                        Artisan::call('elfcms:publish', ['module' => $moduleName]);
+                    }
+                }
+                $success = __('elfcms::default.updated_successfully');
+                if (Session::has('success')) {
+                    $success = Session::get('success');
+                }
+                return redirect(route('admin.system.updates'))->with('success',$success);
+            }
+        }
         $updater = new ModuleUpdater();
         $updater->checkAll();
         $modules = Module::withUpdates()->get();
@@ -105,11 +148,11 @@ class SystemController extends Controller
             $availableModules = $response->json();
         } else {
             Log::warning('Could not fetch modules.json: ' . $response->status());
-            return back()->withErrors(['error'=>__('elfcms::default.error_installing_module',['module'=>$moduleName]) . ': Could not fetch modules.json: ' . $response->status()]);
+            return back()->withErrors(['error' => __('elfcms::default.error_installing_module', ['module' => $moduleName]) . ': Could not fetch modules.json: ' . $response->status()]);
         }
         $module = null;
         if (!empty($availableModules) && !empty($availableModules['modules'])) {
-            foreach($availableModules['modules'] as $moduleData) {
+            foreach ($availableModules['modules'] as $moduleData) {
                 if (strtolower($moduleData['name']) == strtolower($moduleName)) {
                     $module = $moduleData;
                 }
@@ -117,7 +160,7 @@ class SystemController extends Controller
         }
 
         if (empty($module)) {
-            return back()->withErrors(['error'=>__('elfcms::default.error_installing_module',['module'=>$moduleName]) . ': ' . __('elfcms::default.module_not_found')]);
+            return back()->withErrors(['error' => __('elfcms::default.error_installing_module', ['module' => $moduleName]) . ': ' . __('elfcms::default.module_not_found')]);
         }
 
         $composer = new ComposerService;
@@ -125,22 +168,28 @@ class SystemController extends Controller
 
         if (!$result->success()) {
             Log::warning($result->error());
-            return back()->withErrors(['error'=>__('elfcms::default.error_installing_module',['module'=>$module['package']]) . ': ' . $result->error()]);
+            return back()->withErrors(['error' => __('elfcms::default.error_installing_module', ['module' => $module['package']]) . ': ' . $result->error()]);
         }
+
+        $composer->dumpAutoload();
+
         $version = $this->getLatestTag($module['package']) ?? null;
-        $newModule = Module::create([
-            'name' => $module['name'],
-            'title' => $module['title'],
-            'current_version' => $version ?? __('elfcms::default.unknown'),
-            'latest_version' => $version,
-            'source' => $module['repo'],
-            'update_method' => $module['install_via'],
-            'update_available' => 0,
-            'last_checked_at' => now(),
-        ]);
-        Artisan::call('migrate');
-        Artisan::call('elfcms:publish ' . $module['name']);
-        return back()->with('success',__('elfcms::default.module_name_has_been_installed_successfully',['module'=>$moduleName]));
+        try {
+            $newModule = Module::create([
+                'name' => $module['name'],
+                'title' => $module['title'],
+                'current_version' => $version ?? __('elfcms::default.unknown'),
+                'latest_version' => $version,
+                'source' => $module['repo'],
+                'update_method' => $module['install_via'],
+                'update_available' => 0,
+                'last_checked_at' => now(),
+            ]);
+        } catch (\Throwable $e) {
+            //
+        }
+
+        return back()->with('success', __('elfcms::default.module_name_has_been_installed_successfully', ['module' => $moduleName]))->with('pending_module_installation', $moduleName);
     }
 
     public function updateAll(Request $request)
@@ -148,12 +197,13 @@ class SystemController extends Controller
         $errors = [];
         $success = [];
         $composer = new ComposerService;
-        
+        $names = [];
+
         if (!empty($request->modules)) {
             foreach ($request->modules as $moduleName) {
-                $module = Module::where('name',$moduleName)->first();
+                $module = Module::where('name', $moduleName)->first();
                 if (empty($module) || empty($module->id)) {
-                    $errors[] = __('elfcms::default.module_name_not_found',['module'=>$moduleName]);
+                    $errors[] = __('elfcms::default.module_name_not_found', ['module' => $moduleName]);
                     continue;
                 }
                 $oldVersion = $module->current_version;
@@ -168,7 +218,7 @@ class SystemController extends Controller
                         'success' => false,
                         'message' => $result->error(),
                     ]);
-                    $errors[] = __('elfcms::default.update_error_text',['error'=>$result->error()]);
+                    $errors[] = __('elfcms::default.update_error_text', ['error' => $result->error()]);
                 }
                 ModuleUpdate::create([
                     'module_id' => $module->id,
@@ -180,19 +230,22 @@ class SystemController extends Controller
                     'message' => __('elfcms::default.updated_successfully'),
                 ]);
                 $success[] = __('elfcms::default.updated_successfully') . ': ' . $module->name;
-                Artisan::call('elfcms:publish ' . $module->name);
+                $names[] = $module->name;
             }
         }
 
-        $result = back();
+        $redirect = back();
         if (!empty($success)) {
-            $result->with('success', implode('<br>', $success));
-            Artisan::call('migrate');
+            $composer->dumpAutoload();
+            $redirect->with('success', implode('<br>', $success));
+            if (!empty($names)) {
+                $redirect->with('pending_modules_update', implode(',',$names));
+            }
         }
         if (!empty($errors)) {
-            $result->withErrors($errors);
+            $redirect->withErrors($errors);
         }
-        return $result;
+        return $redirect;
     }
 
     public function update(Module $module)
@@ -211,8 +264,9 @@ class SystemController extends Controller
                 'success' => false,
                 'message' => $result->error(),
             ]);
-            return back()->withErrors(['error' => __('elfcms::default.update_error_text',['error'=>$result->error()])]);
+            return back()->withErrors(['error' => __('elfcms::default.update_error_text', ['error' => $result->error()])]);
         }
+        $composer->dumpAutoload();
         ModuleUpdate::create([
             'module_id' => $module->id,
             'user_id' => Auth::id() ?? null,
@@ -222,9 +276,7 @@ class SystemController extends Controller
             'success' => true,
             'message' => __('elfcms::default.updated_successfully'),
         ]);
-        Artisan::call('migrate');
-        Artisan::call('elfcms:publish ' . $module['name']);
-        return back()->with('success',__('elfcms::default.updated_successfully'));
+        return back()->with('success', __('elfcms::default.updated_successfully'))->with('pending_module_update', $module->name);
     }
 
     protected function getLatestTag(string $repo)
@@ -258,403 +310,4 @@ class SystemController extends Controller
             return back()->with('error', __('elfcms::default.error_checking_for_updates', ['error' => $e->getMessage()]));
         }
     }
-
-    /*public function updateAll(Request $request)
-    {
-        $errors = [];
-        $success = [];
-        if (!empty($request->modules)) {
-            foreach ($request->modules as $module) {
-                $moduleResult = $this->update($module, $request);
-                if (isset($moduleResult['success'])) {
-                    if (isset($moduleResult['success']) && $moduleResult['success'] === false) {
-                        $errors[] = $moduleResult['message'] ?? null;
-                    } else {
-                        $success[] = $moduleResult['message'] ?? null;
-                    }
-                }
-            }
-        }
-        if (!empty($success)) {
-            return back()->with('success', implode('<br>', $success));
-        }
-        if (!empty($errors)) {
-            return back()->withErrors($errors);
-        }
-    }
-
-    public function update(string $moduleName, Request $request)
-    {
-        $module = Module::where('name', $moduleName)->firstOrFail();
-        $oldVersion = $module->current_version;
-
-        try {
-            if ($module->update_method === 'composer') {
-                $this->updateViaComposer($module);
-            } elseif ($module->update_method === 'zip') {
-                $this->updateViaZip($module);
-            } else {
-                throw new \Exception(__('elfcms::default.update_method_not_defined'));
-            }
-
-            $module->current_version = $module->latest_version;
-            $module->update_available = false;
-            $module->save();
-
-            ModuleUpdate::create([
-                'module_id' => $module->id,
-                'user_id' => Auth::id(),
-                'old_version' => $oldVersion,
-                'new_version' => $module->latest_version,
-                'method' => $module->update_method,
-                'success' => true,
-                'message' => __('elfcms::default.updated_successfully'),
-            ]);
-
-            $result = ['success' => true, 'message' => __('elfcms::default.module_successfully_updated', ['module' => $module->title])];
-            if ($request->ajax()) {
-                return response()->json($result);
-            }
-            return $result;
-        } catch (\Throwable $e) {
-            ModuleUpdate::create([
-                'module_id' => $module->id,
-                'user_id' => Auth::id(),
-                'old_version' => $oldVersion,
-                'new_version' => $module->latest_version ?? __('elfcms::default.unknown'),
-                'method' => $module->update_method,
-                'success' => false,
-                'message' => $e->getMessage(),
-            ]);
-
-            $result = ['success' => false, 'message' => __('elfcms::default.update_error_text', ['error' => $e->getMessage()])];
-            if ($request->ajax()) {
-                return response()->json($result);
-            }
-            return $result;
-        }
-    }
-
-    protected function updateViaComposer(Module $module): void
-    {
-        $package = 'elfcms/' . $module->name;
-        if (!is_dir(base_path('.composer'))) {
-            Storage::makeDirectory(base_path('.composer'));
-        }
-        $env = ['COMPOSER_HOME' => base_path('.composer')];
-
-        $process = new Process(['composer', 'update', $package], base_path(), $env);
-        $process->setTimeout(300); // 5 minute
-        $process->run();
-
-        if (!$process->isSuccessful()) {
-            throw new \Exception($process->getErrorOutput());
-        }
-
-        Process::fromShellCommandline('php artisan optimize:clear', base_path(), $env)->run();
-        Process::fromShellCommandline('php artisan migrate --force', base_path(), $env)->run();
-    }
-
-    protected function updateViaZip(Module $module): void
-    {
-        $url = $this->buildZipUrl($module->source, $module->latest_version);
-        $tempZip = storage_path("app/tmp/{$module->name}.zip");
-        $tempDir = storage_path("app/tmp/{$module->name}");
-
-        // zip download
-        File::ensureDirectoryExists(dirname($tempZip));
-        file_put_contents($tempZip, file_get_contents($url));
-
-        // unzip
-        $zip = new \ZipArchive();
-        if ($zip->open($tempZip) === true) {
-            $zip->extractTo($tempDir);
-            $zip->close();
-        } else {
-            throw new \Exception(__('elfcms::default.failed_to_unzip_zip_file'));
-        }
-
-        $subdirs = File::directories($tempDir);
-        if (empty($subdirs)) {
-            throw new \Exception(__('elfcms::default.zip_file_does_not_contain_module_folder'));
-        }
-        $newModulePath = $subdirs[0];
-
-        // rewrite module
-        $targetPath = base_path("vendor/{$module->package}");
-        if (File::exists($targetPath)) {
-            File::deleteDirectory($targetPath);
-        }
-        File::copyDirectory($newModulePath, $targetPath);
-
-        Process::fromShellCommandline('php artisan optimize:clear')->run();
-        Process::fromShellCommandline('php artisan migrate --force')->run();
-
-        // Remove temp
-        File::delete($tempZip);
-        File::deleteDirectory($tempDir);
-    }
-
-    protected function buildZipUrl(string $source, string $version): string
-    {
-        if (Str::contains($source, 'github.com')) {
-            // Example: https://github.com/elfcms/infobox → https://github.com/elfcms/infobox/archive/refs/tags/1.1.0.zip
-            if (preg_match('#github\.com/([^/]+/[^/]+)#', $source, $m)) {
-                return "https://github.com/{$m[1]}/archive/refs/tags/{$version}.zip";
-            }
-        }
-
-        return $source; // full link
-    }
-
-    public function isComposerAvailable(): bool
-    {
-        try {
-            $process = new Process(['composer', '--version']);
-            $process->setTimeout(10)->run();
-
-            return $process->isSuccessful();
-        } catch (\Throwable $e) {
-            return false;
-        }
-    }
-
-    // Installing
-    public function installViaComposer(string $package): void
-    {
-        $env = ['COMPOSER_HOME' => base_path('.composer')];
-        $process = new Process(['composer', 'require', $package], base_path(), $env);
-        $process->setTimeout(300);
-        $process->run();
-
-        if (!$process->isSuccessful()) {
-            throw new \Exception("Composer install failed: " . $process->getErrorOutput());
-        }
-
-        // Можно оптимизировать Laravel
-        Process::fromShellCommandline('php artisan optimize:clear', base_path(), $env)->run();
-        Process::fromShellCommandline('php artisan migrate --force', base_path(), $env)->run();
-        try {
-            Process::fromShellCommandline('php artisan elfcms:publish ' . $package, base_path(), $env)->run();
-        }
-        catch (\Throwable $e) {
-            //
-        }
-    }
-
-    public function installFromZip(string $url, array $module): void
-    {
-        $tempZip = storage_path("app/tmp/{$module['name']}.zip");
-        $tempDir = storage_path("app/tmp/{$module['name']}");
-
-        // Download ZIP
-        File::ensureDirectoryExists(dirname($tempZip));
-        file_put_contents($tempZip, file_get_contents($url));
-
-        // Unzip
-        $zip = new \ZipArchive();
-        if ($zip->open($tempZip) === true) {
-            $zip->extractTo($tempDir);
-            $zip->close();
-        } else {
-            throw new \Exception(__('elfcms::default.failed_unzip'));
-        }
-
-        // Detect module folder
-        $subdirs = File::directories($tempDir);
-        if (empty($subdirs)) {
-            throw new \Exception(__('elfcms::default.zip_file_does_not_contain_module_folder'));
-        }
-        $moduleSourcePath = $subdirs[0];
-
-        // Copy to modules directory
-        $targetPath = base_path("vendor/{$module['package']}");
-        if (File::exists($targetPath)) {
-            File::deleteDirectory($targetPath);
-        }
-        File::copyDirectory($moduleSourcePath, $targetPath);
-
-        /* $meta = $this->extractModuleMeta($targetPath);
-        if (!empty($meta['namespace']) && !empty($meta['psr4_path'])) {
-            $this->registerPsr4Autoload($meta['namespace'], $meta['psr4_path']);
-        } *
-
-        $this->finalizeComposerIntegration($targetPath, $module['package']);
-
-        // Run Laravel optimizations
-        Process::fromShellCommandline('php artisan optimize:clear')->run();
-        Process::fromShellCommandline('php artisan migrate --force')->run();
-        try {
-            Process::fromShellCommandline('php artisan elfcms:publish ' . $module['name'])->run();
-        }
-        catch (\Throwable $e) {
-            //
-        }
-
-        // Clean up
-        File::delete($tempZip);
-        File::deleteDirectory($tempDir);
-    }
-
-    protected function finalizeComposerIntegration(string $modulePath, string $packageName): void
-{
-    $composerPath = base_path('composer.json');
-    $composer = json_decode(file_get_contents($composerPath), true);
-
-    // 1. Добавим path репозиторий, если его ещё нет
-    $repos = $composer['repositories'] ?? [];
-    $repoAlreadyExists = collect($repos)->contains(function ($r) use ($modulePath) {
-        return isset($r['type'], $r['url']) && $r['type'] === 'path' && $r['url'] === $modulePath;
-    });
-
-    if (!$repoAlreadyExists) {
-        $composer['repositories'][] = [
-            'type' => 'path',
-            'url' => $modulePath
-        ];
-    }
-
-    // 2. Добавим пакет в require
-    if (!isset($composer['require'][$packageName])) {
-        $composer['require'][$packageName] = '*';
-    }
-
-    // 3. Запишем обновлённый composer.json
-    file_put_contents($composerPath, json_encode($composer, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
-
-    // 4. composer update (если доступен)
-    if ($this->isComposerAvailable()) {
-        $process = new \Symfony\Component\Process\Process(["composer", "update", $packageName]);
-        $process->setTimeout(300);
-        $process->run();
-
-        if (!$process->isSuccessful()) {
-            throw new \Exception("Composer update failed: " . $process->getErrorOutput());
-        }
-    } else {
-        throw new \Exception("Composer is not available. Please run `composer update {$packageName}` manually.");
-    }
-}
-
-    protected function extractModuleMeta(string $modulePath): array
-    {
-        $composerPath = $modulePath . '/composer.json';
-        if (!File::exists($composerPath)) {
-            throw new \Exception("Module composer.json not found");
-        }
-
-        $composer = json_decode(file_get_contents($composerPath), true);
-        $psr4 = $composer['autoload']['psr-4'] ?? null;
-
-        if (!$psr4 || count($psr4) === 0) {
-            throw new \Exception("No PSR-4 autoload section found in module");
-        }
-
-        $namespace = array_key_first($psr4);
-        $path = rtrim('modules/' . basename($modulePath) . '/' . trim($psr4[$namespace], '/'), '/') . '/';
-
-        return [
-            'namespace' => $namespace,
-            'psr4_path' => $path
-        ];
-    }
-
-    protected function registerPsr4Autoload(string $namespace, string $path): void
-    {
-        $composerJsonPath = base_path('composer.json');
-        $composer = json_decode(file_get_contents($composerJsonPath), true);
-
-        $autoload = $composer['autoload']['psr-4'] ?? [];
-
-        if (!isset($autoload[$namespace])) {
-            $composer['autoload']['psr-4'][$namespace] = $path;
-            file_put_contents($composerJsonPath, json_encode($composer, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
-            Process::fromShellCommandline('composer dump-autoload')->run();
-        }
-    }
-
-    public function installModule(array $module, Request $request)
-    {
-        try {
-            if (!empty($module['composer_package']) && $this->isComposerAvailable()) {
-                try {
-                    $this->installViaComposer($module['composer_package']);
-                    return;
-                } catch (\Throwable $e) {
-                    Log::warning(__('elfcms::default.composer_install_failed_for', ['module' => $module['composer_package']]) . ": " . $e->getMessage());
-                }
-            }
-
-            $zipUrl = $module['zip_url'] ?? null;
-
-            $version = $this->getLatestTag($module['package']);
-            if (empty($zipUrl) && !empty($version)) {
-                $zipUrl = "https://github.com/{$module['package']}/archive/refs/tags/{$version}.zip";
-            }
-
-            if (!empty($zipUrl)) {
-                $this->installFromZip($zipUrl, $module);
-            } else {
-                throw new \Exception(__('elfcms::default.no_valid_installation_method_available_for_module', ['module' => $module['title']]));
-            }
-
-            $newModule = Module::create([
-                'name' => $module['name'],
-                'title' => $module['title'],
-                'current_version' => $version,
-                'latest_version' => $version,
-                'source' => $module['repo'],
-                'update_method' => $module['install_via'],
-                'update_available' => 0,
-                'last_checked_at' => now(),
-            ]);
-
-            $result = ['success' => true, 'message' => __('elfcms::default.module_has_been_installed_successfully', ['module' => $module['title']])];
-            if ($request->ajax()) {
-                return response()->json($result);
-            }
-            return $result;
-        } catch (\Throwable $e) {
-            $result = ['success' => false, 'message' => __('elfcms::default.update_error_text', ['error' => $e->getMessage()])];
-            if ($request->ajax()) {
-                return response()->json($result);
-            }
-            return $result;
-        }
-    }
-
-    public function install(Request $request, string $moduleName)
-    {
-        $availableModules = [];
-        $response = Http::timeout(5)->get('https://raw.githubusercontent.com/elfcms/modules-list/main/modules.json');
-        if ($response->successful()) {
-            $body = $response->body();
-            $availableModules = json_decode($body, true);
-
-            if (json_last_error() !== JSON_ERROR_NONE) {
-                Log::error('Invalid JSON in modules.json: ' . json_last_error_msg());
-                $availableModules = [];
-            }
-            $availableModules = $response->json();
-        } else {
-            Log::warning('Could not fetch modules.json: ' . $response->status());
-            return back()->withErrors(['error'=>__('elfcms::default.error_installing_module',['module'=>$moduleName]) . ': Could not fetch modules.json: ' . $response->status()]);
-        }
-        $module = null;
-        if (!empty($availableModules) && !empty($availableModules['modules'])) {
-            foreach($availableModules['modules'] as $moduleData) {
-                if (strtolower($moduleData['name']) == strtolower($moduleName)) {
-                    $module = $moduleData;
-                }
-            }
-        }
-        if (empty($module)) {
-            return back()->withErrors(['error'=>__('elfcms::default.error_installing_module',['module'=>$moduleName]) . ': ' . __('elfcms::default.module_not_found')]);
-        }
-        $result = $this->installModule($module, $request);
-        if (!$result['success']) {
-            return back()->withErrors(['error'=>$result['message']]);
-        }
-        return back()->with('success',$result['message']);
-    } */
 }
