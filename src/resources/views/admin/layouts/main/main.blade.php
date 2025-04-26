@@ -32,7 +32,7 @@
     <div class="main-container">
         @if (Session::has('success'))
             <x-elf-notify type="success" title="{{ __('elfcms::default.success') }}"
-                text="{{ Session::get('success') }}" />
+                text="{!! Session::get('success') !!}" />
         @endif
         @if ($errors->any())
             <x-elf-notify type="error" title="{{ __('elfcms::default.error') }}" text="{!! '<ul><li>' . implode('</li><li>', $errors->all()) . '</li></ul>' !!}" />

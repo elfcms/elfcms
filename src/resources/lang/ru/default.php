@@ -746,4 +746,5 @@ return [
     'no_data' => 'Нет данных',
     'no_information_available' => 'Информация отсутствует',
     'module_not_found' => 'Модуль не найден',
+    'module_name_not_found' => 'Модуль :module не найден',
 ];

@@ -7,6 +7,7 @@ use Symfony\Component\Process\Process;
 use Illuminate\Support\Facades\File;
 use Elfcms\Elfcms\Models\Module;
 use Elfcms\Elfcms\Models\ModuleUpdate;
+use Elfcms\Elfcms\Services\ComposerService;
 use Elfcms\Elfcms\Services\ModuleUpdater;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -88,6 +89,153 @@ class SystemController extends Controller
         ]);
     }
 
+    public function install(string $moduleName)
+    {
+        $availableModules = [];
+        $response = Http::timeout(5)->get('https://raw.githubusercontent.com/elfcms/modules-list/main/modules.json');
+        if ($response->successful()) {
+            $body = $response->body();
+            $availableModules = json_decode($body, true);
+
+            if (json_last_error() !== JSON_ERROR_NONE) {
+                Log::error('Invalid JSON in modules.json: ' . json_last_error_msg());
+                $availableModules = [];
+            }
+            $availableModules = $response->json();
+        } else {
+            Log::warning('Could not fetch modules.json: ' . $response->status());
+            return back()->withErrors(['error'=>__('elfcms::default.error_installing_module',['module'=>$moduleName]) . ': Could not fetch modules.json: ' . $response->status()]);
+        }
+        $module = null;
+        if (!empty($availableModules) && !empty($availableModules['modules'])) {
+            foreach($availableModules['modules'] as $moduleData) {
+                if (strtolower($moduleData['name']) == strtolower($moduleName)) {
+                    $module = $moduleData;
+                }
+            }
+        }
+
+        if (empty($module)) {
+            return back()->withErrors(['error'=>__('elfcms::default.error_installing_module',['module'=>$moduleName]) . ': ' . __('elfcms::default.module_not_found')]);
+        }
+
+        $composer = new ComposerService;
+        $result = $composer->require($module['package']);
+
+        if (!$result->success()) {
+            Log::warning($result->error());
+            return back()->withErrors(['error'=>__('elfcms::default.error_installing_module',['module'=>$module['package']]) . ': ' . $result->error()]);
+        }
+        $version = $this->getLatestTag($module['package']) ?? null;
+        $newModule = Module::create([
+            'name' => $module['name'],
+            'title' => $module['title'],
+            'current_version' => $version ?? __('elfcms::default.unknown'),
+            'latest_version' => $version,
+            'source' => $module['repo'],
+            'update_method' => $module['install_via'],
+            'update_available' => 0,
+            'last_checked_at' => now(),
+        ]);
+        return back()->with('success',__('elfcms::default.module_name_has_been_installed_successfully',['module'=>$moduleName]));
+    }
+
+    public function updateAll(Request $request)
+    {
+        $errors = [];
+        $success = [];
+        $composer = new ComposerService;
+        
+        if (!empty($request->modules)) {
+            foreach ($request->modules as $moduleName) {
+                $module = Module::where('name',$moduleName)->first();
+                if (empty($module) || empty($module->id)) {
+                    $errors[] = __('elfcms::default.module_name_not_found',['module'=>$moduleName]);
+                    continue;
+                }
+                $oldVersion = $module->current_version;
+                $result = $composer->require($module['package']);
+                if (!$result->success()) {
+                    ModuleUpdate::create([
+                        'module_id' => $module->id,
+                        'user_id' => Auth::id(),
+                        'old_version' => $oldVersion,
+                        'new_version' => $module->latest_version ?? __('elfcms::default.unknown'),
+                        'method' => $module->update_method ?? 'composer',
+                        'success' => false,
+                        'message' => $result->error(),
+                    ]);
+                    $errors[] = __('elfcms::default.update_error_text',['error'=>$result->error()]);
+                }
+                ModuleUpdate::create([
+                    'module_id' => $module->id,
+                    'user_id' => Auth::id() ?? null,
+                    'old_version' => $oldVersion,
+                    'new_version' => $module->latest_version,
+                    'method' => $module->update_method ?? 'composer',
+                    'success' => true,
+                    'message' => __('elfcms::default.updated_successfully'),
+                ]);
+                $success[] = __('elfcms::default.updated_successfully') . ': ' . $module['name'];
+            }
+        }
+
+        $result = back();
+        if (!empty($success)) {
+            $result->with('success', implode('<br>', $success));
+        }
+        if (!empty($errors)) {
+            $result->withErrors($errors);
+        }
+        return $result;
+    }
+
+    public function update(Module $module)
+    {
+        $oldVersion = $module->current_version;
+
+        $composer = new ComposerService;
+        $result = $composer->require($module['package']);
+        if (!$result->success()) {
+            ModuleUpdate::create([
+                'module_id' => $module->id,
+                'user_id' => Auth::id(),
+                'old_version' => $oldVersion,
+                'new_version' => $module->latest_version ?? __('elfcms::default.unknown'),
+                'method' => $module->update_method ?? 'composer',
+                'success' => false,
+                'message' => $result->error(),
+            ]);
+            return back()->withErrors(['error' => __('elfcms::default.update_error_text',['error'=>$result->error()])]);
+        }
+        ModuleUpdate::create([
+            'module_id' => $module->id,
+            'user_id' => Auth::id() ?? null,
+            'old_version' => $oldVersion,
+            'new_version' => $module->latest_version,
+            'method' => $module->update_method ?? 'composer',
+            'success' => true,
+            'message' => __('elfcms::default.updated_successfully'),
+        ]);
+        return back()->with('success',__('elfcms::default.updated_successfully'));
+    }
+
+    protected function getLatestTag(string $repo)
+    {
+        $url = "https://api.github.com/repos/{$repo}/releases/latest";
+
+        $response = Http::withHeaders([
+            'Accept' => 'application/vnd.github.v3+json',
+            // 'Authorization' => 'token ' . config('services.github.token'),
+        ])->get($url);
+
+        if ($response->failed()) {
+            throw new \Exception("GitHub API error ({$response->status()}): " . $response->body());
+        }
+
+        return $response->json('tag_name');
+    }
+
     public function checkUpdates(Request $request, ModuleUpdater $updater)
     {
         try {
@@ -104,7 +252,7 @@ class SystemController extends Controller
         }
     }
 
-    public function updateAll(Request $request)
+    /*public function updateAll(Request $request)
     {
         $errors = [];
         $success = [];
@@ -252,22 +400,6 @@ class SystemController extends Controller
         return $source; // full link
     }
 
-    protected function getLatestTag(string $repo)
-    {
-        $url = "https://api.github.com/repos/{$repo}/releases/latest";
-
-        $response = Http::withHeaders([
-            'Accept' => 'application/vnd.github.v3+json',
-            // 'Authorization' => 'token ' . config('services.github.token'),
-        ])->get($url);
-
-        if ($response->failed()) {
-            throw new \Exception("GitHub API error ({$response->status()}): " . $response->body());
-        }
-
-        return $response->json('tag_name');
-    }
-
     public function isComposerAvailable(): bool
     {
         try {
@@ -335,10 +467,12 @@ class SystemController extends Controller
         }
         File::copyDirectory($moduleSourcePath, $targetPath);
 
-        $meta = $this->extractModuleMeta($targetPath);
+        /* $meta = $this->extractModuleMeta($targetPath);
         if (!empty($meta['namespace']) && !empty($meta['psr4_path'])) {
             $this->registerPsr4Autoload($meta['namespace'], $meta['psr4_path']);
-        }
+        } *
+
+        $this->finalizeComposerIntegration($targetPath, $module['package']);
 
         // Run Laravel optimizations
         Process::fromShellCommandline('php artisan optimize:clear')->run();
@@ -354,6 +488,46 @@ class SystemController extends Controller
         File::delete($tempZip);
         File::deleteDirectory($tempDir);
     }
+
+    protected function finalizeComposerIntegration(string $modulePath, string $packageName): void
+{
+    $composerPath = base_path('composer.json');
+    $composer = json_decode(file_get_contents($composerPath), true);
+
+    // 1. Добавим path репозиторий, если его ещё нет
+    $repos = $composer['repositories'] ?? [];
+    $repoAlreadyExists = collect($repos)->contains(function ($r) use ($modulePath) {
+        return isset($r['type'], $r['url']) && $r['type'] === 'path' && $r['url'] === $modulePath;
+    });
+
+    if (!$repoAlreadyExists) {
+        $composer['repositories'][] = [
+            'type' => 'path',
+            'url' => $modulePath
+        ];
+    }
+
+    // 2. Добавим пакет в require
+    if (!isset($composer['require'][$packageName])) {
+        $composer['require'][$packageName] = '*';
+    }
+
+    // 3. Запишем обновлённый composer.json
+    file_put_contents($composerPath, json_encode($composer, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+
+    // 4. composer update (если доступен)
+    if ($this->isComposerAvailable()) {
+        $process = new \Symfony\Component\Process\Process(["composer", "update", $packageName]);
+        $process->setTimeout(300);
+        $process->run();
+
+        if (!$process->isSuccessful()) {
+            throw new \Exception("Composer update failed: " . $process->getErrorOutput());
+        }
+    } else {
+        throw new \Exception("Composer is not available. Please run `composer update {$packageName}` manually.");
+    }
+}
 
     protected function extractModuleMeta(string $modulePath): array
     {
@@ -475,5 +649,5 @@ class SystemController extends Controller
             return back()->withErrors(['error'=>$result['message']]);
         }
         return back()->with('success',$result['message']);
-    }
+    } */
 }
