@@ -34,6 +34,18 @@
             <x-elf-notify type="success" title="{{ __('elfcms::default.success') }}"
                 text="{!! Session::get('success') !!}" />
         @endif
+        @if (Session::has('error'))
+            <x-elf-notify type="error" title="{{ __('elfcms::default.error') }}"
+                text="{!! Session::get('error') !!}" />
+        @endif
+        @if (Session::has('warning'))
+            <x-elf-notify type="warning" title="{{ __('elfcms::default.warning') }}"
+                text="{!! Session::get('warning') !!}" />
+        @endif
+        @if (Session::has('info'))
+            <x-elf-notify type="info" title="{{ __('elfcms::default.info') }}"
+                text="{!! Session::get('info') !!}" />
+        @endif
         @if ($errors->any())
             <x-elf-notify type="error" title="{{ __('elfcms::default.error') }}" text="{!! '<ul><li>' . implode('</li><li>', $errors->all()) . '</li></ul>' !!}" />
         @endif

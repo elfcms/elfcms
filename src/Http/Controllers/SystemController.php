@@ -31,7 +31,7 @@ class SystemController extends Controller
                 if (Session::has('success')) {
                     $success = Session::get('success');
                 }
-                return redirect(route('admin.system.index'))->with('success',$success);
+                return redirect(route('admin.system.index'))->with('success', $success);
             }
         }
 
@@ -44,20 +44,24 @@ class SystemController extends Controller
         $data = $configs['elfcms'];
 
         $availableModules = [];
-        $response = Http::timeout(5)->get('https://raw.githubusercontent.com/elfcms/modules-list/main/modules.json');
-        if ($response->successful()) {
-            $body = $response->body();
-            $availableModules = json_decode($body, true);
+        try {
+            $response = Http::timeout(5)->get('https://raw.githubusercontent.com/elfcms/modules-list/main/modules.json');
+            if ($response->successful()) {
+                $body = $response->body();
+                $availableModules = json_decode($body, true);
 
-            if (json_last_error() !== JSON_ERROR_NONE) {
-                Log::error('Invalid JSON in modules.json: ' . json_last_error_msg());
-                $availableModules = [];
+                if (json_last_error() !== JSON_ERROR_NONE) {
+                    Log::error('Invalid JSON in modules.json: ' . json_last_error_msg());
+                    $availableModules = [];
+                }
+                $availableModules = $response->json();
+            } else {
+                Log::warning('Could not fetch modules.json: ' . $response->status());
             }
-            $availableModules = $response->json();
-        } else {
-            Log::warning('Could not fetch modules.json: ' . $response->status());
+        } catch (\Throwable $e) {
+            Session::put('warning',__('elfcms::default.error_loading_modules_information_missing'));
         }
-
+        
         $modulesToInstall = [];
 
         if (empty($modules) && !empty($availableModules) && !empty($availableModules['modules'])) {
@@ -99,15 +103,15 @@ class SystemController extends Controller
                 if (Session::has('success')) {
                     $success = Session::get('success');
                 }
-                return redirect(route('admin.system.updates'))->with('success',$success);
+                return redirect(route('admin.system.updates'))->with('success', $success);
             }
         }
         if (Session::has('pending_modules_update')) {
             $moduleNames = Session::pull('pending_modules_update');
-            if (!empty($moduleNames)) $moduleNames = explode(',',$moduleNames);
+            if (!empty($moduleNames)) $moduleNames = explode(',', $moduleNames);
             if (!empty($moduleNames)) {
                 Artisan::call('migrate', ['--force' => true]);
-                foreach($moduleNames as $moduleName) {
+                foreach ($moduleNames as $moduleName) {
                     if (!empty($moduleName)) {
                         Artisan::call('elfcms:publish', ['module' => $moduleName]);
                     }
@@ -116,7 +120,7 @@ class SystemController extends Controller
                 if (Session::has('success')) {
                     $success = Session::get('success');
                 }
-                return redirect(route('admin.system.updates'))->with('success',$success);
+                return redirect(route('admin.system.updates'))->with('success', $success);
             }
         }
         $updater = new ModuleUpdater();
@@ -239,7 +243,7 @@ class SystemController extends Controller
             $composer->dumpAutoload();
             $redirect->with('success', implode('<br>', $success));
             if (!empty($names)) {
-                $redirect->with('pending_modules_update', implode(',',$names));
+                $redirect->with('pending_modules_update', implode(',', $names));
             }
         }
         if (!empty($errors)) {

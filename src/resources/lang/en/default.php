@@ -747,4 +747,6 @@ return [
     'no_information_available' => 'No information available',
     'module_not_found' => 'Module not found',
     'module_name_not_found' => 'Module :module not found',
+    'information_about_modules_is_missing' => 'Information about modules is missing',
+    'error_loading_modules_information_missing' => 'Error loading modules information missing',
 ];
