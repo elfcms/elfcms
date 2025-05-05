@@ -1,6 +1,15 @@
 @extends('elfcms::admin.layouts.main')
 
 @section('pagecontent')
+    <div class="table-search-box">
+        <a href="{{ route('admin.filestorage.index') }}" class="button round-button theme-button"
+            style="color:var(--default-color);">
+            {!! iconHtmlLocal('elfcms/admin/images/icons/buttons/arrow_back.svg', svg: true) !!}
+            <span class="button-collapsed-text">
+                {{ __('elfcms::default.back') }}
+            </span>
+        </a>
+    </div>
 
     <div class="item-form">
         <h2>{{ __('elfcms::default.create_storage') }}</h2>
@@ -8,9 +17,6 @@
             @csrf
             @method('POST')
             <div class="colored-rows-box">
-                {{-- <div class="input-box colored">
-                    <x-elfcms-input-checkbox code="active" label="{{ __('elfcms::default.active') }}" checked style="blue" />
-                </div> --}}
                 <div class="input-box colored">
                     <label for="name">{{ __('elfcms::default.name') }}</label>
                     <div class="input-wrapper">
@@ -23,8 +29,7 @@
                 <div class="input-box colored">
                     <label for="code">{{ __('elfcms::default.code') }}</label>
                     <div class="input-wrapper">
-                        <input type="text" name="code" id="code" data-isslug
-                            value="{{ old('code') }}">
+                        <input type="text" name="code" id="code" data-isslug value="{{ old('code') }}">
                     </div>
                     <div class="input-wrapper">
                         <div class="icon-checkbox-round input-checker none" data-inpcheck="code" data-listen="name"></div>
@@ -36,8 +41,8 @@
                 <div class="input-box colored">
                     <label for="path">{{ __('elfcms::default.path') }}</label>
                     <div class="input-wrapper">
-                        <input type="text" name="path" id="path" data-isslug
-                            value="{{ old('code') }}" readonly>
+                        <input type="text" name="path" id="path" data-isslug value="{{ old('code') }}"
+                            readonly>
                     </div>
                     <div class="input-wrapper">
                         <div class="icon-checkbox-round input-checker none" data-inpcheck="path" data-listen="name"></div>
@@ -52,7 +57,8 @@
                     <div class="input-wrapper">
                         <select name="group_id" id="group_id">
                             @foreach ($groups as $group)
-                                <option value="{{ $group->id }}" @if (old('group_id') == $group->id) selected @endif data-group="{{ $group->id }}" data-code="{{ $group->code }}">
+                                <option value="{{ $group->id }}" @if (old('group_id') == $group->id) selected @endif
+                                    data-group="{{ $group->id }}" data-code="{{ $group->code }}">
                                     {{ $group->name }}</option>
                             @endforeach
                         </select>
@@ -63,19 +69,19 @@
                     <label>{{ __('elfcms::default.types') }}</label>
                     <div class="input-wrapper wrap-wrapper">
                         @foreach ($groups as $group)
-                        <div @class(['input-column']) data-group="{{ $group->id }}" data-code="{{ $group->code }}">
-                            @foreach ($group->types as $type)
-                                <div class="small-checkbox-wrapper">
-                                    <div class="small-checkbox">
-                                        <input type="checkbox" name="types[]" id="type_{{ $type->id }}"
-                                            value="{{ $type->id }}">
-                                        <i></i>
+                            <div @class(['input-column']) data-group="{{ $group->id }}"
+                                data-code="{{ $group->code }}">
+                                @foreach ($group->types as $type)
+                                    <div class="small-checkbox-wrapper">
+                                        <div class="small-checkbox">
+                                            <input type="checkbox" name="types[]" id="type_{{ $type->id }}"
+                                                value="{{ $type->id }}">
+                                            <i></i>
+                                        </div>
+                                        <label for="type_{{ $type->id }}">{{ $type->name }}</label>
                                     </div>
-                                    <label for="type_{{ $type->id }}">{{ $type->name }}</label>
-                                </div>
-                            @endforeach
-                        </div>
-
+                                @endforeach
+                            </div>
                         @endforeach
                     </div>
                 </div>
@@ -88,7 +94,8 @@
                 </div>
             </div>
             <div class="button-box single-box">
-                <button type="submit" class="button color-text-button success-button">{{ __('elfcms::default.submit') }}</button>
+                <button type="submit"
+                    class="button color-text-button success-button">{{ __('elfcms::default.submit') }}</button>
                 <button type="submit" name="submit" value="save_and_open"
                     class="button color-text-button info-button">{{ __('elfcms::default.save_and_open') }}</button>
                 <button type="submit" name="submit" value="save_and_close"
@@ -104,7 +111,7 @@
 
         const groupSelect = document.getElementById('group_id')
         if (groupSelect) {
-            groupSelect.addEventListener('change', function () {
+            groupSelect.addEventListener('change', function() {
                 const group = document.querySelector(`.input-column[data-group="${this.value}"]`)
                 const groupCode = group.getAttribute('data-code')
                 const allColumns = document.querySelectorAll('.input-column')
@@ -121,11 +128,16 @@
         }
 
         let values = {
-            name: [{!! $storages->pluck('name')->map(function ($item) { return "'".strtolower($item)."'"; })->implode(',') !!}],
-            code: [{!! $storages->pluck('code')->map(function ($item) { return "'".strtolower($item)."'"; })->implode(',') !!}],
-            path: [{!! $storages->pluck('path')->map(function ($item) { return "'".strtolower($item)."'"; })->implode(',') !!}],
+            name: [{!! $storages->pluck('name')->map(function ($item) {
+                    return "'" . strtolower($item) . "'";
+                })->implode(',') !!}],
+            code: [{!! $storages->pluck('code')->map(function ($item) {
+                    return "'" . strtolower($item) . "'";
+                })->implode(',') !!}],
+            path: [{!! $storages->pluck('path')->map(function ($item) {
+                    return "'" . strtolower($item) . "'";
+                })->implode(',') !!}],
         };
         inputCheckValue(values);
     </script>
-
 @endsection

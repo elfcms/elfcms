@@ -15,13 +15,14 @@ use Elfcms\Elfcms\Http\Controllers\Publics\PageController;
 use Elfcms\Elfcms\Http\Controllers\SettingController;
 use Elfcms\Elfcms\Http\Controllers\SystemController;
 use Elfcms\Elfcms\Models\Page;
+use Elfcms\Elfcms\Services\DynamicPageRouter;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Lang;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
 
 $adminPath = config('elfcms.elfcms.admin_path') ?? 'admin';
-$adminPath = trim($adminPath,'/');
+$adminPath = trim($adminPath, '/');
 
 Route::group(['middleware' => ['web', 'locales', 'cookie']], function () use ($adminPath) {
 
@@ -104,15 +105,15 @@ Route::group(['middleware' => ['web', 'locales', 'cookie']], function () use ($a
             Route::resource('/forms/{form}/fields', Elfcms\Elfcms\Http\Controllers\Resources\FormFieldController::class)
                 ->names(['index' => 'fields']);
         });
-        
+
         Route::name('form-results.')->group(function () {
             Route::get('/form-results', [FormResultController::class, 'index'])->name('index');
             Route::get('/form-results/{form}', [FormResultController::class, 'form'])->name('form');
             Route::get('/form-results/{form}/{result}', [FormResultController::class, 'show'])->name('show');
         });
 
-        Route::prefix('menus')->name('menus.')->group(function () {
-            Route::resource('/', Elfcms\Elfcms\Http\Controllers\Resources\MenuController::class)->names([
+        Route::name('menus.')->group(function () {
+            Route::resource('/menus', Elfcms\Elfcms\Http\Controllers\Resources\MenuController::class)->names([
                 'index' => 'index',
                 'create' => 'create',
                 'edit'   => 'edit',
@@ -121,7 +122,7 @@ Route::group(['middleware' => ['web', 'locales', 'cookie']], function () use ($a
                 'update' => 'update',
                 'destroy' => 'destroy'
             ]);
-            Route::resource('/{menu}/items', Elfcms\Elfcms\Http\Controllers\Resources\MenuItemController::class)->names([
+            Route::resource('/menus/{menu}/items', Elfcms\Elfcms\Http\Controllers\Resources\MenuItemController::class)->names([
                 'index' => 'items',
                 'create' => 'items.create',
                 'edit'   => 'items.edit',
@@ -134,10 +135,12 @@ Route::group(['middleware' => ['web', 'locales', 'cookie']], function () use ($a
 
         Route::prefix('page')->name('page.')->group(function () {
             Route::resource('/pages', Elfcms\Elfcms\Http\Controllers\Resources\PageController::class)->names(['index' => 'pages']);
+            Route::get('/module-options/{module}', [Elfcms\Elfcms\Http\Controllers\Resources\PageController::class, 'getModuleOptions'])->name('module-options');
+
         });
 
-        Route::prefix('messages')->name('messages.')->group(function () {
-            Route::resource('/', Elfcms\Elfcms\Http\Controllers\Resources\MessageController::class)->names([
+        Route::name('messages.')->group(function () {
+            Route::resource('/messages', Elfcms\Elfcms\Http\Controllers\Resources\MessageController::class)->names([
                 'index' => 'index',
                 'create' => 'create',
                 'edit'   => 'edit',
@@ -174,22 +177,22 @@ Route::group(['middleware' => ['web', 'locales', 'cookie']], function () use ($a
             Route::get('/', [SystemController::class, 'index'])->name('index');
             Route::get('/license', [AdminController::class, 'license'])->name('license');
             Route::get('/updates', [SystemController::class, 'updates'])
-            ->name('updates');
+                ->name('updates');
             Route::post('/check-updates', [SystemController::class, 'checkUpdates'])
-            ->name('checkUpdates');
+                ->name('checkUpdates');
             Route::post('/update/all', [SystemController::class, 'updateAll'])
-            ->name('update-all');
+                ->name('update-all');
             Route::post('/update/{module}', [SystemController::class, 'update'])
-            ->name('update');
+                ->name('update');
 
-            Route::post('/install/{moduleName}',[SystemController::class, 'install'])->name('install.module');
+            Route::post('/install/{moduleName}', [SystemController::class, 'install'])->name('install.module');
         });
 
-        Route::prefix('filestorage')->name('filestorage.')->group(function () {
-            Route::resource('/groups', \Elfcms\Elfcms\Http\Controllers\Resources\FilestorageFilegroupController::class);
-            Route::resource('/types', \Elfcms\Elfcms\Http\Controllers\Resources\FilestorageFiletypeController::class);
+        Route::name('filestorage.')->group(function () {
+            Route::resource('/filestorage/groups', \Elfcms\Elfcms\Http\Controllers\Resources\FilestorageFilegroupController::class);
+            Route::resource('/filestorage/types', \Elfcms\Elfcms\Http\Controllers\Resources\FilestorageFiletypeController::class);
 
-            Route::resource('/', \Elfcms\Elfcms\Http\Controllers\Resources\FilestorageController::class)->names([
+            Route::resource('/filestorage', \Elfcms\Elfcms\Http\Controllers\Resources\FilestorageController::class)->names([
                 'index' => 'index',
                 'create' => 'create',
                 'edit'   => 'edit',
@@ -199,7 +202,7 @@ Route::group(['middleware' => ['web', 'locales', 'cookie']], function () use ($a
                 'destroy' => 'destroy'
             ]);
 
-            Route::resource('/{filestorage}/files', Elfcms\Elfcms\Http\Controllers\Resources\FilestorageFileController::class)
+            Route::resource('/filestorage/{filestorage}/files', Elfcms\Elfcms\Http\Controllers\Resources\FilestorageFileController::class)
                 ->names([
                     'index' => 'files.index',
                     'create' => 'files.create',
@@ -210,7 +213,7 @@ Route::group(['middleware' => ['web', 'locales', 'cookie']], function () use ($a
                     'update' => 'files.update',
                     'destroy' => 'files.destroy',
                 ]);
-            Route::post('/{filestorage}/files/group', [FilestorageFileController::class, 'filestorageFileGroupSave'])->name('files.groupSave');
+            Route::post('/filestorage/{filestorage}/files/group', [FilestorageFileController::class, 'filestorageFileGroupSave'])->name('files.groupSave');
         });
 
         // File icons
@@ -287,22 +290,26 @@ Route::group(['middleware' => ['web', 'locales', 'cookie']], function () use ($a
 
     /* Public */
 
-    /* Dynamic pages */
+    /*  User defined pages */
     Route::get(config('elfcms.elfcms.page_path') . '/{page:slug}', [PageController::class, 'get']);
 
     try {
         if (Schema::hasTable('pages')) {
-            $pages = Page::where('is_dynamic', '<>', 1)->where('active', 1)->whereNotNull('path')->get();
+            $pages = Page::where('active', 1)->whereNotNull('path')->get();
             foreach ($pages as $page) {
-
-                Route::get($page->path, function () use ($page) {
-                    $controller = new PageController;
-                    $template = $page->template;
-                    if (empty($template)) {
-                        $template = 'default';
-                    }
-                    return $controller->get($page, dynamic: false, template: $template);
-                });
+                if (!empty($page->module) && $page->module != 'standard') {
+                    return DynamicPageRouter::moduleRoutes($page);
+                }
+                elseif (boolval($page->is_dynamic)) {
+                    Route::get($page->path, function () use ($page) {
+                        $controller = new PageController;
+                        $template = $page->template;
+                        if (empty($template)) {
+                            $template = 'default';
+                        }
+                        return $controller->get($page, dynamic: false, template: $template);
+                    });
+                }
             }
         }
     } catch (\Exception $e) {

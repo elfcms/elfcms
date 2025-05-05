@@ -1,33 +1,25 @@
-@extends('elfcms::admin.layouts.form')
+@extends('elfcms::admin.layouts.main')
 
-@section('formpage-content')
-    {{-- <div class="table-search-box">
-        <div class="table-search-result-title">
-            @if (!empty($search))
-                {{ __('elfcms::default.search_result_for') }} "{{ $search }}" <a href="{{ route('admin.user.users') }}" title="{{ __('elfcms::default.reset_search') }}">&#215;</a>
-            @endif
-        </div>
-    </div> --}}
-    @if (Session::has('success'))
-    <div class="alert alert-alternate">{{ Session::get('success') }}</div>
-    @endif
-    @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
+@section('pagecontent')
+    <div class="table-search-box">
+        <a href="{{ route('admin.form-results.index') }}" class="button round-button theme-button" style="color:var(--default-color);">
+            {!! iconHtmlLocal('elfcms/admin/images/icons/buttons/arrow_back.svg', svg: true) !!}
+            <span class="button-collapsed-text">
+                {{ __('elfcms::default.back') }}
+            </span>
+        </a>
     </div>
-    @endif
     <div class="grid-table-wrapper">
-        <table class="grid-table table-cols" style="--first-col:4rem; --last-col:200px; --minw:50rem; --cols-count:{{ count($fields) + 2 }};">
+        <table class="grid-table table-cols" style="--first-col:4rem; --last-col:13rem; --minw:50rem; --cols-count:{{ count($fields) > 0 ? count($fields) + 2 : 3 }};">
             <thead>
                 <tr>
                     <th>ID</th>
                     @foreach (array_values($fields) as $title)
                     <th>{{ $title }}</th>
                     @endforeach
+                    @if (count($fields) == 0)
+                        <th></th>
+                    @endif
                     <th>{{ __('elfcms::default.created') }}</th>
                 </tr>
             </thead>

@@ -1,6 +1,22 @@
-<div @class(['small-checkbox', 'disabled' => $disabled ?? false, 'hidden' => $hidden ?? false]) @if (!empty($color)) style="--switch-color: {{ $color }}" @endif>
-    <input type="checkbox" name="{{ $name ?? 'checkbox' }}" id="{{ $id ?? 'checkbox' }}" value="{{ $value ?? 1 }}"
-    @checked($checked ?? false) @disabled($disabled ?? false) title="{{ $title ?? '' }}"
-    @if ($attributes) @foreach ($attributes as $attribute => $value) {{ $attribute }}="{{ $value }}" @endforeach @endif>
+@props([
+    'checked' => false,
+    'disabled' => false,
+    'hidden' => false,
+    'color' => null,
+    'id' => 'checkbox',
+    'name' => 'checkbox',
+    'value' => 1,
+    'title' => '',
+    'attributes' => [],
+])
+
+<div @class(['small-checkbox', 'disabled' => $disabled, 'hidden' => $hidden])
+     @if ($color) style="--switch-color: {{ $color }}" @endif>
+    <input type="checkbox" name="{{ $name }}" id="{{ $id }}" value="{{ $value }}"
+           @if ($checked === true) checked @endif
+           @if ($disabled) disabled @endif
+           title="{{ $title }}"
+           @foreach ($attributes as $attribute => $val) {{ $attribute }}="{{ $val }}" @endforeach
+    >
     <i></i>
 </div>

@@ -14,12 +14,26 @@ class Page extends Model
         'slug',
         'name',
         'title',
-        'content',
-        'meta_keywords',
-        'meta_description',
-        'is_dynamic',
+        'browser_title',
         'path',
         'image',
+        'is_dynamic',
+        'meta_keywords',
+        'meta_description',
+        'content',
+        'template',
+        'active',
+        'module',
+        'module_id',
+        'module_options',
+    ];
+
+    protected $casts = [
+        'meta_keywords' => 'array',
+        'meta_description' => 'array',
+        'module_options' => 'array',
+        'active' => 'boolean',
+        'is_dynamic' => 'boolean',
     ];
 
     /**

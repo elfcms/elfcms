@@ -10,6 +10,15 @@ use Illuminate\Support\Str;
 
 class PageController extends Controller
 {
+    private array $availableModules;
+
+    public function __construct()
+    {
+        $this->availableModules = config('elfcms.elfcms.page_modules');
+        if (empty($this->availableModules)) {
+            $this->availableModules = [];
+        }
+    }
     /**
      * Display a listing of the resource.
      *
@@ -27,7 +36,7 @@ class PageController extends Controller
         }
         $pages = Page::orderBy($order, $trend)->paginate(30);
 
-        return view('elfcms::admin.page.pages.index',[
+        return view('elfcms::admin.page.pages.index', [
             'page' => [
                 'title' => __('elfcms::default.pages'),
                 'current' => url()->current(),
@@ -43,20 +52,22 @@ class PageController extends Controller
      */
     public function create()
     {
-        $templates = Views::list('elfcms/public/pages','publicviews');
+        $templates = Views::list('elfcms/public/pages', 'publicviews');
         if (empty($templates)) {
-            $templates = array_merge($templates,Views::list('pages','elfcmsviews','elfcms'));
+            $templates = array_merge($templates, Views::list('pages', 'elfcmsviews', 'elfcms'));
         }
         if (empty($templates)) {
-            $templates = array_merge($templates,Views::list('resources/views/pages','elfcmsdev','elfcms'));
+            $templates = array_merge($templates, Views::list('resources/views/pages', 'elfcmsdev', 'elfcms'));
         }
-        $templates = array_merge($templates,Views::list('public/pages','publicviews'));
-        return view('elfcms::admin.page.pages.create',[
+        $templates = array_merge($templates, Views::list('public/pages', 'publicviews'));
+
+        return view('elfcms::admin.page.pages.create', [
             'page' => [
                 'title' => __('elfcms::default.create_page'),
                 'current' => url()->current(),
             ],
-            'templates' => $templates
+            'templates' => $templates,
+            'modules' => $this->availableModules,
         ]);
     }
 
@@ -68,10 +79,14 @@ class PageController extends Controller
      */
     public function store(Request $request)
     {
+        $module = $this->availableModules[$request->module] ?? null;
         $validated = $request->validate([
             'name' => 'required|unique:Elfcms\Elfcms\Models\Page,name',
             'slug' => 'required|unique:Elfcms\Elfcms\Models\Page,slug',
             'image' => 'nullable|file|max:2024',
+            'module_id' => empty($request->module) || $request->module == 'standard' ? 'nullable' : 'required',
+        ], [
+            'module_id.required' => __('elfcms::default.module_element_must_be_specified'),
         ]);
 
         $image_path = '';
@@ -79,14 +94,34 @@ class PageController extends Controller
             $image_path = $request->file()['image']->store('pages/image');
         }
 
+        $existsPage = Page::where('module',$request->module)->where('module_id',$request->module_id)->first();
+
+        if (!empty($existsPage) && !empty($existsPage->id)) {
+            return back()->withErrors(['error'=>__('elfcms::default.page_already_exists')]);
+        }
 
         $path = $request->path;
-        if (!empty($request->path) && !Str::startsWith($request->path,'/')) {
-            $path = '/' . $request->path;
+
+        if (empty($path) && !empty($request->module) && $request->module != 'standard') {
+            if (!empty($request->module_id) && !empty($module) && !empty($module['class'])) {
+                $moduleData = null;
+                try {
+                    $moduleData = $module['class']::find($request->module_id);
+                    $column = !empty($module['search_column']) ? $module['search_column'] : 'slug';
+                    if (!empty($moduleData)) $path = $moduleData->$column ?? null;
+                } catch (\Throwable $th) {
+                    //throw $th;
+                }
+            }
+        }
+
+        if (empty($path)) $path = $validated['slug'] ?? $request->module;
+
+        if (!empty($path)) {
+            $path = '/' . trim($path, '/');
         }
 
         $validated['image'] = $image_path;
-        $validated['path'] = $path;
         $validated['title'] = $request->title;
         $validated['content'] = $request->content;
         $validated['template'] = $request->template;
@@ -96,13 +131,17 @@ class PageController extends Controller
         $validated['is_dynamic'] = empty($request->is_dynamic) ? 0 : 1;
         $validated['active'] = empty($request->active) ? 0 : 1;
 
+        $prepared = $this->prepareData($request->all());
+        $validated = array_merge($validated, $prepared);
+        $validated['path'] = $path;
+
         $page = Page::create($validated);
 
         if ($request->input('submit') == 'save_and_close') {
-            return redirect(route('admin.page.pages'))->with('success',__('elfcms::default.page_created_successfully'));
+            return redirect(route('admin.page.pages'))->with('success', __('elfcms::default.page_created_successfully'));
         }
 
-        return redirect(route('admin.page.pages.edit',$page->id))->with('success',__('elfcms::default.page_created_successfully'));
+        return redirect(route('admin.page.pages.edit', $page->id))->with('success', __('elfcms::default.page_created_successfully'));
     }
 
     /**
@@ -125,21 +164,45 @@ class PageController extends Controller
     public function edit(Page $page)
     {
         //$page->content = $page->getOriginal('content');
-        $templates = Views::list('elfcms/public/pages','publicviews');
+        $templates = Views::list('elfcms/public/pages', 'publicviews');
         if (empty($templates)) {
-            $templates = array_merge($templates,Views::list('pages','elfcmsviews','elfcms'));
+            $templates = array_merge($templates, Views::list('pages', 'elfcmsviews', 'elfcms'));
         }
         if (empty($templates)) {
-            $templates = array_merge($templates,Views::list('resources/views/pages','elfcmsdev','elfcms'));
+            $templates = array_merge($templates, Views::list('resources/views/pages', 'elfcmsdev', 'elfcms'));
         }
-        $templates = array_merge($templates,Views::list('public/pages','publicviews'));
-        return view('elfcms::admin.page.pages.edit',[
+        $templates = array_merge($templates, Views::list('public/pages', 'publicviews'));
+
+        $moduleName = 'standard';
+        if (!empty($page->module)) $moduleName = $page->module;
+        $module = $this->availableModules[$moduleName] ?? [];
+        $moduleTemplates = [];
+        if ($moduleName == 'standard') {
+            $module = [
+                'name' => __('elfcms::default.standard_page'),
+            ];
+        } else {
+            $moduleTemplates = Views::list('elfcms/public/'.$moduleName, 'publicviews');
+            $moduleTemplates = array_merge($moduleTemplates, Views::list('public/'.$moduleName, 'publicviews'));
+        }
+        $class = null;
+        if (!empty($module) && !empty($module['class'])) {
+            $class = $module['class'];
+        }
+        $moduleItemList = $class ? $class::all() : [];
+
+        return view('elfcms::admin.page.pages.edit', [
             'page' => [
-                'title' => __('elfcms::default.edit_page').' #' . $page->id,
+                'title' => __('elfcms::default.edit_page') . ' #' . $page->id,
                 'current' => url()->current(),
             ],
             'pageData' => $page,
             'templates' => $templates,
+            'module' => $module,
+            'moduleName' => $moduleName,
+            'module_options' => $page->module_options,
+            'moduleItemList' => $moduleItemList,
+            'moduleTemplates' => $moduleTemplates,
         ]);
     }
 
@@ -158,20 +221,17 @@ class PageController extends Controller
             'image' => 'nullable|file|max:2024',
         ]);
 
-        $path = $request->path;
-        if (!empty($request->path) && !Str::startsWith($request->path,'/')) {
-            $path = '/' . $request->path;
-        }
 
         $image_path = $request->image_path;
         if (!empty($request->file()['image'])) {
             $image_path = $request->file()['image']->store('pages/image');
         }
 
+        $prepared = $this->prepareData($request->all());
+
         $page->image = $image_path;
         $page->name = $validated['name'];
         $page->slug = $validated['slug'];
-        $page->path = $path;
         $page->title = $request->title;
         $page->content = $request->content;
         $page->template = $request->template;
@@ -179,15 +239,21 @@ class PageController extends Controller
         $page->meta_keywords = $request->meta_keywords;
         $page->meta_description = $request->meta_description;
         $page->is_dynamic = empty($request->is_dynamic) ? 0 : 1;
+        $page->module = $prepared['module'];
+        $page->module_id = $prepared['module_id'];
+        $page->module_options = $prepared['module_options'];
         $page->active = empty($request->active) ? 0 : 1;
+        if (!empty($request->path)) {
+            $page->path = '/' . trim($request->path);
+        }
 
         $page->save();
 
         if ($request->input('submit') == 'save_and_close') {
-            return redirect(route('admin.page.pages'))->with('success',__('elfcms::default.page_edited_successfully'));
+            return redirect(route('admin.page.pages'))->with('success', __('elfcms::default.page_edited_successfully'));
         }
 
-        return redirect(route('admin.page.pages.edit',$page->id))->with('success',__('elfcms::default.page_edited_successfully'));
+        return redirect(route('admin.page.pages.edit', $page->id))->with('success', __('elfcms::default.page_edited_successfully'));
     }
 
     /**
@@ -199,9 +265,51 @@ class PageController extends Controller
     public function destroy(Page $page)
     {
         if (!$page->delete()) {
-            return redirect(route('admin.page.pages'))->withErrors(['pagedelerror'=>'Error of page deleting']);
+            return redirect(route('admin.page.pages'))->withErrors(['pagedelerror' => 'Error of page deleting']);
         }
 
-        return redirect(route('admin.page.pages'))->with('success','Page deleted successfully');
+        return redirect(route('admin.page.pages'))->with('success', 'Page deleted successfully');
+    }
+
+    protected function prepareData(array $data): array
+    {
+        $prepared = $data;
+
+        if (!empty($data['module'])) {
+            $prepared['module'] = $data['module'];
+            $prepared['module_id'] = $data['module_id'] ?? null;
+            $prepared['module_options'] = !empty($data['module_options']) ? $data['module_options'] : [];
+        } else {
+            $prepared['module'] = null;
+            $prepared['module_id'] = null;
+            $prepared['module_options'] = null;
+        }
+
+        return $prepared;
+    }
+
+    public function getModuleOptions(string $module)
+    {
+        if (!isset($this->availableModules[$module])) {
+            //abort(404);
+            return null;
+        }
+        $class = null;
+        if (!empty($this->availableModules[$module]['class'])) {
+            $class = $this->availableModules[$module]['class'];
+        }
+
+        $moduleItemList = $class ? $class::all() : [];
+
+        $moduleTemplates = [];
+        if ($module != 'standard') {
+            $moduleTemplates = Views::list('elfcms/public/'.$module, 'publicviews');
+            $moduleTemplates = array_merge($moduleTemplates, Views::list('public/'.$module, 'publicviews'));
+        }
+
+        return view($this->availableModules[$module]['options_view'], [
+            'moduleItemList' => $moduleItemList,
+            'moduleTemplates' => $moduleTemplates,
+        ]);
     }
 }

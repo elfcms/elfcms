@@ -2,8 +2,16 @@
 
 @section('pagecontent')
     <div class="table-search-box">
-        <a href="{{ route('admin.menus.items.create', $menu) }}"
-            class="button round-button theme-button">
+        <a href="{{ route('admin.menus.index') }}" class="button round-button theme-button"
+            style="color:var(--default-color);">
+            {!! iconHtmlLocal('elfcms/admin/images/icons/buttons/arrow_back.svg', svg: true) !!}
+            <span class="button-collapsed-text">
+                {{ __('elfcms::default.back') }}
+            </span>
+        </a>
+    </div>
+    <div class="table-search-box">
+        <a href="{{ route('admin.menus.items.create', $menu) }}" class="button round-button theme-button">
             {!! iconHtmlLocal('elfcms/admin/images/icons/plus.svg', svg: true) !!}
             <span>{{ __('elfcms::default.create_menu_item') }}</span>
         </a>

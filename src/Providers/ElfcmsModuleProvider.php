@@ -108,10 +108,6 @@ class ElfcmsModuleProvider extends ServiceProvider
         ]);
 
         $this->app->booted(function () {
-            /* if (config('elfcms.elfcms.backup.enabled')) {
-                $schedule = $this->app->make(Schedule::class);
-                $schedule->command('elfcms:backup')->cron(config('elfcms.elfcms.backup.schedule'));
-            } */
             $this->scheduleCommands();
         });
 
@@ -178,7 +174,7 @@ class ElfcmsModuleProvider extends ServiceProvider
         $disks = config('elfcms.elfcms.disks');
         if (!empty($disks)) {
             foreach ($disks as $name => $disk) {
-                config(["filesystems.disks.$name" => $config['disks'][$name]]); //config("elfcms.elfcms.disks.$name")]);
+                config(["filesystems.disks.$name" => $config['disks'][$name]]);
             }
         }
         if (!config('elfcms.elfcms.disks.elfcmsviews')) {
@@ -211,12 +207,22 @@ class ElfcmsModuleProvider extends ServiceProvider
             }
         }
 
+        $configs = config('elfcms');
+        $pageModules = [];
+        if (!empty($configs)) {
+            foreach ($configs as $name => $config) {
+                if (!empty($config['pages'])) {
+                    $pageModules[$name] = $config['pages'];
+                }
+            }
+        }
+        config(['elfcms.elfcms.page_modules' => $pageModules]);
+
         try {
             ElfLocales::set();
         } catch (\Exception $e) {
             //
         }
-
 
         $router->pushMiddlewareToGroup('web', Maintenance::class);
 

@@ -1,6 +1,15 @@
 @extends('elfcms::admin.layouts.main')
 
 @section('pagecontent')
+    <div class="table-search-box">
+        <a href="{{ route('admin.fragment.items') }}" class="button round-button theme-button"
+            style="color:var(--default-color);">
+            {!! iconHtmlLocal('elfcms/admin/images/icons/buttons/arrow_back.svg', svg: true) !!}
+            <span class="button-collapsed-text">
+                {{ __('elfcms::default.back') }}
+            </span>
+        </a>
+    </div>
     <div class="item-form">
         <h2>{{ __('elfcms::default.edit_item') }} {{ $item->id }}</h2>
         <form action="{{ route('admin.fragment.items.update', $item->id) }}" method="POST" enctype="multipart/form-data">

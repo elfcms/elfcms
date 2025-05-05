@@ -749,4 +749,8 @@ return [
     'module_name_not_found' => 'Модуль :module не найден',
     'information_about_modules_is_missing' => 'Информация о модулях отсутствует',
     'error_loading_modules_information_missing' => 'Ошибка загрузки модулей, отсутствует информация',
+    'standard_page' => 'Стандартная страница',
+    'module_element_must_be_specified' => 'Необходимо указать элемент модуля',
+    'no_module_element_specified' => 'Элемент модуля не указан',
+    'page_already_exists' => 'Страница уже существует',
 ];

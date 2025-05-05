@@ -2,7 +2,7 @@
     <div id="toppanel">
         <div class="pageinfo">
             <div class="paginfo-title">
-                <h1>{{ $page['title'] }}</h1>
+                <h1>{{ $page['title'] ?? $pageConfig['title'] }}</h1>
             </div>
         </div>
         <div class="userinfo">

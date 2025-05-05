@@ -1,12 +1,15 @@
 @extends('elfcms::admin.layouts.main')
 
 @section('pagecontent')
-    {{-- @if (Session::has('success'))
-        <x-elf-notify type="success" title="{{ __('elfcms::default.success') }}" text="{{ Session::get('success') }}" />
-    @endif
-    @if ($errors->any())
-        <x-elf-notify type="error" title="{{ __('elfcms::default.error') }}" text="{!! '<ul><li>' . implode('</li><li>', $errors->all()) . '</li></ul>' !!}" />
-    @endif   --}}
+    <div class="table-search-box">
+        <a href="{{ route('admin.email.addresses') }}" class="button round-button theme-button"
+            style="color:var(--default-color);">
+            {!! iconHtmlLocal('elfcms/admin/images/icons/buttons/arrow_back.svg', svg: true) !!}
+            <span class="button-collapsed-text">
+                {{ __('elfcms::default.back') }}
+            </span>
+        </a>
+    </div>
 
     <div class="item-form">
         <h2>{{ __('elfcms::default.create_email_address') }}</h2>
@@ -35,8 +38,10 @@
             </div>
 
             <div class="button-box single-box">
-                <button type="submit" class="button color-text-button success-button">{{ __('elfcms::default.submit') }}</button>
-                <a href="{{ route('admin.email.addresses') }}" class="button color-text-button">{{ __('elfcms::default.cancel') }}</a>
+                <button type="submit"
+                    class="button color-text-button success-button">{{ __('elfcms::default.submit') }}</button>
+                <a href="{{ route('admin.email.addresses') }}"
+                    class="button color-text-button">{{ __('elfcms::default.cancel') }}</a>
             </div>
         </form>
     </div>

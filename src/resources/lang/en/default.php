@@ -749,4 +749,8 @@ return [
     'module_name_not_found' => 'Module :module not found',
     'information_about_modules_is_missing' => 'Information about modules is missing',
     'error_loading_modules_information_missing' => 'Error loading modules information missing',
+    'standard_page' => 'Standard page',
+    'module_element_must_be_specified' => 'Module element must be specified',
+    'no_module_element_specified' => 'No module element specified',
+    'page_already_exists' => 'Page already exists',
 ];

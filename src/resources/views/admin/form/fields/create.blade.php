@@ -1,17 +1,26 @@
 @extends('elfcms::admin.layouts.main')
 
 @section('pagecontent')
+    <div class="table-search-box">
+        <a href="{{ route('admin.forms.show', $form) }}" class="button round-button theme-button"
+            style="color:var(--default-color);">
+            {!! iconHtmlLocal('elfcms/admin/images/icons/buttons/arrow_back.svg', svg: true) !!}
+            <span class="button-collapsed-text">
+                {{ __('elfcms::default.back') }}
+            </span>
+        </a>
+    </div>
 
     <div class="item-form">
         <h2>{{ __('elfcms::default.create_field') }}</h2>
-        <form action="{{ route('admin.forms.fields.store',['form'=>$form]) }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('admin.forms.fields.store', ['form' => $form]) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('POST')
             <div class="colored-rows-box">
                 <div class="input-box colored">
                     <label>{{ __('elfcms::default.form') }}</label>
                     <div class="input-wrapper">
-                        #{{ $form->id }} {{ $form->title ?? $form->name ?? $form->code }}
+                        #{{ $form->id }} {{ $form->title ?? ($form->name ?? $form->code) }}
                     </div>
                 </div>
                 <div class="input-box colored">
@@ -19,9 +28,10 @@
                     <div class="input-wrapper">
                         <select name="group_id" id="group_id">
                             <option value="null"> {{ __('elfcms::default.none') }} </option>
-                        @foreach ($groups as $item)
-                            <option value="{{ $item->id }}" @if($group == $item->id) selected @endif>{{ $item->name }}</option>
-                        @endforeach
+                            @foreach ($groups as $item)
+                                <option value="{{ $item->id }}" @if ($group == $item->id) selected @endif>
+                                    {{ $item->name }}</option>
+                            @endforeach
                         </select>
                     </div>
                 </div>
@@ -98,9 +108,9 @@
                     <label for="type_id">{{ __('elfcms::default.field_type') }}</label>
                     <div class="input-wrapper">
                         <select name="type_id" id="type_id">
-                        @foreach ($types as $item)
-                            <option value="{{ $item->id }}">{{ $item->name }}</option>
-                        @endforeach
+                            @foreach ($types as $item)
+                                <option value="{{ $item->id }}">{{ $item->name }}</option>
+                            @endforeach
                         </select>
                     </div>
                 </div>
@@ -129,43 +139,51 @@
                                 </div>
                                 <div class="options-table-string-line" data-line="0">
                                     <div class="options-table-string">
-                                        <input type="text" name="options_new[0][value]" id="option_new_value_0" data-option-value>
+                                        <input type="text" name="options_new[0][value]" id="option_new_value_0"
+                                            data-option-value>
                                     </div>
                                     <div class="options-table-string">
-                                        <input type="text" name="options_new[0][text]" id="option_new_text_0" data-option-text>
+                                        <input type="text" name="options_new[0][text]" id="option_new_text_0"
+                                            data-option-text>
                                     </div>
                                     <div class="options-table-string">
-                                        <input type="checkbox" name="options_new[0][selected]" id="option_new_selected_0" data-option-selected>
+                                        <input type="checkbox" name="options_new[0][selected]" id="option_new_selected_0"
+                                            data-option-selected>
                                     </div>
                                     <div class="options-table-string">
-                                        <input type="checkbox" name="options_new[0][disabled]" id="option_new_disabled_0" data-option-disabled>
+                                        <input type="checkbox" name="options_new[0][disabled]" id="option_new_disabled_0"
+                                            data-option-disabled>
                                     </div>
                                     <div class="options-table-string">
-                                        <input type="checkbox" name="options_new[0][deleted]" id="option_new_deleted_0" data-option-deleted>
+                                        <input type="checkbox" name="options_new[0][deleted]" id="option_new_deleted_0"
+                                            data-option-deleted>
                                     </div>
                                     <div class="options-table-string"></div>
                                 </div>
                             </div>
-                            <button type="button" class="button simple-button" id="addoptionline">{{ __('elfcms::default.add_option') }}</button>
+                            <button type="button" class="button simple-button"
+                                id="addoptionline">{{ __('elfcms::default.add_option') }}</button>
                         </div>
                     </div>
                 </div>
             </div>
             <div class="button-box single-box">
-                <button type="submit" class="button color-text-button success-button">{{ __('elfcms::default.submit') }}</button>
-                <button type="submit" name="submit" value="save_and_close" class="button color-text-button info-button">{{ __('elfcms::default.save_and_close') }}</button>
-                <a href="{{ route('admin.forms.show', $form) }}" class="button color-text-button">{{ __('elfcms::default.cancel') }}</a>
+                <button type="submit"
+                    class="button color-text-button success-button">{{ __('elfcms::default.submit') }}</button>
+                <button type="submit" name="submit" value="save_and_close"
+                    class="button color-text-button info-button">{{ __('elfcms::default.save_and_close') }}</button>
+                <a href="{{ route('admin.forms.show', $form) }}"
+                    class="button color-text-button">{{ __('elfcms::default.cancel') }}</a>
             </div>
         </form>
     </div>
     <script>
-    inputSlugInit()
+        inputSlugInit()
 
-    fieldGroupInit()
+        fieldGroupInit()
 
-    showOptionsSelect('select#type_id','#optionsbox')
-    optionBoxInit()
-    onlyOneCheckedInit('[data-option-selected]','[data-option-selected]')
+        showOptionsSelect('select#type_id', '#optionsbox')
+        optionBoxInit()
+        onlyOneCheckedInit('[data-option-selected]', '[data-option-selected]')
     </script>
-
 @endsection

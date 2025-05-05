@@ -2,7 +2,7 @@
 
 @section('pagecontent')
     <div class="table-search-box">
-        <a href="{{ route('admin.system.index') }}" class="button round-button theme-button" style="color:var(--);">
+        <a href="{{ route('admin.system.index') }}" class="button round-button theme-button" style="color:var(--default-color);">
             {!! iconHtmlLocal('elfcms/admin/images/icons/buttons/arrow_back.svg', svg: true) !!}
             <span class="button-collapsed-text">
                 {{ __('elfcms::default.back') }}

@@ -349,6 +349,12 @@ header#header {
     box-shadow: 0.1rem 0 0.5rem 0 rgba(0, 0, 25, 0.2);
 }
 
+nav#mainmenu {
+    position: sticky;
+    top: 0;
+    margin-bottom: calc(var(--footer-height) + 4rem);
+}
+
 .logobox {
     display: flex;
     align-items: center;
@@ -1525,6 +1531,10 @@ footer {
 
 .table-search-box .input-wrapper {
     display: flex;
+}
+
+.input-wrapper.full-width-wrapper{
+    width: 100%;
 }
 
 .input-wrapper.hidden {

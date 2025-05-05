@@ -1,6 +1,15 @@
 @extends('elfcms::admin.layouts.main')
 
 @section('pagecontent')
+    <div class="table-search-box">
+        <a href="{{ route('admin.forms.index') }}" class="button round-button theme-button"
+            style="color:var(--default-color);">
+            {!! iconHtmlLocal('elfcms/admin/images/icons/buttons/arrow_back.svg', svg: true) !!}
+            <span class="button-collapsed-text">
+                {{ __('elfcms::default.back') }}
+            </span>
+        </a>
+    </div>
 
     <div class="table-search-box">
         <a href="{{ route('admin.forms.groups.create', $form) }}" class="button round-button theme-button">
@@ -9,7 +18,8 @@
         </a>
     </div>
 
-    <div class="form-container" @if(!empty($pageConfig['second_color'])) style="--second-color:{{$pageConfig['second_color']}};" @endif>
+    <div class="form-container"
+        @if (!empty($pageConfig['second_color'])) style="--second-color:{{ $pageConfig['second_color'] }};" @endif>
 
         @if (!empty($form->groups))
             <div class="form-groups" data-form="{{ $form->id }}">
@@ -30,8 +40,7 @@
                                 </div>
                                 <div class="form-group-button-box">
                                     <a href="{{ route('admin.forms.groups.edit', [$form, $group]) }}"
-                                        class="button icon-button"
-                                        title="{{ __('elfcms::default.edit') }}">
+                                        class="button icon-button" title="{{ __('elfcms::default.edit') }}">
                                         {!! iconHtmlLocal('elfcms/admin/images/icons/buttons/edit.svg', svg: true) !!}
                                     </a>
                                     <form action="{{ route('admin.forms.groups.destroy', [$form, $group]) }}"
@@ -56,7 +65,8 @@
                             </div>
                             <div class="form-group-fields-buttons">
                                 <a href="{{ route('admin.forms.fields.create', ['form' => $form, 'group' => $group->id]) }}"
-                                    class="button round-button theme-button" @if(!empty($pageConfig['second_color'])) style="--default-color:{{$pageConfig['second_color']}};" @endif>
+                                    class="button round-button theme-button"
+                                    @if (!empty($pageConfig['second_color'])) style="--default-color:{{ $pageConfig['second_color'] }};" @endif>
                                     {!! iconHtmlLocal('elfcms/admin/images/icons/plus.svg', svg: true) !!}
                                     <span class="button-collapsed-text">{{ __('elfcms::default.create_field') }}</span>
                                 </a>
@@ -74,7 +84,8 @@
 
     </div>
 
-    <div class="table-search-box" @if(!empty($pageConfig['second_color'])) style="--default-color:{{$pageConfig['second_color']}};" @endif>
+    <div class="table-search-box"
+        @if (!empty($pageConfig['second_color'])) style="--default-color:{{ $pageConfig['second_color'] }};" @endif>
         <a href="{{ route('admin.forms.fields.create', $form) }}" class="button round-button theme-button">
             {!! iconHtmlLocal('elfcms/admin/images/icons/plus.svg', svg: true) !!}
             <span>{{ __('elfcms::default.create_field') }}</span>

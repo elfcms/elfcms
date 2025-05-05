@@ -1,6 +1,15 @@
 @extends('elfcms::admin.layouts.main')
 
 @section('pagecontent')
+<div class="table-search-box">
+    <a href="{{ route('admin.filestorage.index') }}" class="button round-button theme-button"
+        style="color:var(--default-color);">
+        {!! iconHtmlLocal('elfcms/admin/images/icons/buttons/arrow_back.svg', svg: true) !!}
+        <span class="button-collapsed-text">
+            {{ __('elfcms::default.back') }}
+        </span>
+    </a>
+</div>
 
     <div class="item-form">
         <h2>{{ __('elfcms::default.edit_storage') }}</h2>

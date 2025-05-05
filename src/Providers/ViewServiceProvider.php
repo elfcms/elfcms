@@ -39,7 +39,8 @@ class ViewServiceProvider extends ServiceProvider
                     //dd([$menu,Route::currentRouteName()]);
                     $currentRoute = Route::currentRouteName();
                     $pageConfig = null;
-                    if (!empty($configs)) {
+                    $pageModules = [];
+                    /* if (!empty($configs)) {
                         foreach ($configs as $package => $config) {
                             if (!empty($config['menu'])) {
                                 foreach ($config['menu'] as $item) {
@@ -51,8 +52,13 @@ class ViewServiceProvider extends ServiceProvider
                                     }
                                 }
                             }
+                            if (!empty($config['pages'])) {
+                                foreach ($config['pages'] as $module) {
+                                    $pageModules[$package] = $module;
+                                }
+                            }
                         }
-                    }
+                    } */
                     $adminPath = $config['elfcms']['admin_path'] ?? '/admin';
                     $vendorPath = 'elfcms/admin';
                     $cssPath = '/css/style.css';
@@ -61,6 +67,19 @@ class ViewServiceProvider extends ServiceProvider
                     $scripts = [];
                     if (!empty($configs)) {
                         foreach ($configs as $name => $config) {
+                            if (!empty($config['menu'])) {
+                                foreach ($config['menu'] as $item) {
+                                    if (empty($item['parent_route'])) {
+                                        $item['parent_route'] = $item['route'];
+                                    }
+                                    if (Str::startsWith($currentRoute,$item['parent_route'])) {
+                                        $pageConfig = $item;
+                                    }
+                                }
+                            }
+                            if (!empty($config['pages'])) {
+                                $pageModules[$name] = $config['pages'];
+                            }
                             if ($name == 'elfcms') {
                                 $name = '';
                             }
@@ -79,7 +98,8 @@ class ViewServiceProvider extends ServiceProvider
                         ->with('admin_scripts',$scripts)
                         ->with('adminPath',$adminPath)
                         ->with('pageConfig',$pageConfig)
-                        ->with('currentRoute',$currentRoute);
+                        ->with('currentRoute',$currentRoute)
+                        ->with('pageModules',$pageModules);
                 });
                 View::composer('*layouts*.main', function($view) {
                     $view->with('elfSiteSettings',Setting::values());

@@ -1,19 +1,15 @@
-@extends('elfcms::admin.layouts.form')
+@extends('elfcms::admin.layouts.main')
 
-@section('formpage-content')
-
-    {{-- @if (Session::has('success'))
-        <div class="alert alert-success">{{ Session::get('success') }}</div>
-    @endif
-    @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul class="errors-list">
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
+@section('pagecontent')
+    <div class="table-search-box">
+        <a href="{{ route('admin.form-results.index') }}" class="button round-button theme-button"
+            style="color:var(--default-color);">
+            {!! iconHtmlLocal('elfcms/admin/images/icons/buttons/arrow_back.svg', svg: true) !!}
+            <span class="button-collapsed-text">
+                {{ __('elfcms::default.back') }}
+            </span>
+        </a>
     </div>
-    @endif --}}
 
     <div class="item-form">
         <h2>{{ __('elfcms::default.form_result') }} #{{ $result->id }}</h2>
@@ -21,14 +17,14 @@
         <div>
             <div class="colored-rows-box">
                 @foreach ($fields as $field)
-                @if(isset($result->data[$field->name]))
-                <div class="input-box colored">
-                    <span class="input-box-label">{{ $field->title }}</span>
-                    <div class="input-wrapper">
-                        <span>{{ $field->type->name == 'checkbox' ? ($result->data[$field->name] == 1 ? '✓' : '-') : $result->data[$field->name] }}</span>
-                    </div>
-                </div>
-                @endif
+                    @if (isset($result->data[$field->name]))
+                        <div class="input-box colored">
+                            <span class="input-box-label">{{ $field->title }}</span>
+                            <div class="input-wrapper">
+                                <span>{{ $field->type->name == 'checkbox' ? ($result->data[$field->name] == 1 ? '✓' : '-') : $result->data[$field->name] }}</span>
+                            </div>
+                        </div>
+                    @endif
                 @endforeach
 
             </div>
@@ -41,5 +37,4 @@
         </div>
         {{-- </form> --}}
     </div>
-
 @endsection

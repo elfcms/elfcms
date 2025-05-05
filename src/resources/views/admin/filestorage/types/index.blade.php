@@ -1,6 +1,16 @@
 @extends('elfcms::admin.layouts.main')
 
 @section('pagecontent')
+    <div class="table-search-box">
+        <a href="{{ route('admin.filestorage.index') }}" class="button round-button theme-button"
+            style="color:var(--default-color);">
+            {!! iconHtmlLocal('elfcms/admin/images/icons/buttons/arrow_back.svg', svg: true) !!}
+            <span class="button-collapsed-text">
+                {{ __('elfcms::default.back') }}
+            </span>
+        </a>
+    </div>
+
     <form name="typeform" class="data-table-box" method="post" action="{{ route('admin.ajax.filestorage.type.fullsave') }}">
         @csrf
         <div class="grid-table-wrapper">
@@ -148,9 +158,12 @@
                         (result) => {
                             if (result.ok) {
                                 return result.json()
-                            }
-                            else {
-                                throw {status: result.status, message: result.statusText, error: new Error()};
+                            } else {
+                                throw {
+                                    status: result.status,
+                                    message: result.statusText,
+                                    error: new Error()
+                                };
                             }
                         }
                     ).then(
@@ -199,16 +212,14 @@
                     ).catch(error => {
                         preloadUnset(preloader);
                         popup({
-                            title:'{{ __('elfcms::default.error') }} ' + error.status,
+                            title: '{{ __('elfcms::default.error') }} ' + error.status,
                             content: error.message,
-                            buttons:[
-                                {
-                                    title:'OK',
-                                    class:'button color-text-button danger-button',
-                                    callback:'close'
-                                }
-                            ],
-                            class:'danger'
+                            buttons: [{
+                                title: 'OK',
+                                class: 'button color-text-button danger-button',
+                                callback: 'close'
+                            }],
+                            class: 'danger'
                         });
                     });
                 }
@@ -219,5 +230,4 @@
         getEmptyItem();
         autoSlug('.autoslug');
     </script>
-
 @endsection
