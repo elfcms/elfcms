@@ -26,6 +26,7 @@ use Elfcms\Elfcms\Http\Middleware\VisitStatistics;
 use Illuminate\Routing\Router;
 use Illuminate\Support\ServiceProvider;
 use Elfcms\Elfcms\Providers\EventServiceProvider;
+use Elfcms\Elfcms\Services\PageConfigService;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\Facades\Config;
@@ -45,6 +46,10 @@ class ElfcmsModuleProvider extends ServiceProvider
         $this->app->register(ViewServiceProvider::class);
         $this->app->register(SitePublicProvider::class);
 
+        $this->app->singleton('pageconfig', function ($app) {
+            return new \Elfcms\Elfcms\Services\PageConfigService($app['request']);
+        });
+
         require_once __DIR__ . '/../Aux/UrlParams.php';
         require_once __DIR__ . '/../Aux/FormSaver.php';
         require_once __DIR__ . '/../Aux/Helpers.php';
@@ -61,6 +66,7 @@ class ElfcmsModuleProvider extends ServiceProvider
         $loader->alias('Locales', 'Elfcms\Elfcms\Aux\Locales');
         $loader->alias('TextPrepare', 'Elfcms\Elfcms\Aux\TextPrepare');
         $loader->alias('AdminMenu', 'Elfcms\Elfcms\Aux\Admin\Menu');
+        $loader->alias('PageConfig', 'Elfcms\Elfcms\Facades\PageConfig');
 
         $helpers = glob(base_path() . '/*/elfcms/*/src/Helpers/*{.php}', GLOB_BRACE | GLOB_MARK);
 

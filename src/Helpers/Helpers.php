@@ -383,3 +383,35 @@ if (!function_exists('dispatch_backup_now')) {
 
 
 /* /Backup */
+
+/* function page_config(): \Elfcms\Elfcms\Services\PageConfigService
+{
+    return app('pageconfig');
+} */
+
+if (!function_exists('page_config')) {
+    function page_config(null|string|array $key = null, mixed $value = null): mixed
+    {
+        $config = app('pageconfig');
+
+        // page_config() → all
+        if (is_null($key)) {
+            return $config->all();
+        }
+
+        // page_config(['title' => '...', ...]) → merge
+        if (is_array($key)) {
+            $config->merge($key);
+            return $config->all();
+        }
+
+        // page_config('key') → get
+        if (func_num_args() === 1) {
+            return $config->get($key);
+        }
+
+        // page_config('key', 'value') → set
+        $config->set($key, $value);
+        return $value;
+    }
+}

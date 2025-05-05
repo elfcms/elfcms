@@ -5,6 +5,7 @@ namespace Elfcms\Elfcms\Providers;
 use Elfcms\Elfcms\Aux\Admin\Menu;
 use Elfcms\Elfcms\Models\Setting;
 use Elfcms\Elfcms\View\Composers\EmailEventComposer;
+use Elfcms\Elfcms\Services\PageConfigService;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\View;
@@ -108,6 +109,20 @@ class ViewServiceProvider extends ServiceProvider
                     $view->with('elfSiteSettings',Setting::values());
                 });
                 View::composer('*emails.events.*', EmailEventComposer::class);
+
+                //Public
+                View::composer('*public.*', function ($view) {
+
+                    $pageConfigAll = page_config();
+                    if (empty($pageConfigAll['title'])) page_config('title',Setting::value('site_title') ?? '');
+                    if (empty($pageConfigAll['description'])) page_config('description',Setting::value('site_description') ?? '');
+                    if (empty($pageConfigAll['keywords'])) page_config('keywords',Setting::value('site_keywords') ?? '');
+                    if (empty($pageConfigAll['lang'])) page_config('lang',Setting::value('site_locale') ?? 'en');
+                    if (empty($pageConfigAll['logo'])) page_config('logo',Setting::value('site_logo') ?? '');
+                    if (empty($pageConfigAll['icon'])) page_config('icon',Setting::value('site_icon') ?? '');
+            
+                    $view->with('pageConfig', page_config());
+                });
             }
         }
         catch (\Exception $e) {
