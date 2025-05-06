@@ -25,8 +25,17 @@ class PageConfigService
 
     public function set(string $key, mixed $value): void
     {
-        logger()->info("PageConfig set $key = $value");
-        $this->data[$key] = $value;
+        $segments = explode('.', $key);
+        $data = &$this->data;
+
+        foreach ($segments as $segment) {
+            if (!isset($data[$segment]) || !is_array($data[$segment])) {
+                $data[$segment] = [];
+            }
+            $data = &$data[$segment];
+        }
+
+        $data = $value;
     }
 
     public function merge(array $data): void
@@ -34,9 +43,20 @@ class PageConfigService
         $this->data = array_merge($this->data, $data);
     }
 
-    public function get(string $key)
+    public function get(string $key, mixed $default = null): mixed
     {
-        return $this->data[$key];
+        $segments = explode('.', $key);
+        $data = $this->data;
+
+        foreach ($segments as $segment) {
+            if (is_array($data) && array_key_exists($segment, $data)) {
+                $data = $data[$segment];
+            } else {
+                return $default;
+            }
+        }
+
+        return $data;
     }
 
     public function all(): array

@@ -1,4 +1,4 @@
-@extends('public.layouts.basic')
+@extends('public.sites.default.layouts.main')
 
 @section('head')
     @parent

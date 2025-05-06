@@ -19,6 +19,7 @@ class SettingController extends \App\Http\Controllers\Controller
         ['code' => 'site_slogan', 'name' => 'Site slogan', 'params' => '{}'],
         ['code' => 'site_keywords', 'name' => 'Site keywords', 'params' => '{"type": "text"}'],
         ['code' => 'site_description', 'name' => 'Site description', 'params' => '{"type": "text"}'],
+        ['code' => 'site_template', 'name' => 'Site template', 'params' => '{"type": "list"}', 'value' => 'default'],
         ['code' => 'site_locale', 'name' => 'Site locale', 'params' => '{"type": "list"}'],
         ['code' => 'admin_locale', 'name' => 'Interface Language', 'params' => '{"type": "list"}'],
         ['code' => 'site_statistics_use', 'name' => 'Use statistics', 'params' => '{"type": "checkbox"}', 'value' => 0],
