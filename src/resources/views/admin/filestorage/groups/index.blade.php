@@ -122,7 +122,7 @@
                 e.preventDefault();
                 popup({
                     title: '{{ __('elfcms::default.are_you_sure') }}',
-                    content: '{{ __('elfcms::default.do_you_want_to_save_your_changes') }}',
+                    content: '{{ __('elfcms::default.are_you_sure_you_want_to_save_the_changes') }}',
                     buttons: [{
                             title: 'OK',
                             class: 'button color-text-button info-button',

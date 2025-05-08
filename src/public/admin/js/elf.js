@@ -2,6 +2,10 @@ if (typeof adminPath === 'undefined') {
     var adminPath = '/admin';
 }
 
+function uniqid() {
+    return Math.floor(Math.random() * Date.now() * 1000);
+}
+
 function popup(params = {}) {
     if (params.reload == undefined) {
         params.reload = true;
@@ -1235,7 +1239,7 @@ const csrfInterval = setInterval(function () {
     const tokenMeta = document.querySelector('meta[name="csrf-token"]');
     const inputTokens = document.querySelectorAll('input[name="_token"]');
     if (tokenMeta || inputTokens) {
-        fetch("/elfcms/api/csrf",{headers:{'X-Requested-With': 'XMLHttpRequest'}})
+        fetch(adminPath+"/elfcms/api/csrf",{headers:{'X-Requested-With': 'XMLHttpRequest'}})
             .then((response) => {
                 return response.json();
             })

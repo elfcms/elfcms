@@ -21,7 +21,7 @@
                 <li @class([
                     'active' =>
                         Str::startsWith($currentRoute, $item['parent_route']),
-                ]) style="--i-color:{{ $item['color'] }}">
+                ]) style="--i-color:{{ $item['color'] ?? 'var(--text-color-default)' }}">
                     <a href="{{ route($item['route']) }}">
                         {{--  <img src="{{ $item['icon'] }}" alt=""> --}}
                         <div class="menu-icon">

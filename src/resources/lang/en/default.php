@@ -753,4 +753,7 @@ return [
     'module_element_must_be_specified' => 'Module element must be specified',
     'no_module_element_specified' => 'No module element specified',
     'page_already_exists' => 'Page already exists',
+
+    'are_you_sure_you_want_to_save_the_changes' => 'Are you sure you want to save the changes?',
+    'to_removal' => 'To removal',
 ];

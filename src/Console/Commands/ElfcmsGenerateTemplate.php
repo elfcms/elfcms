@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands;
+namespace Elfcms\Elfcms\Console\Commands;
 
 use Illuminate\Console\Command;
 use Elfcms\Elfcms\Models\Page;

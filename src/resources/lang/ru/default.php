@@ -753,4 +753,7 @@ return [
     'module_element_must_be_specified' => 'Необходимо указать элемент модуля',
     'no_module_element_specified' => 'Элемент модуля не указан',
     'page_already_exists' => 'Страница уже существует',
+
+    'are_you_sure_you_want_to_save_the_changes' => 'Вы уверены, что хотите сохранить изменения?',
+    'to_removal' => 'К удалению',
 ];

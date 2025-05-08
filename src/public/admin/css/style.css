@@ -36,6 +36,15 @@
     --primary-color: var(--color-010, #4133ff);
     --secondary-color: var(--color-110, #ca03e0);
 
+    --warn-highlight-color: #f9850050;
+    --error-highlight-color: #ff2b2b50;
+    --danger-highlight-color: #ff2b2b50;
+    --success-highlight-color: #00c23c50;
+    --info-highlight-color: #006de650;
+    --hint-highlight-color: #7fe60050;
+    --primary-highlight-color: #4133ff50;
+    --secondary-highlight-color: #ca03e050;
+
     --shade-color-05: rgba(0, 0, 0, 0.05);
     --shade-color-10: rgba(0, 0, 0, 0.1);
     --shade-color-20: rgba(0, 0, 0, 0.15);
@@ -338,8 +347,8 @@ header#header {
     display: flex;
     flex-direction: column;
     min-height: calc(100vh - var(--footer-height));
-    min-width: fit-content;
-    max-width: 320px;
+    min-width: 15rem;
+    max-width: 20rem;
     background-color: var(--background-color-default);
     background-image: linear-gradient(
         to left,
@@ -1051,6 +1060,11 @@ footer {
     animation: loadButton 2s linear infinite;
 }
 
+.small-button {
+    font-size: .8rem;
+    height: 2rem;
+}
+
 @keyframes loadButton {
     0% {
         transform: rotate(0deg);
@@ -1234,11 +1248,14 @@ footer {
     background-color: var(--background-color-bright);
 }
 .delete-box-wrapper i::after {
-    top: 0.25em;
-    left: 0.25em;
-    width: calc(100% - 0.5em);
-    height: calc(100% - 0.5em);
-    background-color: var(--light-color-90);
+    top: 0.25em !important;
+    left: 0.25em !important;
+    width: calc(100% - 0.5em) !important;
+    height: calc(100% - 0.5em) !important;
+    background-color: var(--danger-highlight-color);
+}
+.delete-box-wrapper input:checked + i::after {
+    background-color: var(--light-color-90)
 }
 
 .switchbox.hidden {

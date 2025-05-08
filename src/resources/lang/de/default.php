@@ -753,4 +753,7 @@ return [
     'module_element_must_be_specified' => 'Das Modulelement muss angegeben werden',
     'no_module_element_specified' => 'Kein Modulelement angegeben',
     'page_already_exists' => 'Seite existiert bereits',
+
+    'are_you_sure_you_want_to_save_the_changes' => 'Möchten Sie die Änderungen wirklich speichern?',
+    'to_removal' => 'Zum Löschen',
 ];

@@ -5,7 +5,7 @@
     <div class="big-container">
         <div class="bigtile-box">
             @foreach ($menuData as $data)
-            <a href="{{route($data['route'])}}" class="tile-item" style="--tile-color:{{$data['color']}}">
+            <a href="{{route($data['route'])}}" class="tile-item" style="--tile-color:{{$data['color'] ?? 'var(--text-color-default)'}}">
                 <div class="tile-image">
                     {{-- <img src="{{$data['big_icon'] ?? $data['icon']}}" alt="" width="64"> --}}
                     {!! iconHtmlLocal($data['big_icon'] ?? $data['icon'], 64, 64, true) !!}
