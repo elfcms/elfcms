@@ -46,6 +46,10 @@
             <x-elf-notify type="info" title="{{ __('elfcms::default.info') }}"
                 text="{!! Session::get('info') !!}" />
         @endif
+        @if (Session::has('action_result'))
+            <x-elf-notify type="info" title="{{ __('elfcms::default.info') }}"
+                text="{!! Session::get('action_result') !!}" />
+        @endif
         @if ($errors->any())
             <x-elf-notify type="error" title="{{ __('elfcms::default.error') }}" text="{!! '<ul><li>' . implode('</li><li>', $errors->all()) . '</li></ul>' !!}" />
         @endif
