@@ -24,7 +24,7 @@ return [
 
     'module_name' => 'elfcms',
     'module_title' => 'ELF CMS (Core)',
-    'version' => '3.0.9',
+    'version' => '3.0.11',
     'release_status' => 'beta',
     'release_date' => date('Y-m-d'),
 
