@@ -14,7 +14,7 @@
                                 @if (__('elfcms::default.' . $setting['code']) != 'elfcms::default.' . $setting['code'])
                                     {{ __('elfcms::default.' . $setting['code']) }}
                                 @else
-                                    {{ $setting['title'] }}
+                                    {{ $setting['title'] ?? '' }}
                                 @endif
                             </label>
                             <div class="input-wrapper">

@@ -16,7 +16,7 @@ class File extends Component
      * @return void
      */
     public function __construct(
-        public array $params, public string|null $template, public string|null $boxId, $value = null, $name = null, $accept = null, $download = false, $height = null, $width = null)
+        public array $params, public ?string $template = null, public ?string $boxId = null, $value = null, $name = null, $accept = null, $download = false, $height = null, $width = null)
     {
         $params['name'] = $params['name'] ?? $name;
         $params['value'] = $params['value'] ?? $value;
@@ -30,7 +30,7 @@ class File extends Component
         $params['height'] = $params['height'] ?? $height;
         $params['extension'] = empty($params['value']) ? null : fsExtension($params['value']);
         $params['icon'] = empty($params['extension']) ? null : fsIcon($params['extension']);
-        $params['isImage'] = in_array(strtolower($params['extension']),['jpg','jpeg','gif','png','bmp','webp','svg']);
+        $params['isImage'] = in_array(strtolower($params['extension']),['jpg','jpeg','gif','png','bmp','webp','svg','ico']);
         if (empty($params['file_name'])) {
             if (!empty($params['value'])) {
                 $params['file_name'] = basename($params['value']);

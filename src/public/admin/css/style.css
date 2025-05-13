@@ -565,6 +565,7 @@ main {
 .userinfo-name {
     padding: 0 var(--header-padding);
     font-weight: var(--fw-300, 300);
+    white-space: nowrap;
 }
 
 .userinfo-avatar {
@@ -1864,6 +1865,13 @@ footer {
 .grid-table td[colspan="15"],
 .grid-table th[colspan="15"] {
     grid-column: span 15;
+}
+
+.no-results-box {
+    padding: 1rem;
+    font-weight: 300;
+    color: var(--text-default-color);
+    text-align: center;
 }
 
 /* --- */

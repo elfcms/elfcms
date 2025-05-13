@@ -31,6 +31,10 @@
             <x-elfcms::ui.input.password name="password" id="password" autocomplete="nope"
                 placeholder="{{ __('elfcms::default.password') }}" />
         </div>
+        <div class="input-wrapper">
+            <x-elfcms::ui.checkbox.classic name="remember" id="remember" color="var(--color-020)" />
+            <label for="remember">{{ __('elfcms::default.remember_me') }}</label>
+        </div>
         <div class="button-box single-box">
             <button type="submit" name="submit" value="save" class="button color-text-button info-button wide-button">{{ __('elfcms::default.login') }}</button>
         </div>
