@@ -137,7 +137,7 @@ function itemPositionSuccess() {
         });
         const token = document.querySelector("input[name='_token']").value;
 
-        fetch("/elfcms/api/form/" + formId + "/fieldorder", {
+        fetch(adminPath+'/elfcms/api/form/' + formId + "/fieldorder", {
             method: "POST",
             headers: {
                 Accept: "application/json",

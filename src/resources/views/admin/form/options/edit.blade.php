@@ -20,7 +20,7 @@
 
     <div class="item-form">
         <h3>{{ __('elfcms::default.edit_form') }}</h3>
-        <form action="{{ route('admin.form.forms.update',$form->id) }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('admin.forms.update',$form->id) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="colored-rows-box">

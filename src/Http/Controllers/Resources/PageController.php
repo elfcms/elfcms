@@ -79,7 +79,6 @@ class PageController extends Controller
      */
     public function store(Request $request)
     {
-        $module = $this->availableModules[$request->module] ?? null;
         $validated = $request->validate([
             'name' => 'required|unique:Elfcms\Elfcms\Models\Page,name',
             'slug' => 'required|unique:Elfcms\Elfcms\Models\Page,slug',
@@ -88,16 +87,19 @@ class PageController extends Controller
         ], [
             'module_id.required' => __('elfcms::default.module_element_must_be_specified'),
         ]);
+        $module = $this->availableModules[$request->module] ?? null;
 
         $image_path = '';
         if (!empty($request->file()['image'])) {
             $image_path = $request->file()['image']->store('pages/image');
         }
 
-        $existsPage = Page::where('module',$request->module)->where('module_id',$request->module_id)->first();
-
+        $existsPage = null;
+        if ($request->module !== 'standard' && !empty($request->module_id)) {
+            $existsPage = Page::where('module', $request->module)->where('module_id', $request->module_id)->first();
+        }
         if (!empty($existsPage) && !empty($existsPage->id)) {
-            return back()->withErrors(['error'=>__('elfcms::default.page_already_exists')]);
+            return back()->withErrors(['error' => __('elfcms::default.page_already_exists')]);
         }
 
         $path = $request->path;
@@ -182,8 +184,8 @@ class PageController extends Controller
                 'name' => __('elfcms::default.standard_page'),
             ];
         } else {
-            $moduleTemplates = Views::list('elfcms/public/'.$moduleName, 'publicviews');
-            $moduleTemplates = array_merge($moduleTemplates, Views::list('public/'.$moduleName, 'publicviews'));
+            $moduleTemplates = Views::list('elfcms/public/' . $moduleName, 'publicviews');
+            $moduleTemplates = array_merge($moduleTemplates, Views::list('public/' . $moduleName, 'publicviews'));
         }
         $class = null;
         if (!empty($module) && !empty($module['class'])) {
@@ -244,7 +246,7 @@ class PageController extends Controller
         $page->module_options = $prepared['module_options'];
         $page->active = empty($request->active) ? 0 : 1;
         if (!empty($request->path)) {
-            $page->path = '/' . trim($request->path);
+            $page->path = '/' . trim(trim($request->path),'/');
         }
 
         $page->save();
@@ -303,8 +305,8 @@ class PageController extends Controller
 
         $moduleTemplates = [];
         if ($module != 'standard') {
-            $moduleTemplates = Views::list('elfcms/public/'.$module, 'publicviews');
-            $moduleTemplates = array_merge($moduleTemplates, Views::list('public/'.$module, 'publicviews'));
+            $moduleTemplates = Views::list('elfcms/public/' . $module, 'publicviews');
+            $moduleTemplates = array_merge($moduleTemplates, Views::list('public/' . $module, 'publicviews'));
         }
 
         return view($this->availableModules[$module]['options_view'], [

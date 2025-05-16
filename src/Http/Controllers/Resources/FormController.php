@@ -235,14 +235,14 @@ class FormController extends Controller
         $form->save();
 
         if ($request->input('submit') == 'save_and_open') {
-            return redirect(route('admin.form.forms.show',$form->id))->with('success',__('elfcms::default.form_edited_successfully'));
+            return redirect(route('admin.forms.show',$form->id))->with('success',__('elfcms::default.form_edited_successfully'));
         }
 
         if ($request->input('submit') == 'save_and_close') {
-            return redirect(route('admin.form.forms'))->with('success',__('elfcms::default.form_edited_successfully'));
+            return redirect(route('admin.forms.index'))->with('success',__('elfcms::default.form_edited_successfully'));
         }
 
-        return redirect(route('admin.form.forms.edit',$form->id))->with('success',__('elfcms::default.form_edited_successfully'));
+        return redirect(route('admin.forms.edit',$form->id))->with('success',__('elfcms::default.form_edited_successfully'));
     }
 
     /**
@@ -254,9 +254,9 @@ class FormController extends Controller
     public function destroy(Form $form)
     {
         if (!$form->delete()) {
-            return redirect(route('admin.form.forms'))->withErrors(['formdelerror'=>__('elfcms::default.form_delete_error')]);
+            return redirect(route('admin.forms.index'))->withErrors(['formdelerror'=>__('elfcms::default.form_delete_error')]);
         }
 
-        return redirect(route('admin.form.forms'))->with('success',__('elfcms::default.form_deleted_successfully'));
+        return redirect(route('admin.forms.index'))->with('success',__('elfcms::default.form_deleted_successfully'));
     }
 }

@@ -71,7 +71,7 @@ class SystemController extends Controller
                 //if ($availableModule['version'] == 'dev') continue;
                 $isset = 0;
                 foreach ($modules as $module) {
-                    if ($module['github'] == $availableModule['repo']) $isset++;
+                    if (!empty($module['github']) && !empty($availableModule['repo']) && ($module['github'] == $availableModule['repo'])) $isset++;
                 }
                 if ($isset === 0) {
                     $modulesToInstall[] = $availableModule;

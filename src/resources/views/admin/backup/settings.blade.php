@@ -103,7 +103,7 @@
             </div>
             <div class="button-box single-box">
                 <button type="submit"
-                    class="button color-text-button success-button">{{ __('elfcms::default.submit') }}</button>
+                    class="button color-text-button success-button">{{ __('elfcms::default.save') }}</button>
             </div>
         </form>
     </div>

@@ -38,16 +38,16 @@
                 datasets: [{
                         label: '{{ __('elfcms::default.unique_visits') }}',
                         data: {!! json_encode($chart['unique_visits']) !!},
-                        borderColor: '#2583fd',
-                        backgroundColor: '#2583fd',
+                        borderColor: '#ff2f21',
+                        backgroundColor: '#ff2f21',
                         borderWidth: 2,
                         cubicInterpolationMode: 'monotone'
                     },
                     {
                         label: '{{ __('elfcms::default.all_visits') }}',
                         data: {!! json_encode($chart['all_visits']) !!},
-                        borderColor: '#f96d00',
-                        backgroundColor: '#f96d00',
+                        borderColor: '#2583fd',
+                        backgroundColor: '#2583fd',
                         borderWidth: 2,
                         cubicInterpolationMode: 'monotone'
                     }

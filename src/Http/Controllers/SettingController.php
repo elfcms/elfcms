@@ -66,7 +66,7 @@ class SettingController extends \App\Http\Controllers\Controller
         return $result->value;
     }
 
-    public function save(SettingRequest $request)
+    public function save(Request $request)
     {
         $requestArray = $request->all();
         $settings = Setting::all();
@@ -81,10 +81,9 @@ class SettingController extends \App\Http\Controllers\Controller
                 }
             } elseif (!empty($params) && !empty($params['type']) && $params['type'] == 'checkbox') {
                 $setting->value = !empty($requestArray[$setting->code]) ? 1 : 0;
-            } else {
+            } elseif(!empty($requestArray[$setting->code])) {
                 $setting->value = $requestArray[$setting->code];
             }
-            //dd($setting);
             $setting->save();
         }
 

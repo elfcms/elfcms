@@ -39,7 +39,7 @@
                     </td>
                     <td>
                         @if ($field->group)
-                        <a href="{{ route('admin.form.groups.show',$field->group->id) }}">
+                        <a href="{{ route('admin.forms.groups.show',$field->group->id) }}">
                             {{ $field->group->name }}
                         </a>
                         @endif
@@ -48,8 +48,8 @@
                     <td>{{ $field->created_at }}</td>
                     <td>{{ $field->updated_at }}</td>
                     <td class="button-column">
-                        <a href="{{ route('admin.form.fields.edit',$field->id) }}" class="button edit-button">{{ __('elfcms::default.edit') }}</a>
-                        <form action="{{ route('admin.form.fields.destroy',$field->id) }}" method="POST" data-submit="check">
+                        <a href="{{ route('admin.forms.fields.edit',$field->id) }}" class="button edit-button">{{ __('elfcms::default.edit') }}</a>
+                        <form action="{{ route('admin.forms.fields.destroy',$field->id) }}" method="POST" data-submit="check">
                             @csrf
                             @method('DELETE')
                             <input type="hidden" name="id" value="{{ $field->id }}">

@@ -35,12 +35,12 @@
                 <tr data-id="{{ $form->id }}" class="level-{{ $form->level }}@empty ($form->active) inactive @endempty">
                     <td class="subline-{{ $form->level }}">{{ $form->id }}</td>
                     <td>
-                        <a href="{{ route('admin.form.forms.edit',$form->id) }}">
+                        <a href="{{ route('admin.forms.edit',$form->id) }}">
                             {{ $form->title }}
                         </a>
                     </td>
                     <td>
-                        <a href="{{ route('admin.form.forms.edit',$form->id) }}">
+                        <a href="{{ route('admin.forms.edit',$form->id) }}">
                             {{ $form->name }}
                         </a>
                     </td>
@@ -48,16 +48,16 @@
                     <td>{{ $form->created_at }}</td>
                     <td>{{ $form->updated_at }}</td>
                     <td class="button-column">
-                        <form action="{{ route('admin.form.groups.create') }}" method="GET">
+                        <form action="{{ route('admin.forms.groups.create') }}" method="GET">
                             <input type="hidden" name="form_id" value="{{ $form->id }}">
                             <button type="submit" class="button submit-button">{{ __('elfcms::default.add_group') }}</button>
                         </form>
-                        <form action="{{ route('admin.form.fields.create') }}" method="GET">
+                        <form action="{{ route('admin.forms.fields.create') }}" method="GET">
                             <input type="hidden" name="form_id" value="{{ $form->id }}">
                             <button type="submit" class="button submit-button">{{ __('elfcms::default.add_field') }}</button>
                         </form>
-                        <a href="{{ route('admin.form.forms.edit',$form->id) }}" class="button edit-button">{{ __('elfcms::default.edit') }}</a>
-                        <form action="{{ route('admin.form.forms.destroy',$form->id) }}" method="POST" data-submit="check">
+                        <a href="{{ route('admin.forms.edit',$form->id) }}" class="button edit-button">{{ __('elfcms::default.edit') }}</a>
+                        <form action="{{ route('admin.forms.destroy',$form->id) }}" method="POST" data-submit="check">
                             @csrf
                             @method('DELETE')
                             <input type="hidden" name="id" value="{{ $form->id }}">

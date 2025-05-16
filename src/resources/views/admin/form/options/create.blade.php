@@ -17,7 +17,7 @@
 
     <div class="item-form">
         <h3>{{ __('elfcms::default.create_form') }}</h3>
-        <form action="{{ route('admin.form.forms.store') }}" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('admin.forms.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('POST')
             <div class="colored-rows-box">

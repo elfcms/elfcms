@@ -295,12 +295,12 @@ Route::group(['middleware' => ['web', 'locales', 'cookie']], function () use ($a
 
     try {
         if (Schema::hasTable('pages')) {
-            $pages = Page::where('active', 1)->whereNotNull('path')->get();
+            $pages = Page::where('active', 1)->where('is_dynamic','<>',1)->whereNotNull('path')->get();
             foreach ($pages as $page) {
                 if (!empty($page->module) && $page->module != 'standard') {
-                    return DynamicPageRouter::moduleRoutes($page);
+                    DynamicPageRouter::moduleRoutes($page);
                 }
-                elseif (boolval($page->is_dynamic)) {
+                else {
                     Route::get($page->path, function () use ($page) {
                         $controller = new PageController;
                         $template = $page->template;

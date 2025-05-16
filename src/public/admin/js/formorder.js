@@ -56,7 +56,7 @@ function elementPositionSuccess() {
             groups
         });
         const token = document.querySelector("input[name='_token']").value;
-        fetch('/elfcms/api/form/' + formId + '/grouporder',{
+        fetch(adminPath+'/elfcms/api/form/' + formId + '/grouporder',{
             method: 'POST',
             headers: {
                 'Accept': 'application/json',

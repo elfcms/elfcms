@@ -44,7 +44,7 @@
                             value="{{ $group->code }}">
                     </div>
                     <div class="input-wrapper">
-                        <x-elfcms::ui.checkbox.autoslug textid="title" slugid="code" slugspace="_" />
+                        <x-elfcms::ui.checkbox.autoslug textid="title" slugid="code" slugspace="_" checked="true" />
                     </div>
                 </div>
                 <div class="input-box colored">
@@ -73,7 +73,7 @@
             </div>
             <div class="button-box single-box">
                 <button type="submit" name="submit" value="save"
-                    class="button color-text-button success-button">{{ __('elfcms::default.submit') }}</button>
+                    class="button color-text-button success-button">{{ __('elfcms::default.save') }}</button>
                 <button type="submit" name="submit" value="save_and_close"
                     class="button color-text-button info-button">{{ __('elfcms::default.save_and_close') }}</button>
                 <a href="{{ route('admin.forms.index') }}"

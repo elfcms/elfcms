@@ -191,7 +191,7 @@ class FormFieldGroupController extends Controller
         $group->save();
 
         if ($request->input('submit') == 'save_and_close') {
-            return redirect(route('admin.form.forms.show',$form))->with('success',__('elfcms::default.form_edited_successfully'));
+            return redirect(route('admin.forms.show',$form))->with('success',__('elfcms::default.form_edited_successfully'));
         }
 
         return redirect(route('admin.forms.groups.edit',['form'=>$form,'group'=>$group]))->with('success',__('elfcms::default.field_group_edited_successfully'));

@@ -19,7 +19,7 @@
 </div>
 @endif --}}
 <div class="user-form item-form">
-    <h3>{{ __('elfcms::default.edit_role') }} #{{ $role->id }}</h3>
+    <h2>{{ __('elfcms::default.edit_role') }} #{{ $role->id }}</h2>
     <form action="{{ route('admin.user.roles.update',$role->id) }}" method="POST">
         @csrf
         @method('PUT')
@@ -95,7 +95,7 @@
         </div>
 
         <div class="button-box single-box">
-            <button type="submit" class="button color-text-button success-button">{{ __('elfcms::default.submit') }}</button>
+            <button type="submit" class="button color-text-button success-button">{{ __('elfcms::default.save') }}</button>
             <a href="{{ route('admin.user.roles') }}" class="button color-text-button">{{ __('elfcms::default.cancel') }}</a>
         </div>
     </form>
