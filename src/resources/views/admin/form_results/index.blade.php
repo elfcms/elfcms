@@ -1,25 +1,6 @@
-@extends('elfcms::admin.layouts.form')
+@extends('elfcms::admin.layouts.main')
 
-@section('formpage-content')
-    {{-- <div class="table-search-box">
-        <div class="table-search-result-title">
-            @if (!empty($search))
-                {{ __('elfcms::default.search_result_for') }} "{{ $search }}" <a href="{{ route('admin.user.users') }}" title="{{ __('elfcms::default.reset_search') }}">&#215;</a>
-            @endif
-        </div>
-    </div> --}}
-    @if (Session::has('success'))
-    <div class="alert alert-alternate">{{ Session::get('success') }}</div>
-    @endif
-    @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all() as $error)
-                <li>{{ $error }}</li>
-            @endforeach
-        </ul>
-    </div>
-    @endif
+@section('pagecontent')
     <div class="grid-table-wrapper">
         <table class="grid-table table-cols" style="--first-col:4rem; --last-col:200px; --minw:600px; --cols-count:4;">
             <thead>

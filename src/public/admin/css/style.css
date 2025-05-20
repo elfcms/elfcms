@@ -1972,6 +1972,7 @@ footer {
     justify-content: space-between;
     gap: var(--main-padding-small);
     margin-top: -2rem;
+    margin-bottom: 2rem;
 }
 
 /* Forms */

@@ -153,7 +153,7 @@ function itemPositionSuccess() {
             items: itemsData,
         });
 
-        fetch("/elfcms/api/menu/" + menuId + "/itemorder", {
+        fetch(adminPath+"/elfcms/api/menu/" + menuId + "/itemorder", {
             method: "POST",
             headers: {
                 Accept: "application/json",

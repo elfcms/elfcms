@@ -3,7 +3,7 @@ async function getSBDataTypes() {
     if (elfSBDataTypes !== null && typeof elfSBDataTypes == "object") {
         return elfSBDataTypes;
     }
-    let elfSBDataTypesResponse = await fetch("/elfcms/api/fragment/datatypes", {
+    let elfSBDataTypesResponse = await fetch(adminPath+"/elfcms/api/fragment/datatypes", {
         headers: { "X-Requested-With": "XMLHttpRequest" },
     });
     elfSBDataTypes = await elfSBDataTypesResponse.json();
