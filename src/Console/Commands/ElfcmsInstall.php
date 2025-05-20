@@ -5,6 +5,7 @@ namespace Elfcms\Elfcms\Console\Commands;
 use Elfcms\Elfcms\Aux\Locales;
 use Elfcms\Elfcms\Http\Controllers\SettingController;
 use Elfcms\Elfcms\Models\AccessType;
+use Elfcms\Elfcms\Models\BackupStatus;
 use Elfcms\Elfcms\Models\CookieSetting;
 use Elfcms\Elfcms\Models\DataType;
 use Elfcms\Elfcms\Models\ElfcmsContact;
@@ -144,18 +145,31 @@ class ElfcmsInstall extends Command
         } else {
             $this->error('Error');
         }
-        
+
+        $this->line('Creating backup statuses');
+        $backupStatus = new BackupStatus();
+        if ($backupStatus->start() !== false) {
+            $this->info('OK');
+        } else {
+            $this->error('Error');
+        }
+
         $this->line('Creating core module info');
-        Module::create([
-            'name' => 'elfcms',
-            'title' => 'ELF CMS',
-            'current_version' => config('elfcms.elfcms.version') ?? __('elfcms::default.unknown'),
-            'latest_version' => null,
-            'source' => 'https://github.com/elfcms/elfcms',
-            'update_method' => 'composer',
-            'update_available' => 0,
-            'last_checked_at' => now(),
-        ]);
+        $existsModule = Module::where('name', 'elfcms')->first();
+        if (empty($existsModule)) {
+            Module::create([
+                'name' => 'elfcms',
+                'title' => 'ELF CMS',
+                'current_version' => config('elfcms.elfcms.version') ?? __('elfcms::default.unknown'),
+                'latest_version' => null,
+                'source' => 'https://github.com/elfcms/elfcms',
+                'update_method' => 'composer',
+                'update_available' => 0,
+                'last_checked_at' => now(),
+            ]);
+        } else {
+            $this->warn('Core module already exists. Skipping');
+        }
 
         $lang = $this->choice(
             'Choose the language | Wählen Sie die Sprache | Выберите язык',

@@ -222,6 +222,8 @@ Route::group(['middleware' => ['web', 'locales', 'cookie']], function () use ($a
 
         Route::prefix('elfcms/api')->name('ajax.')->group(function () {
 
+            Route::get('/heartbit/queue',[Elfcms\Elfcms\Http\Controllers\Ajax\ServiceController::class, 'queueHeartbit'])->name('heartbit.queue');
+
             Route::name('form.')->group(function () {
                 Route::post('/form/{form}/grouporder', [Elfcms\Elfcms\Http\Controllers\Ajax\FormController::class, 'groupOrder']);
                 Route::post('/form/{form}/fieldorder', [Elfcms\Elfcms\Http\Controllers\Ajax\FormController::class, 'fieldOrder']);

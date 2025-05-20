@@ -342,24 +342,14 @@
             return false;
         }
 
-        file.href = '{{ $adminPath }}/filestorage/{{ $filestorage->id }}/files/' + data.id + '/edit';
+        file.href = adminPath + '/filestorage/{{ $filestorage->id }}/files/' + data.id + '/edit';
         //file.dataset.slug = data.slug;
         file.dataset.id = data.id;
         file.style.order = data.position;
         file.title = '__("elfcms::default.edit") ' + data.name;
         const img = file.querySelector('img');
         if (img) {
-            /* if (data.thumbnail) {
-                img.src = data.thumbnail;
-            }
-            else if (data.preview) {
-                img.src = data.preview;
-            }
-            else {
-                img.src = data.image;
-            } */
-            console.log(1, data);
-            img.src = data.public_path;;
+            img.src = data.preview;;
         }
         const h5 = file.querySelector('h5');
         if (h5) {
@@ -406,7 +396,7 @@
 
     function createItem(data, empty = false) {
         const newItem = document.createElement('a');
-        newItem.href = '{{ $adminPath }}/filestorage/{{ $filestorage->id }}/files/' + data.id + '/edit';
+        newItem.href = adminPath + '/filestorage/{{ $filestorage->id }}/files/' + data.id + '/edit';
         newItem.classList.add('filestorage-file-tile', 'filestorage-file-element');
         //newItem.dataset.slug = data.slug;
         newItem.dataset.id = data.id;
@@ -415,17 +405,7 @@
         newItem.draggable = true;
         const img = document.createElement('img');
         if (img) {
-            /* if (data.thumbnail) {
-                img.src = data.thumbnail;
-            }
-            else if (data.preview) {
-                img.src = data.preview;
-            }
-            else {
-                img.src = data.image;
-            } */
-            console.log(2, data);
-            img.src = '{{ $adminPath }}/helper/file-icon/' + data.type;
+            img.src = adminPath + '/helper/file-icon/' + data.type;
             newItem.append(img)
         }
         const h5 = document.createElement('h5');
@@ -682,15 +662,15 @@
                                                 else {
                                                     img.src = data.data.image;
                                                 } */
-                                                img.src = data.data.public_path;
+                                                img.src = data.data.preview;
                                             }
                                             currentItem.href =
-                                                '{{ $adminPath }}/filestorage/{{ $filestorage->id }}/files/' +
+                                                adminPath + '/filestorage/{{ $filestorage->id }}/files/' +
                                                 data.data.id + '/edit';
                                         } else if (filesBox) {
                                             const newItem = document.createElement('a');
                                             newItem.href =
-                                                '{{ $adminPath }}/filestorage/{{ $filestorage->id }}/files/' +
+                                                adminPath + '/filestorage/{{ $filestorage->id }}/files/' +
                                                 data.data.id + '/edit';
                                             newItem.classList.add('filestorage-file-tile',
                                                 'filestorage-file-element');
@@ -701,8 +681,7 @@
                                             newItem.draggable = true;
                                             const img = document.createElement('img');
                                             if (img) {
-                                                console.log(4, data);
-                                                img.src = data.data.public_path;
+                                                img.src = data.data.preview;
                                                 newItem.append(img)
                                             }
                                             const h5 = document.createElement('h5');

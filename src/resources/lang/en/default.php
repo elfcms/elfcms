@@ -701,6 +701,9 @@ return [
     'error_interrupted_or_timeout' => 'Error: interrupted or timeout',
     'backup_lock_reset_due_to_timeout' => 'Backup lock reset due to timeout',
     'do_not_close_this_browser_window' => 'Do not close this browser window',
+    'no_response_from_queue_worker' => 'No response from queue worker',
+    'queue_is_not_processing_tasks' => 'Queue is not processing tasks. The queue:work process may not be running',
+    'backups_cannot_be_created_job_queue_handler_is_not_running' => 'Warning: Backups cannot be created because the job queue handler is not running.',
 
     'update' => 'Update',
     'updates' => 'Updates',

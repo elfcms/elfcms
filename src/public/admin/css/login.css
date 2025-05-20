@@ -122,15 +122,15 @@ h1 {
     border-radius: 0.25rem;
     cursor: pointer;
     font-size: 1.25rem;
-    font-family: 'Inter', sans-serif;
+    font-family: "Inter", sans-serif;
     font-weight: var(--fw-600, 600);
     transition: 0.3s;
-    text-shadow: .0625rem .0625rem .125rem var(--shade-color-20);
-    box-shadow: .0625rem .0625rem .375rem 0 var(--shade-color-30);
+    text-shadow: 0.0625rem 0.0625rem 0.125rem var(--shade-color-20);
+    box-shadow: 0.0625rem 0.0625rem 0.375rem 0 var(--shade-color-30);
 }
 .start-button:hover {
     background-color: hsl(from var(--color-020) h s calc(l + 5));
-    box-shadow: .125rem .125rem .5rem 0 var(--shade-color-30);
+    box-shadow: 0.125rem 0.125rem 0.5rem 0 var(--shade-color-30);
 }
 
 .welcome-bg {
@@ -156,7 +156,7 @@ h1 {
     background-position: -35% -35%;
     mask: url("../images/bg/bg-mask-black.png") repeat center;
     animation: bglight 6s ease infinite;
-    opacity: .25;
+    opacity: 0.25;
     z-index: -1;
 }
 
@@ -169,20 +169,22 @@ input::part(#placeholder + div) {
 
 input::placeholder {
     color: var(--background-color-light);
-    text-shadow: .0625rem .0625rem 0 var(--shade-color-30);
+    text-shadow: 0.0625rem 0.0625rem 0 var(--shade-color-30);
 }
 .input-password-wrapper .password-visiblity {
     background-color: var(--background-color-light);
 }
 
 .input-wrapper {
-    padding: .5rem;
+    padding: 0.5rem;
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
 }
 
 .wide-button {
     width: 100%;
 }
-
 
 @keyframes bglight {
     0% {

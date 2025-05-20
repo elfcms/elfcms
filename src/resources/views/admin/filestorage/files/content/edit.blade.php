@@ -27,7 +27,7 @@
             </div>
             <div class="input-box colored">
                 <label for="file">{{ __('elfcms::default.file') }}</label>
-                <x-elf-input-file value="{{$file->public_path}}" :params="['name' => 'file','code'=>'file']" accept="{{implode(',',$mimes)}}" :download="true" template="fs" />
+                <x-elf-input-file value="{{$file->public_path}}" :params="['name' => 'file','code'=>'file','file'=>$file]" accept="{{implode(',',$mimes)}}" :download="true" template="fs" />
             </div>
             <div class="input-box colored">
                 <label for="alt_text">{{ __('elfcms::default.alt_text') }}</label>

@@ -30,6 +30,7 @@ class CreateBackupJob implements ShouldQueue
             else {
                 Cache::put('backup_progress', ['step' => __('elfcms::default.zipping_files'), 'percent' => 15], now()->addMinutes(10));
             }
+            //Cache::put('backup_progress_timestamp', now(), 1800);
 
             Artisan::call('elfcms:backup', ['--name' => $backupName]);
 

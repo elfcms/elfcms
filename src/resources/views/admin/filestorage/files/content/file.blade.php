@@ -1,6 +1,6 @@
 <a href="{{ route('admin.filestorage.files.edit',['filestorage'=>$filestorage,'file'=>$file]) }}" class="filestorage-file-tile filestorage-file-element" title="{{ __('elfcms::default.edit') . ' ' . $file->name }}" style="order:{{$file->position}};" data-id="{{ $file->id }}" data-slug="{{ $file->slug }}">
     <img src="
-        {{ $file->public_path }}
+        {{ fsPreview($file) }}
     " alt="">
     <h5>{{ $file->name }}</h5>
     <div class="delete-file-box" title="{{ __('elfcms::default.delete') }}">

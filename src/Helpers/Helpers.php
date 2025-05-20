@@ -201,7 +201,7 @@ if (!function_exists('fsMime')) { //! To remove
 
 if (!function_exists('fsFile')) { //! To remove
 
-    function fsFile($file, $asString)
+    function fsFile($file, $asString = false)
     {
         return Filestorage::file($file, $asString);
     }

@@ -41,7 +41,7 @@ class FS
     public static function public(string|FilestorageFile|null $file = null)
     {
         $file = self::checkFile($file);
-        return config('elfcms.elfcms.file_path') . '/' . $file->path;
+        return config('elfcms.elfcms.file_path') . '/' . $file->id;
     }
 
 
@@ -89,7 +89,7 @@ class FS
 
     public static function preview(string|FilestorageFile|null $file = null, $icon = false) {
         $file = self::checkFile($file);
-        $extension = pathinfo($file, PATHINFO_EXTENSION);
+        $extension = pathinfo($file->path, PATHINFO_EXTENSION);
         if (!file_exists($file->full_path)) {
             return self::icon('none');
         }

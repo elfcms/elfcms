@@ -701,6 +701,9 @@ return [
     'error_interrupted_or_timeout' => 'Ошибка: прерывание или тайм-аут',
     'backup_lock_reset_due_to_timeout' => 'Сброс блокировки резервного копирования из-за тайм-аута',
     'do_not_close_this_browser_window' => 'Не закрывайте это окно браузера',
+    'no_response_from_queue_worker' => 'Нет ответа от работника очереди',
+    'queue_is_not_processing_tasks' => 'Очередь не обрабатывает задачи. Возможно процесс queue:work не работает.',
+    'backups_cannot_be_created_job_queue_handler_is_not_running' => 'Предупреждение! Создание резервных копий не может быть выполнено, так как обработчик очереди заданий не запущен',
 
     'update' => 'Обновление',
     'updates' => 'Обновления',

@@ -41,7 +41,7 @@
                             {{ $backup->type }}
                             @endif
                         </td>
-                        <td class="backup-status-{{ $backup->status->name }}">{{ !empty($backup->status->lang_title) ? __($backup->status->lang_title) : $backup->status->name ?? '' }}
+                        <td class="backup-status-{{ $backup->status?->name ?? 'pending' }}">{{ !empty($backup->status?->lang_title) ? __($backup->status?->lang_title) : $backup->status?->name ?? '' }}
                         </td>
                         <td @class(['font-bold' => true, 'failed-string' => !$backup->isFile])>{{ $backup->file_path }}</td>
                         <td class="right_text number_text">{{ $backup->size }}</td>

@@ -1,5 +1,5 @@
-if (typeof adminPath === 'undefined') {
-    var adminPath = '/admin';
+if (typeof adminPath === "undefined") {
+    var adminPath = "/admin";
 }
 
 function uniqid() {
@@ -267,7 +267,7 @@ function inputFileExt(input) {
             const files = e.target.files;
             if (files) {
                 const accept = input.getAttribute("accept");
-                const type = files[0].type.split('/')[1];
+                const type = files[0].type.split("/")[1];
                 if (accept && !accept.includes(type)) {
                     //alert("File type not allowed");
                     return;
@@ -277,7 +277,10 @@ function inputFileExt(input) {
                 }
                 const typeId = document.getElementById("type_id");
                 if (typeId) {
-                    const optionToSelect  = typeId.querySelector('option[data-code="'+type+'"]') ?? typeId.querySelector('option[data-code="any"]');
+                    const optionToSelect =
+                        typeId.querySelector(
+                            'option[data-code="' + type + '"]'
+                        ) ?? typeId.querySelector('option[data-code="any"]');
                     if (optionToSelect) {
                         const value = optionToSelect.value;
                         typeId.value = value;
@@ -294,7 +297,17 @@ function inputFileExt(input) {
                                 img.classList.add("button-icon");
                                 img.src =
                                     "/elfcms/admin/images/icons/filestorage/any.svg";
-                                fetch(adminPath + '/helper/file-icon/' + (files[0].type.split('/')[1] ?? 'any'),{headers: {'X-Requested-With': 'XMLHttpRequest'}})
+                                fetch(
+                                    adminPath +
+                                        "/helper/file-icon/" +
+                                        (files[0].type.split("/")[1] ?? "any"),
+                                    {
+                                        headers: {
+                                            "X-Requested-With":
+                                                "XMLHttpRequest",
+                                        },
+                                    }
+                                )
                                     .then((response) => {
                                         return response.text();
                                     })
@@ -1169,7 +1182,7 @@ function tabsInit(selector = ".tab-title", boxSelector = ".tab-box") {
     }
 }
 
-function preloadSet(element) {
+function preloadSet(element, global = true) {
     if (typeof element === "string") {
         element = document.querySelector(element);
     }
@@ -1178,6 +1191,9 @@ function preloadSet(element) {
     }
     const preloader = document.createElement("div");
     preloader.classList.add("preload-wrapper");
+    if (global) {
+        preloader.classList.add("global");
+    }
     preloader.insertAdjacentHTML(
         "beforeend",
         '<div class="preload-box"><div></div><div></div><div></div></div>'
@@ -1239,18 +1255,22 @@ const csrfInterval = setInterval(function () {
     const tokenMeta = document.querySelector('meta[name="csrf-token"]');
     const inputTokens = document.querySelectorAll('input[name="_token"]');
     if (tokenMeta || inputTokens) {
-        fetch(adminPath+"/elfcms/api/csrf",{headers:{'X-Requested-With': 'XMLHttpRequest'}})
+        fetch(adminPath + "/elfcms/api/csrf", {
+            headers: { "X-Requested-With": "XMLHttpRequest" },
+        })
             .then((response) => {
                 return response.json();
             })
             .then((data) => {
                 if (data && data.token) {
                     if (tokenMeta) {
-                        if (tokenMeta.content != data.token) tokenMeta.content = data.token;;
+                        if (tokenMeta.content != data.token)
+                            tokenMeta.content = data.token;
                     }
                     if (inputTokens) {
                         inputTokens.forEach((inputToken) => {
-                            if (inputToken.value != data.token) inputToken.value = data.token;
+                            if (inputToken.value != data.token)
+                                inputToken.value = data.token;
                         });
                     }
                 }
@@ -1260,41 +1280,50 @@ const csrfInterval = setInterval(function () {
 
 /* Dynamic table */
 
-function checkParamChange(th,props=false) {
-    const row = th.closest('tr[data-id]');
+function checkParamChange(th, props = false) {
+    const row = th.closest("tr[data-id]");
     if (row) {
-        let inputName = 'parameter';
+        let inputName = "parameter";
         if (props) {
-            inputName = 'property';
+            inputName = "property";
         }
         const id = row.dataset.id;
         const name = th.dataset.name;
-        const editInput = row.querySelector('input[name="'+inputName+'['+id+'][edited]"]');
-        const optionDeleteInput = row.querySelector('.shop-option-table input[type="checkbox"]:checked');
+        const editInput = row.querySelector(
+            'input[name="' + inputName + "[" + id + '][edited]"]'
+        );
+        const optionDeleteInput = row.querySelector(
+            '.shop-option-table input[type="checkbox"]:checked'
+        );
         if (id && name) {
             let value = th.value;
-            if (th.type == 'checkbox') {
+            if (th.type == "checkbox") {
                 if (th.checked) {
                     value = 1;
-                }
-                else {
+                } else {
                     value = 0;
                 }
             }
-            if (value === '') {
+            if (value === "") {
                 value = null;
             }
             controlData[id][name] = value;
-            if (!optionDeleteInput && objectCompare(controlData[id],unitListData.data[id]) && objectCompare(controlData[id]['options'],unitListData.data[id]['options'])) {
-                row.classList.remove('edited');
+            if (
+                !optionDeleteInput &&
+                objectCompare(controlData[id], unitListData.data[id]) &&
+                objectCompare(
+                    controlData[id]["options"],
+                    unitListData.data[id]["options"]
+                )
+            ) {
+                row.classList.remove("edited");
                 if (editInput) {
-                    editInput.value="0";
+                    editInput.value = "0";
                 }
-            }
-            else {
-                row.classList.add('edited');
+            } else {
+                row.classList.add("edited");
                 if (editInput) {
-                    editInput.value="1";
+                    editInput.value = "1";
                 }
             }
         }
@@ -1303,20 +1332,21 @@ function checkParamChange(th,props=false) {
 }
 
 function setDynamicSaveEnabled() {
-    const saveButton = document.querySelector('.dynamic-table-buttons button[data-action="save"]');
+    const saveButton = document.querySelector(
+        '.dynamic-table-buttons button[data-action="save"]'
+    );
     if (saveButton) {
         saveButton.disabled = false;
     }
 }
 
 function setDynamicUnitRowDelete(th) {
-    const row = th.closest('tr[data-id]');
+    const row = th.closest("tr[data-id]");
     if (row) {
         if (th.checked) {
-            row.classList.add('deletable');
-        }
-        else {
-            row.classList.remove('deletable');
+            row.classList.add("deletable");
+        } else {
+            row.classList.remove("deletable");
         }
         setDynamicSaveEnabled();
     }
@@ -1327,7 +1357,7 @@ function setDynamicUnitRowDelete(th) {
 /* Filestorage */
 
 function isFilestorageEditedUnits() {
-    const editedRows = document.querySelectorAll('tr[data-id].edited');
+    const editedRows = document.querySelectorAll("tr[data-id].edited");
     if (editedRows && editedRows.length) {
         return true;
     }
@@ -1335,7 +1365,7 @@ function isFilestorageEditedUnits() {
 }
 
 function isFilestorageDeletableUnits() {
-    const editedRows = document.querySelectorAll('tr[data-id].deletable');
+    const editedRows = document.querySelectorAll("tr[data-id].deletable");
     if (editedRows && editedRows.length) {
         return true;
     }
@@ -1347,8 +1377,7 @@ function setFilestorageSaveEnabled() {
     if (saveButton) {
         if (isFilestorageDeletableUnits() || isFilestorageEditedUnits()) {
             saveButton.disabled = false;
-        }
-        else {
+        } else {
             saveButton.disabled = true;
         }
     }
@@ -1357,16 +1386,26 @@ function setFilestorageSaveEnabled() {
 function addFilestorageGroupItem() {
     if (!emptyItem) return false;
     if (!newItemId && newItemId !== 0) return false;
-    const container = document.querySelector('table.filestorage-group-table tbody');
+    const container = document.querySelector(
+        "table.filestorage-group-table tbody"
+    );
     if (container) {
-        let itemString = emptyItem.replaceAll('btn" data-id="newgroup"','btn" data-id="'+newItemId+'"').replaceAll('id="newgroup"','id="new_'+newItemId+'"').replaceAll('group[newgroup]','newgroup['+newItemId+']').replaceAll('group_newgroup','newgroup_'+newItemId).replaceAll('<span>newgroup</span>','');
-        container.insertAdjacentHTML('beforeend',itemString);
+        let itemString = emptyItem
+            .replaceAll(
+                'btn" data-id="newgroup"',
+                'btn" data-id="' + newItemId + '"'
+            )
+            .replaceAll('id="newgroup"', 'id="new_' + newItemId + '"')
+            .replaceAll("group[newgroup]", "newgroup[" + newItemId + "]")
+            .replaceAll("group_newgroup", "newgroup_" + newItemId)
+            .replaceAll("<span>newgroup</span>", "");
+        container.insertAdjacentHTML("beforeend", itemString);
         const newRow = container.lastElementChild;
         if (newRow) {
-            newRow.classList.add('edited');
+            newRow.classList.add("edited");
         }
         newItemId++;
-        autoSlug(newRow.querySelectorAll('.autoslug'));
+        autoSlug(newRow.querySelectorAll(".autoslug"));
         setFilestorageSaveEnabled();
     }
 }
@@ -1374,72 +1413,89 @@ function addFilestorageGroupItem() {
 function addFilestorageTypeItem() {
     if (!emptyItem) return false;
     if (!newItemId && newItemId !== 0) return false;
-    const container = document.querySelector('table.filestorage-type-table tbody');
+    const container = document.querySelector(
+        "table.filestorage-type-table tbody"
+    );
     if (container) {
-        let itemString = emptyItem.replaceAll('btn" data-id="newtype"','btn" data-id="'+newItemId+'"').replaceAll('id="newtype"','id="new_'+newItemId+'"').replaceAll('type[newtype]','newtype['+newItemId+']').replaceAll('type_newtype','newtype_'+newItemId).replaceAll('<span>newtype</span>','');
-        container.insertAdjacentHTML('beforeend',itemString);
+        let itemString = emptyItem
+            .replaceAll(
+                'btn" data-id="newtype"',
+                'btn" data-id="' + newItemId + '"'
+            )
+            .replaceAll('id="newtype"', 'id="new_' + newItemId + '"')
+            .replaceAll("type[newtype]", "newtype[" + newItemId + "]")
+            .replaceAll("type_newtype", "newtype_" + newItemId)
+            .replaceAll("<span>newtype</span>", "");
+        container.insertAdjacentHTML("beforeend", itemString);
         const newRow = container.lastElementChild;
         if (newRow) {
-            newRow.classList.add('edited');
+            newRow.classList.add("edited");
         }
         newItemId++;
-        autoSlug(newRow.querySelectorAll('.autoslug'));
+        autoSlug(newRow.querySelectorAll(".autoslug"));
         setFilestorageSaveEnabled();
     }
 }
 
-function inputCheckValue(values, invert=false) {
+function inputCheckValue(values, invert = false) {
     if (!values) return;
-    const checkers = document.querySelectorAll('.input-checker[data-inpcheck]');
+    const checkers = document.querySelectorAll(".input-checker[data-inpcheck]");
     if (checkers) {
-        checkers.forEach(checker => {
-            const name = checker.getAttribute('data-inpcheck');
+        checkers.forEach((checker) => {
+            const name = checker.getAttribute("data-inpcheck");
             const input = document.querySelector(`input[name="${name}"]`);
-            const listen = document.querySelector(`input[name="${checker.getAttribute('data-listen')}"]`);
+            const listen = document.querySelector(
+                `input[name="${checker.getAttribute("data-listen")}"]`
+            );
             if (listen && input) {
-            listen.addEventListener('input', function () {
-                    if (!values[name] || typeof values[name] !== 'object' || !Array.isArray(values[name])) return;
+                listen.addEventListener("input", function () {
+                    if (
+                        !values[name] ||
+                        typeof values[name] !== "object" ||
+                        !Array.isArray(values[name])
+                    )
+                        return;
                     let value = input.value.toLowerCase();
                     let incl = values[name].includes(value);
                     if (input.value.length == 0) {
-                        checker.classList.remove('failed');
-                        checker.classList.remove('checked');
-                        checker.classList.add('none');
-                    } else if (invert && !incl || !invert && incl) {
-                        checker.classList.remove('none');
-                        checker.classList.remove('checked');
-                        checker.classList.add('failed');
+                        checker.classList.remove("failed");
+                        checker.classList.remove("checked");
+                        checker.classList.add("none");
+                    } else if ((invert && !incl) || (!invert && incl)) {
+                        checker.classList.remove("none");
+                        checker.classList.remove("checked");
+                        checker.classList.add("failed");
                     } else {
-                        checker.classList.remove('none');
-                        checker.classList.remove('failed');
-                        checker.classList.add('checked');
+                        checker.classList.remove("none");
+                        checker.classList.remove("failed");
+                        checker.classList.add("checked");
                     }
-                })
+                });
             }
-        })
+        });
     }
 }
 
-
 function checkOptionChange(th) {
-    const row = th.closest('tr[data-id]');
+    const row = th.closest("tr[data-id]");
     if (row) {
         const id = row.dataset.id;
-        const editInput = row.querySelector('input[name="unit['+id+'][edited]"]');
-        const inputs = row.querySelectorAll('.shop-option-table-column input');
-        if (!id || ! inputs) {
+        const editInput = row.querySelector(
+            'input[name="unit[' + id + '][edited]"]'
+        );
+        const inputs = row.querySelectorAll(".shop-option-table-column input");
+        if (!id || !inputs) {
             return false;
         }
         let isDelete = false;
         let rows = [];
         let options = {};
         inputs.forEach((input, i) => {
-            if (input.dataset.name == 'delete') {
+            if (input.dataset.name == "delete") {
                 if (input.checked) {
                     isDelete = true;
                 }
-            }
-            else {
+            } else {
                 if (!rows[input.dataset.loop]) {
                     rows[input.dataset.loop] = [];
                 }
@@ -1447,23 +1503,29 @@ function checkOptionChange(th) {
             }
         });
 
-        rows.forEach(element => {
+        rows.forEach((element) => {
             options[element.key] = element.value;
         });
 
         if (controlData[id]) {
-            controlData[id]['options'] = options;
+            controlData[id]["options"] = options;
 
-            if (!isDelete && objectCompare(controlData[id]['options'],unitListData.data[id]['options']) && objectCompare(controlData[id],unitListData.data[id])) {
-                row.classList.remove('edited');
+            if (
+                !isDelete &&
+                objectCompare(
+                    controlData[id]["options"],
+                    unitListData.data[id]["options"]
+                ) &&
+                objectCompare(controlData[id], unitListData.data[id])
+            ) {
+                row.classList.remove("edited");
                 if (editInput) {
-                    editInput.value="0";
+                    editInput.value = "0";
                 }
-            }
-            else {
-                row.classList.add('edited');
+            } else {
+                row.classList.add("edited");
                 if (editInput) {
-                    editInput.value="1";
+                    editInput.value = "1";
                 }
             }
         }
@@ -1471,9 +1533,8 @@ function checkOptionChange(th) {
     }
 }
 
-
 function isEditedUnits() {
-    const editedRows = document.querySelectorAll('tr[data-id].edited');
+    const editedRows = document.querySelectorAll("tr[data-id].edited");
     if (editedRows && editedRows.length) {
         return true;
     }
@@ -1481,7 +1542,7 @@ function isEditedUnits() {
 }
 
 function isDeletableUnits() {
-    const editedRows = document.querySelectorAll('tr[data-id].deletable');
+    const editedRows = document.querySelectorAll("tr[data-id].deletable");
     if (editedRows && editedRows.length) {
         return true;
     }
@@ -1493,21 +1554,24 @@ function setSaveEnabled() {
     if (saveButton) {
         if (isDeletableUnits() || isEditedUnits()) {
             saveButton.disabled = false;
-        }
-        else {
+        } else {
             saveButton.disabled = true;
         }
     }
 }
 
 function objectCompare(obj1, obj2) {
-    if (typeof obj1 != 'object' || typeof obj2 != 'object') {
-        return null
+    if (typeof obj1 != "object" || typeof obj2 != "object") {
+        return null;
     }
     for (let key in obj1) {
-        if (typeof obj2[key] !== 'object' || typeof obj1[key] !== 'object') {
+        if (typeof obj2[key] !== "object" || typeof obj1[key] !== "object") {
             //return objectCompare(obj1[key],obj2[key]);
-            if ((!obj2[key] && obj1[key]) || (obj2[key] && !obj1[key]) || obj1[key] != obj2[key]) {
+            if (
+                (!obj2[key] && obj1[key]) ||
+                (obj2[key] && !obj1[key]) ||
+                obj1[key] != obj2[key]
+            ) {
                 return false;
             }
         }

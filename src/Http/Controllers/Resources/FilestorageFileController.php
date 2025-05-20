@@ -20,12 +20,6 @@ class FilestorageFileController extends Controller
      */
     public function index(Request $request, Filestorage $filestorage)
     {
-        /* if (empty($filestorage->preview)) {
-            $filestorage->preview = '/elfcms/admin/modules/filestorage/images/empty_270.png';
-        }
-        else {
-            $filestorage->preview = Image::cropCache($filestorage->preview,270,270);
-        } */
         if ($request->ajax()) {
             return view('elfcms::admin.filestorage.files.content.index', [
                 'page' => [
@@ -118,7 +112,8 @@ class FilestorageFileController extends Controller
         if ($request->ajax()) {
             $data = $file->toArray();
             //if ($data['path']) $data['path'] = file_path($data['path']);
-            $data['public_path'] = $file->public_path;
+            $data['public_path'] = fsPublic($file);
+            $data['preview'] = fsPreview($file);
             return response()->json([
                 'result' => 'success',
                 'message' => __('elfcms::default.file_created_successfully'),

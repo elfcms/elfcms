@@ -9,6 +9,9 @@
             </span>
         </a>
     </div>
+    <div class="alert alert-notice collapsed" id="queue_alert">
+        {{ __('elfcms::default.backups_cannot_be_created_job_queue_handler_is_not_running') }}
+    </div>
     <div class="item-form">
         <h2>{{ __('elfcms::default.settings') }}</h2>
         <form action="{{ route('admin.backup.settingsSave') }}" method="POST" enctype="multipart/form-data">
@@ -107,7 +110,7 @@
             </div>
         </form>
     </div>
-    <div class="item-form last-form backup-create-form">
+    <div class="item-form last-form backup-create-form hidden">
         <button id="start-backup" class="button color-button" style="--button-color:var(--default-color);">Start
             Backup</button>
 
@@ -122,6 +125,33 @@
 
 
     <script>
+        const queueAlert = document.querySelector('#queue_alert');
+        const backupForm = document.querySelector('.backup-create-form');
+        const preloader = preloadSet(document.querySelector('body'),true);
+        if (queueAlert || backupForm) {
+            fetch('{{ route('admin.ajax.heartbit.queue') }}')
+                .then(res => res.json())
+                .then(data => {
+                    if (data.result) {
+                        if (backupForm) {
+                            backupForm.classList.remove('hidden');
+                        }
+                    }
+                    else {
+                        if (queueAlert) {
+                            queueAlert.classList.remove('collapsed');
+                        }
+                    }
+                    if (preloader) {
+                        preloadUnset(preloader)
+                    }
+                })
+                .catch((e) => {
+                    if (preloader) {
+                        preloadUnset(preloader)
+                    }
+                });
+        }
         document.addEventListener('DOMContentLoaded', function() {
             const fields = ['minute', 'hour', 'day', 'month', 'weekday'];
             const previewEl = document.getElementById('cron-preview');

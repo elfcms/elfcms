@@ -1,8 +1,8 @@
 <div class="inputfile" id="inputfile_{{ $boxId }}">
     <div @class(['inputfile-buttons', 'hidden' => empty($params['value'])])>
         <div class="inputfile-delete"></div>
-        @if ($params['download'] && !empty($params['value']))
-            <a href="{{ $params['value'] }}" class="inputfile-download" download
+        @if ($params['download'] && !empty($params['file']) && !empty($params['file']['id']))
+            <a href="{{ route('files', ['file'=>$params['file']['id']]) }}" class="inputfile-download" download
                 title="{{ __('elfcms::default.download') }}">{!! iconHtmlLocal('/elfcms/admin/images/icons/download.svg', svg: true) !!}</a>
         @endif
     </div>
