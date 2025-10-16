@@ -171,13 +171,15 @@ class ElfcmsInstall extends Command
             $this->warn('Core module already exists. Skipping');
         }
 
-        $lang = $this->choice(
+        /* $lang = $this->choice(
             'Choose the language | Wählen Sie die Sprache | Выберите язык',
             ['English', 'Deutsch', 'Русский'],
             1,
             $maxAttempts = null,
             $allowMultipleSelections = false
-        );
+        ); */
+
+        $lang = 'English';
 
         $langCodes = [
             'English' => 'en',
