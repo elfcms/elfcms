@@ -70,6 +70,14 @@
                             value="{{ $item->handler }}">
                     </div>
                 </div>
+                <div class="input-box colored">
+                    <label for="image">
+                            {{ __('elfcms::default.image') }}
+                    </label>
+                    <div class="input-wrapper">
+                        <x-elf-input-file :params="['name'=>'image','value'=>$item->image]" :download="true" />
+                    </div>
+                </div>
                 <div class="input-box colored" id="attributesbox">
                     <label>{{ __('elfcms::default.attributes') }}</label>
                     <div class="input-wrapper">

@@ -17,7 +17,7 @@ class MenuItemController extends Controller
     public function index(Menu $menu)
     {
         $items = MenuItem::flat();
-        return view('elfcms::admin.menu.items.index',[
+        return view('elfcms::admin.menu.items.index', [
             'page' => [
                 'title' => __('elfcms::default.menu_items'),
                 'current' => url()->current(),
@@ -40,18 +40,18 @@ class MenuItemController extends Controller
             $menu_id = $menus[0]->id;
         } */
         $parent_id = null;
-        $menuItems = MenuItem::where('menu_id',$menu->id);
+        $menuItems = MenuItem::where('menu_id', $menu->id);
         if ($request->parent_id) {
             $parent_id = $request->parent_id;
             //$parent_menu = MenuItem::find($parent_id);
             //$menu_id = $parent_menu->menu_id;
-            $menuItems->where('parent_id','<>',$parent_id);
+            $menuItems->where('parent_id', '<>', $parent_id);
         }
         $items = $menuItems->get();
         //dd($items);
 
         //dd($menu_id);
-        return view('elfcms::admin.menu.items.create',[
+        return view('elfcms::admin.menu.items.create', [
             'page' => [
                 'title' => __('elfcms::default.create_menu_item'),
                 'current' => url()->current(),
@@ -89,6 +89,11 @@ class MenuItemController extends Controller
             'position' => 'integer|nullable'
         ]);
 
+        $image = null;
+        if (!empty($request->file()['image'])) {
+            $image = $request->file()['image']->store('elfcms/settings/site/image');
+        }
+
         $validated['menu_id'] = $menu->id;
         $validated['parent_id'] = $request->parent_id;
         $validated['position'] = $request->position;
@@ -97,15 +102,16 @@ class MenuItemController extends Controller
         $validated['handler'] = $request->handler;
         $validated['clickable'] = $request->clickable;
         $validated['attributes'] = $attributes;
+        $validated['image'] = $image;
 
         //dd($validated);
         $item = MenuItem::create($validated);
 
         if ($request->input('submit') == 'save_and_close') {
-            return redirect(route('admin.menus.show',$menu))->with('success',__('elfcms::default.menu_edited_successfully'));
+            return redirect(route('admin.menus.show', $menu))->with('success', __('elfcms::default.menu_edited_successfully'));
         }
 
-        return redirect(route('admin.menus.items.edit',['item'=>$item,'menu'=>$menu]))->with('success',__('elfcms::default.menu_item_created_successfully'));
+        return redirect(route('admin.menus.items.edit', ['item' => $item, 'menu' => $menu]))->with('success', __('elfcms::default.menu_item_created_successfully'));
     }
 
     /**
@@ -128,8 +134,8 @@ class MenuItemController extends Controller
     public function edit(Menu $menu, MenuItem $item)
     {
         //$menus = Menu::all();
-        $items = MenuItem::where('id','<>',$item->id)->get();
-        return view('elfcms::admin.menu.items.edit',[
+        $items = MenuItem::where('id', '<>', $item->id)->get();
+        return view('elfcms::admin.menu.items.edit', [
             'page' => [
                 'title' => __('elfcms::default.edit_menu_item'),
                 'current' => url()->current(),
@@ -150,6 +156,7 @@ class MenuItemController extends Controller
      */
     public function update(Request $request, Menu $menu, MenuItem $item)
     {
+        $requestArray = $request->all();
         $attributes = [];
         if (!empty($request->attributes_new)) {
             foreach ($request->attributes_new as $attribute) {
@@ -167,6 +174,13 @@ class MenuItemController extends Controller
             'position' => 'integer|nullable'
         ]);
 
+        if (!empty($request->file()['image'])) {
+            $image = $request->file()['image']->store('elfcms/settings/site/image');
+            $item->image =  $image;
+        } else {
+            $item->image = $requestArray['image_path'];
+        }
+
         $item->menu_id = $menu->id;
         $item->parent_id = $request->parent_id;
         $item->position = $request->position;
@@ -179,10 +193,10 @@ class MenuItemController extends Controller
         $item->save();
 
         if ($request->input('submit') == 'save_and_close') {
-            return redirect(route('admin.menus.show',$menu))->with('success',__('elfcms::default.menu_edited_successfully'));
+            return redirect(route('admin.menus.show', $menu))->with('success', __('elfcms::default.menu_edited_successfully'));
         }
 
-        return redirect(route('admin.menus.items.edit',['item'=>$item,'menu'=>$menu]))->with('success',__('elfcms::default.menu_item_edited_successfully'));
+        return redirect(route('admin.menus.items.edit', ['item' => $item, 'menu' => $menu]))->with('success', __('elfcms::default.menu_item_edited_successfully'));
     }
 
     /**
@@ -194,9 +208,9 @@ class MenuItemController extends Controller
     public function destroy(Menu $menu, MenuItem $item)
     {
         if (!$item->delete()) {
-            return redirect(route('admin.menus.show', $menu))->withErrors(['menuitemdelerror'=>'Error of menu item deleting']);
+            return redirect(route('admin.menus.show', $menu))->withErrors(['menuitemdelerror' => 'Error of menu item deleting']);
         }
 
-        return redirect(route('admin.menus.show', $menu))->with('success','Menu item deleted successfully');
+        return redirect(route('admin.menus.show', $menu))->with('success', 'Menu item deleted successfully');
     }
 }

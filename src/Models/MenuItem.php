@@ -16,6 +16,7 @@ class MenuItem extends Model
         'title',
         'clickable',
         'handler',
+        'image',
         'attributes',
         'parent_id',
         'position'

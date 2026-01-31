@@ -8,7 +8,7 @@ use Illuminate\View\Component;
 
 class Fragment extends Component
 {
-    public $item, $theme;
+    public $item, $theme, $options;
 
     /**
      * Create a new component instance.
@@ -24,8 +24,16 @@ class Fragment extends Component
         elseif (gettype($item) == 'string') {
             $item = FragmentItem::where('code',$item)->with('options')->first();
         }
+
+        $options = [];
+        if (!empty($item->options)) {
+            foreach ($item->options as $option) {
+                $options[$option->name] = $option->value;
+            }
+        }
         $this->item = $item;
         $this->theme = $theme;
+        $this->options = $options;
     }
 
     /**
