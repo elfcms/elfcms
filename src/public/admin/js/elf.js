@@ -1307,7 +1307,11 @@ function checkParamChange(th, props = false) {
             if (value === "") {
                 value = null;
             }
-            controlData[id][name] = value;
+            let controlData = {
+                [id]: {
+                    [name]: value
+                }
+            }
             if (
                 !optionDeleteInput &&
                 objectCompare(controlData[id], unitListData.data[id]) &&
