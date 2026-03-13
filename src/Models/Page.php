@@ -26,6 +26,8 @@ class Page extends Model
         'module',
         'module_id',
         'module_options',
+        'header_code',
+        'footer_code',
     ];
 
     protected $casts = [

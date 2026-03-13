@@ -36,30 +36,9 @@ class ViewServiceProvider extends ServiceProvider
 
                 View::composer('*::admin.*', function ($view) {
                     $configs = config('elfcms');
-                    //$menu = Menu::getByRoute($configs);
-                    //dd([$menu,Route::currentRouteName()]);
                     $currentRoute = Route::currentRouteName();
                     $pageConfig = null;
                     $pageModules = [];
-                    /* if (!empty($configs)) {
-                        foreach ($configs as $package => $config) {
-                            if (!empty($config['menu'])) {
-                                foreach ($config['menu'] as $item) {
-                                    if (empty($item['parent_route'])) {
-                                        $item['parent_route'] = $item['route'];
-                                    }
-                                    if (Str::startsWith($currentRoute,$item['parent_route'])) {
-                                        $pageConfig = $item;
-                                    }
-                                }
-                            }
-                            if (!empty($config['pages'])) {
-                                foreach ($config['pages'] as $module) {
-                                    $pageModules[$package] = $module;
-                                }
-                            }
-                        }
-                    } */
                     $adminPath = $config['elfcms']['admin_path'] ?? '/admin';
                     $vendorPath = 'elfcms/admin';
                     $cssPath = '/css/style.css';
@@ -104,14 +83,23 @@ class ViewServiceProvider extends ServiceProvider
                 View::composer('*layouts*.main', function ($view) {
                     $view->with('elfSiteSettings', Setting::values());
                 });
+                View::composer('*layouts*.main', function ($view) {
+                    $view->with('elfSiteSettings', Setting::values());
+                });
                 View::composer('*admin.login*', function ($view) {
                     $view->with('elfSiteSettings', Setting::values());
                 });
                 View::composer('*emails.events.*', EmailEventComposer::class);
 
+                //Pages
+                View::composer('*public.pages.*', function ($view) {
+                    $pageConfigAll = page_config();
+                    $view->with('headerCode', $pageConfigAll['header_code']);
+                    $view->with('footerCode', $pageConfigAll['footer_code']);
+                });
+
                 //Public
                 View::composer('*public.*', function ($view) {
-
                     $pageConfigAll = page_config();
                     if (empty($pageConfigAll['site'])) {
                         if (empty($pageConfigAll['site']['title'])) page_config('site.title', Setting::value('site_title') ?? '');

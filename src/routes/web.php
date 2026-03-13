@@ -310,7 +310,7 @@ Route::group(['middleware' => ['web', 'locales', 'cookie']], function () use ($a
                             $template = 'default';
                         }
                         return $controller->get($page, dynamic: false, template: $template);
-                    });
+                    })->name($page->slug);
                 }
             }
         }

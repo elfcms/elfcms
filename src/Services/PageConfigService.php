@@ -2,25 +2,37 @@
 
 namespace Elfcms\Elfcms\Services;
 
+use Elfcms\Elfcms\Models\Page;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
 
 class PageConfigService
 {
     protected array $data = [];
+    protected Request $request;
+    protected Page $page;
 
     public function __construct(Request $request)
     {
+        $this->request = $request;
         $this->data = [
             'title' => '',
             'description' => '',
             'keywords' => '',
-            'currentRoute' => Route::currentRouteName(),
-            'url' => $request->fullUrl(),
+            'currentRoute' => '',
+            'url' => '',
             'lang' => '',
             'logo' => '',
-            'icon' => ''
+            'icon' => '',
+            'header_code' => '',
+            'footer_code' => '',
         ];
+
+
+        $routeName = $this->request->route() ? $this->request->route()->getName() : null;
+
+        if ($routeName) {
+            $this->page = Page::where('slug',$routeName)->first();
+        }
     }
 
     public function set(string $key, mixed $value): void
@@ -45,6 +57,13 @@ class PageConfigService
 
     public function get(string $key, mixed $default = null): mixed
     {
+        if ($key === 'currentRoute') {
+            return $this->request->route() ? $this->request->route()->getName() : null;
+        }
+        if ($key === 'url') {
+            return $this->request->fullUrl();
+        }
+
         $segments = explode('.', $key);
         $data = $this->data;
 
@@ -61,6 +80,18 @@ class PageConfigService
 
     public function all(): array
     {
-        return $this->data;
+        $routeName = $this->request->route() ? $this->request->route()->getName() : null;
+        
+        $dynamicData = [
+            'title' => $this->page->title ?? '',
+            'description' => $this->page->meta_description ?? '',
+            'keywords' => $this->page->meta_keywords ?? '',
+            'currentRoute' => $routeName,
+            'url' => $this->request->fullUrl(),
+            'header_code' => $this->page->header_code ?? '',
+            'footer_code' => $this->page->footer_code ?? '',
+        ];
+
+        return array_merge($this->data, $dynamicData);
     }
 }

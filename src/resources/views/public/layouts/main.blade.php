@@ -10,15 +10,12 @@
     @isset($elfSiteSettings['icon'])
     <link rel="shortcut icon" href="{{ asset(file_path($elfSiteSettings['icon'])) }}" type="image/x-icon">
     @endisset
-    @isset($elfSiteSettings['keywords'])
-    <meta name="keywords" content="{{ $page['keywords'] ?? $elfSiteSettings['keywords'] }}">
-    @endisset
-    @isset($elfSiteSettings['description'])
-    <meta name="description" content="{{ $page['description'] ?? $elfSiteSettings['description'] }}">
-    @endisset
+    <meta name="keywords" content="{{ $page['keywords'] ?? $elfSiteSettings['keywords'] ?? '' }}">
+    <meta name="description" content="{{ $page['description'] ?? $elfSiteSettings['description'] ?? '' }}">
     <link rel="stylesheet" href="/vendor/elfcms/basic/fonts/raleway/raleway.css">
     <link rel="stylesheet" href="/vendor/elfcms/basic/fonts/roboto/roboto.css">
     <link rel="stylesheet" href="/vendor/elfcms/basic/css/style.css">
+    {!! $headerCode ?? '' !!}
     {!! $chatbox_include ?? '' !!}
     @show
 </head>
@@ -67,6 +64,7 @@
             </div>
         </div>
     </footer>
+    {!! $footerCode ?? '' !!}
     {!! $chatbox_init ?? '' !!}
     @show
 </body>
