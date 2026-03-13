@@ -110,12 +110,18 @@
                         <textarea name="content" id="content" cols="30" rows="10"></textarea>
                     </div>
                 </div>
-                {{-- <div class="input-box colored">
-                    <label for="template">{{ __('elfcms::default.template') }}</label>
+                <div class="input-box colored">
+                    <label for="header_code">Header code</label>
                     <div class="input-wrapper">
-                        <input type="text" name="template" id="template" autocomplete="off">
+                        <textarea name="header_code" id="header_code" cols="30" rows="3"></textarea>
                     </div>
-                </div> --}}
+                </div>
+                <div class="input-box colored">
+                    <label for="footer_code">Footer code</label>
+                    <div class="input-wrapper">
+                        <textarea name="footer_code" id="footer_code" cols="30" rows="3"></textarea>
+                    </div>
+                </div>
                 <div class="input-box colored" data-module="standard">
                     <label for="template">{{ __('elfcms::default.template') }}</label>
                     <div class="input-wrapper">

@@ -132,6 +132,8 @@ class PageController extends Controller
         $validated['meta_description'] = $request->meta_description;
         $validated['is_dynamic'] = empty($request->is_dynamic) ? 0 : 1;
         $validated['active'] = empty($request->active) ? 0 : 1;
+        $validated['header_code'] = $request->header_code ?? null;
+        $validated['footer_code'] = $request->footer_code ?? null;
 
         $prepared = $this->prepareData($request->all());
         $validated = array_merge($validated, $prepared);
@@ -240,6 +242,8 @@ class PageController extends Controller
         $page->browser_title = $request->browser_title;
         $page->meta_keywords = $request->meta_keywords;
         $page->meta_description = $request->meta_description;
+        $page->footer_code = $request->footer_code ?? null;
+        $page->header_code = $request->header_code ?? null;
         $page->is_dynamic = empty($request->is_dynamic) ? 0 : 1;
         $page->module = $prepared['module'];
         $page->module_id = $prepared['module_id'];

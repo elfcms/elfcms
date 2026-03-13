@@ -84,13 +84,18 @@
                         <textarea name="content" id="content" cols="30" rows="10">{{ $pageData->getOriginal('content') }}</textarea>
                     </div>
                 </div>
-                {{-- <div class="input-box colored">
-                    <label for="template">{{ __('elfcms::default.template') }}</label>
+                <div class="input-box colored">
+                    <label for="header_code">Header code</label>
                     <div class="input-wrapper">
-                        <input type="text" name="template" id="template" autocomplete="off"
-                            value="{{ $pageData->template }}">
+                        <textarea name="header_code" id="header_code" cols="30" rows="3">{{ $pageData->header_code }}</textarea>
                     </div>
-                </div> --}}
+                </div>
+                <div class="input-box colored">
+                    <label for="footer_code">Footer code</label>
+                    <div class="input-wrapper">
+                        <textarea name="footer_code" id="footer_code" cols="30" rows="3">{{ $pageData->footer_code }}</textarea>
+                    </div>
+                </div>
                 @if ($moduleName == 'standard')
                     <div class="input-box colored">
                         <label for="template">{{ __('elfcms::default.template') }}</label>
