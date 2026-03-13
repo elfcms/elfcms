@@ -279,7 +279,7 @@ Route::group(['middleware' => ['web', 'locales', 'cookie']], function () use ($a
     Route::get('/files/preview/{file?}', [FilestorageFile::class, 'preview'])
         ->where('file', '.*')
         ->name('files.preview');
-    Route::get('/files/{file}', [FilestorageFile::class, 'show'])
+    Route::get('/files/{file}', [FilestorageFile::class, 'stream'])
         ->where('file', '.*')
         ->name('files');
 
