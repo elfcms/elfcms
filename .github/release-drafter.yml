@@ -1,0 +1,38 @@
+name-template: 'v$RESOLVED_VERSION'
+tag-template: 'v$RESOLVED_VERSION'
+categories:
+  - title: 'New Features'
+    labels:
+      - 'feature'
+      - 'enhancement'
+  - title: 'Bug Fixes'
+    labels:
+      - 'bug'
+      - 'fix'
+  - title: 'Database & Migrations'
+    labels:
+      - 'database'
+      - 'migration'
+  - title: 'UI & Frontend'
+    labels:
+      - 'ui'
+      - 'frontend'
+      - 'blade'
+  - title: 'Configuration & Environment'
+    labels:
+      - 'config'
+  - title: 'Documentation'
+    labels:
+      - 'documentation'
+  - title: 'Dependency Updates'
+    labels:
+      - 'dependencies'
+
+change-template: '- $TITLE (#$NUMBER) by @$AUTHOR'
+
+template: |
+  ## What's Changed
+
+  $CHANGES
+
+  **Full Changelog**: https://github.com/elfcms/elfcms/compare/$PREVIOUS_TAG...v$RESOLVED_VERSION
